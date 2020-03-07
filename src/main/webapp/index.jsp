@@ -9,15 +9,16 @@
 
         <title>SoftCoiso </title>
 
-        <!-- Bootstrap -->
-
-        <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Font Awesome -->
-        <link href="build/css/custom.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
         <!-- NProgress -->
-        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <link href="otros/nprogress.css" rel="stylesheet" type="text/css"/>
+        <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
         <!-- Animate.css -->
+        <link href="../vendors/animate.css/animate.min.css" rel="stylesheet">
+
+        <!-- Custom Theme Style -->
+        <link href="../build/css/custom.min.css" rel="stylesheet">
 
         <!-- Custom Theme Style -->
     </head>
