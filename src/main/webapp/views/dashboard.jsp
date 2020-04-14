@@ -256,13 +256,13 @@
           <li class="sub-menu">
             <a href="javascript:;">
               <i class="fa fa-desktop"></i>
-              <span>UI Elements</span>
+              <span>Modulos Administrativos</span>
               </a>
             <ul class="sub">
-              <li><a href="general.html">General</a></li>
-              <li><a href="buttons.html">Buttons</a></li>
-              <li><a href="panels.html">Panels</a></li>
-              <li><a href="font_awesome.html">Font Awesome</a></li>
+              <li><a href="views/usuario.jsp">Usuarios</a></li>
+              <li><a href="usuario.jsp">Formaciones</a></li>
+              <li><a href="panels.html">Tipo de casos</a></li>
+              <li><a href="font_awesome.html">Estados de caso</a></li>
             </ul>
           </li>
           <li class="sub-menu">

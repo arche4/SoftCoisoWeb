@@ -10,6 +10,7 @@ import com.softcoisoweb.model.Usuario;
 import com.softcoisoweb.util.JPAFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -51,6 +52,8 @@ public class ServletLogin extends HttpServlet {
                 rd = request.getRequestDispatcher("index.jsp");
 
             } else {
+                List<Usuario> listUsuario = ujc.findUsuarioEntities();
+                session.setAttribute("listUsuario", listUsuario);
                 rd = request.getRequestDispatcher("views/dashboard.jsp");
                 //Mensaje = "Email o Clave no validos";
             }
