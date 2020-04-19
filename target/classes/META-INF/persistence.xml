@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="com.co.softcoisoweb_SoftCoisoWeb_war_1.0-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.softcoisoweb.model.Usuario</class>
+    <class>com.softcoisoweb.model.Diagnostico</class>
+    <class>com.softcoisoweb.model.Medicamentos</class>
+    <class>com.softcoisoweb.model.Persona</class>
+    <class>com.softcoisoweb.model.CasoAcciones</class>
+    <class>com.softcoisoweb.model.MedicamentosCaso</class>
+    <class>com.softcoisoweb.model.ProcesoReclamacion</class>
+    <class>com.softcoisoweb.model.EstadoCaso</class>
+    <class>com.softcoisoweb.model.PersonaDireccion</class>
+    <class>com.softcoisoweb.model.Arl</class>
+    <class>com.softcoisoweb.model.FlujoCaso</class>
+    <class>com.softcoisoweb.model.Eps</class>
+    <class>com.softcoisoweb.model.ProcesoCalificacion</class>
+    <class>com.softcoisoweb.model.TipoContrato</class>
+    <class>com.softcoisoweb.model.Afp</class>
+    <class>com.softcoisoweb.model.Empresa</class>
+    <class>com.softcoisoweb.model.TipoCaso</class>
+    <class>com.softcoisoweb.model.Formacion</class>
+    <class>com.softcoisoweb.model.CasoPersona</class>
+    <class>com.softcoisoweb.model.CambioCaso</class>
+    <class>com.softcoisoweb.model.OrganizacionSindical</class>
+    <class>com.softcoisoweb.model.Agendamiento</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/softcoisobd?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="root"/>
+    </properties>
+  </persistence-unit>
+</persistence>
