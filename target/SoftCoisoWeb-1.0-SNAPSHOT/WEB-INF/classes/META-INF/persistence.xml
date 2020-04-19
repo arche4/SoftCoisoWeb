@@ -24,6 +24,7 @@
     <class>com.softcoisoweb.model.CambioCaso</class>
     <class>com.softcoisoweb.model.OrganizacionSindical</class>
     <class>com.softcoisoweb.model.Agendamiento</class>
+    <class>com.softcoisoweb.model.Citas</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/softcoisobd?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>

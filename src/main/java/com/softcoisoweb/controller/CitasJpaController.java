@@ -6,8 +6,7 @@
 package com.softcoisoweb.controller;
 
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
-import com.softcoisoweb.controller.exceptions.PreexistingEntityException;
-import com.softcoisoweb.model.Usuario;
+import com.softcoisoweb.model.Citas;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -21,9 +20,9 @@ import javax.persistence.criteria.Root;
  *
  * @author manue
  */
-public class UsuarioJpaController implements Serializable {
+public class CitasJpaController implements Serializable {
 
-    public UsuarioJpaController(EntityManagerFactory emf) {
+    public CitasJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
@@ -32,18 +31,13 @@ public class UsuarioJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Usuario usuario) throws PreexistingEntityException, Exception {
+    public void create(Citas citas) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.persist(usuario);
+            em.persist(citas);
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findUsuario(usuario.getCedula()) != null) {
-                throw new PreexistingEntityException("Usuario " + usuario + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -51,19 +45,19 @@ public class UsuarioJpaController implements Serializable {
         }
     }
 
-    public void edit(Usuario usuario) throws NonexistentEntityException, Exception {
+    public void edit(Citas citas) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            usuario = em.merge(usuario);
+            citas = em.merge(citas);
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                String id = usuario.getCedula();
-                if (findUsuario(id) == null) {
-                    throw new NonexistentEntityException("The usuario with id " + id + " no longer exists.");
+                Integer id = citas.getCodigoCita();
+                if (findCitas(id) == null) {
+                    throw new NonexistentEntityException("The citas with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -74,19 +68,19 @@ public class UsuarioJpaController implements Serializable {
         }
     }
 
-    public void destroy(String id) throws NonexistentEntityException {
+    public void destroy(Integer id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Usuario usuario;
+            Citas citas;
             try {
-                usuario = em.getReference(Usuario.class, id);
-                usuario.getCedula();
+                citas = em.getReference(Citas.class, id);
+                citas.getCodigoCita();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The usuario with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The citas with id " + id + " no longer exists.", enfe);
             }
-            em.remove(usuario);
+            em.remove(citas);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -95,19 +89,19 @@ public class UsuarioJpaController implements Serializable {
         }
     }
 
-    public List<Usuario> findUsuarioEntities() {
-        return findUsuarioEntities(true, -1, -1);
+    public List<Citas> findCitasEntities() {
+        return findCitasEntities(true, -1, -1);
     }
 
-    public List<Usuario> findUsuarioEntities(int maxResults, int firstResult) {
-        return findUsuarioEntities(false, maxResults, firstResult);
+    public List<Citas> findCitasEntities(int maxResults, int firstResult) {
+        return findCitasEntities(false, maxResults, firstResult);
     }
 
-    private List<Usuario> findUsuarioEntities(boolean all, int maxResults, int firstResult) {
+    private List<Citas> findCitasEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Usuario.class));
+            cq.select(cq.from(Citas.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -119,41 +113,23 @@ public class UsuarioJpaController implements Serializable {
         }
     }
 
-    public Usuario findUsuario(String id) {
+    public Citas findCitas(Integer id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Usuario.class, id);
+            return em.find(Citas.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getUsuarioCount() {
+    public int getCitasCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Usuario> rt = cq.from(Usuario.class);
+            Root<Citas> rt = cq.from(Citas.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
-        } finally {
-            em.close();
-        }
-    }
-    
-    public Usuario buscarUsuario(String cedula, String Clave) {
-        EntityManager em = getEntityManager();
-        Usuario usuario = null;
-        try {
-            List<Usuario> listado = findUsuarioEntities();
-            for (Usuario user : listado) {
-                if (cedula.equals(user.getCedula())  && Clave.equals(user.getClave())) {
-                    usuario = new Usuario();
-                    usuario = user;
-
-                }
-            }
-            return usuario;
         } finally {
             em.close();
         }

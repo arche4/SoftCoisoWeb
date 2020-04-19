@@ -101,7 +101,7 @@
                     <!-- page start-->
                     <div class="row mt">
 
-                        <aside class="col-lg-9 mt">
+                        <aside class="col-lg-11 mt" style="margin: 20px;">
                             <section class="panel">
                                 <div class="panel-body">
                                     <div id='calendar'></div>
