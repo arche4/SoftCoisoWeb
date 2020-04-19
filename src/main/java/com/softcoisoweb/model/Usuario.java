@@ -6,20 +6,16 @@
 package com.softcoisoweb.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -70,24 +66,6 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "correo")
     private String correo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioCedula")
-    private Collection<CasoAcciones> casoAccionesCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioCedula")
-    private Collection<ProcesoReclamacion> procesoReclamacionCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioCedula")
-    private Collection<Formacion> formacionCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioCedula")
-    private Collection<MedicamentosCaso> medicamentosCasoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioCedula")
-    private Collection<Agendamiento> agendamientoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioCedula")
-    private Collection<Diagnostico> diagnosticoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioCedula")
-    private Collection<FlujoCaso> flujoCasoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioCedula")
-    private Collection<CambioCaso> cambioCasoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioCedula")
-    private Collection<ProcesoCalificacion> procesoCalificacionCollection;
 
     public Usuario() {
     }
@@ -151,87 +129,6 @@ public class Usuario implements Serializable {
 
     public void setCorreo(String correo) {
         this.correo = correo;
-    }
-
-    @XmlTransient
-    public Collection<CasoAcciones> getCasoAccionesCollection() {
-        return casoAccionesCollection;
-    }
-
-    public void setCasoAccionesCollection(Collection<CasoAcciones> casoAccionesCollection) {
-        this.casoAccionesCollection = casoAccionesCollection;
-    }
-
-    @XmlTransient
-    public Collection<ProcesoReclamacion> getProcesoReclamacionCollection() {
-        return procesoReclamacionCollection;
-    }
-
-    public void setProcesoReclamacionCollection(Collection<ProcesoReclamacion> procesoReclamacionCollection) {
-        this.procesoReclamacionCollection = procesoReclamacionCollection;
-    }
-
-    @XmlTransient
-    public Collection<Formacion> getFormacionCollection() {
-        return formacionCollection;
-    }
-
-    public void setFormacionCollection(Collection<Formacion> formacionCollection) {
-        this.formacionCollection = formacionCollection;
-    }
-
-    @XmlTransient
-    public Collection<MedicamentosCaso> getMedicamentosCasoCollection() {
-        return medicamentosCasoCollection;
-    }
-
-    public void setMedicamentosCasoCollection(Collection<MedicamentosCaso> medicamentosCasoCollection) {
-        this.medicamentosCasoCollection = medicamentosCasoCollection;
-    }
-
-    @XmlTransient
-    public Collection<Agendamiento> getAgendamientoCollection() {
-        return agendamientoCollection;
-    }
-
-    public void setAgendamientoCollection(Collection<Agendamiento> agendamientoCollection) {
-        this.agendamientoCollection = agendamientoCollection;
-    }
-
-    @XmlTransient
-    public Collection<Diagnostico> getDiagnosticoCollection() {
-        return diagnosticoCollection;
-    }
-
-    public void setDiagnosticoCollection(Collection<Diagnostico> diagnosticoCollection) {
-        this.diagnosticoCollection = diagnosticoCollection;
-    }
-
-    @XmlTransient
-    public Collection<FlujoCaso> getFlujoCasoCollection() {
-        return flujoCasoCollection;
-    }
-
-    public void setFlujoCasoCollection(Collection<FlujoCaso> flujoCasoCollection) {
-        this.flujoCasoCollection = flujoCasoCollection;
-    }
-
-    @XmlTransient
-    public Collection<CambioCaso> getCambioCasoCollection() {
-        return cambioCasoCollection;
-    }
-
-    public void setCambioCasoCollection(Collection<CambioCaso> cambioCasoCollection) {
-        this.cambioCasoCollection = cambioCasoCollection;
-    }
-
-    @XmlTransient
-    public Collection<ProcesoCalificacion> getProcesoCalificacionCollection() {
-        return procesoCalificacionCollection;
-    }
-
-    public void setProcesoCalificacionCollection(Collection<ProcesoCalificacion> procesoCalificacionCollection) {
-        this.procesoCalificacionCollection = procesoCalificacionCollection;
     }
 
     @Override

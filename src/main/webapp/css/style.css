@@ -1371,14 +1371,9 @@ PANELS CONFIGURATIONS
     font-size: 12px;
 }
 
-/* Calendar Configuration */
-#calendar {
-    color: white;
-    padding: 0px !important;
-}
-.calendar-month-header {
-    background: #43b1a9;
-}
+
+
+
 
 /* TODO PANEL */
 .steps{
@@ -1631,15 +1626,6 @@ PANELS CONFIGURATIONS
 
 .show-grid [class^=col-]:hover {
     background-color: white;
-}
-
-/* Calendar Events - Calendar.html*/
-.external-event {
-    cursor: move;
-    display: inline-block !important;
-    margin-bottom: 7px !important;
-    margin-right: 7px !important;
-    padding: 10px;
 }
 
 .drop-after {
