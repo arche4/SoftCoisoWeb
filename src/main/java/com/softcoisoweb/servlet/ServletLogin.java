@@ -52,6 +52,7 @@ public class ServletLogin extends HttpServlet {
                 rd = request.getRequestDispatcher("index.jsp");
 
             } else {
+                session.setAttribute("USUARIO", usuario);
                 List<Usuario> listUsuario = ujc.findUsuarioEntities();
                 session.setAttribute("listUsuario", listUsuario);
                 rd = request.getRequestDispatcher("views/dashboard.jsp");
