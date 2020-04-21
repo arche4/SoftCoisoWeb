@@ -158,7 +158,7 @@
                                     </div>
                                     <input class="form-control " id="emailUsuario" type="hidden" name="emailUsuario" value="${sessionScope.USUARIO.correo}">
                                     <input class="form-control " id="cedulaUsuario" type="hidden" name="cedulaUsuario" value="${sessionScope.USUARIO.cedula}">
-                                    
+
                                     <div class="form-group col-md-6">
                                         <label class="control-label">Titulo</label>
                                         <input class="form-control " id="titulo" type="text" name="titulo" placeholder="Titulo" required >
@@ -210,6 +210,7 @@
 
 
         </section>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>                                    
         <script src="${pageContext.servletContext.contextPath}/lib/fullcalendar/packages/bundle/locales/es.js" type="text/javascript"></script>
 
 
