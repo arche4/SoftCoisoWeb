@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
     calendar.render();
 });
 function guardar() {
-    var btnCrearCita = $(this).val();
+    var btnCrearCita = 'si';
     var cedula = $('#cedula').val();
     var nombrePersona = $('#nombrePersona').val();
     var horaIni = $('#horaIni').val();
@@ -42,12 +42,14 @@ function guardar() {
     $.ajax({
         async: false,
         type: "GET",
-        url: "/SoftCoisoWeb/CalendarServlet",
+        url: "/CalendarServlet",
         data: 'cedula=' + cedula + '&nombrePersona=' + nombrePersona + '&horaIni=' + horaIni + '&horaFin=' + horaFin + '&email=' + email +
                 '&emailUsuario=' + emailUsuario + '&cedulaUsuario=' + cedulaUsuario + '&titulo=' + titulo + '&comentario=' + comentario + '&btnCrearCita=' + btnCrearCita
                 + '&ano=' + ano + '&mes=' + mes + '&dia=' + dia,
         success: function (data) {
-
+       console.log(data);
+           
         }
+        
     });
 }

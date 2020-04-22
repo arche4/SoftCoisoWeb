@@ -40,7 +40,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Citas.findByCorreoPersona", query = "SELECT c FROM Citas c WHERE c.correoPersona = :correoPersona")
     , @NamedQuery(name = "Citas.findByNombrepersona", query = "SELECT c FROM Citas c WHERE c.nombrepersona = :nombrepersona")
     , @NamedQuery(name = "Citas.findByCorreoUsuario", query = "SELECT c FROM Citas c WHERE c.correoUsuario = :correoUsuario")
-    , @NamedQuery(name = "Citas.findByUsuario", query = "SELECT c FROM Citas c WHERE c.usuario = :usuario")})
+    , @NamedQuery(name = "Citas.findByUsuario", query = "SELECT c FROM Citas c WHERE c.usuario = :usuario")
+    , @NamedQuery(name = "Citas.findByEstado", query = "SELECT c FROM Citas c WHERE c.estado = :estado")})
 public class Citas implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -98,6 +99,11 @@ public class Citas implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "usuario")
     private String usuario;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "estado")
+    private String estado;
 
     public Citas() {
     }
@@ -106,16 +112,22 @@ public class Citas implements Serializable {
         this.codigoCita = codigoCita;
     }
 
-    public Citas(Integer codigoCita, int ano, int mes, int dia, String horaInicio, String horaFin, String codigoCasoPersona, String correoUsuario, String usuario) {
-        this.codigoCita = codigoCita;
+    public Citas(int ano, int mes, int dia, String horaInicio, String horaFin, String titulo,
+            String descripcion, String codigoCasoPersona,String correoPersona, String nombrepersona,
+            String correoUsuario, String usuario, String estado) {
         this.ano = ano;
         this.mes = mes;
         this.dia = dia;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
         this.codigoCasoPersona = codigoCasoPersona;
+        this.correoPersona = correoPersona;
+        this.nombrepersona = nombrepersona;
         this.correoUsuario = correoUsuario;
         this.usuario = usuario;
+        this.estado = estado;
     }
 
     public Integer getCodigoCita() {
@@ -220,6 +232,14 @@ public class Citas implements Serializable {
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     @Override

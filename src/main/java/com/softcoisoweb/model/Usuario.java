@@ -58,7 +58,7 @@ public class Usuario implements Serializable {
     private String clave;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
+    @Size(min = 1, max = 20)
     @Column(name = "rol")
     private String rol;
     @Basic(optional = false)
