@@ -1,9 +1,9 @@
 var fechaCompleta1;
+
 document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
-
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        plugins: ['interaction', 'dayGrid', 'timeGrid'],
+        plugins: ['dayGrid', 'timeGrid', 'interaction'],
         header: {
             left: 'prev,next today',
             center: 'title',
@@ -13,7 +13,56 @@ document.addEventListener('DOMContentLoaded', function () {
         defaultDate: new Date(),
         navLinks: true, // can click day/week names to navigate views
         selectable: true,
-        selectMirror: true,
+        //selectMirror: true,
+        eventClick: function (info) {
+            var codigo = info.event.title.split("(");
+            codigo = codigo[0];
+            $.ajax({
+                type: "GET",
+                url: "/CalendarServlet",
+                data: '&codigo=' + codigo,
+                success: function (data) {
+                    var respuesta = $.trim(data);
+                    if (respuesta != "") {
+                        respuesta = respuesta.split(",");
+                        if (respuesta[0] < 10) {
+                            respuesta[0] = "0" + respuesta[0];
+                        }
+                        if (respuesta[1] < 10) {
+                            respuesta[1] = "0" + respuesta[1];
+                        }
+                        if (respuesta[2] < 10) {
+                            respuesta[2] = "0" + respuesta[2];
+                        }
+                        $('#CitaInfo').html(' <div class="form-row">  <div class="form-group col-md-6">'
+                                + '<label for="cedula">Cedula</label>'
+                                + '<p></p>'
+                                + '<span>' + respuesta[8] + '</span>'
+                                + '<input name="cedulaUser" id="cedulaUser" type="hidden" class="form-control" value=' + respuesta[8] + '> </div>'
+                                + '<div class="form-group col-md-6">'
+                                + '<label for="nombre">Nombre</label>'
+                                + '<input name="nomUser" id="nomUser" class="form-control" value=' + respuesta[10] + '> </div> </div>'
+                                + '<div class="form-row"> <div class="form-group col-md-6">'
+                                + '<label for="apellido">Apellido</label>'
+                                + '<input name="apellidoUser" id="apellidoUser" class="form-control" value=' + respuesta[9] + '> </div>'
+                                + '<div class="form-group col-md-6">'
+                                + '<label for="rol">Rol</label>'
+                                + '<input name="rolUser" id="rolUser" class="form-control" value=' + respuesta[5] + '> </div> </div>'
+                                + '<div class="form-row"> <div class="form-group col-md-6"> '
+                                + '<label for="Clave">Clave</label>'
+                                + '<input type="password" name="ClaveUser" id="ClaveUser" class="form-control" value=' + respuesta[7] + '> </div> </div>'
+
+                                )
+                        $('#mostrarCita').modal('show');
+                    } else {
+                        $('#ErrorGuardando').fadeIn(1000);
+                        setTimeout(function () {
+                            $('#ErrorGuardando').fadeOut(1000);
+                        }, 5000);
+                    }
+                }
+            });
+        },
         dateClick: function (info) {
             fechaCompleta1 = info.dateStr;
             var moment = calendar.getDate();
@@ -69,54 +118,66 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
         },
-
         events: '/CargarDatosCalendarServlet'
     });
-
     calendar.render();
+    $('#submitButton').on('click', function (e) {
+        e.preventDefault();
+    });
 });
+function myFunctionReload() {
+    location.reload();
+}
 function guardar() {
-    var btnCrearCita = 'si';
-    var cedula = $('#cedula').val();
-    var nombrePersona = $('#nombrePersona').val();
+    $('#crearCita').modal('hide');
+    $("#correctamente").modal('show');
     var horaIni = $('#horaIni').val();
     var horaFin = $('#horaFin').val();
     var iniHora = horaIni[0] + "" + horaIni[1] + "" + horaIni[3] + "" + horaIni[4] + "" + '00';
     var finHora = horaFin[0] + "" + horaFin[1] + "" + horaFin[3] + "" + horaFin[4] + "" + '00';
-    var email = $('#emailPersona').val();
-    var emailUsuario = $('#emailUsuario').val();
-    var cedulaUsuario = $('#cedulaUsuario').val();
-    var titulo = $('#titulo').val();
-    var comentario = $('#comentario').val();
-    var fechaCompletaSplit = fechaCompleta1.split("T");
-    var fecha = fechaCompletaSplit[0].split("-");
-    var ano = fecha[0];
-    var mes = fecha[1];
-    var dia = fecha[2];
-    $.ajax({
-        async: false,
-        type: "POST",
-        url: "/CalendarServlet",
-        data: 'cedula=' + cedula + '&nombrePersona=' + nombrePersona + '&iniHora=' + iniHora + '&finHora=' + finHora + '&email=' + email +
-                '&emailUsuario=' + emailUsuario + '&cedulaUsuario=' + cedulaUsuario + '&titulo=' + titulo + '&comentario=' + comentario + '&btnCrearCita=' + btnCrearCita
-                + '&ano=' + ano + '&mes=' + mes + '&dia=' + dia,
-        success: function (data) {
-            console.log(data);
-            var respuesta = $.trim(data);
-            console.log(respuesta)
-            if (respuesta == "Exitoso") {
-                $('#Exitoso').fadeIn(1000);
-                setTimeout(function () {
-                    $('#Exitoso').fadeOut(1000);
-                }, 5000);
-            } else {
-                $('#ErrorGuardando').fadeIn(1000);
-                setTimeout(function () {
-                    $('#ErrorGuardando').fadeOut(1000);
-                }, 5000);
+    if (finHora > iniHora) {
+        var btnCrearCita = 'si';
+        var cedula = $('#cedula').val();
+        var nombrePersona = $('#nombrePersona').val();
+        var email = $('#emailPersona').val();
+        var emailUsuario = $('#emailUsuario').val();
+        var cedulaUsuario = $('#cedulaUsuario').val();
+        var titulo = $('#titulo').val();
+        var comentario = $('#comentario').val();
+        var fechaCompletaSplit = fechaCompleta1.split("T");
+        var fecha = fechaCompletaSplit[0].split("-");
+        var ano = fecha[0];
+        var mes = fecha[1];
+        var dia = fecha[2];
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: "/CalendarServlet",
+            data: 'cedula=' + cedula + '&nombrePersona=' + nombrePersona + '&iniHora=' + iniHora + '&finHora=' + finHora + '&email=' + email +
+                    '&emailUsuario=' + emailUsuario + '&cedulaUsuario=' + cedulaUsuario + '&titulo=' + titulo + '&comentario=' + comentario + '&btnCrearCita=' + btnCrearCita
+                    + '&ano=' + ano + '&mes=' + mes + '&dia=' + dia,
+            success: function (data) {
+                $(window).load(function () {
+                    $(".loader").fadeOut("slow");
+                });
+                if (data == "Exitoso") {
+                    var cadena = ' <div class="form-row">'
+                            + '<h3>Sus cambios fueron guardados con ex\u00EDto.</h3>'
+                            + ' </div>';
+                    $('#modInfexito').html(cadena)
+                    $('#modalInfexito').modal('show');
+                } else {
+                    $('#ErrorGuardando').fadeIn(1000);
+                    setTimeout(function () {
+                        $('#ErrorGuardando').fadeOut(1000);
+                    }, 5000);
+                }
             }
-
-        }
-
-    });
+        });
+    } else {
+        $('#ErrorFechas').fadeIn(7000);
+        setTimeout(function () {
+            $('#ErrorFechas').fadeOut(7000);
+        }, 7000);
+    }
 }

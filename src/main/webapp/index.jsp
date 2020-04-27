@@ -34,10 +34,10 @@
         <div class="limiter">
             <div class="container-login100">
                 <div class="wrap-login100">
-                   <form class="login100-form validate-form" id="frmLogin" method="post" action="${pageContext.servletContext.contextPath}/ServletLogin">
-                       
-                 <!--  <form class="login100-form validate-form"> -->
-                  <span class="login100-form-title p-b-43">
+                    <form class="login100-form validate-form" id="frmLogin" method="post" action="${pageContext.servletContext.contextPath}/ServletLogin">
+
+                        <!--  <form class="login100-form validate-form"> -->
+                        <span class="login100-form-title p-b-43">
                             Sofcoiso!
                         </span>
                         <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
@@ -87,6 +87,12 @@
                 </div>
             </div>
         </div>
+        <div class="loader" ></div>
+        <script type="text/javascript">
+            $(window).load(function () {
+                $(".loader").fadeOut("slow");
+            });
+        </script>
         <!--===============================================================================================-->
         <script src="${pageContext.servletContext.contextPath}/login/vendor/jquery/jquery-3.2.1.min.js" type="text/javascript"></script>
         <!--===============================================================================================-->

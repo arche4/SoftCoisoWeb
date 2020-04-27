@@ -5,6 +5,7 @@
  */
 package com.softcoisoweb.servlet;
 
+import com.softcoisoweb.conexion.OperacionesBD;
 import com.softcoisoweb.controller.CitasJpaController;
 import com.softcoisoweb.model.Citas;
 import com.softcoisoweb.util.JPAFactory;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.json.JSONObject;
 
 /**
  *
@@ -30,12 +32,10 @@ public class CalendarServlet extends HttpServlet {
      * @param request servlet request
      * @param response servlet response
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void guardarDatos(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         RequestDispatcher rd = null;
         CitasJpaController jpaCita = new CitasJpaController(JPAFactory.getFACTORY());
-
-        String btnCrearCita = request.getParameter("btnCrearCita");
         String codigoPersona = request.getParameter("cedula");
         String nombrePersona = request.getParameter("nombrePersona");
         String emailPersona = request.getParameter("email");
@@ -48,29 +48,29 @@ public class CalendarServlet extends HttpServlet {
         String ano = request.getParameter("ano");
         String mes = request.getParameter("mes");
         String dia = request.getParameter("dia");
-        
         PrintWriter out = response.getWriter();
         try {
-            if (btnCrearCita.equals("si")) {
-                Citas cita = new Citas(Integer.parseInt(ano), Integer.parseInt(mes), Integer.parseInt(dia), horaIni, horaFin, titulo, comentario, codigoPersona, emailPersona, nombrePersona, emailUsuario, cedulaUsuario, "Creada");
-                try {
-                    jpaCita.create(cita);
-                    out.print("Exitoso");
-                } catch (Exception e) {
-                    System.out.println("Error creando una cita, el error es: " + e);
-                    out.print("Error");
-                }
-
-                session.setAttribute("Estado", "");
-                rd = request.getRequestDispatcher("/view/estadoCasos.jsp");
+            Citas cita = new Citas(Integer.parseInt(ano), Integer.parseInt(mes), Integer.parseInt(dia), horaIni, horaFin, titulo, comentario, codigoPersona, emailPersona, nombrePersona, emailUsuario, cedulaUsuario, "Creada");
+            try {
+                jpaCita.create(cita);
+                out.print("Exitoso");
+            } catch (Exception e) {
+                System.out.println("Error creando una cita, el error es: " + e);
+                out.print("Error");
             }
-
-            rd.forward(request, response);
-            
         } catch (Exception e) {
             System.out.println("Error creando una cita, el error es: " + e);
         }
+    }
 
+    public String getCosultaCita(int codigoCita) {
+        CitasJpaController jpaCita = new CitasJpaController(JPAFactory.getFACTORY());
+        Citas cita = jpaCita.findCitas(codigoCita);
+        String respuesta = cita.getCodigoCita() + "," + cita.getAno() + "," + cita.getMes()
+                + "," + cita.getDia() + "," + cita.getHoraInicio() + "," + cita.getHoraFin()
+                + "," + cita.getTitulo() + "," + cita.getDescripcion() + "," + cita.getCodigoCasoPersona()
+                + "," + cita.getCorreoPersona() + "," + cita.getNombrepersona();
+        return respuesta;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -85,7 +85,12 @@ public class CalendarServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        PrintWriter out = response.getWriter();
+        String codigoCita = request.getParameter("codigo");
+        if (codigoCita != null && !codigoCita.equals("")) {
+            String respuesta = getCosultaCita(Integer.parseInt(codigoCita));
+            out.print(respuesta);
+        }
 
     }
 
@@ -100,7 +105,12 @@ public class CalendarServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String btnCrearCita = request.getParameter("btnCrearCita");
+        PrintWriter out = response.getWriter();
+        if (btnCrearCita.equals("si")) {
+            guardarDatos(request, response);
+        }
+
     }
 
     /**

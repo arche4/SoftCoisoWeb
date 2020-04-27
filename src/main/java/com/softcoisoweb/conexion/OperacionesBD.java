@@ -12,6 +12,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,7 +27,6 @@ import org.json.JSONObject;
 public class OperacionesBD {
 
     public String scheme = "citas";
-    
 
     public JSONArray cargarDatos(final int anoIni, final int mesIni, final int anoMed,
             final int mesMed, final int anoFin, final int mesFin) throws IOException {
@@ -38,8 +41,8 @@ public class OperacionesBD {
         try {
             Conexion objConn = new Conexion();
             conn = objConn.conectarMySQL();
-            pstmt = conn.prepareStatement("SELECT * from " + scheme + 
-                    " WHERE ano IN(?,?,?) AND mes IN (?,?,?)");
+            pstmt = conn.prepareStatement("SELECT * from " + scheme
+                    + " WHERE ano IN(?,?,?) AND mes IN (?,?,?)");
             pstmt.setInt(1, anoIni);
             pstmt.setInt(2, anoMed);
             pstmt.setInt(3, anoFin);
@@ -75,14 +78,18 @@ public class OperacionesBD {
                 } else {
                     mesString = Integer.toString(mes);
                 }
-                if (estado.equals("Creada") || estado.equals("creada")) {
-                    eventColor = "#087BC1";
-                } else if (estado.equals("Cancelada") || estado.equals("cancelada")) {
-                    eventColor = "#CA2C0A";
-                } else if (estado.equals("Aprobada") || estado.equals("aprobada")) {
-                    eventColor = "#08A676";
-                } else if (estado.equals("Finalizada") || estado.equals("finalizada")) {
-                    eventColor = "#999999";
+                Calendar fecha = new GregorianCalendar();
+                int diaActual = fecha.get(Calendar.DAY_OF_MONTH);
+                int mesActual = fecha.get(Calendar.DAY_OF_WEEK_IN_MONTH);
+                
+                if (dia < diaActual && mes == mesActual) {
+                    eventColor = "#777";
+                } else if (dia == diaActual) {
+                    eventColor = "#f0ad4e";
+                } else if (dia > diaActual) {
+                    eventColor = "#5cb85c";
+                }else{
+                    eventColor = "#5cb85c";
                 }
                 fechaI = Integer.toString(ano) + "-"
                         + mesString + "-"
@@ -101,7 +108,7 @@ public class OperacionesBD {
             }
             System.out.println(resp);
         } catch (SQLException e) {
-            System.out.println("com.softcoisoweb.conexion.OperacionesBD.cargarDatos(): ERROR" +e);
+            System.out.println("com.softcoisoweb.conexion.OperacionesBD.cargarDatos(): ERROR" + e);
         } finally {
             try {
                 if (pstmt != null) {
@@ -116,8 +123,8 @@ public class OperacionesBD {
                 if (br != null) {
                     br.close();
                 }
-            } catch (SQLException  e) {
-                System.out.println("com.softcoisoweb.conexion.OperacionesBD.cargarDatos(): ERROR" +e);
+            } catch (SQLException e) {
+                System.out.println("com.softcoisoweb.conexion.OperacionesBD.cargarDatos(): ERROR" + e);
             }
         }
         return resp;

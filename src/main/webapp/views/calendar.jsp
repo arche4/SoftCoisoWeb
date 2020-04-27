@@ -31,7 +31,8 @@
         <link href='${pageContext.servletContext.contextPath}/lib/fullcalendar/packages/timegrid/main.css' rel='stylesheet' />
 
         <link href="${pageContext.servletContext.contextPath}/css/style-responsive.css" rel="stylesheet">
-
+        <script src="${pageContext.servletContext.contextPath}/lib/jquery/jquery.min.js"></script>
+        <link href="${pageContext.servletContext.contextPath}/css/Loading.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/lib/gritter/css/jquery.gritter.css" />
 
     </head>
@@ -119,8 +120,13 @@
                     <div class="alert alert-danger" id="ErrorGuardando" style="display:none;">
                         <strong>Error! </strong>Se presento un error guardando la cita.
                     </div>
+                    <div class="alert alert-danger" id="ErrorFechas" style="display:none;">
+                        <strong>Error! </strong>La hora final de la cita es incorrecta.
+                    </div>
                     <div class="alert alert-success" id="Exitoso" style="display:none;">
-                        <strong>¡Bien hecho! </strong>Se guardo correctamente la cita.</div>
+                        <strong>¡Bien hecho!</strong>Se guardo correctamente la cita.
+                    </div>
+
                     <div class="row mt">
 
                         <aside class="col-lg-11 mt" style="margin: 20px;">
@@ -135,7 +141,25 @@
                 </section>
 
                 <!--Modales -->
-
+                <div class="modal fade" id="mostrarCita" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel">Cita</h4>
+                            </div>
+                            <form method="post" name="modCita" id="modCita" action="">
+                                <div class="modal-body" id="CitaInfo">
+                                </div>
+                                <div class="modal-footer">
+                                    <button  type="submit" class="btn btn-primary btn-block" name="btnModificarCita" value="btnModificarCita" id="btnModificarCita">
+                                        Guardar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 <div class="modal fade" id="crearCita" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -196,6 +220,31 @@
                         </div>
                     </div>
                 </div>
+                <div class="modal" id="modalInfexito" role="dialog">
+                    <div class="modal-dialog" role="document">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Operación Exitosa</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="modal-row">
+                                    <div class="col-md-12">
+                                        <form method="post" name="personaEdit" id="persona" action="">
+                                            <div class="modal-body" id="modInfexito">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <hr width="0%">
+                                    <button type="button" id="Guardar" class="btn btn-primary" onclick="myFunctionReload()">Cerrar</button>
+                                </div>                           
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!--Modales --> 
                 <footer class="site-footer">
                     <div class="text-center">
@@ -219,13 +268,10 @@
                 <!-- /wrapper -->
 
             </section>
-            <div id='loading'>loading...</div>
-
-
         </section>
+        <div class="loader" style="display:none;"></div>
         <script src="${pageContext.servletContext.contextPath}/lib/fullcalendar/packages/bundle/locales/es.js" type="text/javascript"></script>
         <script src="${pageContext.servletContext.contextPath}/JavaScript/calendario.js" type="text/javascript"></script>
-        <script src="${pageContext.servletContext.contextPath}/lib/jquery/jquery.min.js"></script>
         <script class="include" type="text/javascript" src="${pageContext.servletContext.contextPath}/lib/jquery.dcjqaccordion.2.7.js"></script>
         <script src="${pageContext.servletContext.contextPath}/lib/jquery.scrollTo.min.js"></script>
         <script src="${pageContext.servletContext.contextPath}/lib/jquery.nicescroll.js" type="text/javascript"></script>
