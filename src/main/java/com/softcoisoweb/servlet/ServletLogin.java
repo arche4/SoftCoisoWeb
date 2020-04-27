@@ -41,8 +41,11 @@ public class ServletLogin extends HttpServlet {
         RequestDispatcher rd = null;
         String cedula = request.getParameter("usuario");
         String clave = request.getParameter("clave");
-
+        HttpSession misession = (HttpSession) request.getSession();
         try {
+            if (misession.equals(true)) {
+                rd = request.getRequestDispatcher("index.jsp");
+            }
             UsuarioJpaController ujc = new UsuarioJpaController(JPAFactory.getFACTORY());
             Usuario usuario = ujc.buscarUsuario(cedula, clave);
             String Mensaje = "";
@@ -52,17 +55,20 @@ public class ServletLogin extends HttpServlet {
                 rd = request.getRequestDispatcher("index.jsp");
 
             } else {
+                session.setAttribute("user", usuario);
                 session.setAttribute("USUARIO", usuario);
                 List<Usuario> listUsuario = ujc.findUsuarioEntities();
                 session.setAttribute("listUsuario", listUsuario);
                 rd = request.getRequestDispatcher("views/dashboard.jsp");
                 //Mensaje = "Email o Clave no validos";
             }
-            rd.forward(request, response);
-
+            
         } catch (Exception e) {
+            rd = request.getRequestDispatcher("index.jsp");
             System.out.println("Error buscando al usuario: " + e);
+            
         }
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

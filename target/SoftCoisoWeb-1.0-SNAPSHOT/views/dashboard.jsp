@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:if test="${empty user}">
+    <jsp:forward page="${pageContext.servletContext.contextPath}/index.jsp"/>
+</c:if> 
 <html lang="en">
 
     <head>
@@ -47,7 +50,9 @@
 
                 <div class="top-menu">
                     <ul class="nav pull-right top-menu">
-                        <li><a class="logout" href="login.html">Logout</a></li>
+                        <li><form action = "${pageContext.servletContext.contextPath}/CerrarSesionServlet" method = "post">
+                                <button id="btnExit"  class="logout" type="submit">Cerrar sesi&oacute;n</button>
+                            </form></li>
                     </ul>
                 </div>
             </header>
@@ -74,8 +79,8 @@
                                 <span>Agendamiento</span>
                             </a>
                             <ul class="sub">
-                                <li><a href="${pageContext.servletContext.contextPath}/views/usuario.jsp">Usuarios</a></li>
                                 <li><a href="${pageContext.servletContext.contextPath}/views/calendar.jsp">Citas</a></li>
+                                <li><a href="${pageContext.servletContext.contextPath}/views/calendar.jsp">Formaciones</a></li>
                                 <li><a href="panels.html">Planeacion</a></li>
                             </ul>
                         </li>
