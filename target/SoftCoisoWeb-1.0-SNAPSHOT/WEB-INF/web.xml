@@ -8,9 +8,17 @@
         <servlet-name>CalendarServlet</servlet-name>
         <servlet-class>com.softcoisoweb.servlet.CalendarServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CargarDatosCalendarServlet</servlet-name>
+        <servlet-class>com.softcoisoweb.servlet.CargarDatosCalendarServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CalendarServlet</servlet-name>
         <url-pattern>/CalendarServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CargarDatosCalendarServlet</servlet-name>
+        <url-pattern>/CargarDatosCalendarServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -109,6 +109,15 @@
                 <section class="wrapper">
                     <h3><i class="fa fa-angle-right"></i> Calendario</h3>
                     <!-- page start-->
+                    <!--Alertas -->
+                    <div class="alert alert-danger" id="Error" style="display:none;">
+                        <strong>Error! </strong>Debes seleccionar una fecha correcta.
+                    </div>
+                    <div class="alert alert-danger" id="ErrorGuardando" style="display:none;">
+                        <strong>Error! </strong>Se presento un error guardando la cita.
+                    </div>
+                    <div class="alert alert-success" id="Exitoso" style="display:none;">
+                        <strong>¡Bien hecho! </strong>Se guardo correctamente la cita.</div>
                     <div class="row mt">
 
                         <aside class="col-lg-11 mt" style="margin: 20px;">
@@ -121,6 +130,7 @@
                     </div>
                     <!-- page end-->
                 </section>
+
                 <!--Modales -->
 
                 <div class="modal fade" id="crearCita" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -210,10 +220,7 @@
 
 
         </section>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>                                    
         <script src="${pageContext.servletContext.contextPath}/lib/fullcalendar/packages/bundle/locales/es.js" type="text/javascript"></script>
-
-
         <script src="${pageContext.servletContext.contextPath}/JavaScript/calendario.js" type="text/javascript"></script>
         <script src="${pageContext.servletContext.contextPath}/lib/jquery/jquery.min.js"></script>
         <script class="include" type="text/javascript" src="${pageContext.servletContext.contextPath}/lib/jquery.dcjqaccordion.2.7.js"></script>

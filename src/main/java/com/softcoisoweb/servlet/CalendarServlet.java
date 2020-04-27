@@ -30,7 +30,7 @@ public class CalendarServlet extends HttpServlet {
      * @param request servlet request
      * @param response servlet response
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         RequestDispatcher rd = null;
         CitasJpaController jpaCita = new CitasJpaController(JPAFactory.getFACTORY());
@@ -39,8 +39,8 @@ public class CalendarServlet extends HttpServlet {
         String codigoPersona = request.getParameter("cedula");
         String nombrePersona = request.getParameter("nombrePersona");
         String emailPersona = request.getParameter("email");
-        String horaIni = request.getParameter("horaIni");
-        String horaFin = request.getParameter("horaFin");
+        String horaIni = request.getParameter("iniHora");
+        String horaFin = request.getParameter("finHora");
         String emailUsuario = request.getParameter("emailUsuario");
         String cedulaUsuario = request.getParameter("cedulaUsuario");
         String titulo = request.getParameter("titulo");
@@ -48,13 +48,17 @@ public class CalendarServlet extends HttpServlet {
         String ano = request.getParameter("ano");
         String mes = request.getParameter("mes");
         String dia = request.getParameter("dia");
+        
+        PrintWriter out = response.getWriter();
         try {
             if (btnCrearCita.equals("si")) {
                 Citas cita = new Citas(Integer.parseInt(ano), Integer.parseInt(mes), Integer.parseInt(dia), horaIni, horaFin, titulo, comentario, codigoPersona, emailPersona, nombrePersona, emailUsuario, cedulaUsuario, "Creada");
                 try {
                     jpaCita.create(cita);
+                    out.print("Exitoso");
                 } catch (Exception e) {
                     System.out.println("Error creando una cita, el error es: " + e);
+                    out.print("Error");
                 }
 
                 session.setAttribute("Estado", "");

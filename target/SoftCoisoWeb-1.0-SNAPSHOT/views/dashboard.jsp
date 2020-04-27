@@ -69,10 +69,15 @@
                             </a>
                         </li>
                         <li class="sub-menu">
-                            <a href="${pageContext.servletContext.contextPath}/views/calendar.jsp">
-                                <i class="fa fa-calendar"></i>
-                                <span>Calendario</span>
+                            <a href="javascript:;">
+                                <i class="fa fa-desktop"></i>
+                                <span>Agendamiento</span>
                             </a>
+                            <ul class="sub">
+                                <li><a href="${pageContext.servletContext.contextPath}/views/usuario.jsp">Usuarios</a></li>
+                                <li><a href="${pageContext.servletContext.contextPath}/views/calendar.jsp">Citas</a></li>
+                                <li><a href="panels.html">Planeacion</a></li>
+                            </ul>
                         </li>
                         <li class="sub-menu">
                             <a href="javascript:;">
