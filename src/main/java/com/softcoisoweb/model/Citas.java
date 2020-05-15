@@ -112,6 +112,25 @@ public class Citas implements Serializable {
         this.codigoCita = codigoCita;
     }
 
+    public Citas(Integer codigoCita, int ano, int mes, int dia, String horaInicio, String horaFin, String titulo,
+            String descripcion, String codigoCasoPersona,String correoPersona, String nombrepersona,
+            String correoUsuario, String usuario, String estado) {
+        this.codigoCita=codigoCita;
+        this.ano = ano;
+        this.mes = mes;
+        this.dia = dia;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.codigoCasoPersona = codigoCasoPersona;
+        this.correoPersona = correoPersona;
+        this.nombrepersona = nombrepersona;
+        this.correoUsuario = correoUsuario;
+        this.usuario = usuario;
+        this.estado = estado;
+    }
+    
     public Citas(int ano, int mes, int dia, String horaInicio, String horaFin, String titulo,
             String descripcion, String codigoCasoPersona,String correoPersona, String nombrepersona,
             String correoUsuario, String usuario, String estado) {

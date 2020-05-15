@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-
+<%@ page pageEncoding="UTF-8" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <html lang="en">
     <head>
         <title>SofCoiso</title>
@@ -28,6 +29,8 @@
         <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/login/css/util.css"/>
         <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/login/css/main.css"/>
         <!--===============================================================================================-->
+        <script src="${pageContext.servletContext.contextPath}/lib/jquery/jquery.min.js"></script>
+        <link href="css/Loading.css" rel="stylesheet" type="text/css"/>
     </head>
 
     <body style="background-color: #666666;">
@@ -40,6 +43,7 @@
                         <span class="login100-form-title p-b-43">
                             Sofcoiso!
                         </span>
+                        <span class="login100-form-title p-b-43" style="color:red;"> <c:out value="${sessionScope.MENSAJE}"/></span>
                         <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
                             <input class="input100" type="text" id="usuario" name="usuario">
                             <span class="focus-input100"></span>
@@ -60,17 +64,15 @@
 
                             <div>
                                 <a href="#" class="txt1">
-                                    Has olvidado la contraseña?
+                                    Has olvidado la contraseÃ±a?
                                 </a>
                             </div>
                         </div>
                         <div class="container-login100-form-btn">
-                            <button class="login100-form-btn" id="btnLog" type="submit">
+                            <button class="login100-form-btn" id="btnLog" type="submit" onclick="myFunctionReload()">
                                 Ingresar
                             </button>
                         </div>
-
-
                         <div class="clearfix"></div>
 
                         <div class="separator">
@@ -78,7 +80,7 @@
                             <br />
 
                             <div>
-                                <p>©2020 Todos los derechos reservados. Corporación colectivo intersindical de salud ocupacional. Privacidad y términos.</p>
+                                <p>Â©2020 Todos los derechos reservados. CorporaciÃ³n colectivo intersindical de salud ocupacional. Privacidad y tÃ©rminos.</p>
                             </div>
                         </div>
                     </form>
@@ -87,14 +89,9 @@
                 </div>
             </div>
         </div>
-        <div class="loader" ></div>
-        <script type="text/javascript">
-            $(window).load(function () {
-                $(".loader").fadeOut("slow");
-            });
-        </script>
+        <div class="loader" id="loader" style="display:none"></div>
+        <script src="JavaScript/login.js" type="text/javascript"></script>
         <!--===============================================================================================-->
-        <script src="${pageContext.servletContext.contextPath}/login/vendor/jquery/jquery-3.2.1.min.js" type="text/javascript"></script>
         <!--===============================================================================================-->
         <script src="${pageContext.servletContext.contextPath}/login/vendor/animsition/js/animsition.min.js" type="text/javascript"></script>
         <!--===============================================================================================-->

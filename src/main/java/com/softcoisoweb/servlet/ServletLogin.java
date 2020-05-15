@@ -53,20 +53,17 @@ public class ServletLogin extends HttpServlet {
                 Mensaje = "Email o Clave no validos";
                 session.setAttribute("MENSAJE", Mensaje);
                 rd = request.getRequestDispatcher("index.jsp");
-
             } else {
                 session.setAttribute("user", usuario);
                 session.setAttribute("USUARIO", usuario);
                 List<Usuario> listUsuario = ujc.findUsuarioEntities();
                 session.setAttribute("listUsuario", listUsuario);
+                session.setAttribute("rol", "Administrador");
                 rd = request.getRequestDispatcher("views/dashboard.jsp");
-                //Mensaje = "Email o Clave no validos";
-            }
-            
+            } 
         } catch (Exception e) {
             rd = request.getRequestDispatcher("index.jsp");
-            System.out.println("Error buscando al usuario: " + e);
-            
+            System.out.println("Error buscando al usuario: " + e);   
         }
         rd.forward(request, response);
     }

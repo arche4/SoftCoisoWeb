@@ -78,17 +78,23 @@ public class OperacionesBD {
                 } else {
                     mesString = Integer.toString(mes);
                 }
-                Calendar fecha = new GregorianCalendar();
+                Calendar fecha = Calendar.getInstance();
                 int diaActual = fecha.get(Calendar.DAY_OF_MONTH);
-                int mesActual = fecha.get(Calendar.DAY_OF_WEEK_IN_MONTH);
-                
+                int mesActual = fecha.get(Calendar.MONTH) + 1;
+
                 if (dia < diaActual && mes == mesActual) {
+                    eventColor = "#777";
+                } else if (dia < diaActual && mes < mesActual) {
+                    eventColor = "#777";
+                } else if (dia > diaActual && mes < mesActual) {
                     eventColor = "#777";
                 } else if (dia == diaActual) {
                     eventColor = "#f0ad4e";
                 } else if (dia > diaActual) {
                     eventColor = "#5cb85c";
-                }else{
+                } else if (estado.equals("Modificada")) {
+                    eventColor = "#4e69cd";
+                } else {
                     eventColor = "#5cb85c";
                 }
                 fechaI = Integer.toString(ano) + "-"

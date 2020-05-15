@@ -34,7 +34,7 @@
         <script src="${pageContext.servletContext.contextPath}/lib/jquery/jquery.min.js"></script>
         <link href="${pageContext.servletContext.contextPath}/css/Loading.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/lib/gritter/css/jquery.gritter.css" />
-
+        <link href="${pageContext.servletContext.contextPath}/css/general.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <section id="container">
@@ -47,7 +47,9 @@
 
                 <div class="top-menu">
                     <ul class="nav pull-right top-menu">
-                        <li><a class="logout" href="login.html">Logout</a></li>
+                        <li><form action = "${pageContext.servletContext.contextPath}/CerrarSesionServlet" method = "post">
+                                <button id="btnExit"  class="logout" type="submit">Cerrar sesi&oacute;n</button>
+                            </form></li>
                     </ul>
                 </div>
             </header>
@@ -152,9 +154,19 @@
                                 <div class="modal-body" id="CitaInfo">
                                 </div>
                                 <div class="modal-footer">
-                                    <button  type="submit" class="btn btn-primary btn-block" name="btnModificarCita" value="btnModificarCita" id="btnModificarCita">
-                                        Guardar
-                                    </button>
+                                    <div class="modal-footer">
+                                        <button  type="submit" class="btn btn-success" id="btnModificar" onclick="validar()">
+                                            Guardar
+                                        </button>
+                                        <c:choose>
+                                            <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">
+                                                <button  type="submit" class="btn btn-danger" id="btnEliminar" onclick="validarEliminar()">
+                                                    Eliminar
+                                                </button>
+                                            </c:when> 
+                                        </c:choose>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -168,6 +180,7 @@
                                 <h4 class="modal-title" id="myModalLabel">Crear  Cita</h4>
                             </div>
                             <form id="calendario">
+                                <br>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label class="control-label">Cedula</label>
@@ -175,7 +188,7 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label class="control-label">Nombre</label>
-                                        <input type="text" class="form-control" id="nombrePersona" name="nombrePersona"  placeholder="Nombre Persona">
+                                        <input type="text" class="form-control" id="nombrePersona" name="nombrePersona"  placeholder="Nombre Persona" required>
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -191,7 +204,7 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label class="control-label">Email</label>
-                                        <input class="form-control " id="emailPersona" type="email" name="emailPersona" placeholder="Email" required >
+                                        <input class="form-control " id="emailPersona" type="email" name="emailPersona" placeholder="Email" >
                                     </div>
                                     <input class="form-control " id="emailUsuario" type="hidden" name="emailUsuario" value="${sessionScope.USUARIO.correo}">
                                     <input class="form-control " id="cedulaUsuario" type="hidden" name="cedulaUsuario" value="${sessionScope.USUARIO.cedula}">
@@ -202,29 +215,25 @@
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    <div class="form-group ">
-                                        <div class="col-lg-12">
-                                            <label class="control-label">Descripcion</label>
-                                            <textarea class="form-control " id="comentario" name="comentario" required></textarea>
-                                        </div>
+                                    <div class="form-group col-lg-12 ">
+                                        <label class="control-label">Descripcion</label>
+                                        <textarea class="form-control " id="comentario" name="comentario" ></textarea>
+
                                     </div>
-                                </div>
-                                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>                
+                                </div>         
                                 <div class="modal-footer">
                                     <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="guardar()">
                                         Crear
                                     </button>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
-                <div class="modal" id="modalInfexito" role="dialog">
+                <div class="modal" id="modalInfexito" abindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
-
-                        <!-- Modal content-->
-                        <div class="modal-content">
+                        <div class="modal-content" id="modales-content">
                             <div class="modal-header">
                                 <h4 class="modal-title">Operación Exitosa</h4>
                             </div>
@@ -239,7 +248,84 @@
                                 </div>
                                 <div class="modal-footer">
                                     <hr width="0%">
-                                    <button type="button" id="Guardar" class="btn btn-primary" onclick="myFunctionReload()">Cerrar</button>
+                                    <button type="button" id="Guardar" class="btn btn-primary" onclick="myFunctionReload()">Ok</button>
+                                </div>                           
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="modalValidar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+
+                        <!-- Modal content-->
+                        <div class="modal-content" id="modales-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Confirmar Cambios</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="modal-row">
+                                    <div class="col-md-12">
+                                        <form method="post" name="modConfirmar" id="modConfirmar" action="">
+                                            <div class="modal-body" id="InfoConfirmar">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button  type="submit" class="btn btn-success" id="btnModificar" onclick="Modificar()">
+                                        Si
+                                    </button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                </div>                           
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+
+                        <!-- Modal content-->
+                        <div class="modal-content" id="modales-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Confirmar Cambios</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="modal-row">
+                                    <div class="col-md-12">
+                                        <form method="post" name="modConfirmar" id="modConfirmar" action="">
+                                            <div class="modal-body" id="InfoEliminar">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button  type="submit" class="btn btn-success" id="btnModificar" onclick="Eliminar()">
+                                        Si
+                                    </button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                </div>                           
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal" id="modalInfError" abindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content" id="modales-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Operación Erronea</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="modal-row">
+                                    <div class="col-md-12">
+                                        <form method="post" name="personaEdit" id="persona" action="">
+                                            <div class="modal-body" id="modInferror">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <hr width="0%">
+                                    <button type="button" id="Guardar" class="btn btn-primary" onclick="myFunctionReload()">Ok</button>
                                 </div>                           
                             </div>
                         </div>
@@ -269,8 +355,8 @@
 
             </section>
         </section>
-        <div class="loader" style="display:none;"></div>
-        <script src="${pageContext.servletContext.contextPath}/lib/fullcalendar/packages/bundle/locales/es.js" type="text/javascript"></script>
+        <div class="loader" id="loader"></div>
+        <script src="${pageContext.servletContext.contextPath}/lib/fullcalendar/packages/core/locales-all.js" type="text/javascript"></script>
         <script src="${pageContext.servletContext.contextPath}/JavaScript/calendario.js" type="text/javascript"></script>
         <script class="include" type="text/javascript" src="${pageContext.servletContext.contextPath}/lib/jquery.dcjqaccordion.2.7.js"></script>
         <script src="${pageContext.servletContext.contextPath}/lib/jquery.scrollTo.min.js"></script>

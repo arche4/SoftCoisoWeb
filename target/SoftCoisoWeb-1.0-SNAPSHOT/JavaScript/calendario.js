@@ -1,13 +1,19 @@
 var fechaCompleta1;
-
+var loader = document.getElementById('loader');
+$(window).load(function () {
+    $(".loader").fadeOut("slow");
+});
 document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        plugins: ['dayGrid', 'timeGrid', 'interaction'],
+
+        locale: 'es',
+        plugins: ['dayGrid', 'timeGrid', 'interaction', 'list'],
+
         header: {
             left: 'prev,next today',
             center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
         },
         defaultView: 'dayGridMonth',
         defaultDate: new Date(),
@@ -17,6 +23,9 @@ document.addEventListener('DOMContentLoaded', function () {
         eventClick: function (info) {
             var codigo = info.event.title.split("(");
             codigo = codigo[0];
+            $(window).load(function () {
+                $(".loader").fadeOut("slow");
+            });
             $.ajax({
                 type: "GET",
                 url: "/CalendarServlet",
@@ -25,34 +34,53 @@ document.addEventListener('DOMContentLoaded', function () {
                     var respuesta = $.trim(data);
                     if (respuesta != "") {
                         respuesta = respuesta.split(",");
-                        if (respuesta[0] < 10) {
-                            respuesta[0] = "0" + respuesta[0];
-                        }
-                        if (respuesta[1] < 10) {
-                            respuesta[1] = "0" + respuesta[1];
-                        }
-                        if (respuesta[2] < 10) {
-                            respuesta[2] = "0" + respuesta[2];
-                        }
                         $('#CitaInfo').html(' <div class="form-row">  <div class="form-group col-md-6">'
                                 + '<label for="cedula">Cedula</label>'
-                                + '<p></p>'
-                                + '<span>' + respuesta[8] + '</span>'
-                                + '<input name="cedulaUser" id="cedulaUser" type="hidden" class="form-control" value=' + respuesta[8] + '> </div>'
+                                + '<input type="number" class="form-control" id="citaCedula" name="citaCedula"  placeholder="Cedula"  readonly> </div>'
                                 + '<div class="form-group col-md-6">'
-                                + '<label for="nombre">Nombre</label>'
-                                + '<input name="nomUser" id="nomUser" class="form-control" value=' + respuesta[10] + '> </div> </div>'
+                                + ' <label class="control-label">Nombre</label>'
+                                + '<input type="text" class="form-control" id="citaNom" name="citaNom"> </div> </div>'
                                 + '<div class="form-row"> <div class="form-group col-md-6">'
-                                + '<label for="apellido">Apellido</label>'
-                                + '<input name="apellidoUser" id="apellidoUser" class="form-control" value=' + respuesta[9] + '> </div>'
+                                + '<label class="control-label">Hora de inicio</label>'
+                                + '<input type="time" class="form-control" id="CitaIniHora" name="CitaIniHora"> </div>'
                                 + '<div class="form-group col-md-6">'
-                                + '<label for="rol">Rol</label>'
-                                + '<input name="rolUser" id="rolUser" class="form-control" value=' + respuesta[5] + '> </div> </div>'
+                                + '<label class="control-label">Hora de fin</label>'
+                                + '<input type="time" class="form-control" id="CitaFinHora" name="CitaFinHora"> </div> </div>'
                                 + '<div class="form-row"> <div class="form-group col-md-6"> '
-                                + '<label for="Clave">Clave</label>'
-                                + '<input type="password" name="ClaveUser" id="ClaveUser" class="form-control" value=' + respuesta[7] + '> </div> </div>'
-
+                                + '<label class="control-label">Email</label>'
+                                + '<input class="form-control " id="Citaemail" type="email" name="Citaemail"> </div> '
+                                + '<div class="form-group col-md-6">'
+                                + '<label class="control-label">Titulo</label>'
+                                + '<input class="form-control" id="Citatitulo" type="text" name="Citatitulo" placeholder="Titulo"> </div> </div>'
+                                + '<div class="form-row">'
+                                + '<div class="form-group col-lg-12">'
+                                + '<label class="control-label">Descripcion</label>'
+                                + '<textarea class="form-control" id="Citacomentario" name="Citacomentario"></textarea> </div> </div>'
+                                + '<div class="form-row">'
+                                + '<div class="form-group">'
+                                + '<label for="agree" class="control-label col-md-4">Enviar Corero Electronico</label>'
+                                + '<input type="checkbox" style="width: 20px" class="checkbox form-control" id="envioEmail" name="envioEmail" />'
+                                + '</div></div>'
+                                + '<input class="form-control " id="emailUsuarioCita" type="hidden" name="emailUsuarioCita">'
+                                + '<input class="form-control " id="cedulaUsuarioCita" type="hidden" name="cedulaUsuarioCita">'
+                                + '<input class="form-control " id="codigoCita" type="hidden" name="codigoCita">'
+                                + '<input class="form-control " id="anoCita" type="hidden" name="anoCita">'
+                                + '<input class="form-control " id="mesCita" type="hidden" name="mesCita">'
+                                + '<input class="form-control " id="diaCita" type="hidden" name="diaCita">'
                                 )
+                        $("#citaCedula").val(respuesta[8]);
+                        $("#Citaemail").val(respuesta[9]);
+                        $("#Citatitulo").val(respuesta[6]);
+                        $("#Citacomentario").val(respuesta[7]);
+                        $("#citaNom").val(respuesta[10]);
+                        $("#CitaIniHora").val(respuesta[4]);
+                        $("#CitaFinHora").val(respuesta[5]);
+                        $("#emailUsuarioCita").val(respuesta[11]);
+                        $("#cedulaUsuarioCita").val(respuesta[12]);
+                        $("#codigoCita").val(respuesta[0]);
+                        $("#anoCita").val(respuesta[1]);
+                        $("#mesCita").val(respuesta[2]);
+                        $("#diaCita").val(respuesta[3]);
                         $('#mostrarCita').modal('show');
                     } else {
                         $('#ErrorGuardando').fadeIn(1000);
@@ -125,12 +153,17 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
     });
 });
+
 function myFunctionReload() {
     location.reload();
+
 }
 function guardar() {
-    $('#crearCita').modal('hide');
-    $("#correctamente").modal('show');
+    if (loader.style.display === 'none') {
+        loader.style.display = 'block';
+    } else {
+        loader.style.display = 'none';
+    }
     var horaIni = $('#horaIni').val();
     var horaFin = $('#horaFin').val();
     var iniHora = horaIni[0] + "" + horaIni[1] + "" + horaIni[3] + "" + horaIni[4] + "" + '00';
@@ -157,27 +190,170 @@ function guardar() {
                     '&emailUsuario=' + emailUsuario + '&cedulaUsuario=' + cedulaUsuario + '&titulo=' + titulo + '&comentario=' + comentario + '&btnCrearCita=' + btnCrearCita
                     + '&ano=' + ano + '&mes=' + mes + '&dia=' + dia,
             success: function (data) {
-                $(window).load(function () {
-                    $(".loader").fadeOut("slow");
-                });
+                event.preventDefault();
+                $('#crearCita').modal('hide');
+                if (loader.style.display === 'none') {
+                    loader.style.display = 'block';
+                } else {
+                    loader.style.display = 'none';
+                }
                 if (data == "Exitoso") {
                     var cadena = ' <div class="form-row">'
-                            + '<h3>Sus cambios fueron guardados con ex\u00EDto.</h3>'
+                            + '<h5>Sus cambios fueron guardados con ex\u00EDto.</h3>'
                             + ' </div>';
                     $('#modInfexito').html(cadena)
                     $('#modalInfexito').modal('show');
                 } else {
-                    $('#ErrorGuardando').fadeIn(1000);
-                    setTimeout(function () {
-                        $('#ErrorGuardando').fadeOut(1000);
-                    }, 5000);
+                    var cadena = '<div class="form-row">'
+                            + '<h5>Lo sentimos, se ha presentado un problema guardando los datos .</h3>'
+                            + ' </div>';
+                    $('#modInferror').html(cadena)
+                    $('#modalInfError').modal('show');
                 }
             }
         });
     } else {
+        if (loader.style.display === 'none') {
+            loader.style.display = 'block';
+        } else {
+            loader.style.display = 'none';
+        }
         $('#ErrorFechas').fadeIn(7000);
         setTimeout(function () {
             $('#ErrorFechas').fadeOut(7000);
         }, 7000);
     }
+}
+
+function validar() {
+    event.preventDefault();
+    var cadena = ' <div class="form-row">'
+            + '<h5> ¿ Esta seguro que quieres realizar los cambios ? </h3>'
+            + ' </div>';
+    $('#InfoConfirmar').html(cadena)
+    $('#modalValidar').modal('show');
+    $('#mostrarCita').modal('hide');
+}
+
+function Modificar() {
+    $('#modalValidar').modal('hide');
+    if (loader.style.display === 'none') {
+        loader.style.display = 'block';
+    } else {
+        loader.style.display = 'none';
+    }
+    var btnModificarCita = 'ok';
+    var citaCedula = $('#citaCedula').val();
+    var citaNom = $('#citaNom').val();
+    var iniHora = $('#CitaIniHora').val();
+    var finHora = $('#CitaFinHora').val();
+    var Citaemail = $('#Citaemail').val();
+    var Citatitulo = $('#Citatitulo').val();
+    var Citacomentario = $('#Citacomentario').val();
+    var emailUsuarioCita = $('#emailUsuarioCita').val();
+    var cedulaUsuarioCita = $('#cedulaUsuarioCita').val();
+    var codigoCita = $('#codigoCita').val();
+    var anoCita = $('#anoCita').val();
+    var mesCita = $('#mesCita').val();
+    var diaCita = $('#diaCita').val();
+    var CitaIniHora = iniHora[0] + "" + iniHora[1] + "" + iniHora[3] + "" + iniHora[4] + "" + '00';
+    var CitaFinHora = finHora[0] + "" + finHora[1] + "" + finHora[3] + "" + finHora[4] + "" + '00';
+    var enviarEmail;
+    var enviarCorreo = 'No';
+    if ((enviarEmail = $("#envioEmail:checked").val()) !== null) {
+        var enviarCorreo = 'Si';
+    }
+    if (finHora > iniHora) {
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: "/CalendarServlet",
+            data: 'btnModificarCita=' + btnModificarCita + '&citaCedula=' + citaCedula + '&citaNom=' + citaNom + '&CitaIniHora=' + CitaIniHora + '&CitaFinHora=' + CitaFinHora +
+                    '&Citaemail=' + Citaemail + '&Citatitulo=' + Citatitulo + '&Citacomentario=' + Citacomentario + '&emailUsuarioCita=' + emailUsuarioCita + '&cedulaUsuarioCita=' + cedulaUsuarioCita
+                    + '&codigoCita=' + codigoCita + '&anoCita=' + anoCita + '&mesCita=' + mesCita + '&diaCita=' + diaCita + '&enviarCorreo=' + enviarCorreo,
+            success: function (data) {
+                event.preventDefault();
+                if (loader.style.display === 'none') {
+                    loader.style.display = 'block';
+                } else {
+                    loader.style.display = 'none';
+                }
+                if (data == "Exitoso") {
+                    var cadena = ' <div class="form-row">'
+                            + '<h4>Genial!!!.</h4>'
+                            + '<h5>Sus cambios fueron guardados con ex\u00EDto.</h5>'
+                            + ' </div>';
+                    $('#modInfexito').html(cadena)
+                    $('#modalInfexito').modal('show');
+                } else {
+                    var cadena = '<div class="form-row">'
+                            + '<h4>Lo sentimos!!</h4>'
+                            + '<h5>Se  presento un problema guardando los datos .</h3>'
+                            + '</div>';
+                    $('#modInferror').html(cadena)
+                    $('#modalInfError').modal('show');
+                }
+            }
+        });
+    } else {
+        if (loader.style.display === 'none') {
+            loader.style.display = 'block';
+        } else {
+            loader.style.display = 'none';
+        }
+        $('#ErrorFechas').fadeIn(7000);
+        setTimeout(function () {
+            $('#ErrorFechas').fadeOut(7000);
+        }, 7000);
+    }
+}
+
+function validarEliminar() {
+    event.preventDefault();
+    var cadena = ' <div class="form-row">'
+            + '<h5> ¿ Esta seguro que quieres eliminar la cita ? </h3>'
+            + ' </div>';
+    $('#InfoEliminar').html(cadena)
+    $('#modalEliminar').modal('show');
+    $('#mostrarCita').modal('hide');
+}
+
+function Eliminar() {
+    $('#modalEliminar').modal('hide');
+    if (loader.style.display === 'none') {
+        loader.style.display = 'block';
+    } else {
+        loader.style.display = 'none';
+    }
+    var btnEliminarCita = 'ok';
+    var codigoCita = $('#codigoCita').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/CalendarServlet",
+        data: 'btnEliminarCita=' + btnEliminarCita + '&codigoCita=' + codigoCita,
+        success: function (data) {
+            event.preventDefault();
+            if (loader.style.display === 'none') {
+                loader.style.display = 'block';
+            } else {
+                loader.style.display = 'none';
+            }
+            if (data == "Exitoso") {
+                var cadena = ' <div class="form-row">'
+                        + '<h4>Genial!!!.</h4>'
+                        + '<h5>Se elimino correctamente la cita.</h5>'
+                        + ' </div>';
+                $('#modInfexito').html(cadena);
+                $('#modalInfexito').modal('show');
+            } else {
+                var cadena = '<div class="form-row">'
+                        + '<h4>Lo sentimos!!</h4>'
+                        + '<h5>Se  presento un problema eliminando los datos .</h3>'
+                        + '</div>';
+                $('#modInferror').html(cadena);
+                $('#modalInfError').modal('show');
+            }
+        }
+    });
 }

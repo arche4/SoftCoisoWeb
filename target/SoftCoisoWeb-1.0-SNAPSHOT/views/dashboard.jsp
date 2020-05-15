@@ -26,7 +26,7 @@
         <link href="${pageContext.servletContext.contextPath}/css/style.css" rel="stylesheet">
         <link href="${pageContext.servletContext.contextPath}/css/style-responsive.css" rel="stylesheet">
         <script src="${pageContext.servletContext.contextPath}/lib/chart-master/Chart.js"></script>
-
+        <link href="${pageContext.servletContext.contextPath}/css/general.css" rel="stylesheet" type="text/css"/>
         <!-- =======================================================
           Template Name: Dashio
           Template URL: https://templatemag.com/dashio-bootstrap-admin-template/
