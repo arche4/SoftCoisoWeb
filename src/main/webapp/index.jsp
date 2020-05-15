@@ -30,7 +30,7 @@
         <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/login/css/main.css"/>
         <!--===============================================================================================-->
         <script src="${pageContext.servletContext.contextPath}/lib/jquery/jquery.min.js"></script>
-        <link href="css/Loading.css" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.servletContext.contextPath}/Loading.css" rel="stylesheet" type="text/css"/>
     </head>
 
     <body style="background-color: #666666;">
@@ -90,7 +90,7 @@
             </div>
         </div>
         <div class="loader" id="loader" style="display:none"></div>
-        <script src="JavaScript/login.js" type="text/javascript"></script>
+        <script src="${pageContext.servletContext.contextPath}/JavaScript/login.js" type="text/javascript"></script>
         <!--===============================================================================================-->
         <!--===============================================================================================-->
         <script src="${pageContext.servletContext.contextPath}/login/vendor/animsition/js/animsition.min.js" type="text/javascript"></script>

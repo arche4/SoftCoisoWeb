@@ -32,7 +32,7 @@
 
         <link href="${pageContext.servletContext.contextPath}/css/style-responsive.css" rel="stylesheet">
         <script src="${pageContext.servletContext.contextPath}/lib/jquery/jquery.min.js"></script>
-        <link href="${pageContext.servletContext.contextPath}/css/Loading.css" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.servletContext.contextPath}/Loading.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/lib/gritter/css/jquery.gritter.css" />
         <link href="${pageContext.servletContext.contextPath}/css/general.css" rel="stylesheet" type="text/css"/>
     </head>
@@ -71,10 +71,15 @@
                             </a>
                         </li>
                         <li class="sub-menu">
-                            <a class="active" href="${pageContext.servletContext.contextPath}/views/calendar.jsp">
-                                <i class="fa fa-calendar"></i>
-                                <span>Calendario</span>
+                            <a href="javascript:;">
+                                <i class="fa fa-desktop"></i>
+                                <span>Agendamiento</span>
                             </a>
+                            <ul class="sub">
+                                <li><a href="${pageContext.servletContext.contextPath}/views/calendar.jsp">Citas</a></li>
+                                <li><a href="${pageContext.servletContext.contextPath}/views/formacion.jsp">Formaciones</a></li>
+                                <li><a href="panels.html">Planeacion</a></li>
+                            </ul>
                         </li>
                         <li class="sub-menu">
                             <a href="javascript:;">
@@ -335,7 +340,7 @@
                 <footer class="site-footer">
                     <div class="text-center">
                         <p>
-                            &copy; Copyrights <strong>Dashio</strong>. All Rights Reserved
+                            &copy; Derechos de autor <strong>Coiso</strong>. ©2020 Todos los derechos reservados.
                         </p>
                         <div class="credits">
                             <!--
@@ -344,9 +349,9 @@
                               Buy the pro version with working PHP/AJAX contact form: https://templatemag.com/dashio-bootstrap-admin-template/
                               Licensing information: https://templatemag.com/license/
                             -->
-                            Created with Dashio template by <a href="https://templatemag.com/">TemplateMag</a>
+                            Corporación colectivo intersindical de salud ocupacional. Privacidad y términos <a href="http://www.coiso.org/"></a>
                         </div>
-                        <a href="calendar.html#" class="go-top">
+                        <a href="http://www.coiso.org/" class="go-top">
                             <i class="fa fa-angle-up"></i>
                         </a>
                     </div>
