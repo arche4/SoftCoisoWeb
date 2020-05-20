@@ -28,6 +28,10 @@
         <servlet-name>PersonaServlet</servlet-name>
         <servlet-class>com.softcoisoweb.servlet.PersonaServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CasoServlet</servlet-name>
+        <servlet-class>com.softcoisoweb.servlet.CasoServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CerrarSesionServlet</servlet-name>
         <url-pattern>/CerrarSesionServlet</url-pattern>
@@ -44,9 +48,13 @@
         <servlet-name>PersonaServlet</servlet-name>
         <url-pattern>/PersonaServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CasoServlet</servlet-name>
+        <url-pattern>/CasoServlet</url-pattern>
+    </servlet-mapping>    
     <session-config>
         <session-timeout>
-            5
+            30
         </session-timeout>
     </session-config>
 </web-app>

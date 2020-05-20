@@ -13,6 +13,11 @@
     <class>com.softcoisoweb.model.TipoContrato</class>
     <class>com.softcoisoweb.model.Afp</class>
     <class>com.softcoisoweb.model.Arl</class>
+    <class>com.softcoisoweb.model.CasoPersona</class>
+    <class>com.softcoisoweb.model.EstadoCaso</class>
+    <class>com.softcoisoweb.model.TipoCaso</class>
+    <class>com.softcoisoweb.model.FlujoCaso</class>
+    <class>com.softcoisoweb.model.SeguimientoCaso</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://coiso.org:3306/coiso_BDpdn?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>

@@ -65,7 +65,7 @@ public class PersonaServlet extends HttpServlet {
             out.close();
         }
     }
-    
+
     private String crearPersona(HttpServletRequest request, HttpServletResponse response) {
         String resultado;
         PersonaJpaController PersonJpa = new PersonaJpaController(JPAFactory.getFACTORY());
@@ -94,12 +94,12 @@ public class PersonaServlet extends HttpServlet {
         String FechaClinica = request.getParameter("FechaClinica");
         String recomendado = request.getParameter("recomendado");
         try {
-            
+
             Persona persona = new Persona(cedula, nombrePersona, apellidos, genero, cumpleanos, edad, anosExperiencia, cargo,
                     FechaClinica, telefono, correo, recomendado, "No", codigoAfp, codigoArl, codigoEps, codigoContrato, codigoSindicato,
                     empresa, empresaUsuaria, sectorEconomico);
             PersonJpa.create(persona);
-            
+
             PersonaDireccion direccion = new PersonaDireccion(cedula, municipio, barrio, personaDireccion);
             PersonDireccionJpa.create(direccion);
             resultado = "Exitoso";
@@ -107,11 +107,11 @@ public class PersonaServlet extends HttpServlet {
             System.out.println("Error creando una persona, el error es: " + e);
             resultado = "Error";
         }
-        
+
         return resultado;
     }
-    
-    private void cargarDatos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    public void cargarDatos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         RequestDispatcher rd = null;
         PersonaJpaController Persona = new PersonaJpaController(JPAFactory.getFACTORY());
@@ -120,9 +120,8 @@ public class PersonaServlet extends HttpServlet {
         if (rd != null) {
             rd.forward(request, response);
         }
-        
     }
-    
+
     private String consultarDatos(String cedula) {
         String respuesta = null;
         try {
@@ -130,21 +129,21 @@ public class PersonaServlet extends HttpServlet {
             PersonaDireccionJpaController direccionJpa = new PersonaDireccionJpaController(JPAFactory.getFACTORY());
             Persona persona = Personajpa.findPersona(cedula);
             PersonaDireccion direccion = direccionJpa.findPersonaDireccion(cedula);
-            
+
             respuesta = persona.getCedula() + "," + persona.getNombrePersona() + "," + persona.getApellidoPersona() + "," + persona.getGenero() + "," + persona.getEdad()
                     + "," + persona.getFechaNacimiento() + "," + direccion.getMunicipio() + "," + direccion.getBarrio() + "," + direccion.getDireccion() + "," + persona.getTelefono()
                     + "," + persona.getCorreo() + "," + persona.getEpsCodigoEps() + "," + persona.getArlCodigoArl() + "," + persona.getAfpCodigoAfp()
                     + "," + persona.getTipoContratoCodigoTipoContrato() + "," + persona.getOrganizacionSindicalCodigoOrganizacion()
                     + "," + persona.getNombreEmpresa() + "," + persona.getEmpresaUsuaria() + "," + persona.getSectorEconomico() + "," + persona.getCargo()
                     + "," + persona.getAntiguedadEmpresa() + "," + persona.getFechaClinica() + "," + persona.getRecomendado() + "," + persona.getCasoAsociado();
-            
+
         } catch (Exception e) {
             System.out.println("Error consultando una persona: " + e);
         }
-        
+
         return respuesta;
     }
-    
+
     private String modificarPersona(HttpServletRequest request, HttpServletResponse response) {
         String resultado;
         try {
@@ -172,26 +171,26 @@ public class PersonaServlet extends HttpServlet {
             String FechaClinica = request.getParameter("personFechaClinica");
             String recomendado = request.getParameter("personRecomendado");
             String casoAsociado = request.getParameter("casoAsociado");
-            
+
             PersonaJpaController Personajpa = new PersonaJpaController(JPAFactory.getFACTORY());
             PersonaDireccionJpaController PersonDireccionJpa = new PersonaDireccionJpaController(JPAFactory.getFACTORY());
-            
+
             Persona persona = new Persona(cedula, nombrePersona, apellidos, genero, cumpleanos, edad, anosExperiencia, cargo,
                     FechaClinica, telefono, correo, recomendado, casoAsociado, codigoAfp, codigoArl, codigoEps, codigoContrato, codigoSindicato,
                     empresa, empresaUsuaria, sectorEconomico);
             Personajpa.edit(persona);
             PersonaDireccion direccion = new PersonaDireccion(cedula, municipio, barrio, personaDireccion);
             PersonDireccionJpa.edit(direccion);
-            
+
             resultado = "Exitoso";
         } catch (Exception e) {
             System.out.println("Error actualizando datos de una persona: " + e);
             resultado = "Error";
         }
         return resultado;
-        
+
     }
-    
+
     private String eliminarPersona(HttpServletRequest request) {
         String resultado;
         try {
@@ -205,7 +204,19 @@ public class PersonaServlet extends HttpServlet {
             resultado = "Error";
         }
         return resultado;
-        
+    }
+
+    public String agregarCaso(String cedula) {
+        String respuesta;
+        try {
+            PersonaJpaController Personajpa = new PersonaJpaController(JPAFactory.getFACTORY());
+            Personajpa.cambiarCasoAsociado(cedula);
+            respuesta = "Exitoso";
+        } catch (NonexistentEntityException e) {
+            System.out.println("Error actualizando el caso asociado: " + e);
+            respuesta = "Error";
+        }
+        return respuesta;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -218,7 +229,7 @@ public class PersonaServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);

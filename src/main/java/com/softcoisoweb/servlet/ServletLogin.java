@@ -8,20 +8,23 @@ package com.softcoisoweb.servlet;
 import com.softcoisoweb.controller.AfpJpaController;
 import com.softcoisoweb.controller.ArlJpaController;
 import com.softcoisoweb.controller.EpsJpaController;
+import com.softcoisoweb.controller.EstadoCasoJpaController;
 import com.softcoisoweb.controller.OrganizacionSindicalJpaController;
 import com.softcoisoweb.controller.PersonaJpaController;
+import com.softcoisoweb.controller.TipoCasoJpaController;
 import com.softcoisoweb.controller.TipoContratoJpaController;
 import com.softcoisoweb.controller.UsuarioJpaController;
 import com.softcoisoweb.model.Afp;
 import com.softcoisoweb.model.Arl;
 import com.softcoisoweb.model.Eps;
+import com.softcoisoweb.model.EstadoCaso;
 import com.softcoisoweb.model.OrganizacionSindical;
 import com.softcoisoweb.model.Persona;
+import com.softcoisoweb.model.TipoCaso;
 import com.softcoisoweb.model.TipoContrato;
 import com.softcoisoweb.model.Usuario;
 import com.softcoisoweb.util.JPAFactory;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -60,6 +63,9 @@ public class ServletLogin extends HttpServlet {
         AfpJpaController afp = new AfpJpaController(JPAFactory.getFACTORY());
         TipoContratoJpaController contrato = new TipoContratoJpaController(JPAFactory.getFACTORY());
         OrganizacionSindicalJpaController sindical = new OrganizacionSindicalJpaController(JPAFactory.getFACTORY());
+        TipoCasoJpaController tipoCaso = new TipoCasoJpaController(JPAFactory.getFACTORY());
+        EstadoCasoJpaController estadoJpa = new EstadoCasoJpaController(JPAFactory.getFACTORY());
+        PersonaJpaController Persona = new PersonaJpaController(JPAFactory.getFACTORY());
 
         try {
             if (misession.equals(true)) {
@@ -88,9 +94,12 @@ public class ServletLogin extends HttpServlet {
                 session.setAttribute("Contrato", listContrato);
                 List<OrganizacionSindical> listSindicato = sindical.findOrganizacionSindicalEntities();
                 session.setAttribute("Sindicato", listSindicato);
-                PersonaJpaController Persona = new PersonaJpaController(JPAFactory.getFACTORY());
                 List<Persona> listPerson = Persona.findPersonaEntities();
                 session.setAttribute("Persona", listPerson);
+                List<TipoCaso> listTipoCaso = tipoCaso.findTipoCasoEntities();
+                session.setAttribute("Tipo", listTipoCaso);
+                List<EstadoCaso> ListEstado = estadoJpa.findEstadoCasoEntities();
+                session.setAttribute("Estado", ListEstado);
                 rd = request.getRequestDispatcher("views/dashboard.jsp");
             }
         } catch (Exception e) {

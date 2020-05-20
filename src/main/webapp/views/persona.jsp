@@ -488,7 +488,7 @@
                                                 <c:choose>
                                                     <c:when test="${persona.getCasoAsociado() == 'No'}">  
                                                         <td>
-                                                            <button  href="#crearCaso" id ="casoCrear"  name="casoCrear"  class="btn btn-link" value="${persona.getCedula()}">
+                                                            <button  id ="casoCrear"  name="casoCrear"  class="btn btn-link" value="${persona.getCedula()}">
                                                                 Crear Caso
                                                             </button>  </td>
                                                         </c:when> 
@@ -512,8 +512,54 @@
                 <!-- /wrapper -->
             </section>
             <!-- /MAIN CONTENT -->
-            <!--main content end-->
-            <!--footer start-->
+            <!--modales-->
+            <div class="modal fade" id="crearCaso" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Crear  Caso</h4>
+                        </div>
+                        <form id="calendario">
+                            <br>
+                            <div class="form-group col-md-6">
+                                <label for="Tipo">Tipo de Caso</label>
+                                <select name="Tipo" id="Tipo" class="form-control-sm form-control" required>
+                                    <option value="">Tipo Caso </option>
+                                    <c:forEach var="Tipo" items="${sessionScope.Tipo}">
+                                        <option value="${Tipo.getCodigoTipoCaso()}"><c:out value="${Tipo.getTipoCaso()}"/></option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="fechaAfectacion">Fecha  Afectacion</label>
+                                <input type="text" class="form-control" id="fechaAfectacion" name="fechaAfectacion" placeholder="Inicio afectacion(meses)" id="example-month-input" required>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="Tipo">Parte Afectada</label>
+                                <input  name="parteAfectada" id="parteAfectada" type="text" class="form-control" placeholder="Parte del cuerpo afectada" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="Tipo">Tiempo de Incapacidad</label>
+                                <input type="text" class="form-control" id="tiempoInca" name="tiempoInca" placeholder="Tiempo de Incapacidad" >
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Descripcion del Caso</label>
+                                <textarea class="form-control " rows="10" cols="50" id="descripcionCaso" name="descripcionCaso" required></textarea>
+                            </div>
+                            <input class="form-control " id="cedulaPersona" type="hidden" name="cedulaPersona">
+                            <input class="form-control " id="cedulaUsuario" type="hidden" name="cedulaUsuario" value="${sessionScope.USUARIO.cedula}">
+                            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="guardarCaso()">
+                                    Crear
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <div class="modal" id="modalInfexito" abindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content" id="modales-content">

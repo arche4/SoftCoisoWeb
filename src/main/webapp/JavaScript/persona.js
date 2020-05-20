@@ -144,7 +144,7 @@ $(document).ready(function () {
                             } else {
                                 loader.style.display = 'none';
                             }
-                            
+
                             if (data === "Exitoso") {
                                 var cadena = ' <div class="form-row">'
                                         + '<h5>Sus cambios fueron guardados con ex\u00EDto.</h3>'
@@ -185,10 +185,10 @@ $(document).ready(function () {
             toolbarExtraButtons: [btnFinish, btnCancel]
         },
         anchorSettings: {
-            markDoneStep: true, // add done css
-            markAllPreviousStepsAsDone: true, // When a step selected by url hash, all previous steps are marked done
-            removeDoneStepOnNavigateBack: true, // While navigate back done step after active step will be cleared
-            enableAnchorOnDoneStep: true // Enable/Disable the done steps navigation
+            markDoneStep: true,
+            markAllPreviousStepsAsDone: true,
+            removeDoneStepOnNavigateBack: true,
+            enableAnchorOnDoneStep: true
         }
     });
     $('#wizzardMostrar').smartWizard({
@@ -242,6 +242,12 @@ $(document).ready(function () {
         } else {
             $('.btn-finish').addClass('disabled');
         }
+    });
+
+    $("body").on("click", "#casoCrear", function () {
+        var casoCrear = $(this).val();
+        $("#cedulaPersona").val(casoCrear);
+        $('#crearCaso').modal('show');
     });
 
 });
@@ -301,10 +307,57 @@ $("body").on("click", "#selectConsulta", function () {
             }
         }
     });
+
 });
 function cerrarModal() {
-    $('#modalInfError').modal('hide');
+    $('#modalDatosIncorrectos').modal('hide');
 }
 function myFunctionReload() {
- location.reload();
+    location.reload();
+}
+
+function guardarCaso() {
+    if (loader.style.display === 'none') {
+        loader.style.display = 'block';
+    } else {
+        loader.style.display = 'none';
+    }
+    event.preventDefault();
+    $('#crearCaso').modal('hide');
+    var btnCrearCaso = 'ok';
+    var cedulaPersona = $('#cedulaPersona').val();
+    var cedulaUsuario = $('#cedulaUsuario').val();
+    var Tipo = $('#Tipo').val();
+    var fechaAfectacion = $('#fechaAfectacion').val();
+    var parteAfectada = $('#parteAfectada').val();
+    var tiempoInca = $('#tiempoInca').val();
+    var descripcionCaso = $('#descripcionCaso').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/CasoServlet",
+        data: 'btnCrearCaso=' + btnCrearCaso + '&cedulaPersona=' + cedulaPersona + '&cedulaUsuario=' + cedulaUsuario + '&Tipo=' + Tipo +
+                '&fechaAfectacion=' + fechaAfectacion + '&parteAfectada=' + parteAfectada + '&tiempoInca=' + tiempoInca +
+                '&descripcionCaso=' + descripcionCaso,
+        success: function (data) {
+            event.preventDefault();
+            if (loader.style.display === 'none') {
+                loader.style.display = 'block';
+            } else {
+                loader.style.display = 'none';
+            }
+            if (data === "Exitoso") {
+                var cadena = ' <div class="form-row">'
+                        + '<h5>Sus cambios fueron guardados con ex\u00EDto.</h3>'
+                        + ' </div>';
+                $('#modInfexito').html(cadena);
+                $('#modalInfexito').modal('show');
+            } else {
+                var cadena = '<div class="form-row">'
+                        + '<h5>Lo sentimos, se ha presentado un problema guardando los datos .</h3>'
+                        + ' </div>';
+                $('#modInferror').html(cadena);
+                $('#modalInfError').modal('show');
+            }
+        }});
 }

@@ -51,6 +51,23 @@ public class PersonaJpaController implements Serializable {
         }
     }
 
+    public void cambiarCasoAsociado(String id) throws NonexistentEntityException {
+        EntityManager em = null;
+        try {
+            String Query = "UPDATE persona SET caso_asociado = 'Si' WHERE cedula = '" + id + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.createNativeQuery(Query).executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+             throw new NonexistentEntityException("Se presento inconvenientes al actualizar  el caso asociado con la cedula " + id + "El eror es: ", e);
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
     public void edit(Persona persona) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
@@ -140,5 +157,5 @@ public class PersonaJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }
