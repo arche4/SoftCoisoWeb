@@ -5,7 +5,19 @@
  */
 package com.softcoisoweb.servlet;
 
+import com.softcoisoweb.controller.AfpJpaController;
+import com.softcoisoweb.controller.ArlJpaController;
+import com.softcoisoweb.controller.EpsJpaController;
+import com.softcoisoweb.controller.OrganizacionSindicalJpaController;
+import com.softcoisoweb.controller.PersonaJpaController;
+import com.softcoisoweb.controller.TipoContratoJpaController;
 import com.softcoisoweb.controller.UsuarioJpaController;
+import com.softcoisoweb.model.Afp;
+import com.softcoisoweb.model.Arl;
+import com.softcoisoweb.model.Eps;
+import com.softcoisoweb.model.OrganizacionSindical;
+import com.softcoisoweb.model.Persona;
+import com.softcoisoweb.model.TipoContrato;
 import com.softcoisoweb.model.Usuario;
 import com.softcoisoweb.util.JPAFactory;
 import java.io.IOException;
@@ -42,6 +54,13 @@ public class ServletLogin extends HttpServlet {
         String cedula = request.getParameter("usuario");
         String clave = request.getParameter("clave");
         HttpSession misession = (HttpSession) request.getSession();
+
+        EpsJpaController eps = new EpsJpaController(JPAFactory.getFACTORY());
+        ArlJpaController arl = new ArlJpaController(JPAFactory.getFACTORY());
+        AfpJpaController afp = new AfpJpaController(JPAFactory.getFACTORY());
+        TipoContratoJpaController contrato = new TipoContratoJpaController(JPAFactory.getFACTORY());
+        OrganizacionSindicalJpaController sindical = new OrganizacionSindicalJpaController(JPAFactory.getFACTORY());
+
         try {
             if (misession.equals(true)) {
                 rd = request.getRequestDispatcher("index.jsp");
@@ -59,11 +78,24 @@ public class ServletLogin extends HttpServlet {
                 List<Usuario> listUsuario = ujc.findUsuarioEntities();
                 session.setAttribute("listUsuario", listUsuario);
                 session.setAttribute("rol", "Administrador");
+                List<Eps> listEps = eps.findEpsEntities();
+                session.setAttribute("EPS", listEps);
+                List<Arl> ListArl = arl.findArlEntities();
+                session.setAttribute("ARL", ListArl);
+                List<Afp> ListAfp = afp.findAfpEntities();
+                session.setAttribute("AFP", ListAfp);
+                List<TipoContrato> listContrato = contrato.findTipoContratoEntities();
+                session.setAttribute("Contrato", listContrato);
+                List<OrganizacionSindical> listSindicato = sindical.findOrganizacionSindicalEntities();
+                session.setAttribute("Sindicato", listSindicato);
+                PersonaJpaController Persona = new PersonaJpaController(JPAFactory.getFACTORY());
+                List<Persona> listPerson = Persona.findPersonaEntities();
+                session.setAttribute("Persona", listPerson);
                 rd = request.getRequestDispatcher("views/dashboard.jsp");
-            } 
+            }
         } catch (Exception e) {
             rd = request.getRequestDispatcher("index.jsp");
-            System.out.println("Error buscando al usuario: " + e);   
+            System.out.println("Error buscando al usuario: " + e);
         }
         rd.forward(request, response);
     }

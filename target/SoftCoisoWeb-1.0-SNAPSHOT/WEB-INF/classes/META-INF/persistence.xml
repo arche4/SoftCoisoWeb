@@ -4,6 +4,15 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>com.softcoisoweb.model.Usuario</class>
     <class>com.softcoisoweb.model.Citas</class>
+    <class>com.softcoisoweb.model.Eps</class>
+    <class>com.softcoisoweb.model.PersonaDireccion</class>
+    <class>com.softcoisoweb.model.Empresa</class>
+    <class>com.softcoisoweb.model.Formacion</class>
+    <class>com.softcoisoweb.model.Persona</class>
+    <class>com.softcoisoweb.model.OrganizacionSindical</class>
+    <class>com.softcoisoweb.model.TipoContrato</class>
+    <class>com.softcoisoweb.model.Afp</class>
+    <class>com.softcoisoweb.model.Arl</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://coiso.org:3306/coiso_BDpdn?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>

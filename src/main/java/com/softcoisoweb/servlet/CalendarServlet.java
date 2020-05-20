@@ -10,18 +10,11 @@ import com.softcoisoweb.controller.CitasJpaController;
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.model.Citas;
 import com.softcoisoweb.util.JPAFactory;
-import java.awt.Image;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.mail.MessagingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -29,7 +22,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.ImageIcon;
 
 /**
  *
@@ -53,17 +45,21 @@ public class CalendarServlet extends HttpServlet {
         String btnModificarCita = request.getParameter("btnModificarCita");
         String btnEliminarCita = request.getParameter("btnEliminarCita");
 
-        if (btnCrearCita != null && btnCrearCita.equals("si")) {
-            String guardar = guardatos(request, response);
-            out.print(guardar);
-        }
-        if (btnModificarCita != null && btnModificarCita.equals("ok")) {
-            String modificar = modificarCita(request, response);
-            out.print(modificar);
-        }
-        if (btnEliminarCita != null && btnEliminarCita.equals("ok")) {
-            String eliminar = eliminarCita(request, response);
-            out.print(eliminar);
+        try {
+            if (btnCrearCita != null && btnCrearCita.equals("si")) {
+                String guardar = guardatos(request, response);
+                out.print(guardar);
+            }
+            if (btnModificarCita != null && btnModificarCita.equals("ok")) {
+                String modificar = modificarCita(request, response);
+                out.print(modificar);
+            }
+            if (btnEliminarCita != null && btnEliminarCita.equals("ok")) {
+                String eliminar = eliminarCita(request, response);
+                out.print(eliminar);
+            }
+        } finally {
+            out.close();
         }
 
     }
@@ -130,7 +126,7 @@ public class CalendarServlet extends HttpServlet {
     }
 
     public String modificarCita(HttpServletRequest request, HttpServletResponse response) {
-        String respuesta = null;
+        String respuesta = "Error";
         CitasJpaController jpaCita = new CitasJpaController(JPAFactory.getFACTORY());
         String codigoCita = request.getParameter("codigoCita");
         String anoCita = request.getParameter("anoCita");

@@ -75,7 +75,7 @@
                         </li>
                         <li class="sub-menu">
                             <a href="javascript:;">
-                                <i class="fa fa-desktop"></i>
+                                <i class="fa fa-calendar"></i>
                                 <span>Agendamiento</span>
                             </a>
                             <ul class="sub">
@@ -85,9 +85,9 @@
                             </ul>
                         </li>
                         <li class="sub-menu">
-                            <a href="javascript:;">
+                            <a href="${pageContext.servletContext.contextPath}/views/persona.jsp">
                                 <i class="fa fa-users"></i>
-                                <span>Personas</span>
+                                <span>Persona</span>
                             </a>
                         </li>
                         <li class="sub-menu">

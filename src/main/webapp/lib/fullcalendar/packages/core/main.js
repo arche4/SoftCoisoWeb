@@ -6117,7 +6117,7 @@ Docs & License: https://fullcalendar.io/
             this.toggleButtonEnabled('prev', isPrevEnabled);
         };
         Toolbar.prototype.updateNext = function (isNextEnabled) {
-            this.toggleButtonEnabled('next', isNextEnabled);
+            this.toggleButtonEnabled('Siguiente', isNextEnabled);
         };
         Toolbar.prototype.updateTitle = function (text) {
             findElements(this.el, 'h2').forEach(function (titleEl) {

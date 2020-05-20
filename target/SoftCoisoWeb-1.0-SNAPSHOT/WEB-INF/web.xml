@@ -24,6 +24,10 @@
         <servlet-name>CerrarSesionServlet</servlet-name>
         <servlet-class>com.softcoisoweb.servlet.CerrarSesionServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PersonaServlet</servlet-name>
+        <servlet-class>com.softcoisoweb.servlet.PersonaServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CerrarSesionServlet</servlet-name>
         <url-pattern>/CerrarSesionServlet</url-pattern>
@@ -35,6 +39,10 @@
     <servlet-mapping>
         <servlet-name>CargarDatosCalendarServlet</servlet-name>
         <url-pattern>/CargarDatosCalendarServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PersonaServlet</servlet-name>
+        <url-pattern>/PersonaServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

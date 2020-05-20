@@ -17,6 +17,7 @@
         <!-- Favicons -->
         <link href="${pageContext.servletContext.contextPath}/img/favicon.png" rel="icon">
         <link href="${pageContext.servletContext.contextPath}/img/apple-touch-icon.png" rel="apple-touch-icon">
+        <script src="${pageContext.servletContext.contextPath}/lib/jquery/jquery.min.js"></script>
         <link href="${pageContext.servletContext.contextPath}/css/calendario.css" rel="stylesheet" type="text/css"/>
         <!-- Bootstrap core CSS -->
         <link href="${pageContext.servletContext.contextPath}/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -31,7 +32,7 @@
         <link href='${pageContext.servletContext.contextPath}/lib/fullcalendar/packages/timegrid/main.css' rel='stylesheet' />
 
         <link href="${pageContext.servletContext.contextPath}/css/style-responsive.css" rel="stylesheet">
-        <script src="${pageContext.servletContext.contextPath}/lib/jquery/jquery.min.js"></script>
+        
         <link href="${pageContext.servletContext.contextPath}/Loading.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/lib/gritter/css/jquery.gritter.css" />
         <link href="${pageContext.servletContext.contextPath}/css/general.css" rel="stylesheet" type="text/css"/>
@@ -83,9 +84,13 @@
                         </li>
                         <li class="sub-menu">
                             <a href="javascript:;">
-                                <i class="fa fa-users"></i>
-                                <span>Personas</span>
+                                <i class="fa fa-desktop"></i>
+                                <span>Persona</span>
                             </a>
+                            <ul class="sub">
+                                <li><a href="${pageContext.servletContext.contextPath}/views/registroPersona.jsp">Registrar Personas</a></li>
+                                <li><a href="${pageContext.servletContext.contextPath}/views/persona.jsp">Personas</a></li>
+                            </ul>
                         </li>
                         <li class="sub-menu">
                             <a href="javascript:;">
@@ -343,12 +348,6 @@
                             &copy; Derechos de autor <strong>Coiso</strong>. ©2020 Todos los derechos reservados.
                         </p>
                         <div class="credits">
-                            <!--
-                              You are NOT allowed to delete the credit link to TemplateMag with free version.
-                              You can delete the credit link only if you bought the pro version.
-                              Buy the pro version with working PHP/AJAX contact form: https://templatemag.com/dashio-bootstrap-admin-template/
-                              Licensing information: https://templatemag.com/license/
-                            -->
                             Corporación colectivo intersindical de salud ocupacional. Privacidad y términos <a href="http://www.coiso.org/"></a>
                         </div>
                         <a href="http://www.coiso.org/" class="go-top">
@@ -360,7 +359,7 @@
 
             </section>
         </section>
-        <div class="loader" id="loader"></div>
+        <div class="loader" id="loader" style="display:none"></div>
         <script src="${pageContext.servletContext.contextPath}/lib/fullcalendar/packages/core/locales-all.js" type="text/javascript"></script>
         <script src="${pageContext.servletContext.contextPath}/JavaScript/calendario.js" type="text/javascript"></script>
         <script class="include" type="text/javascript" src="${pageContext.servletContext.contextPath}/lib/jquery.dcjqaccordion.2.7.js"></script>

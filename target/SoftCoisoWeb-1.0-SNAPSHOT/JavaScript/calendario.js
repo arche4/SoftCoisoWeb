@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 data: '&codigo=' + codigo,
                 success: function (data) {
                     var respuesta = $.trim(data);
-                    if (respuesta != "") {
+                    if (respuesta !== "") {
                         respuesta = respuesta.split(",");
                         $('#CitaInfo').html(' <div class="form-row">  <div class="form-group col-md-6">'
                                 + '<label for="cedula">Cedula</label>'
@@ -133,16 +133,16 @@ document.addEventListener('DOMContentLoaded', function () {
                         ssystem = horaJS.getSeconds();
                     }
                     horaJS = hsystem + ":" + msystem + ":" + ssystem;
-                    if ((auxfecha[0] < horaJS) && (fechaJS == fechaCompleta[0])) {
+                    if ((auxfecha[0] < horaJS) && (fechaJS === fechaCompleta[0])) {
                         $('#Error').fadeIn(1000);
                         setTimeout(function () {
                             $('#Error').fadeOut(1000);
                         }, 5000);
                     } else {
-                        $("#crearCita").modal()
+                        $("#crearCita").modal();
                     }
                 } else {
-                    $("#crearCita").modal()
+                    $("#crearCita").modal();
                 }
             }
         },
@@ -156,7 +156,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function myFunctionReload() {
     location.reload();
-
 }
 function guardar() {
     if (loader.style.display === 'none') {
@@ -197,17 +196,17 @@ function guardar() {
                 } else {
                     loader.style.display = 'none';
                 }
-                if (data == "Exitoso") {
+                if (data === "Exitoso") {
                     var cadena = ' <div class="form-row">'
                             + '<h5>Sus cambios fueron guardados con ex\u00EDto.</h3>'
                             + ' </div>';
-                    $('#modInfexito').html(cadena)
+                    $('#modInfexito').html(cadena);
                     $('#modalInfexito').modal('show');
                 } else {
                     var cadena = '<div class="form-row">'
                             + '<h5>Lo sentimos, se ha presentado un problema guardando los datos .</h3>'
                             + ' </div>';
-                    $('#modInferror').html(cadena)
+                    $('#modInferror').html(cadena);
                     $('#modalInfError').modal('show');
                 }
             }
@@ -230,7 +229,7 @@ function validar() {
     var cadena = ' <div class="form-row">'
             + '<h5> ¿ Esta seguro que quieres realizar los cambios ? </h3>'
             + ' </div>';
-    $('#InfoConfirmar').html(cadena)
+    $('#InfoConfirmar').html(cadena);
     $('#modalValidar').modal('show');
     $('#mostrarCita').modal('hide');
 }
@@ -278,19 +277,19 @@ function Modificar() {
                 } else {
                     loader.style.display = 'none';
                 }
-                if (data == "Exitoso") {
+                if (data === "Exitoso") {
                     var cadena = ' <div class="form-row">'
                             + '<h4>Genial!!!.</h4>'
                             + '<h5>Sus cambios fueron guardados con ex\u00EDto.</h5>'
                             + ' </div>';
-                    $('#modInfexito').html(cadena)
+                    $('#modInfexito').html(cadena);
                     $('#modalInfexito').modal('show');
                 } else {
                     var cadena = '<div class="form-row">'
                             + '<h4>Lo sentimos!!</h4>'
                             + '<h5>Se  presento un problema guardando los datos .</h3>'
                             + '</div>';
-                    $('#modInferror').html(cadena)
+                    $('#modInferror').html(cadena);
                     $('#modalInfError').modal('show');
                 }
             }
@@ -313,7 +312,7 @@ function validarEliminar() {
     var cadena = ' <div class="form-row">'
             + '<h5> ¿ Esta seguro que quieres eliminar la cita ? </h3>'
             + ' </div>';
-    $('#InfoEliminar').html(cadena)
+    $('#InfoEliminar').html(cadena);
     $('#modalEliminar').modal('show');
     $('#mostrarCita').modal('hide');
 }
@@ -339,7 +338,7 @@ function Eliminar() {
             } else {
                 loader.style.display = 'none';
             }
-            if (data == "Exitoso") {
+            if (data === "Exitoso") {
                 var cadena = ' <div class="form-row">'
                         + '<h4>Genial!!!.</h4>'
                         + '<h5>Se elimino correctamente la cita.</h5>'
