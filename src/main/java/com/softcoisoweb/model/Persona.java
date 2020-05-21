@@ -7,6 +7,7 @@ package com.softcoisoweb.model;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -22,6 +23,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "persona")
+@Cacheable(false)
 @NamedQueries({
     @NamedQuery(name = "Persona.findAll", query = "SELECT p FROM Persona p"),
     @NamedQuery(name = "Persona.findByCedula", query = "SELECT p FROM Persona p WHERE p.cedula = :cedula"),

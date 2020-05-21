@@ -10,6 +10,8 @@ import com.softcoisoweb.controller.exceptions.PreexistingEntityException;
 import com.softcoisoweb.model.CasoPersona;
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Cache;
+import javax.persistence.CacheStoreMode;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
@@ -95,6 +97,23 @@ public class CasoPersonaJpaController implements Serializable {
         }
     }
 
+    public List<CasoPersona> casosxpersona(String cedula) {
+        EntityManager em = null;
+        List<CasoPersona> listCasoxPer = null;
+        try {
+            String QuerySelect = "select * from caso_persona where persona_cedula  =  '" + cedula + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            listCasoxPer = em.createNativeQuery(QuerySelect, CasoPersona.class).getResultList();
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return listCasoxPer;
+    }
+
     public List<CasoPersona> findCasoPersonaEntities() {
         return findCasoPersonaEntities(true, -1, -1);
     }
@@ -109,6 +128,7 @@ public class CasoPersonaJpaController implements Serializable {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             cq.select(cq.from(CasoPersona.class));
             Query q = em.createQuery(cq);
+            q.setHint("javax.persistence.cache.storeMode", CacheStoreMode.REFRESH);
             if (!all) {
                 q.setMaxResults(maxResults);
                 q.setFirstResult(firstResult);
@@ -121,7 +141,9 @@ public class CasoPersonaJpaController implements Serializable {
 
     public CasoPersona findCasoPersona(String id) {
         EntityManager em = getEntityManager();
+
         try {
+            em.setProperty("javax.persistence.cache.storeMode", CacheStoreMode.BYPASS);
             return em.find(CasoPersona.class, id);
         } finally {
             em.close();
@@ -140,5 +162,5 @@ public class CasoPersonaJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

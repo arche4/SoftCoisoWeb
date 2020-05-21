@@ -96,6 +96,7 @@ public class ServletLogin extends HttpServlet {
                 session.setAttribute("Sindicato", listSindicato);
                 List<Persona> listPerson = Persona.findPersonaEntities();
                 session.setAttribute("Persona", listPerson);
+                session.setAttribute("TieneCaso", "No");
                 List<TipoCaso> listTipoCaso = tipoCaso.findTipoCasoEntities();
                 session.setAttribute("Tipo", listTipoCaso);
                 List<EstadoCaso> ListEstado = estadoJpa.findEstadoCasoEntities();

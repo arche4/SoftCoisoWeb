@@ -115,6 +115,7 @@ public class PersonaServlet extends HttpServlet {
         HttpSession session = request.getSession();
         RequestDispatcher rd = null;
         PersonaJpaController Persona = new PersonaJpaController(JPAFactory.getFACTORY());
+        Persona.refreshJPACache();
         List<Persona> listPerson = Persona.findPersonaEntities();
         session.setAttribute("Persona", listPerson);
         if (rd != null) {

@@ -140,14 +140,14 @@ public class UsuarioJpaController implements Serializable {
             em.close();
         }
     }
-    
+
     public Usuario buscarUsuario(String cedula, String Clave) {
         EntityManager em = getEntityManager();
         Usuario usuario = null;
         try {
             List<Usuario> listado = findUsuarioEntities();
             for (Usuario user : listado) {
-                if (cedula.equals(user.getCedula())  && Clave.equals(user.getClave())) {
+                if (cedula.equals(user.getCedula()) && Clave.equals(user.getClave())) {
                     usuario = new Usuario();
                     usuario = user;
 
@@ -158,5 +158,10 @@ public class UsuarioJpaController implements Serializable {
             em.close();
         }
     }
-    
+
+    public void refreshJPACache() {
+        EntityManager em = getEntityManager();
+        em.clear();
+    }
+
 }

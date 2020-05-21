@@ -480,27 +480,36 @@
                                     </thead>
                                     <tbody>
                                         <c:forEach var="persona" items="${sessionScope.Persona}" varStatus="myIndex">
-                                            <tr>
+                                            <c:choose>
+                                                <c:when test="${persona.getCasoAsociado() == sessionScope.TieneCaso}">  
+                                                    <tr class="gradeX odd">
                                                 <td>
                                                     <button id ="selectConsulta" name="selectConsulta" class="btn btn-link" value="${persona.getCedula()}"><c:out value="${persona.getCedula()}"/></button></td>
                                                 <td><c:out value="${persona.getNombrePersona()}"/> <c:out value="${persona.getApellidoPersona()}"/></td>
                                                 <td><c:out value="${persona.getFechaClinica()}"/></td>
-                                                <c:choose>
-                                                    <c:when test="${persona.getCasoAsociado() == 'No'}">  
                                                         <td>
                                                             <button  id ="casoCrear"  name="casoCrear"  class="btn btn-link" value="${persona.getCedula()}">
                                                                 Crear Caso
-                                                            </button>  </td>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
                                                         </c:when> 
                                                         <c:otherwise>
-                                                        <td><form  method="post" action="${pageContext.servletContext.contextPath}/CasoServlet">
+                                                    <tr class="gradeA odd">
+                                                        <td>
+                                                            <button id ="selectConsulta" name="selectConsulta" class="btn btn-link" value="${persona.getCedula()}"><c:out value="${persona.getCedula()}"/></button>
+                                                        </td>
+                                                        <td><c:out value="${persona.getNombrePersona()}"/> <c:out value="${persona.getApellidoPersona()}"/></td>
+                                                        <td><c:out value="${persona.getFechaClinica()}"/></td>
+                                                        <td>
+                                                            <form  method="post" action="${pageContext.servletContext.contextPath}/CasoServlet">
                                                                 <button name="verCasos" value="${persona.getCedula()}" type="submit" class="btn btn-link">Ver detalles</button>
-                                                            </form> </td>
+                                                            </form> 
+                                                        </td>
+                                                    </tr>
                                                         </c:otherwise>
                                                     </c:choose>
-                                            </tr>
                                         </c:forEach>
-
                                     </tbody>
                                 </table>
                             </div>

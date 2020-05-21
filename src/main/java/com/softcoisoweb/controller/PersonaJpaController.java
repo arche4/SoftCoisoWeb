@@ -10,6 +10,7 @@ import com.softcoisoweb.controller.exceptions.PreexistingEntityException;
 import com.softcoisoweb.model.Persona;
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CacheStoreMode;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
@@ -126,6 +127,7 @@ public class PersonaJpaController implements Serializable {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             cq.select(cq.from(Persona.class));
             Query q = em.createQuery(cq);
+            q.setHint("javax.persistence.cache.storeMode", CacheStoreMode.REFRESH);
             if (!all) {
                 q.setMaxResults(maxResults);
                 q.setFirstResult(firstResult);
@@ -156,6 +158,11 @@ public class PersonaJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    
+     public void refreshJPACache() {
+        EntityManager em = getEntityManager();
+        em.clear();
     }
 
 }

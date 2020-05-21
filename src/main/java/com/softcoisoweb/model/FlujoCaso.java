@@ -66,10 +66,10 @@ public class FlujoCaso implements Serializable {
         this.casoPersonaIdCaso = casoPersonaIdCaso;
     }
 
-    public FlujoCaso(String casoPersonaIdCaso, String fechaCreacion, String fechaActualizacion, String usuarioCedula, String estadoCasoCodigoEstado) {
-        this.casoPersonaIdCaso = casoPersonaIdCaso;
+    public FlujoCaso(String fechaCreacion, String fechaActualizacion, String casoPersonaIdCaso, String usuarioCedula, String estadoCasoCodigoEstado) {      
         this.fechaCreacion = fechaCreacion;
         this.fechaActualizacion = fechaActualizacion;
+        this.casoPersonaIdCaso = casoPersonaIdCaso;
         this.usuarioCedula = usuarioCedula;
         this.estadoCasoCodigoEstado = estadoCasoCodigoEstado;
     }

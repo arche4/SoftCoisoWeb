@@ -313,7 +313,14 @@ function cerrarModal() {
     $('#modalDatosIncorrectos').modal('hide');
 }
 function myFunctionReload() {
-    location.reload();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/PersonaServlet",
+        success: function (data) {
+            location.reload();
+        }
+    });  
 }
 
 function guardarCaso() {
