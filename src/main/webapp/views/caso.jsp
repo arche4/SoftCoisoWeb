@@ -166,7 +166,7 @@
                                                 <td><c:out value="${sessionScope.nombreTipoCaso}"/></td>
                                                 <td><c:out value="${sessionScope.nombreEstado}"/></td>
                                                 <td> <form  method="post" action="${pageContext.servletContext.contextPath}/ExpedienteServlet">
-                                                        <button name="ver" value="${caso.getIdCaso()}" type="submit" class="btn btn-link">Ver Expediente</button>
+                                                        <button name="verExpediente" id="verExpediente" value="${caso.getIdCaso()}" type="submit" class="btn btn-link">Ver Expediente</button>
                                                     </form>
                                                 </td>
                                             </tr>

@@ -18,6 +18,13 @@
     <class>com.softcoisoweb.model.TipoCaso</class>
     <class>com.softcoisoweb.model.FlujoCaso</class>
     <class>com.softcoisoweb.model.SeguimientoCaso</class>
+    <class>com.softcoisoweb.model.Medicamentos</class>
+    <class>com.softcoisoweb.model.ProcesoCalificacion</class>
+    <class>com.softcoisoweb.model.MedicamentosCaso</class>
+    <class>com.softcoisoweb.model.Calificacion</class>
+    <class>com.softcoisoweb.model.ProcesoReclamacion</class>
+    <class>com.softcoisoweb.model.Diagnostico</class>
+    <class>com.softcoisoweb.model.Actividades</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <shared-cache-mode>ALL</shared-cache-mode>
     <properties>

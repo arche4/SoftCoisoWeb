@@ -32,6 +32,10 @@
         <servlet-name>CasoServlet</servlet-name>
         <servlet-class>com.softcoisoweb.servlet.CasoServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ExpedienteServlet</servlet-name>
+        <servlet-class>com.softcoisoweb.servlet.ExpedienteServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CerrarSesionServlet</servlet-name>
         <url-pattern>/CerrarSesionServlet</url-pattern>
@@ -52,6 +56,10 @@
         <servlet-name>CasoServlet</servlet-name>
         <url-pattern>/CasoServlet</url-pattern>
     </servlet-mapping>    
+    <servlet-mapping>
+        <servlet-name>ExpedienteServlet</servlet-name>
+        <url-pattern>/ExpedienteServlet</url-pattern>
+    </servlet-mapping> 
     <session-config>
         <session-timeout>
             50

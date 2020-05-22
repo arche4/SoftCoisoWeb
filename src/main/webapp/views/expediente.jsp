@@ -132,88 +132,61 @@
                             <section class="panel">
                                 <header class="panel-heading wht-bg">
                                     <h4 class="gen-case">
-                                        View Message
-                                        <form action="#" class="pull-right mail-src-position">
-                                            <div class="input-append">
-                                                <input type="text" class="form-control " placeholder="Search Mail">
-                                            </div>
-                                        </form>
+                                        Expediente - ${sessionScope.Expediente.getIdCaso()}
                                     </h4>
                                 </header>
                                 <div class="panel-body ">
                                     <div class="mail-header row">
-                                        <div class="col-md-8">
-                                            <h4 class="pull-left"> Dashio, New Admin Dashboard & Front-end </h4>
-                                        </div>
                                         <div class="col-md-4">
+                                            <h4 class="pull-left"> ${sessionScope.PersonaNombre} </h4>
+                                        </div>
+                                        <div class="col-md-8">
                                             <div class="compose-btn pull-right">
-                                                <a href="mail_compose.html" class="btn btn-sm btn-theme"><i class="fa fa-reply"></i> Reply</a>
-                                                <button class="btn  btn-sm tooltips" data-original-title="Print" type="button" data-toggle="tooltip" data-placement="top" title=""><i class="fa fa-print"></i> </button>
-                                                <button class="btn btn-sm tooltips" data-original-title="Trash" data-toggle="tooltip" data-placement="top" title=""><i class="fa fa-trash-o"></i></button>
+                                                <button class="btn btn-sm btn-theme"  type="button">Editar</button>
+                                                <button class="btn btn-sm btn-theme"  type="button">Cambiar Estado</button>
+                                                <button class="btn btn-sm btn-theme"  type="button">Asignar Usuario</button>
+                                                <button class="btn btn-sm btn-theme"  type="button">Citar</button>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="mail-sender">
                                         <div class="row">
                                             <div class="col-md-8">
-                                                <img src="${pageContext.servletContext.contextPath}/img/ui-zac.jpg" alt="">
-                                                <strong>Zac Doe</strong>
-                                                <span>[zac@youremail.com]</span> to
-                                                <strong>me</strong>
+                                                <strong>Detalles</strong>
                                             </div>
                                             <div class="col-md-4">
-                                                <p class="date"> 10:15AM 02 FEB 2014</p>
+                                                <p class="date">${sessionScope.FlujoCaso.getFechaActualizacion()}</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="view-mail">
-                                        <p>As he bent his head in his most courtly manner, there was a secrecy in his smiling face, and he conveyed an air of mystery to those words, which struck the eyes and ears of his nephew forcibly. At the same time, the thin straight lines
-                                            of the setting of the eyes, and the thin straight lips, and the markings in the nose, curved with a sarcasm that looked handsomely diabolic. </p>
-                                        <p>"Yes," repeated the Marquis. "A Doctor with a daughter. Yes. So commences the new philosophy! You are fatigued. Good night!"</p>
-                                        <p>It would have been of as much avail to interrogate any stone face outside the chateau as to interrogate that face of his. The nephew looked at him, in vain, in passing on to the door. </p>
-                                        <p>"Good night!" said the uncle. "I look to the pleasure of seeing you again in the morning. Good repose! Light Monsieur my nephew to his chamber there!--And burn Monsieur my nephew in his bed, if you will," he added to himself, before
-                                            he rang his little bell again, and summoned his valet to his own bedroom.</p>
+                                        <div class="col-md-6">
+                                            <h5> <strong>Tipo: </strong> ${sessionScope.nombreTipoCaso} </h5>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h5> <strong>Estado: </strong> ${sessionScope.nombreEstado} </h5>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h5> <strong>Parte Afectada: </strong> ${sessionScope.Expediente.getParteEfectada()} </h5>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h5> <strong>Tiempo de Incapacidad: </strong>${sessionScope.Expediente.getTimepoIncapacidad()} </h5>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <h5> <strong>Fecha de Inicio de Afectacion: </strong>${sessionScope.Expediente.getFechaAfectacion()}</h5>
+                                        </div>
                                     </div>
-                                    <div class="attachment-mail">
-                                        <p>
-                                            <span><i class="fa fa-paperclip"></i> 2 attachments — </span>
-                                            <a href="#">Download all attachments</a> |
-                                            <a href="#">View all images</a>
-                                        </p>
-                                        <ul>
-                                            <li>
-                                                <a class="atch-thumb" href="#">
-                                                    <img src="${pageContext.servletContext.contextPath}/img/instagram.jpg">
-                                                </a>
-                                                <a class="name" href="#">
-                                                    IMG_001.jpg
-                                                    <span>20KB</span>
-                                                </a>
-                                                <div class="links">
-                                                    <a href="#">View</a> -
-                                                    <a href="#">Download</a>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <a class="atch-thumb" href="#">
-                                                    <img src="${pageContext.servletContext.contextPath}/img/weather.jpg">
-                                                </a>
-                                                <a class="name" href="#">
-                                                    IMG_001.jpg
-                                                    <span>20KB</span>
-                                                </a>
-                                                <div class="links">
-                                                    <a href="#">View</a> -
-                                                    <a href="#">Download</a>
-                                                </div>
-                                            </li>
-                                        </ul>
+                                    <div class="mail-sender">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <strong>Descripción</strong>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="compose-btn pull-left">
-                                        <a href="mail_compose.html" class="btn btn-sm btn-theme"><i class="fa fa-reply"></i> Reply</a>
-                                        <button class="btn btn-sm "><i class="fa fa-arrow-right"></i> Forward</button>
-                                        <button class="btn  btn-sm tooltips" data-original-title="Print" type="button" data-toggle="tooltip" data-placement="top" title=""><i class="fa fa-print"></i> </button>
-                                        <button class="btn btn-sm tooltips" data-original-title="Trash" data-toggle="tooltip" data-placement="top" title=""><i class="fa fa-trash-o"></i></button>
+                                    <div class="view-mail">
+                                        <div class="col-md-12">
+                                            <h5>${sessionScope.Expediente.getDescripcionCaso()} </h5>
+                                        </div>
                                     </div>
                                 </div>
                             </section>
@@ -221,73 +194,326 @@
                         <div class="col-sm-3">
                             <section class="panel">
                                 <div class="panel-body">
-                                    <a href="mail_compose.html" class="btn btn-compose">
-                                        <i class="fa fa-pencil"></i>  Compose Mail
-                                    </a>
-                                    <ul class="nav nav-pills nav-stacked mail-nav">
-                                        <li class="active"><a href="inbox.html"> <i class="fa fa-inbox"></i> Inbox  <span class="label label-theme pull-right inbox-notification">3</span></a></li>
-                                        <li><a href="#"> <i class="fa fa-envelope-o"></i> Send Mail</a></li>
-                                        <li><a href="#"> <i class="fa fa-exclamation-circle"></i> Important</a></li>
-                                        <li><a href="#"> <i class="fa fa-file-text-o"></i> Drafts <span class="label label-info pull-right inbox-notification">8</span></a></a>
-                                        </li>
-                                        <li><a href="#"> <i class="fa fa-trash-o"></i> Trash</a></li>
-                                    </ul>
+                                    <h4>Usuario</h4>
+                                    <strong>Informador</strong>
+                                    <li>${sessionScope.creadoPor}</li>
+                                    <br>
+                                    <strong>Responsable</strong>
+                                    <li>${sessionScope.Asignado}</li>
                                 </div>
                             </section>
                             <section class="panel">
                                 <div class="panel-body">
-                                    <ul class="nav nav-pills nav-stacked labels-info ">
-                                        <li>
-                                            <h4>Friends Online</h4>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <img src="${pageContext.servletContext.contextPath}/img/friends/fr-10.jpg" class="img-circle" width="20">Laura
-                                                <p><span class="label label-success">Available</span></p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <img src="${pageContext.servletContext.contextPath}/img/friends/fr-05.jpg" class="img-circle" width="20">David
-                                                <p><span class="label label-danger"> Busy</span></p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <img src="${pageContext.servletContext.contextPath}/img/friends/fr-01.jpg" class="img-circle" width="20">Mark
-                                                <p>Offline</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <img src="${pageContext.servletContext.contextPath}/img/friends/fr-03.jpg" class="img-circle" width="20">Phillip
-                                                <p>Offline</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <img src="${pageContext.servletContext.contextPath}/img/friends/fr-02.jpg" class="img-circle" width="20">Joshua
-                                                <p>Offline</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <a href="#"> + Add More</a>
-                                    <div class="inbox-body text-center inbox-action">
-                                        <div class="btn-group">
-                                            <a class="btn mini btn-default" href="javascript:;">
-                                                <i class="fa fa-power-off"></i>
-                                            </a>
-                                        </div>
-                                        <div class="btn-group">
-                                            <a class="btn mini btn-default" href="javascript:;">
-                                                <i class="fa fa-cog"></i>
-                                            </a>
-                                        </div>
-                                    </div>
+                                    <h4>Fechas</h4>
+                                    <strong>Creada</strong>
+                                    <li>${sessionScope.FlujoCaso.getFechaCreacion()}</li>
+                                    <br>
+                                    <strong>Actualizada</strong>
+                                    <li>${sessionScope.FlujoCaso.getFechaActualizacion()}</li>
                                 </div>
                             </section>
                         </div>
-
+                        <div class="col-lg-12 mt">
+                            <div class="panel">
+                                <section class="panel">
+                                <header class="panel-heading wht-bg">
+                                    <h4 class="gen-case">
+                                       Actividad
+                                    </h4>
+                                </header>
+                                    </section>
+                                <div class="panel-heading">
+                                    <ul class="nav nav-tabs nav-justified">
+                                        <li class="active">
+                                            <a data-toggle="tab" href="#overview">Acciones</a>
+                                        </li>
+                                        <li>
+                                            <a data-toggle="tab" href="#edit">Citas</a>
+                                        </li>
+                                        <li>
+                                            <a data-toggle="tab" href="#edit">Proceso de Calificación</a>
+                                        </li>
+                                        <li>
+                                            <a data-toggle="tab" href="#edit">Reclamación</a>
+                                        </li>
+                                        <li>
+                                            <a data-toggle="tab" href="#edit">Medicacion</a>
+                                        </li>
+                                        <li>
+                                            <a data-toggle="tab" href="#edit">Diagnostico</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- /panel-heading -->
+                                <div class="panel-body">
+                                    <div class="tab-content">
+                                        <div id="overview" class="tab-pane active">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <textarea rows="3" class="form-control" placeholder="Whats on your mind?"></textarea>
+                                                    <div class="grey-style">
+                                                        <div class="pull-left">
+                                                            <button class="btn btn-sm btn-theme"><i class="fa fa-camera"></i></button>
+                                                            <button class="btn btn-sm btn-theme"><i class="fa fa-map-marker"></i></button>
+                                                        </div>
+                                                        <div class="pull-right">
+                                                            <button class="btn btn-sm btn-theme03">POST</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="detailed mt">
+                                                        <h4>Recent Activity</h4>
+                                                        <div class="recent-activity">
+                                                            <div class="activity-icon bg-theme"><i class="fa fa-check"></i></div>
+                                                            <div class="activity-panel">
+                                                                <h5>1 HOUR AGO</h5>
+                                                                <p>Purchased: Dashio Admin Panel & Front-end theme.</p>
+                                                            </div>
+                                                            <div class="activity-icon bg-theme02"><i class="fa fa-trophy"></i></div>
+                                                            <div class="activity-panel">
+                                                                <h5>5 HOURS AGO</h5>
+                                                                <p>Task Completed. Resolved issue with Disk Space.</p>
+                                                            </div>
+                                                            <div class="activity-icon bg-theme04"><i class="fa fa-rocket"></i></div>
+                                                            <div class="activity-panel">
+                                                                <h5>3 DAYS AGO</h5>
+                                                                <p>Launched a new product: Flat Pack Heritage.</p>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /recent-activity -->
+                                                    </div>
+                                                    <!-- /detailed -->
+                                                </div>
+                                                <!-- /col-md-6 -->
+                                                <div class="col-md-6 detailed">
+                                                    <h4>User Stats</h4>
+                                                    <div class="row centered mt mb">
+                                                        <div class="col-sm-4">
+                                                            <h1><i class="fa fa-money"></i></h1>
+                                                            <h3>$22,980</h3>
+                                                            <h6>LIFETIME EARNINGS</h6>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <h1><i class="fa fa-trophy"></i></h1>
+                                                            <h3>37</h3>
+                                                            <h6>COMPLETED TASKS</h6>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <h1><i class="fa fa-shopping-cart"></i></h1>
+                                                            <h3>1980</h3>
+                                                            <h6>ITEMS SOLD</h6>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /row -->
+                                                    <h4>My Friends</h4>
+                                                    <div class="row centered mb">
+                                                        <ul class="my-friends">
+                                                            <li>
+                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-01.jpg"></div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-02.jpg"></div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-03.jpg"></div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-04.jpg"></div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-05.jpg"></div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-06.jpg"></div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-07.jpg"></div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-08.jpg"></div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-09.jpg"></div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-10.jpg"></div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-11.jpg"></div>
+                                                            </li>
+                                                        </ul>
+                                                        <div class="row mt">
+                                                            <div class="col-md-4 col-md-offset-4">
+                                                                <h6><a href="#">VIEW ALL</a></h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /row -->
+                                                    <h4>Pending Tasks</h4>
+                                                    <div class="row centered">
+                                                        <div class="col-md-8 col-md-offset-2">
+                                                            <h5>Dashboard Update (40%)</h5>
+                                                            <div class="progress">
+                                                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                                                    <span class="sr-only">40% Complete (success)</span>
+                                                                </div>
+                                                            </div>
+                                                            <h5>Unanswered Messages (80%)</h5>
+                                                            <div class="progress">
+                                                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                                                                    <span class="sr-only">80% Complete (success)</span>
+                                                                </div>
+                                                            </div>
+                                                            <h5>Product Review (60%)</h5>
+                                                            <div class="progress">
+                                                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+                                                                    <span class="sr-only">60% Complete (success)</span>
+                                                                </div>
+                                                            </div>
+                                                            <h5>Friend Requests (90%)</h5>
+                                                            <div class="progress">
+                                                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 90%">
+                                                                    <span class="sr-only">90% Complete (success)</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /col-md-8 -->
+                                                    </div>
+                                                    <!-- /row -->
+                                                </div>
+                                                <!-- /col-md-6 -->
+                                            </div>
+                                            <!-- /OVERVIEW -->
+                                        </div>
+                                        <!-- /tab-pane -->
+                                        <div id="contact" class="tab-pane">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div id="map"></div>
+                                                </div>
+                                                <!-- /col-md-6 -->
+                                                <div class="col-md-6 detailed">
+                                                    <h4>Location</h4>
+                                                    <div class="col-md-8 col-md-offset-2 mt">
+                                                        <p>
+                                                            Postal Address<br/> PO BOX 12988, Sutter Ave<br/> Brownsville, New York.
+                                                        </p>
+                                                        <br>
+                                                        <p>
+                                                            Headquarters<br/> 844 Sutter Ave,<br/> 9003, New York.
+                                                        </p>
+                                                    </div>
+                                                    <h4>Contacts</h4>
+                                                    <div class="col-md-8 col-md-offset-2 mt">
+                                                        <p>
+                                                            Phone: +33 4898-4303<br/> Cell: 48 4389-4393<br/>
+                                                        </p>
+                                                        <br>
+                                                        <p>
+                                                            Email: hello@dashiotheme.com<br/> Skype: UseDashio<br/> Website: http://Alvarez.is
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <!-- /col-md-6 -->
+                                            </div>
+                                            <!-- /row -->
+                                        </div>
+                                        <!-- /tab-pane -->
+                                        <div id="edit" class="tab-pane">
+                                            <div class="row">
+                                                <div class="col-lg-8 col-lg-offset-2 detailed">
+                                                    <h4 class="mb">Personal Information</h4>
+                                                    <form role="form" class="form-horizontal">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-2 control-label"> Avatar</label>
+                                                            <div class="col-lg-6">
+                                                                <input type="file" id="exampleInputFile" class="file-pos">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-lg-2 control-label">Company</label>
+                                                            <div class="col-lg-6">
+                                                                <input type="text" placeholder=" " id="c-name" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-lg-2 control-label">Lives In</label>
+                                                            <div class="col-lg-6">
+                                                                <input type="text" placeholder=" " id="lives-in" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-lg-2 control-label">Country</label>
+                                                            <div class="col-lg-6">
+                                                                <input type="text" placeholder=" " id="country" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-lg-2 control-label">Description</label>
+                                                            <div class="col-lg-10">
+                                                                <textarea rows="10" cols="30" class="form-control" id="" name=""></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="col-lg-8 col-lg-offset-2 detailed mt">
+                                                    <h4 class="mb">Contact Information</h4>
+                                                    <form role="form" class="form-horizontal">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-2 control-label">Address 1</label>
+                                                            <div class="col-lg-6">
+                                                                <input type="text" placeholder=" " id="addr1" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-lg-2 control-label">Address 2</label>
+                                                            <div class="col-lg-6">
+                                                                <input type="text" placeholder=" " id="addr2" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-lg-2 control-label">Phone</label>
+                                                            <div class="col-lg-6">
+                                                                <input type="text" placeholder=" " id="phone" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-lg-2 control-label">Cell</label>
+                                                            <div class="col-lg-6">
+                                                                <input type="text" placeholder=" " id="cell" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-lg-2 control-label">Email</label>
+                                                            <div class="col-lg-6">
+                                                                <input type="text" placeholder=" " id="email" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-lg-2 control-label">Skype</label>
+                                                            <div class="col-lg-6">
+                                                                <input type="text" placeholder=" " id="skype" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-lg-offset-2 col-lg-10">
+                                                                <button class="btn btn-theme" type="submit">Save</button>
+                                                                <button class="btn btn-theme04" type="button">Cancel</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <!-- /col-lg-8 -->
+                                            </div>
+                                            <!-- /row -->
+                                        </div>
+                                        <!-- /tab-pane -->
+                                    </div>
+                                    <!-- /tab-content -->
+                                </div>
+                                <!-- /panel-body -->
+                            </div>
+                            <!-- /col-lg-12 -->
+                        </div>
                     </div>
                 </section>
                 <!-- /wrapper -->
