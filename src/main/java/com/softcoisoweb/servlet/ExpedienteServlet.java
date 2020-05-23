@@ -18,18 +18,19 @@ import com.softcoisoweb.model.Persona;
 import com.softcoisoweb.model.TipoCaso;
 import com.softcoisoweb.model.Usuario;
 import com.softcoisoweb.util.JPAFactory;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  *
@@ -50,15 +51,20 @@ public class ExpedienteServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String verExpediente = request.getParameter("verExpediente");
+        String btnCambiarEstado = request.getParameter("btnCambiarEstado");
         try ( PrintWriter out = response.getWriter()) {
             if (verExpediente != null && !verExpediente.equals("")) {
                 String codigoCaso = verExpediente;
                 buscarExpediente(request, response, codigoCaso, "No");
             }
+            if (btnCambiarEstado != null && btnCambiarEstado.equals("ok")) {
+                String estado = cambiarEstado(request, response);
+                out.print(estado);
+            }
         }
     }
 
-    private void buscarExpediente(HttpServletRequest request, HttpServletResponse response, String codigoCaso, String cargar) throws ServletException, IOException {
+    public void buscarExpediente(HttpServletRequest request, HttpServletResponse response, String codigoCaso, String cargar) throws ServletException, IOException {
         CasoPersonaJpaController casojpa = new CasoPersonaJpaController(JPAFactory.getFACTORY());
         TipoCasoJpaController tipoCasoJpa = new TipoCasoJpaController(JPAFactory.getFACTORY());
         FlujoCasoJpaController flujoJpa = new FlujoCasoJpaController(JPAFactory.getFACTORY());
@@ -73,8 +79,8 @@ public class ExpedienteServlet extends HttpServlet {
             EstadoCaso estado = estadoJpa.findEstadoCaso(flujo.getEstadoCasoCodigoEstado());
             Usuario creadoPor = usuarioJpa.findUsuario(caso.getCreadoPor());
             Usuario asignado = usuarioJpa.findUsuario(caso.getAsignado());
-            String usuarioInformador = creadoPor.getNombreUsuario()+" "+creadoPor.getApellidoUsuario();
-            String usuarioAsignado = asignado.getNombreUsuario()+" "+asignado.getApellidoUsuario();
+            String usuarioInformador = creadoPor.getNombreUsuario() + " " + creadoPor.getApellidoUsuario();
+            String usuarioAsignado = asignado.getNombreUsuario() + " " + asignado.getApellidoUsuario();
             session.setAttribute("Expediente", caso);
             PersonaJpaController Personajpa = new PersonaJpaController(JPAFactory.getFACTORY());
             Persona persona = Personajpa.findPersona(caso.getPersonaCedula());
@@ -85,7 +91,7 @@ public class ExpedienteServlet extends HttpServlet {
             session.setAttribute("creadoPor", usuarioInformador);
             session.setAttribute("Asignado", usuarioAsignado);
             session.setAttribute("FlujoCaso", flujo);
-            
+
         } catch (Exception e) {
             System.out.println("Error buscando el expediente  del caso, el error es: " + e);
         }
@@ -95,6 +101,40 @@ public class ExpedienteServlet extends HttpServlet {
         if (rd != null) {
             rd.forward(request, response);
         }
+    }
+
+    public String cambiarEstado(HttpServletRequest request, HttpServletResponse response) {
+        String respuesta;
+        String estado = request.getParameter("verExpediente");
+        String comentarioEstado = request.getParameter("verExpediente");
+        try {
+            final String UPLOAD_DIRECTORY = "C:\\Users\\manue\\Documents\\NetBeansProjects\\SoftCoisoWeb\\Archivos";
+		if(ServletFileUpload.isMultipartContent(request)){
+			try {
+                List<FileItem> multiparts = new ServletFileUpload(
+                                         new DiskFileItemFactory()).parseRequest(request);
+                for(FileItem item : multiparts){
+                    if(!item.isFormField()){
+                    	File fileSaveDir = new File(UPLOAD_DIRECTORY);
+                    	if (!fileSaveDir.exists()) {
+                    		fileSaveDir.mkdir();
+                    	}
+                        String name = new File(item.getName()).getName();
+                        item.write( new File(UPLOAD_DIRECTORY + File.separator + name));
+                    }
+                }
+			} catch (Exception e) {
+				// exception handling
+			}
+			
+			PrintWriter out = response.getWriter();
+			out.print("{\"status\":1}");
+		}
+            respuesta = "Exitoso";
+        } catch (Exception e) {
+            respuesta = "Error";
+        }
+        return respuesta;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

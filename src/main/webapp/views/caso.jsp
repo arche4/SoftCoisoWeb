@@ -221,7 +221,7 @@
                             <input class="form-control " id="cedulaUsuario" type="hidden" name="cedulaUsuario" value="${sessionScope.USUARIO.cedula}">
                             <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
                             <div class="modal-footer">
-                                <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="guardarCaso()">
+                                <button  type="submit" class="btn btn-success" id="btnCrearCita">
                                     Crear
                                 </button>
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
@@ -276,7 +276,7 @@
                             <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
                             <div class="modal-footer">
                                 <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="validar()">
-                                    Crear
+                                    Guardar
                                 </button>
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                             </div>
@@ -425,7 +425,6 @@
         <div class="loader" id="loader" style="display:none"></div>
         <!-- js placed at the end of the document so the pages load faster -->
         <script src="${pageContext.servletContext.contextPath}/JavaScript/caso.js" type="text/javascript"></script>
-        <script src="${pageContext.servletContext.contextPath}/lib/bootstrap/js/validator.min.js" type="text/javascript"></script>     
         <script type="text/javascript" src="${pageContext.servletContext.contextPath}/lib/advanced-datatable/js/DT_bootstrap.js"></script>
         <script src="${pageContext.servletContext.contextPath}/lib/bootstrap/js/bootstrap.min.js"></script>
         <script class="include" type="text/javascript" src="${pageContext.servletContext.contextPath}/lib/jquery.dcjqaccordion.2.7.js"></script>

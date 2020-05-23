@@ -25,6 +25,7 @@
     <class>com.softcoisoweb.model.ProcesoReclamacion</class>
     <class>com.softcoisoweb.model.Diagnostico</class>
     <class>com.softcoisoweb.model.Actividades</class>
+    <class>com.softcoisoweb.model.CasoAcciones</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <shared-cache-mode>ALL</shared-cache-mode>
     <properties>

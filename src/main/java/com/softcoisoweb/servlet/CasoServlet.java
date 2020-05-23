@@ -60,6 +60,7 @@ public class CasoServlet extends HttpServlet {
         String verCasos = request.getParameter("verCasos");
         String selectConsulta = request.getParameter("selectConsulta");
         String btnModificarCaso = request.getParameter("btnModificarCaso");
+        String btnModificarCasoExp = request.getParameter("btnModificarCasoExp");
 
         try ( PrintWriter out = response.getWriter()) {
             if (btnCrearCaso != null && btnCrearCaso.equals("ok")) {
@@ -75,7 +76,11 @@ public class CasoServlet extends HttpServlet {
                 obtenerCaso(request, response, cedulaPersona, "No");
             }
             if (btnModificarCaso != null && btnModificarCaso.equals("ok")) {
-                String modificar = modificarCaso(request, response);
+                String modificar = modificarCaso(request, response, "");
+                out.print(modificar);
+            }
+            if (btnModificarCasoExp != null && btnModificarCasoExp.equals("ok")) {
+                String modificar = modificarCaso(request, response, "Expediente");
                 out.print(modificar);
             }
         }
@@ -208,7 +213,7 @@ public class CasoServlet extends HttpServlet {
         return respuesta;
     }
 
-    public String modificarCaso(HttpServletRequest request, HttpServletResponse response) {
+    public String modificarCaso(HttpServletRequest request, HttpServletResponse response, String expediente) {
         String respuesta;
         String IdCaso = request.getParameter("IdCaso");
         String tipoCaso = request.getParameter("tipoCaso");
@@ -232,7 +237,13 @@ public class CasoServlet extends HttpServlet {
             String gestionCaso = gestionCaso("Actualizar", IdCaso, cedulaUsuario, flujo.getEstadoCasoCodigoEstado(), flujo.getFechaCreacion());
             if (gestionCaso.equals("Exitoso")) {
                 respuesta = "Exitoso";
-                obtenerCaso(request, response, casoCedulaPersona, "Cargar");
+                if (expediente.equals("Expediente")) {
+                    ExpedienteServlet cargarExpediente = new ExpedienteServlet();
+                    cargarExpediente.buscarExpediente(request, response, IdCaso, "Cargar");
+                } else {
+                    obtenerCaso(request, response, casoCedulaPersona, "Cargar");
+                }
+
             } else {
                 respuesta = "Error";
             }

@@ -483,18 +483,18 @@
                                             <c:choose>
                                                 <c:when test="${persona.getCasoAsociado() == sessionScope.TieneCaso}">  
                                                     <tr class="gradeX odd">
-                                                <td>
-                                                    <button id ="selectConsulta" name="selectConsulta" class="btn btn-link" value="${persona.getCedula()}"><c:out value="${persona.getCedula()}"/></button></td>
-                                                <td><c:out value="${persona.getNombrePersona()}"/> <c:out value="${persona.getApellidoPersona()}"/></td>
-                                                <td><c:out value="${persona.getFechaClinica()}"/></td>
+                                                        <td>
+                                                            <button id ="selectConsulta" name="selectConsulta" class="btn btn-link" value="${persona.getCedula()}"><c:out value="${persona.getCedula()}"/></button></td>
+                                                        <td><c:out value="${persona.getNombrePersona()}"/> <c:out value="${persona.getApellidoPersona()}"/></td>
+                                                        <td><c:out value="${persona.getFechaClinica()}"/></td>
                                                         <td>
                                                             <button  id ="casoCrear"  name="casoCrear"  class="btn btn-link" value="${persona.getCedula()}">
                                                                 Crear Caso
                                                             </button>
                                                         </td>
                                                     </tr>
-                                                        </c:when> 
-                                                        <c:otherwise>
+                                                </c:when> 
+                                                <c:otherwise>
                                                     <tr class="gradeA odd">
                                                         <td>
                                                             <button id ="selectConsulta" name="selectConsulta" class="btn btn-link" value="${persona.getCedula()}"><c:out value="${persona.getCedula()}"/></button>
@@ -507,8 +507,8 @@
                                                             </form> 
                                                         </td>
                                                     </tr>
-                                                        </c:otherwise>
-                                                    </c:choose>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </c:forEach>
                                     </tbody>
                                 </table>
@@ -529,33 +529,41 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <h4 class="modal-title" id="myModalLabel">Crear  Caso</h4>
                         </div>
-                        <form id="calendario">
+                        <form id="caso" data-toggle="validator">
                             <br>
-                            <div class="form-group col-md-6">
-                                <label for="Tipo">Tipo de Caso</label>
-                                <select name="Tipo" id="Tipo" class="form-control-sm form-control" required>
-                                    <option value="">Tipo Caso </option>
-                                    <c:forEach var="Tipo" items="${sessionScope.Tipo}">
-                                        <option value="${Tipo.getCodigoTipoCaso()}"><c:out value="${Tipo.getTipoCaso()}"/></option>
-                                    </c:forEach>
-                                </select>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="control-label">Tipo de Caso</label>
+                                    <select name="Tipo" id="Tipo" class="form-control-sm form-control" required>
+                                        <option value="">Tipo Caso </option>
+                                        <c:forEach var="Tipo" items="${sessionScope.Tipo}">
+                                            <option value="${Tipo.getCodigoTipoCaso()}"><c:out value="${Tipo.getTipoCaso()}"/></option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="control-label">Fecha  Afectacion</label>
+                                    <input type="text" class="form-control" id="fechaAfectacion" name="fechaAfectacion" placeholder="Inicio afectacion(meses)"  required>
+                                </div>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label for="fechaAfectacion">Fecha  Afectacion</label>
-                                <input type="text" class="form-control" id="fechaAfectacion" name="fechaAfectacion" placeholder="Inicio afectacion(meses)" id="example-month-input" required>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Parte Afectada</label>
+                                    <input  type="text" class="form-control"  name="parteAfectada" id="parteAfectada" placeholder="Parte del cuerpo afectada" required>
+                                </div>
                             </div>
-                            <div class="form-group col-md-12">
-                                <label for="Tipo">Parte Afectada</label>
-                                <input  name="parteAfectada" id="parteAfectada" type="text" class="form-control" placeholder="Parte del cuerpo afectada" required>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="control-label">Tiempo de Incapacidad</label>
+                                    <input type="text" class="form-control" id="tiempoInca" name="tiempoInca" placeholder="Tiempo de Incapacidad" >
+                                </div>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label for="Tipo">Tiempo de Incapacidad</label>
-                                <input type="text" class="form-control" id="tiempoInca" name="tiempoInca" placeholder="Tiempo de Incapacidad" >
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label class="control-label">Descripcion del Caso</label>
-                                <textarea class="form-control " rows="10" cols="50" id="descripcionCaso" name="descripcionCaso" required></textarea>
-                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Descripcion</label>
+                                    <textarea class="form-control " rows="10" cols="50" id="descripcionCaso" name="descripcionCaso" required></textarea>
+                                </div>
+                            </div>  
                             <input class="form-control " id="cedulaPersona" type="hidden" name="cedulaPersona">
                             <input class="form-control " id="cedulaUsuario" type="hidden" name="cedulaUsuario" value="${sessionScope.USUARIO.cedula}">
                             <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>

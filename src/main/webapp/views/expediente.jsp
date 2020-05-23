@@ -18,6 +18,8 @@
         <link href="${pageContext.servletContext.contextPath}/img/favicon.png" rel="icon">
         <!-- Bootstrap core CSS -->
         <link href="${pageContext.servletContext.contextPath}/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <script src="${pageContext.servletContext.contextPath}/lib/jquery/jquery.min.js"></script>
+
         <!--external css-->
         <link href="${pageContext.servletContext.contextPath}/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
         <!-- Custom styles for this template -->
@@ -27,6 +29,8 @@
         <link href="${pageContext.servletContext.contextPath}/css/general.css" rel="stylesheet" type="text/css"/>
         <link href="${pageContext.servletContext.contextPath}/Loading.css" rel="stylesheet" type="text/css"/>
 
+        <link href="${pageContext.servletContext.contextPath}/lib/bootstrap-fileinput-master/css/fileinput.min.css" rel="stylesheet" type="text/css"/>
+        <script src="${pageContext.servletContext.contextPath}/lib/bootstrap-fileinput-master/js/fileinput.min.js" type="text/javascript"></script>
 
         <!-- =======================================================
           Template Name: Dashio
@@ -142,8 +146,9 @@
                                         </div>
                                         <div class="col-md-8">
                                             <div class="compose-btn pull-right">
-                                                <button class="btn btn-sm btn-theme"  type="button">Editar</button>
-                                                <button class="btn btn-sm btn-theme"  type="button">Cambiar Estado</button>
+                                                <button  id ="editCaso"  name="editCaso"  class="btn btn-sm btn-theme" value="${sessionScope.Expediente.getIdCaso()}">
+                                                    Editar</button>
+                                                <button class="btn btn-sm btn-theme" data-toggle="modal" data-target="#cambiarEstado" type="button">Cambiar Estado</button>
                                                 <button class="btn btn-sm btn-theme"  type="button">Asignar Usuario</button>
                                                 <button class="btn btn-sm btn-theme"  type="button">Citar</button>
                                             </div>
@@ -216,12 +221,12 @@
                         <div class="col-lg-12 mt">
                             <div class="panel">
                                 <section class="panel">
-                                <header class="panel-heading wht-bg">
-                                    <h4 class="gen-case">
-                                       Actividad
-                                    </h4>
-                                </header>
-                                    </section>
+                                    <header class="panel-heading wht-bg">
+                                        <h4 class="gen-case">
+                                            Actividad
+                                        </h4>
+                                    </header>
+                                </section>
                                 <div class="panel-heading">
                                     <ul class="nav nav-tabs nav-justified">
                                         <li class="active">
@@ -250,36 +255,40 @@
                                         <div id="overview" class="tab-pane active">
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <textarea rows="3" class="form-control" placeholder="Whats on your mind?"></textarea>
-                                                    <div class="grey-style">
-                                                        <div class="pull-left">
-                                                            <button class="btn btn-sm btn-theme"><i class="fa fa-camera"></i></button>
-                                                            <button class="btn btn-sm btn-theme"><i class="fa fa-map-marker"></i></button>
-                                                        </div>
-                                                        <div class="pull-right">
-                                                            <button class="btn btn-sm btn-theme03">POST</button>
-                                                        </div>
-                                                    </div>
                                                     <div class="detailed mt">
-                                                        <h4>Recent Activity</h4>
+                                                        <h4>Comentarios</h4>
                                                         <div class="recent-activity">
-                                                            <div class="activity-icon bg-theme"><i class="fa fa-check"></i></div>
                                                             <div class="activity-panel">
-                                                                <h5>1 HOUR AGO</h5>
-                                                                <p>Purchased: Dashio Admin Panel & Front-end theme.</p>
+                                                                <div class="task-title">
+                                                                    <p>Dashio - Admin Panel skjhfjhdjkfhdjkhfjkdhgkjhdfkjghjkdfhgjkdhkjghjkdfhjgkhdjkghdjkhgk
+                                                                        jhdjkhgjkdhjkghdkjhfgkjdhfgkhdkfg& Front-end Theme</p>
+                                                                    <span class="badge bg-theme">Manuela Jimenez</span>
+                                                                    <div class="pull-right hidden-phone">
+                                                                        <button class="btn btn-primary btn-xs fa fa-pencil"></button>
+                                                                        <button class="btn btn-danger btn-xs fa fa-trash-o"></button>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                            <div class="activity-icon bg-theme02"><i class="fa fa-trophy"></i></div>
                                                             <div class="activity-panel">
-                                                                <h5>5 HOURS AGO</h5>
-                                                                <p>Task Completed. Resolved issue with Disk Space.</p>
+                                                                <div class="task-title">
+                                                                    <span class="task-title-sp">Dashio - Admin Panel &skjhfjhdjkfhdjkhfjkdhgkjhdfkjghjkdfhgjkdhkjghjkdfhjgkhdjkghdjkhgkjhdjkhgjkdhjkghdkjhfgkjdhfgkhdkfg Front-end Theme</span>
+                                                                    <span class="badge bg-theme">Manuela Jimenez</span>
+                                                                    <div class="pull-right hidden-phone">
+                                                                        <button class="btn btn-primary btn-xs fa fa-pencil"></button>
+                                                                        <button class="btn btn-danger btn-xs fa fa-trash-o"></button>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                            <div class="activity-icon bg-theme04"><i class="fa fa-rocket"></i></div>
-                                                            <div class="activity-panel">
-                                                                <h5>3 DAYS AGO</h5>
-                                                                <p>Launched a new product: Flat Pack Heritage.</p>
-                                                            </div>
+
                                                         </div>
                                                         <!-- /recent-activity -->
+                                                    </div>
+                                                    <h4></h4>
+                                                    <textarea rows="3" class="form-control" placeholder="Comentar.."></textarea>
+                                                    <div class="grey-style">
+                                                        <div class="pull-right">
+                                                            <button class="btn btn-sm btn-theme03">Comentar</button>
+                                                        </div>
                                                     </div>
                                                     <!-- /detailed -->
                                                 </div>
@@ -521,6 +530,215 @@
             <!-- /MAIN CONTENT -->
             <!--main content end-->
             <!--footer start-->
+            <div class="modal fade" id="cargarArchivos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Cargar Archivo</h4>
+                        </div>
+                        <form id="sampleUploadFrm" method="POST" action="#" enctype="multipart/form-data">
+                            <div class="form-group col-md-12">
+                                <div class="file-loading"> 
+                                    <input id="input-700" name="kartik-input-700[]" type="file" multiple>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary pull-right" id="uploadBtn">Cargar</button>
+                                <button type="reset" class="btn btn-danger">cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="cambiarEstado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Cambiar Estado</h4>
+                        </div>
+                        <form id="caso">
+                            <br>
+                            <div class="form-group col-md-6">
+                                <label>Tipo de Caso</label>
+                                <select name="estadoCaso" id="estadoCaso" class="form-control-sm form-control" required>
+                                    <option value="">Tipo Caso </option>
+                                    <c:forEach var="estado" items="${sessionScope.Estado}">
+                                        <option value="${estado.getCodigoEstado()}"><c:out value="${estado.getNombreEstado()}"/></option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Descripcion del Caso</label>
+                                <textarea class="form-control " rows="10" cols="50" id="casoDescripcion" name="casoDescripcion" required></textarea>
+                            </div>
+                            <input class="form-control " id="casoCedulaPersona" type="hidden" name="casoCedulaPersona">
+                            <input class="form-control " id="CreadoPor" type="hidden" name="CreadoPor">
+                            <input class="form-control " id="Asignado" type="hidden" name="Asignado">
+                            <input class="form-control " id="cedulaUsuario" type="hidden" name="cedulaUsuario" value="${sessionScope.USUARIO.cedula}">
+
+                            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="validar()">
+                                    Guardar
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="verCaso" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Caso</h4>
+                        </div>
+                        <form id="caso">
+                            <br>
+                            <div class="form-group col-md-6">
+                                <label class="control-label">Codigo Caso</label>
+                                <input type="number" class="form-control" id="IdCaso" name="IdCaso" readonly>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Tipo de Caso</label>
+                                <select name="tipoCaso" id="tipoCaso" class="form-control-sm form-control" required>
+                                    <option value="">Tipo Caso </option>
+                                    <c:forEach var="Tipo" items="${sessionScope.Tipo}">
+                                        <option value="${Tipo.getCodigoTipoCaso()}"><c:out value="${Tipo.getTipoCaso()}"/></option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Fecha  Afectacion</label>
+                                <input type="text" class="form-control" id="casoFechaAfectacion" name="casoFechaAfectacion" placeholder="Inicio afectacion(meses)" id="example-month-input" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Tiempo de Incapacidad</label>
+                                <input type="text" class="form-control" id="casoTimpoInca" name="casoTimpoInca" placeholder="Tiempo de Incapacidad" >
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>Parte Afectada</label>
+                                <input  name="casoParteAfectada" id="casoParteAfectada" type="text" class="form-control" placeholder="Parte del cuerpo afectada" required>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Descripcion del Caso</label>
+                                <textarea class="form-control " rows="10" cols="50" id="casoDescripcion" name="casoDescripcion" required></textarea>
+                            </div>
+                            <input class="form-control " id="casoCedulaPersona" type="hidden" name="casoCedulaPersona">
+                            <input class="form-control " id="CreadoPor" type="hidden" name="CreadoPor">
+                            <input class="form-control " id="Asignado" type="hidden" name="Asignado">
+                            <input class="form-control " id="cedulaUsuario" type="hidden" name="cedulaUsuario" value="${sessionScope.USUARIO.cedula}">
+
+                            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="validar()">
+                                    Guardar
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal" id="modalInfexito" abindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content" id="modales-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Operación Exitosa</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-row">
+                                <div class="col-md-12">
+                                    <form method="post" name="personaEdit" id="persona" action="">
+                                        <div class="modal-body" id="modInfexito">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <hr width="0%">
+                                <button type="button" id="Guardar" class="btn btn-primary" onclick="myFunctionReload()">Ok</button>
+                            </div>                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modalValidar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+
+                    <!-- Modal content-->
+                    <div class="modal-content" id="modales-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Confirmar Cambios</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-row">
+                                <div class="col-md-12">
+                                    <form method="post" name="modConfirmar" id="modConfirmar" action="">
+                                        <div class="modal-body" id="InfoConfirmar">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success" id="btnModificar" onclick="modificarCaso()">
+                                    Si
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                            </div>                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal" id="modalDatosIncorrectos" abindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content" id="modales-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Operación Erronea</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-row">
+                                <div class="col-md-12">
+                                    <form method="post" name="personaEdit" id="persona" action="">
+                                        <div class="modal-body" id="modMensaje">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <hr width="0%">
+                                <button type="button" id="Guardar" class="btn btn-primary" onclick="cerrarModal()">Ok</button>
+                            </div>                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal" id="modalInfError" abindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content" id="modales-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Operación Erronea</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-row">
+                                <div class="col-md-12">
+                                    <form method="post" name="personaEdit" id="persona" action="">
+                                        <div class="modal-body" id="modInferror">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <hr width="0%">
+                                <button type="button" id="Guardar" class="btn btn-primary" onclick="myFunctionReload()">Ok</button>
+                            </div>                           
+                        </div>
+                    </div>
+                </div>
+            </div>
             <footer class="site-footer">
                 <div class="text-center">
                     <p>
@@ -542,8 +760,11 @@
             </footer>
             <!--footer end-->
         </section>
+        <div class="loader"></div>
         <!-- js placed at the end of the document so the pages load faster -->
-        <script src="${pageContext.servletContext.contextPath}/lib/jquery/jquery.min.js"></script>
+
+        <script src="${pageContext.servletContext.contextPath}/JavaScript/Expediente.js" type="text/javascript"></script>
+        <script src="${pageContext.servletContext.contextPath}/lib/bootstrap-fileinput-master/js/locales/es.js" type="text/javascript"></script>
         <script src="${pageContext.servletContext.contextPath}/lib/bootstrap/js/bootstrap.min.js"></script>
         <script class="include" type="text/javascript" src="${pageContext.servletContext.contextPath}/lib/jquery.dcjqaccordion.2.7.js"></script>
         <script src="${pageContext.servletContext.contextPath}/lib/jquery.scrollTo.min.js"></script>

@@ -2061,7 +2061,7 @@ profile-text p {
     text-transform: uppercase;
     border-bottom: 1px solid #e2e2e2;
     font-weight: 700;
-    color: #48cfad;
+    color: #6675df;
 }
 
 ul.my-friends {
@@ -2116,7 +2116,6 @@ ul.my-friends li .friends-pic {
     border-radius: 5px;
     -webkit-border-radius: 5px;
     position: relative;
-    text-align: center;
 }
 
 .activity-panel h5{

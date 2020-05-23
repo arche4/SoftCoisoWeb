@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <display-name>CargaArchivoServlet</display-name>
     <filter>
         <filter-name>FilterSecurity</filter-name>
         <filter-class>com.softcoisoweb.servlet.FilterSecurity</filter-class>
@@ -36,6 +37,10 @@
         <servlet-name>ExpedienteServlet</servlet-name>
         <servlet-class>com.softcoisoweb.servlet.ExpedienteServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CargaArchivoServlet</servlet-name>
+        <servlet-class>com.softcoisoweb.servlet.CargaArchivoServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CerrarSesionServlet</servlet-name>
         <url-pattern>/CerrarSesionServlet</url-pattern>
@@ -59,6 +64,10 @@
     <servlet-mapping>
         <servlet-name>ExpedienteServlet</servlet-name>
         <url-pattern>/ExpedienteServlet</url-pattern>
+    </servlet-mapping> 
+     <servlet-mapping>
+        <servlet-name>CargaArchivoServlet</servlet-name>
+        <url-pattern>/CargaArchivoServlet</url-pattern>
     </servlet-mapping> 
     <session-config>
         <session-timeout>

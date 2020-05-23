@@ -249,7 +249,9 @@ $(document).ready(function () {
         $("#cedulaPersona").val(casoCrear);
         $('#crearCaso').modal('show');
     });
+    $("#caso").validate({
 
+    });
 });
 $("body").on("click", "#selectConsulta", function () {
     var selectConsulta = $(this).val();
@@ -320,51 +322,65 @@ function myFunctionReload() {
         success: function (data) {
             location.reload();
         }
-    });  
+    });
 }
 
 function guardarCaso() {
-    if (loader.style.display === 'none') {
-        loader.style.display = 'block';
-    } else {
-        loader.style.display = 'none';
-    }
-    event.preventDefault();
-    $('#crearCaso').modal('hide');
-    var btnCrearCaso = 'ok';
-    var cedulaPersona = $('#cedulaPersona').val();
-    var cedulaUsuario = $('#cedulaUsuario').val();
-    var Tipo = $('#Tipo').val();
-    var fechaAfectacion = $('#fechaAfectacion').val();
-    var parteAfectada = $('#parteAfectada').val();
-    var tiempoInca = $('#tiempoInca').val();
-    var descripcionCaso = $('#descripcionCaso').val();
-    $.ajax({
-        async: false,
-        type: "POST",
-        url: "/CasoServlet",
-        data: 'btnCrearCaso=' + btnCrearCaso + '&cedulaPersona=' + cedulaPersona + '&cedulaUsuario=' + cedulaUsuario + '&Tipo=' + Tipo +
-                '&fechaAfectacion=' + fechaAfectacion + '&parteAfectada=' + parteAfectada + '&tiempoInca=' + tiempoInca +
-                '&descripcionCaso=' + descripcionCaso,
-        success: function (data) {
-            event.preventDefault();
+    var elmForm = $("#caso");
+    if (elmForm) {
+        elmForm.validator('validate');
+        var elmErr = elmForm.find('.has-error');
+        if (elmErr && elmErr.length > 0) {
+            return false;
+        } else {
             if (loader.style.display === 'none') {
                 loader.style.display = 'block';
             } else {
                 loader.style.display = 'none';
             }
-            if (data === "Exitoso") {
-                var cadena = ' <div class="form-row">'
-                        + '<h5>Sus cambios fueron guardados con ex\u00EDto.</h3>'
-                        + ' </div>';
-                $('#modInfexito').html(cadena);
-                $('#modalInfexito').modal('show');
-            } else {
-                var cadena = '<div class="form-row">'
-                        + '<h5>Lo sentimos, se ha presentado un problema guardando los datos .</h3>'
-                        + ' </div>';
-                $('#modInferror').html(cadena);
-                $('#modalInfError').modal('show');
-            }
-        }});
+            event.preventDefault();
+            $('#crearCaso').modal('hide');
+            var btnCrearCaso = 'ok';
+            var cedulaPersona = $('#cedulaPersona').val();
+            var cedulaUsuario = $('#cedulaUsuario').val();
+            var Tipo = $('#Tipo').val();
+            var fechaAfectacion = $('#fechaAfectacion').val();
+            var parteAfectada = $('#parteAfectada').val();
+            var tiempoInca = $('#tiempoInca').val();
+            var descripcionCaso = $('#descripcionCaso').val();
+            $.ajax({
+                async: false,
+                type: "POST",
+                url: "/CasoServlet",
+                data: 'btnCrearCaso=' + btnCrearCaso + '&cedulaPersona=' + cedulaPersona + '&cedulaUsuario=' + cedulaUsuario + '&Tipo=' + Tipo +
+                        '&fechaAfectacion=' + fechaAfectacion + '&parteAfectada=' + parteAfectada + '&tiempoInca=' + tiempoInca +
+                        '&descripcionCaso=' + descripcionCaso,
+                success: function (data) {
+                    event.preventDefault();
+                    if (data === "Exitoso") {
+                        if (loader.style.display === 'none') {
+                        loader.style.display = 'block';
+                    } else {
+                        loader.style.display = 'none';
+                    }
+                        var cadena = ' <div class="form-row">'
+                                + '<h5>Sus cambios fueron guardados con ex\u00EDto.</h3>'
+                                + ' </div>';
+                        $('#modInfexito').html(cadena);
+                        $('#modalInfexito').modal('show');
+                    } else {
+                        if (loader.style.display === 'none') {
+                        loader.style.display = 'block';
+                    } else {
+                        loader.style.display = 'none';
+                    }
+                        var cadena = '<div class="form-row">'
+                                + '<h5>Lo sentimos, se ha presentado un problema guardando los datos .</h3>'
+                                + ' </div>';
+                        $('#modInferror').html(cadena);
+                        $('#modalInfError').modal('show');
+                    }
+                }});
+        }
+    }
 }
