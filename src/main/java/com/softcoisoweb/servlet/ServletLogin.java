@@ -9,6 +9,7 @@ import com.softcoisoweb.controller.AfpJpaController;
 import com.softcoisoweb.controller.ArlJpaController;
 import com.softcoisoweb.controller.EpsJpaController;
 import com.softcoisoweb.controller.EstadoCasoJpaController;
+import com.softcoisoweb.controller.MedicamentosJpaController;
 import com.softcoisoweb.controller.OrganizacionSindicalJpaController;
 import com.softcoisoweb.controller.PersonaJpaController;
 import com.softcoisoweb.controller.TipoCasoJpaController;
@@ -18,6 +19,7 @@ import com.softcoisoweb.model.Afp;
 import com.softcoisoweb.model.Arl;
 import com.softcoisoweb.model.Eps;
 import com.softcoisoweb.model.EstadoCaso;
+import com.softcoisoweb.model.Medicamentos;
 import com.softcoisoweb.model.OrganizacionSindical;
 import com.softcoisoweb.model.Persona;
 import com.softcoisoweb.model.TipoCaso;
@@ -66,6 +68,7 @@ public class ServletLogin extends HttpServlet {
         TipoCasoJpaController tipoCaso = new TipoCasoJpaController(JPAFactory.getFACTORY());
         EstadoCasoJpaController estadoJpa = new EstadoCasoJpaController(JPAFactory.getFACTORY());
         PersonaJpaController Persona = new PersonaJpaController(JPAFactory.getFACTORY());
+        MedicamentosJpaController medicamentoJpa = new MedicamentosJpaController(JPAFactory.getFACTORY());
 
         try {
             if (misession.equals(true)) {
@@ -101,6 +104,8 @@ public class ServletLogin extends HttpServlet {
                 session.setAttribute("Tipo", listTipoCaso);
                 List<EstadoCaso> ListEstado = estadoJpa.findEstadoCasoEntities();
                 session.setAttribute("Estado", ListEstado);
+                List<Medicamentos> listMedicamento = medicamentoJpa.findMedicamentosEntities();
+                session.setAttribute("listMedicamento", listMedicamento);
                 rd = request.getRequestDispatcher("views/dashboard.jsp");
             }
         } catch (Exception e) {

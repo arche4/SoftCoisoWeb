@@ -52,9 +52,10 @@ public class Medicamentos implements Serializable {
         this.codigoMedicamento = codigoMedicamento;
     }
 
-    public Medicamentos(String codigoMedicamento, String nombreMedicamento) {
+    public Medicamentos(String codigoMedicamento, String nombreMedicamento, String descripcionMedicamento) {
         this.codigoMedicamento = codigoMedicamento;
         this.nombreMedicamento = nombreMedicamento;
+        this.descripcionMedicamento = descripcionMedicamento;
     }
 
     public String getCodigoMedicamento() {

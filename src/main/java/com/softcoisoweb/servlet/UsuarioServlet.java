@@ -55,8 +55,8 @@ public class UsuarioServlet extends HttpServlet {
                 out.print(datos);
             }
             if (btnModificar != null && btnModificar.equals("ok")) {
-                String modificarPersona = modificarUsuario(request, response);
-                out.print(modificarPersona);
+                String modUser = modificarUsuario(request, response);
+                out.print(modUser);
             }
             if (btnEliminar != null) {
                 String eliminarPersona = eliminarUsuario(btnEliminar);

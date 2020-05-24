@@ -109,7 +109,7 @@
                                     </a>
                                     <ul class="sub">
                                         <li><a href="${pageContext.servletContext.contextPath}/views/usuario.jsp">Usuarios</a></li>
-                                        <li><a href="${pageContext.servletContext.contextPath}/views/medicacion.jsp">Medicamentos</a></li>
+                                        <li><a href="${pageContext.servletContext.contextPath}/views/medicamento.jsp">Medicamentos</a></li>
                                         <li><a href="${pageContext.servletContext.contextPath}/views/tipoCaso.jsp">Tipo de casos</a></li>
                                         <li><a href="${pageContext.servletContext.contextPath}/views/estadoCaso.jsp">Estados de caso</a></li>
                                         <li><a href="${pageContext.servletContext.contextPath}/views/tipoContrato.jsp">Tipos de Contratos</a></li>

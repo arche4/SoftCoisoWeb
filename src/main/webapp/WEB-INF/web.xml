@@ -45,6 +45,10 @@
         <servlet-name>UsuarioServlet</servlet-name>
         <servlet-class>com.softcoisoweb.servlet.UsuarioServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MedicamentosServlet</servlet-name>
+        <servlet-class>com.softcoisoweb.servlet.MedicamentosServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CerrarSesionServlet</servlet-name>
         <url-pattern>/CerrarSesionServlet</url-pattern>
@@ -69,13 +73,17 @@
         <servlet-name>ExpedienteServlet</servlet-name>
         <url-pattern>/ExpedienteServlet</url-pattern>
     </servlet-mapping> 
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>CargaArchivoServlet</servlet-name>
         <url-pattern>/CargaArchivoServlet</url-pattern>
     </servlet-mapping> 
     <servlet-mapping>
         <servlet-name>UsuarioServlet</servlet-name>
         <url-pattern>/UsuarioServlet</url-pattern>
+    </servlet-mapping> 
+    <servlet-mapping>
+        <servlet-name>MedicamentosServlet</servlet-name>
+        <url-pattern>/MedicamentosServlet</url-pattern>
     </servlet-mapping> 
     <session-config>
         <session-timeout>
