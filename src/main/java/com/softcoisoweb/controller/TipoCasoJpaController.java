@@ -7,9 +7,12 @@ package com.softcoisoweb.controller;
 
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.controller.exceptions.PreexistingEntityException;
+import com.softcoisoweb.model.CasoPersona;
+import com.softcoisoweb.model.MedicamentosCaso;
 import com.softcoisoweb.model.TipoCaso;
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CacheStoreMode;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
@@ -109,6 +112,7 @@ public class TipoCasoJpaController implements Serializable {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             cq.select(cq.from(TipoCaso.class));
             Query q = em.createQuery(cq);
+            q.setHint("javax.persistence.cache.storeMode", CacheStoreMode.REFRESH);
             if (!all) {
                 q.setMaxResults(maxResults);
                 q.setFirstResult(firstResult);
@@ -139,6 +143,23 @@ public class TipoCasoJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    
+    public List<CasoPersona> tipoXCaso(String codigo) {
+        EntityManager em = null;
+        List<CasoPersona> tipoXCaso = null;
+        try {
+            String QuerySelect = "select * from caso_persona where tipo_caso_codigo_tipo_caso = '" + codigo + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            tipoXCaso = em.createNativeQuery(QuerySelect, CasoPersona.class).getResultList();
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return tipoXCaso;
     }
     
 }

@@ -7,6 +7,7 @@ package com.softcoisoweb.model;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -22,6 +23,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "tipo_caso")
+@Cacheable(false)
 @NamedQueries({
     @NamedQuery(name = "TipoCaso.findAll", query = "SELECT t FROM TipoCaso t"),
     @NamedQuery(name = "TipoCaso.findByCodigoTipoCaso", query = "SELECT t FROM TipoCaso t WHERE t.codigoTipoCaso = :codigoTipoCaso"),
@@ -52,9 +54,10 @@ public class TipoCaso implements Serializable {
         this.codigoTipoCaso = codigoTipoCaso;
     }
 
-    public TipoCaso(String codigoTipoCaso, String tipoCaso) {
+    public TipoCaso(String codigoTipoCaso, String tipoCaso, String descripcion) {
         this.codigoTipoCaso = codigoTipoCaso;
         this.tipoCaso = tipoCaso;
+        this.descripcion = descripcion;
     }
 
     public String getCodigoTipoCaso() {

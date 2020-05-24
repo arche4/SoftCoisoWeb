@@ -59,7 +59,7 @@
                     <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
                 </div>
                 <!--logo start-->
-                <a href="index.html" class="logo"><b>SOF<span>COISO</span></b></a>
+                <a href="${pageContext.servletContext.contextPath}/views/dashboard.jsp" class="logo"><b>SOF<span>COISO</span></b></a>
 
                 <div class="top-menu">
                     <ul class="nav pull-right top-menu">

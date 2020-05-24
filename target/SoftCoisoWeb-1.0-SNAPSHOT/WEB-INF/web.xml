@@ -49,6 +49,10 @@
         <servlet-name>MedicamentosServlet</servlet-name>
         <servlet-class>com.softcoisoweb.servlet.MedicamentosServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TipoCasoServlet</servlet-name>
+        <servlet-class>com.softcoisoweb.servlet.TipoCasoServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CerrarSesionServlet</servlet-name>
         <url-pattern>/CerrarSesionServlet</url-pattern>
@@ -84,6 +88,10 @@
     <servlet-mapping>
         <servlet-name>MedicamentosServlet</servlet-name>
         <url-pattern>/MedicamentosServlet</url-pattern>
+    </servlet-mapping> 
+    <servlet-mapping>
+        <servlet-name>TipoCasoServlet</servlet-name>
+        <url-pattern>/TipoCasoServlet</url-pattern>
     </servlet-mapping> 
     <session-config>
         <session-timeout>
