@@ -6,11 +6,6 @@
 package com.softcoisoweb.clase;
 
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.activation.FileDataSource;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -52,11 +47,6 @@ public class EnviarCorreo {
             MimeMultipart multiParte = new MimeMultipart();
             multiParte.addBodyPart(texto);
             texto = new MimeBodyPart();
-            
-             DataSource imagenCabecera = new FileDataSource("C:\\Users\\manue\\Documents"
-                     + "\\NetBeansProjects\\SoftCoisoWeb\\imagen\\CabezaEmail.PNG");
-            texto.setDataHandler(new DataHandler(imagenCabecera));
-            texto.setHeader("Content-ID", "<imagenCabezera>");
             multiParte.addBodyPart(texto);
             
             message.setFrom(new InternetAddress(correoEnvia));

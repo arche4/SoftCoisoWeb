@@ -7,7 +7,7 @@ $(document).ready(function () {
         language: 'es',
         showUpload: false,
         maxFileCount: 5
-        
+
     });
 
     $("#uploadBtn").on("click", function () {
@@ -22,21 +22,34 @@ $(document).ready(function () {
             processData: false,
             contentType: false,
             data: data,
-            success: function (msg) {
-                var response = JSON.parse(msg);
-                var status = response.status;
-                if (status == 1) {
-                    alert("File has been uploaded successfully");
-                } else {
-                    alert("Couldn't upload file");
+            success: function (data) {
+                var respuesta = $.trim(data);
+                if (respuesta !== "") {
+                    respuesta = respuesta.split(",");
+                    var estatus = respuesta[0];
+                    if (estatus == 1) {
+                        $("#rutaArchivo").val(respuesta[1]);
+                        $('#cargarArchivos').modal('hide');
+                        $('#Exitoso').fadeIn(5000);
+                        setTimeout(function () {
+                            $('#Exitoso').fadeOut(5000);
+                        }, 5000);
+                    } else {
+                        $('#Error').fadeIn(5000);
+                        setTimeout(function () {
+                            $('#Error').fadeOut(5000);
+                        }, 5000);
+                    }
                 }
             },
             error: function (msg) {
-                alert("Couldn't upload file");
+                $('#Error').fadeIn(5000);
+                setTimeout(function () {
+                    $('#Error').fadeOut(5000);
+                }, 5000);
             }
         });
     });
-
     $("body").on("click", "#editCaso", function () {
         var editCaso = $(this).val();
         $.ajax({
@@ -83,20 +96,44 @@ function validar() {
     $('#modalValidar').modal('show');
     $('#verCaso').modal('hide');
 }
+
+function validarEstado() {
+    var cadena = ' <div class="form-row">'
+            + '<h5>¿Esta seguro que quieres realizar los cambios?</h3>'
+            + ' </div>';
+    $('#infoEstado').html(cadena);
+    $('#validarEstado').modal('show');
+    $('#cambiarEstado').modal('hide');
+}
 function cambiarEstado() {
     var btnCambiarEstado = 'ok';
-    var estado = $('#estado').val();
-    var comentarioEstado = $('#comentarioEstado').val();
-    var form = $("#estadoForm")[0];
-    var data = new FormData(form);
+    var estadoCaso = $('#estadoCaso').val();
+    var fechaCreacion = $('#fechaCreacion').val();
+    var casoid = $('#casoid').val();
+    var casoDescripcion = $('#casoDescripcion').val();
+    var cedulaUsuario = $('#cedulaUsuario').val();
+    var rutaArchivo = $('#rutaArchivo').val();
     $.ajax({
         async: false,
         type: "POST",
-        encType: "multipart/form-data",
         url: "/ExpedienteServlet",
-        data: 'btnCambiarEstado=' + btnCambiarEstado + '&estado=' + estado + '&comentarioEstado=' + comentarioEstado + '&data=' + data,
+        data: 'btnCambiarEstado=' + btnCambiarEstado + '&estadoCaso=' + estadoCaso + '&fechaCreacion=' + fechaCreacion
+                + '&casoid=' + casoid + '&casoDescripcion=' + casoDescripcion + '&cedulaUsuario=' + cedulaUsuario + '&rutaArchivo=' + rutaArchivo,
         success: function (data) {
-            console.log(data);
+            event.preventDefault();
+            if (data === "Exitoso") {
+                var cadena = ' <div class="form-row">'
+                        + '<h5>Sus cambios fueron guardados con ex\u00EDto.</h3>'
+                        + ' </div>';
+                $('#modInfexito').html(cadena);
+                $('#modalInfexito').modal('show');
+            } else {
+                var cadena = '<div class="form-row">'
+                        + '<h5>Lo sentimos, se ha presentado un problema guardando los datos .</h3>'
+                        + ' </div>';
+                $('#modInferror').html(cadena);
+                $('#modalInfError').modal('show');
+            }
         }
     });
 }

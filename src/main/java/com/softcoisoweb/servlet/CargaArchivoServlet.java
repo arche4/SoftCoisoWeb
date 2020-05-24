@@ -59,7 +59,8 @@ public class CargaArchivoServlet extends HttpServlet {
             }
 
             PrintWriter out = response.getWriter();
-            out.print("{\"status\":1}"+archivo);
+            String respuesta = "1"+","+archivo;
+            out.print(respuesta);
         }
 
     }

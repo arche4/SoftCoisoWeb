@@ -216,7 +216,7 @@ public class CalendarServlet extends HttpServlet {
             contenidoMensaje.append("<html>");
             contenidoMensaje.append("<head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /></head>");
             contenidoMensaje.append("<body style=\"color: #797979; background: #eaeaea; font-family: 'Ruda', sans-serif;\">");
-            contenidoMensaje.append("<img src=\"cid:imagenCabezera\" alt=\"\" style=\"margin: auto; display: block;\"/>");
+            contenidoMensaje.append("<img src=\"https://i.ibb.co/ZLnqNXX/Cabeza-Email.png\" alt=\"\" style=\"margin: auto; display: block;\"/>");
             contenidoMensaje.append("<table class=\"es-content\" cellspacing=\"0\" cellpadding=\"0\" align=\"center\">");
             contenidoMensaje.append("<td class=\"esd-container-frame\" width=\"600\" valign=\"top\" align=\"center\">");
             contenidoMensaje.append("<table style=\"border-radius: 4px; border-collapse: separate; background-color: #ffffff;\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"#ffffff\">");

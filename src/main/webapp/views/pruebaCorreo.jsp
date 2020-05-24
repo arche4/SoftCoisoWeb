@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body style="color: #797979; background: #eaeaea; font-family: 'Ruda', sans-serif;">
-        <img src="../img/CabezaEmail.PNG" alt="" style="margin: auto; display: block;"/>
+        <img src="https://i.ibb.co/ZLnqNXX/Cabeza-Email.png" alt="" style="margin: auto; display: block;"/>
         <table class="es-content" cellspacing="0" cellpadding="0" align="center">
 
             <td class="esd-container-frame" width="600" valign="top" align="center">

@@ -10,6 +10,7 @@ import com.softcoisoweb.controller.exceptions.PreexistingEntityException;
 import com.softcoisoweb.model.Usuario;
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CacheStoreMode;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
@@ -109,6 +110,7 @@ public class UsuarioJpaController implements Serializable {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             cq.select(cq.from(Usuario.class));
             Query q = em.createQuery(cq);
+            q.setHint("javax.persistence.cache.storeMode", CacheStoreMode.REFRESH);
             if (!all) {
                 q.setMaxResults(maxResults);
                 q.setFirstResult(firstResult);

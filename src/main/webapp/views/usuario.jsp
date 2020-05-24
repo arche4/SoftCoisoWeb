@@ -1,5 +1,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:if test="${empty user}">
+    <jsp:forward page="${pageContext.servletContext.contextPath}/index.jsp"/>
+</c:if> 
+<c:if test="${sessionScope.USUARIO.getRol() != sessionScope.rol}">
+    <jsp:forward page="${pageContext.servletContext.contextPath}/views/dashboard.jsp"/>
+</c:if> 
 <!DOCTYPE html>
 <html lang="en">
 
@@ -115,10 +121,11 @@
                             </a>
                             <ul class="sub">
                                 <li class="active"><a href="${pageContext.servletContext.contextPath}/views/usuario.jsp">Usuarios</a></li>
-                                <li ><a href="usuario.jsp">Formaciones</a></li>
-                                <li><a href="panels.html">Tipo de casos</a></li>
-                                <li><a href="font_awesome.html">Estados de caso</a></li>
-                                <li><a href="font_awesome.html">Medicamentos</a></li>
+                                <li><a href="${pageContext.servletContext.contextPath}/views/medicacion.jsp">Medicamentos</a></li>
+                                <li><a href="${pageContext.servletContext.contextPath}/views/tipoCaso.jsp">Tipo de casos</a></li>
+                                <li><a href="${pageContext.servletContext.contextPath}/views/estadoCaso.jsp">Estados de caso</a></li>
+                                <li><a href="${pageContext.servletContext.contextPath}/views/tipoContrato.jsp">Tipos de Contratos</a></li>
+                                <li><a href="${pageContext.servletContext.contextPath}/views/grupoSindicales.jsp">Grupos Sindicales</a></li>
                             </ul>
                         </li>
 
@@ -133,28 +140,58 @@
             <!--main content start-->
 
             <section id="main-content">
-                <section class="wrapper">
+                <section class="wrapper site-min-height">
                     <h3><i class="fa fa-angle-right"></i> Usuarios </h3>
-                    <div class="row mb">
+                    <div class="row mt">
                         <!-- page start-->
                         <button class="btn btn-theme" data-toggle="modal" data-target="#myModal" style="margin: 10px;">
                             Crear Usuario
                         </button>
                         <!-- Modal -->
-                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="myModal" >
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                        <h4 class="modal-title" id="myModalLabel">Crear Usuario</h4>
                                     </div>
-                                    <div class="modal-body">
-                                        Hi there, I am a Modal Example for Dashio Admin Panel.
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
+                                    <form id="usuario" data-toggle="validator">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label class="control-label">Cedula</label>
+                                                <input type="number" class="form-control" id="cedula" name="cedula"  placeholder="Cedula" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="control-label">Nombre</label>
+                                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label class="control-label">Apellido</label>
+                                                <input type="text" class="form-control" id="apellido" name="apellido"  placeholder="Apellidos" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="control-label">Rol</label>
+                                                <select name="rol" id="rol"  class="form-control" required>
+                                                    <option value="Administrador" selected>Administrador</option>
+                                                    <option value="Coordinador" selected>Coordinador</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-12">
+                                                <label class="control-label">Email</label>
+                                                <input class="form-control " id="emalUsuario" type="email" name="emalUsuario" placeholder="Email" required>
+                                            </div>
+                                        </div>
+                                        <br><br><br><br><br><br><br><br><br><br><br><br><br>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">cerrar</button>
+                                            <button type="button" class="btn btn-primary" onclick="guardarUsuario()">Guardar</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -167,9 +204,9 @@
                                             <th scope="col">Cedula</th>
                                             <th scope="col">Nombre</th>
                                             <th scope="col">Apellidos</th>
+                                            <th scope="col">Correo</th>
                                             <th scope="col">rol</th>
                                             <th scope="col">Ver</th>
-                                            <th scope="col">Eliminar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -178,17 +215,166 @@
                                                 <td><c:out value="${usuario.getCedula()}"/></td>
                                                 <td><c:out value="${usuario.getNombreUsuario()}"/></td>
                                                 <td><c:out value="${usuario.getApellidoUsuario()}"/></td>
+                                                <td><c:out value="${usuario.getCorreo()}"/></td>
                                                 <td><c:out value="${usuario.getRol()}"/></td>
-                                                <td> <button type="button" href="#modalInf" id ="usuarioConsulta" 
-                                                             name="usuarioConsulta" class="btn btn-link" value="${usuario.getCedula()}"><i class="fa fa-eye"></i> </button>
+                                                <td> 
+                                                    <button type="button" href="#modalInf" id ="usuarioConsulta" 
+                                                            name="usuarioConsulta" class="btn btn-link" value="${usuario.getCedula()}"><i class="fa fa-eye"></i>
+                                                    </button>
                                                 </td>
-                                                <td><button type="button" href="#modalDelete" id ="btnElimiar" 
-                                                            name="btnElmiar" class="btn btn-link" value="${usuario.getCedula()}"><i class="fa fa-trash-o"></i></button>   </td>
                                             </tr>
                                         </c:forEach>
-
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="verUsuario" >
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title" id="myModalLabel">Usuario</h4>
+                                    </div>
+                                    <form id="userMod" data-toggle="validator">
+                                        <div class="modal-body">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <label class="control-label">Cedula</label>
+                                                    <input type="number" class="form-control" id="usuarioCedula" name="usuarioCedula"  placeholder="Cedula" readonly>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label class="control-label">Nombre</label>
+                                                    <input type="text" class="form-control" id="usuarioNombre" name="usuarioNombre" placeholder="Nombre" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <label class="control-label">Apellido</label>
+                                                    <input type="text" class="form-control" id="usuarioApellido" name="usuarioApellido"  placeholder="Apellidos" required>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label class="control-label">Rol</label>
+                                                    <select name="usuarioRol" id="usuarioRol"  class="form-control" required>
+                                                        <option value="Administrador" selected>Administrador</option>
+                                                        <option value="Coordinador" selected>Coordinador</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12">
+                                                    <label class="control-label">Email</label>
+                                                    <input class="form-control " id="usuarioEmail" type="email" name="usuarioEmail" placeholder="Email" required>
+                                                </div>
+                                            </div>
+                                            <input class="form-control " id="usuarioContraseña" type="hidden" name="usuarioContraseña">
+                                        </div>
+                                        <br><br><br><br><br><br><br><br><br><br><br>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                            <button type="button" class="btn btn-primary" onclick="validar()">Guardar</button>
+                                            <button type="button" class="btn btn-danger" onclick="validarEliminar()">Eliminar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal" id="modalInfexito" abindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" id="modales-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Operación Exitosa</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="modal-row">
+                                            <div class="col-md-12">
+                                                <form>
+                                                    <div class="modal-body" id="modInfexito">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <hr width="0%">
+                                            <button type="button" id="Guardar" class="btn btn-primary" onclick="myFunctionReload()">Ok</button>
+                                        </div>                           
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="modalValidar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" id="modales-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Confirmar Cambios</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="modal-row">
+                                            <div class="col-md-12">
+                                                <form method="post" name="modConfirmar" id="modConfirmar" action="">
+                                                    <div class="modal-body" id="InfoConfirmar">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button  type="submit" class="btn btn-success" id="btnModificar" onclick="modificarUsuario()">
+                                                Si
+                                            </button>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                        </div>                           
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+
+                                <!-- Modal content-->
+                                <div class="modal-content" id="modales-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Confirmar Cambios</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="modal-row">
+                                            <div class="col-md-12">
+                                                <form method="post" name="modConfirmar" id="modConfirmar" action="">
+                                                    <div class="modal-body" id="InfoEliminar">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button  type="submit" class="btn btn-success" id="btnModificar" onclick="eliminarUsuario()">
+                                                Si
+                                            </button>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                        </div>                           
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal" id="modalInfError" abindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" id="modales-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Operación Erronea</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="modal-row">
+                                            <div class="col-md-12">
+                                                <form method="post" name="personaEdit" id="persona" action="">
+                                                    <div class="modal-body" id="modInferror">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <hr width="0%">
+                                            <button type="button" id="Guardar" class="btn btn-primary" onclick="myFunctionReload()">Ok</button>
+                                        </div>                           
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- page end-->
@@ -215,8 +401,9 @@
             </footer>
             <!--footer end-->
         </section>
-        <div class="loader" id="loader"></div>
+        <div class="loader"></div>
         <!-- js placed at the end of the document so the pages load faster -->
+        <script src="${pageContext.servletContext.contextPath}/lib/bootstrap/js/validator.min.js" type="text/javascript"></script>
         <script src="${pageContext.servletContext.contextPath}/JavaScript/usuario.js" type="text/javascript"></script>
         <script type="text/javascript" src="${pageContext.servletContext.contextPath}/lib/advanced-datatable/js/DT_bootstrap.js"></script>
 

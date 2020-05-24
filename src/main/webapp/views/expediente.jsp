@@ -530,27 +530,7 @@
             <!-- /MAIN CONTENT -->
             <!--main content end-->
             <!--footer start-->
-            <div class="modal fade" id="cargarArchivos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">Cargar Archivo</h4>
-                        </div>
-                        <form id="sampleUploadFrm" method="POST" action="#" enctype="multipart/form-data">
-                            <div class="form-group col-md-12">
-                                <div class="file-loading"> 
-                                    <input id="input-700" name="kartik-input-700[]" type="file" multiple>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary pull-right" id="uploadBtn">Cargar</button>
-                                <button type="reset" class="btn btn-danger">cancelar</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+
             <div class="modal fade" id="cambiarEstado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -560,30 +540,62 @@
                         </div>
                         <form id="caso">
                             <br>
-                            <div class="form-group col-md-6">
-                                <label>Tipo de Caso</label>
-                                <select name="estadoCaso" id="estadoCaso" class="form-control-sm form-control" required>
-                                    <option value="">Tipo Caso </option>
-                                    <c:forEach var="estado" items="${sessionScope.Estado}">
-                                        <option value="${estado.getCodigoEstado()}"><c:out value="${estado.getNombreEstado()}"/></option>
-                                    </c:forEach>
-                                </select>
+                            <div class="alert alert-success" id="Exitoso" style="display:none;">
+                                <strong>¡Bien hecho!</strong>Se guardo a cargado correctamente el archivo.
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <select name="estadoCaso" id="estadoCaso" class="form-control-sm form-control" required>
+                                        <option value="">Estado </option>
+                                        <c:forEach var="estado" items="${sessionScope.Estado}">
+                                            <option value="${estado.getCodigoEstado()}"><c:out value="${estado.getNombreEstado()}"/></option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <button type="button" class="btn btn-theme" data-toggle="modal" data-target="#cargarArchivos">
+                                        Cargar
+                                    </button>
+                                </div>
                             </div>
                             <div class="form-group col-md-12">
-                                <label class="control-label">Descripcion del Caso</label>
-                                <textarea class="form-control " rows="10" cols="50" id="casoDescripcion" name="casoDescripcion" required></textarea>
+                                <label class="control-label">Quieres agregar algun comentario ? </label>
+                                <textarea class="form-control " id="casoDescripcion" name="casoDescripcion" placeholder="Coementar..."></textarea>
                             </div>
-                            <input class="form-control " id="casoCedulaPersona" type="hidden" name="casoCedulaPersona">
-                            <input class="form-control " id="CreadoPor" type="hidden" name="CreadoPor">
-                            <input class="form-control " id="Asignado" type="hidden" name="Asignado">
+                            <input class="form-control " id="fechaCreacion" type="hidden" name="fechaCreacion" value="${sessionScope.FlujoCaso.getFechaCreacion()}">
+                            <input class="form-control " id="casoid" type="hidden" name="casoid" value="${sessionScope.FlujoCaso.getCasoPersonaIdCaso()}">
                             <input class="form-control " id="cedulaUsuario" type="hidden" name="cedulaUsuario" value="${sessionScope.USUARIO.cedula}">
-
-                            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                            <input class="form-control " id="rutaArchivo" type="hidden" name="rutaArchivo">
+                            <br><br><br><br><br><br><br><br><br>
                             <div class="modal-footer">
-                                <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="validar()">
-                                    Guardar
+                                <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="validarEstado()">
+                                    Cambiar Estado
                                 </button>
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="cargarArchivos">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Cargar Archivo</h4>
+                        </div>
+                        <form id="sampleUploadFrm" method="POST" action="#" enctype="multipart/form-data">
+                            <div class="alert alert-danger" id="Error" style="display:none;">
+                                <strong>Error! </strong>Se ha presentado un problema en la carga.
+                            </div>
+                            <div class="form-group col-md-12">
+                                <div class="file-loading"> 
+                                    <input id="input-700" name="kartik-input-700[]" type="file" multiple>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary pull-right" id="uploadBtn">Cargar</button>
+                                <button type="reset" class="btn btn-danger">cancelar</button>
                             </div>
                         </form>
                     </div>
@@ -693,6 +705,33 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="validarEstado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+
+                    <!-- Modal content-->
+                    <div class="modal-content" id="modales-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Confirmar Cambios</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-row">
+                                <div class="col-md-12">
+                                    <form method="post" name="modConfirmar" id="modConfirmar" action="">
+                                        <div class="modal-body" id="infoEstado">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success" id="btnModificar" onclick="cambiarEstado()">
+                                    Si
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                            </div>                           
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="modal" id="modalDatosIncorrectos" abindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content" id="modales-content">
@@ -742,18 +781,12 @@
             <footer class="site-footer">
                 <div class="text-center">
                     <p>
-                        &copy; Copyrights <strong>Dashio</strong>. All Rights Reserved
+                        &copy; Derechos de autor <strong>Coiso</strong>. ©2020 Todos los derechos reservados.
                     </p>
                     <div class="credits">
-                        <!--
-                          You are NOT allowed to delete the credit link to TemplateMag with free version.
-                          You can delete the credit link only if you bought the pro version.
-                          Buy the pro version with working PHP/AJAX contact form: https://templatemag.com/dashio-bootstrap-admin-template/
-                          Licensing information: https://templatemag.com/license/
-                        -->
-                        Created with Dashio template by <a href="https://templatemag.com/">TemplateMag</a>
+                        Corporación colectivo intersindical de salud ocupacional. Privacidad y términos <a href="http://www.coiso.org/"></a>
                     </div>
-                    <a href="mail_view.html#" class="go-top">
+                    <a href="http://www.coiso.org/" class="go-top">
                         <i class="fa fa-angle-up"></i>
                     </a>
                 </div>
