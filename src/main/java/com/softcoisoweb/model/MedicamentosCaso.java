@@ -7,6 +7,7 @@ package com.softcoisoweb.model;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,6 +25,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "medicamentos_caso")
+@Cacheable(false)
 @NamedQueries({
     @NamedQuery(name = "MedicamentosCaso.findAll", query = "SELECT m FROM MedicamentosCaso m"),
     @NamedQuery(name = "MedicamentosCaso.findByCodigoMedicamento", query = "SELECT m FROM MedicamentosCaso m WHERE m.codigoMedicamento = :codigoMedicamento"),
@@ -32,7 +34,9 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "MedicamentosCaso.findByMedicamentosCodigoMedicamento", query = "SELECT m FROM MedicamentosCaso m WHERE m.medicamentosCodigoMedicamento = :medicamentosCodigoMedicamento"),
     @NamedQuery(name = "MedicamentosCaso.findByUsuarioCedula", query = "SELECT m FROM MedicamentosCaso m WHERE m.usuarioCedula = :usuarioCedula"),
     @NamedQuery(name = "MedicamentosCaso.findByComentario", query = "SELECT m FROM MedicamentosCaso m WHERE m.comentario = :comentario"),
-    @NamedQuery(name = "MedicamentosCaso.findByArchivos", query = "SELECT m FROM MedicamentosCaso m WHERE m.archivos = :archivos")})
+    @NamedQuery(name = "MedicamentosCaso.findByArchivos", query = "SELECT m FROM MedicamentosCaso m WHERE m.archivos = :archivos"),
+    @NamedQuery(name = "MedicamentosCaso.findByDosificacion", query = "SELECT m FROM MedicamentosCaso m WHERE m.dosificacion = :dosificacion"),
+    @NamedQuery(name = "MedicamentosCaso.findByCantidad", query = "SELECT m FROM MedicamentosCaso m WHERE m.cantidad = :cantidad")})
 public class MedicamentosCaso implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -67,6 +71,12 @@ public class MedicamentosCaso implements Serializable {
     @Size(max = 500)
     @Column(name = "archivos")
     private String archivos;
+    @Size(max = 100)
+    @Column(name = "dosificacion")
+    private String dosificacion;
+    @Size(max = 100)
+    @Column(name = "cantidad")
+    private String cantidad;
 
     public MedicamentosCaso() {
     }
@@ -137,6 +147,22 @@ public class MedicamentosCaso implements Serializable {
 
     public void setArchivos(String archivos) {
         this.archivos = archivos;
+    }
+
+    public String getDosificacion() {
+        return dosificacion;
+    }
+
+    public void setDosificacion(String dosificacion) {
+        this.dosificacion = dosificacion;
+    }
+
+    public String getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(String cantidad) {
+        this.cantidad = cantidad;
     }
 
     @Override

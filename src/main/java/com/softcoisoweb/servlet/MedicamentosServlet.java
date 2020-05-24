@@ -6,7 +6,9 @@
 package com.softcoisoweb.servlet;
 
 import com.softcoisoweb.controller.MedicamentosJpaController;
+import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.model.Medicamentos;
+import com.softcoisoweb.model.MedicamentosCaso;
 import com.softcoisoweb.util.JPAFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -39,6 +41,7 @@ public class MedicamentosServlet extends HttpServlet {
         String btnCrearMedicamento = request.getParameter("btnCrearMedicamento");
         String consultarMedicamento = request.getParameter("consultarMedicamento");
         String btnModificar = request.getParameter("btnModificar");
+        String btnEliminar = request.getParameter("btnEliminar");
 
         try ( PrintWriter out = response.getWriter()) {
             if (btnCrearMedicamento != null && btnCrearMedicamento.equals("ok")) {
@@ -51,6 +54,10 @@ public class MedicamentosServlet extends HttpServlet {
             }
             if (btnModificar != null && btnModificar.equals("ok")) {
                 String modMed = modificarMedicamento(request);
+                out.print(modMed);
+            }
+            if (btnEliminar != null) {
+                String modMed = eliminarMedicamento(btnEliminar);
                 out.print(modMed);
             }
             cargarDatos(request, response);
@@ -120,6 +127,24 @@ public class MedicamentosServlet extends HttpServlet {
             resultado = "Error";
         }
 
+        return resultado;
+    }
+
+    public String eliminarMedicamento(String codigoMedicamento) {
+        String resultado;
+        MedicamentosJpaController medicamentoJpa = new MedicamentosJpaController(JPAFactory.getFACTORY());
+        try {
+            List<MedicamentosCaso> ListMed = medicamentoJpa.medicamentoxCaso(codigoMedicamento);
+            if (!ListMed.isEmpty()) {
+                resultado = "1";
+            } else {
+                medicamentoJpa.destroy(codigoMedicamento);
+                resultado = "0";
+            }
+        } catch (NonexistentEntityException e) {
+            System.out.println("Error eliminando el medicamento: " + codigoMedicamento + "El error es:" + e);
+            resultado = "2";
+        }
         return resultado;
     }
 

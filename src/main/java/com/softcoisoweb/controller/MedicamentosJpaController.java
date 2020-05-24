@@ -8,6 +8,7 @@ package com.softcoisoweb.controller;
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.controller.exceptions.PreexistingEntityException;
 import com.softcoisoweb.model.Medicamentos;
+import com.softcoisoweb.model.MedicamentosCaso;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CacheStoreMode;
@@ -141,6 +142,23 @@ public class MedicamentosJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    
+    public List<MedicamentosCaso> medicamentoxCaso(String codigoMed) {
+        EntityManager em = null;
+        List<MedicamentosCaso> listMedxCaso = null;
+        try {
+            String QuerySelect = "select * from medicamentos_caso where codigo_medicamento = '" + codigoMed + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            listMedxCaso = em.createNativeQuery(QuerySelect, MedicamentosCaso.class).getResultList();
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return listMedxCaso;
     }
     
 }

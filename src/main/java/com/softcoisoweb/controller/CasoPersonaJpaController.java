@@ -10,7 +10,6 @@ import com.softcoisoweb.controller.exceptions.PreexistingEntityException;
 import com.softcoisoweb.model.CasoPersona;
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Cache;
 import javax.persistence.CacheStoreMode;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

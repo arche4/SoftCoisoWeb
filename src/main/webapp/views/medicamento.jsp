@@ -218,6 +218,7 @@
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                         <h4 class="modal-title" id="myModalLabel">Crear Medicamento</h4>
                                     </div>
+                                    <br>
                                     <form id="medicamento" data-toggle="validator">
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
@@ -235,10 +236,11 @@
                                                 <textarea class="form-control " id="medDescrip" name="medDescrip" ></textarea>
                                             </div>
                                         </div>
-                                        <br><br><br><br><br><br><br><br>
+                                        <br><br><br><br><br><br><br><br><br><br>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">cerrar</button>
                                             <button type="button" class="btn btn-primary" onclick="validar()">Guardar</button>
+                                            <button type="button" class="btn btn-danger" onclick="validarEliminar()">Eliminar</button>
                                         </div>
                                     </form>
                                 </div>
@@ -310,7 +312,7 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button  type="submit" class="btn btn-success" id="btnModificar" onclick="eliminarUsuario()">
+                                            <button  type="submit" class="btn btn-success" id="btnModificar" onclick="eliminarMedicamento()">
                                                 Si
                                             </button>
                                             <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>

@@ -104,11 +104,11 @@ function validar() {
 
 function validarEliminar() {
     var cadena = ' <div class="form-row">'
-            + '<h5> ¿ Esta seguro que quieres eliminar el usuario? </h3>'
+            + '<h5> ¿ Esta seguro que quieres eliminar el medicamento? </h3>'
             + ' </div>';
     $('#InfoEliminar').html(cadena);
     $('#modalEliminar').modal('show');
-    $('#verUsuario').modal('hide');
+    $('#verMedicamento').modal('hide');
 }
 function modificarMedicamento() {
 
@@ -141,26 +141,32 @@ function modificarMedicamento() {
             }
         }});
 }
-function eliminarUsuario() {
+function eliminarMedicamento() {
     $(".loader").fadeIn("slow");
     $('#modalEliminar').modal('hide');
-    var btnEliminar = $('#usuarioCedula').val();
+    var btnEliminar = $('#medCod').val();
     $.ajax({
         async: false,
         type: "GET",
-        url: "/UsuarioServlet",
+        url: "/MedicamentosServlet",
         data: 'btnEliminar=' + btnEliminar,
         success: function (data) {
             $(".loader").fadeOut("slow");
-            if (data === "Exitoso") {
+            if (data === "0") {
                 var cadena = ' <div class="form-row">'
-                        + '<h5>El usuario fue eliminado  con ex\u00EDto.</h3>'
+                        + '<h5>El medicamento fue eliminado con ex\u00EDto.</h3>'
                         + '</div>';
                 $('#modInfexito').html(cadena);
                 $('#modalInfexito').modal('show');
-            } else {
+            } else if (data === "1") {
                 var cadena = '<div class="form-row">'
-                        + '<h5>Lo sentimos, se ha presentado un problema eliminando el usuario.</h3>'
+                        + '<h5>El medicamento no se puede eliminar, esta siendo usado.</h3>'
+                        + ' </div>';
+                $('#modInferror').html(cadena);
+                $('#modalInfError').modal('show');
+            } else if (data === "2") {
+                var cadena = '<div class="form-row">'
+                        + '<h5>Lo sentimos, se ha presentado un problema eliminando el medicamento .</h3>'
                         + ' </div>';
                 $('#modInferror').html(cadena);
                 $('#modalInfError').modal('show');
