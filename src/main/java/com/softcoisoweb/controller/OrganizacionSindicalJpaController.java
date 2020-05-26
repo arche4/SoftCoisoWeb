@@ -8,6 +8,7 @@ package com.softcoisoweb.controller;
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.controller.exceptions.PreexistingEntityException;
 import com.softcoisoweb.model.OrganizacionSindical;
+import com.softcoisoweb.model.Persona;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -139,6 +140,23 @@ public class OrganizacionSindicalJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    
+    public List<Persona> sindicatoXpersona(String codigo) {
+        EntityManager em = null;
+        List<Persona> SindicatoXpersona = null;
+        try {
+            String QuerySelect = "select * from persona where organizacion_sindical_codigo_organizacion = '" + codigo + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            SindicatoXpersona = em.createNativeQuery(QuerySelect, Persona.class).getResultList();
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return SindicatoXpersona;
     }
     
 }

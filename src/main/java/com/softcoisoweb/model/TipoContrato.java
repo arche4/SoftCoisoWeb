@@ -52,9 +52,10 @@ public class TipoContrato implements Serializable {
         this.codigoTipoContrato = codigoTipoContrato;
     }
 
-    public TipoContrato(String codigoTipoContrato, String nombre) {
+    public TipoContrato(String codigoTipoContrato, String nombre, String descripcion) {
         this.codigoTipoContrato = codigoTipoContrato;
         this.nombre = nombre;
+        this.descripcion = descripcion;
     }
 
     public String getCodigoTipoContrato() {

@@ -219,7 +219,7 @@
                                         <h4 class="modal-title" id="myModalLabel">Crear Medicamento</h4>
                                     </div>
                                     <br>
-                                    <form id="medicamento" data-toggle="validator">
+                                    <form id="modMedMo" data-toggle="validator">
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label class="control-label">Codigo Medicamento</label>

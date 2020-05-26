@@ -7,9 +7,12 @@ package com.softcoisoweb.controller;
 
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.controller.exceptions.PreexistingEntityException;
+import com.softcoisoweb.model.CasoPersona;
 import com.softcoisoweb.model.EstadoCaso;
+import com.softcoisoweb.model.FlujoCaso;
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CacheStoreMode;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
@@ -109,6 +112,7 @@ public class EstadoCasoJpaController implements Serializable {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             cq.select(cq.from(EstadoCaso.class));
             Query q = em.createQuery(cq);
+            q.setHint("javax.persistence.cache.storeMode", CacheStoreMode.REFRESH);
             if (!all) {
                 q.setMaxResults(maxResults);
                 q.setFirstResult(firstResult);
@@ -139,6 +143,23 @@ public class EstadoCasoJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    
+    public List<FlujoCaso> EstadoxCasos(String codigo) {
+        EntityManager em = null;
+        List<FlujoCaso> estadoXcaso = null;
+        try {
+            String QuerySelect = "select * from flujo_caso where estado_caso_codigo_estado = '" + codigo + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            estadoXcaso = em.createNativeQuery(QuerySelect, FlujoCaso.class).getResultList();
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return estadoXcaso;
     }
     
 }

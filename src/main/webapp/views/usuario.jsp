@@ -95,14 +95,10 @@
                             </ul>
                         </li>
                         <li class="sub-menu">
-                            <a href="javascript:;">
+                            <a href="${pageContext.servletContext.contextPath}/views/persona.jsp">
                                 <i class="fa fa-users"></i>
                                 <span>Persona</span>
                             </a>
-                            <ul class="sub">
-                                <li><a href="${pageContext.servletContext.contextPath}/views/registroPersona.jsp">Registrar Personas</a></li>
-                                <li><a href="${pageContext.servletContext.contextPath}/views/persona.jsp">Personas</a></li>
-                            </ul>
                         </li>
                         <li class="sub-menu">
                             <a href="javascript:;">

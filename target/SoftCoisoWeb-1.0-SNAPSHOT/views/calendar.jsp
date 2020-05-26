@@ -12,7 +12,7 @@
         <meta name="description" content="">
         <meta name="author" content="Dashboard">
         <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
-        <title>SOFCOISO</title>
+        <title>SofCoiso-Citas</title>
 
         <!-- Favicons -->
         <link href="${pageContext.servletContext.contextPath}/img/favicon.png" rel="icon">
@@ -32,11 +32,14 @@
         <link href='${pageContext.servletContext.contextPath}/lib/fullcalendar/packages/timegrid/main.css' rel='stylesheet' />
 
         <link href="${pageContext.servletContext.contextPath}/css/style-responsive.css" rel="stylesheet">
-        
+
         <link href="${pageContext.servletContext.contextPath}/Loading.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/lib/gritter/css/jquery.gritter.css" />
         <link href="${pageContext.servletContext.contextPath}/css/general.css" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.servletContext.contextPath}/lib/Search/select2.min.css" rel="stylesheet" type="text/css"/>
+        <script src="${pageContext.servletContext.contextPath}/lib/Search/select2.min.js" type="text/javascript"></script>
     </head>
+
     <body>
         <section id="container">
             <header class="header black-bg">
@@ -44,7 +47,7 @@
                     <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
                 </div>
                 <!--logo start-->
-                <a href="index.html" class="logo"><b>SOF<span>COISO</span></b></a>
+                <a href="${pageContext.servletContext.contextPath}/views/dashboard.jsp" class="logo"><b>SOF<span>COISO</span></b></a>
 
                 <div class="top-menu">
                     <ul class="nav pull-right top-menu">
@@ -63,7 +66,7 @@
                 <div id="sidebar" class="nav-collapse ">
                     <!-- sidebar menu start-->
                     <ul class="sidebar-menu" id="nav-accordion">
-                        <p class="centered"><a href="profile.html"><img src="${pageContext.servletContext.contextPath}/img/ui-sam.jpg" class="img-circle" width="80"></a></p>
+                        <p class="centered"><a href="${pageContext.servletContext.contextPath}/views/perfil.jsp"><img src="${pageContext.servletContext.contextPath}/img/icono-user.png" class="img-circle" width="80"></a></p>
                         <h5 class="centered">${sessionScope.USUARIO.nombreUsuario} ${sessionScope.USUARIO.apellidoUsuario}</h5>
                         <li class="mt">
                             <a  href="${pageContext.servletContext.contextPath}/views/dashboard.jsp">
@@ -72,25 +75,21 @@
                             </a>
                         </li>
                         <li class="sub-menu">
-                            <a href="javascript:;">
+                            <a class="active" href="javascript:;">
                                 <i class="fa fa-desktop"></i>
                                 <span>Agendamiento</span>
                             </a>
                             <ul class="sub">
-                                <li><a href="${pageContext.servletContext.contextPath}/views/calendar.jsp">Citas</a></li>
+                                <li class="active"><a href="${pageContext.servletContext.contextPath}/views/calendar.jsp">Citas</a></li>
                                 <li><a href="${pageContext.servletContext.contextPath}/views/formacion.jsp">Formaciones</a></li>
                                 <li><a href="panels.html">Planeacion</a></li>
                             </ul>
                         </li>
                         <li class="sub-menu">
-                            <a href="javascript:;">
-                                <i class="fa fa-desktop"></i>
+                            <a href="${pageContext.servletContext.contextPath}/views/persona.jsp">
+                                <i class="fa fa-users"></i>
                                 <span>Persona</span>
                             </a>
-                            <ul class="sub">
-                                <li><a href="${pageContext.servletContext.contextPath}/views/registroPersona.jsp">Registrar Personas</a></li>
-                                <li><a href="${pageContext.servletContext.contextPath}/views/persona.jsp">Personas</a></li>
-                            </ul>
                         </li>
                         <li class="sub-menu">
                             <a href="javascript:;">
@@ -103,16 +102,17 @@
                             </ul>
                         </li>
                         <li class="sub-menu">
-                            <a href="javascript:;">
+                            <a   href="javascript:;">
                                 <i class="fa fa-desktop"></i>
                                 <span>Modulos Administrativos</span>
                             </a>
                             <ul class="sub">
                                 <li><a href="${pageContext.servletContext.contextPath}/views/usuario.jsp">Usuarios</a></li>
-                                <li><a href="usuario.jsp">Formaciones</a></li>
-                                <li><a href="panels.html">Tipo de casos</a></li>
-                                <li><a href="font_awesome.html">Estados de caso</a></li>
-                                <li><a href="font_awesome.html">Medicamentos</a></li>
+                                <li><a href="${pageContext.servletContext.contextPath}/views/medicamento.jsp">Medicamentos</a></li>
+                                <li><a href="${pageContext.servletContext.contextPath}/views/tipoCaso.jsp">Tipo de casos</a></li>
+                                <li><a href="${pageContext.servletContext.contextPath}/views/estadoCaso.jsp">Estados de caso</a></li>
+                                <li><a href="${pageContext.servletContext.contextPath}/views/tipoContrato.jsp">Tipos de Contratos</a></li>
+                                <li><a href="${pageContext.servletContext.contextPath}/views/grupoSindicales.jsp">Grupos Sindicales</a></li>
                             </ul>
                         </li>
 
@@ -138,7 +138,6 @@
                     <div class="alert alert-success" id="Exitoso" style="display:none;">
                         <strong>¡Bien hecho!</strong>Se guardo correctamente la cita.
                     </div>
-
                     <div class="row mt">
 
                         <aside class="col-lg-11 mt" style="margin: 20px;">
@@ -182,7 +181,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal fade" id="crearCita" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal fade" id="crearCita" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -192,13 +191,13 @@
                             <form id="calendario">
                                 <br>
                                 <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label class="control-label">Cedula</label>
-                                        <input type="number" class="form-control" id="cedula" name="cedula"  placeholder="Cedula" required>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label class="control-label">Nombre</label>
-                                        <input type="text" class="form-control" id="nombrePersona" name="nombrePersona"  placeholder="Nombre Persona" required>
+                                    <div class="form-group col-md-12">
+                                        <select class="js-example-basic-single" name="persona" id="persona" required>
+                                             <option value="">Buscar Persona                                                                                                                                                   </option>
+                                            <c:forEach var="persona" items="${sessionScope.Persona}">
+                                                <option value="${persona.getCedula()}"><c:out value="${persona.getCedula()}"/> - <c:out value="${persona.getNombrePersona()}"/>  <c:out value="${persona.getApellidoPersona()}"/></option>
+                                            </c:forEach>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -230,7 +229,8 @@
                                         <textarea class="form-control " id="comentario" name="comentario" ></textarea>
 
                                     </div>
-                                </div>         
+                                </div>
+                                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
                                 <div class="modal-footer">
                                     <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="guardar()">
                                         Crear
@@ -359,7 +359,8 @@
 
             </section>
         </section>
-        <div class="loader" id="loader" style="display:none"></div>
+        <div class="loader"></div>
+        
         <script src="${pageContext.servletContext.contextPath}/lib/fullcalendar/packages/core/locales-all.js" type="text/javascript"></script>
         <script src="${pageContext.servletContext.contextPath}/JavaScript/calendario.js" type="text/javascript"></script>
         <script class="include" type="text/javascript" src="${pageContext.servletContext.contextPath}/lib/jquery.dcjqaccordion.2.7.js"></script>

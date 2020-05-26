@@ -95,14 +95,10 @@
                             </ul>
                         </li>
                         <li class="sub-menu">
-                            <a href="javascript:;">
+                            <a href="${pageContext.servletContext.contextPath}/views/persona.jsp">
                                 <i class="fa fa-users"></i>
                                 <span>Persona</span>
                             </a>
-                            <ul class="sub">
-                                <li><a href="${pageContext.servletContext.contextPath}/views/registroPersona.jsp">Registrar Personas</a></li>
-                                <li><a href="${pageContext.servletContext.contextPath}/views/persona.jsp">Personas</a></li>
-                            </ul>
                         </li>
                         <li class="sub-menu">
                             <a href="javascript:;">
@@ -219,7 +215,7 @@
                                         <h4 class="modal-title" id="myModalLabel">Tipo Caso</h4>
                                     </div>
                                     <br>
-                                    <form id="tipoCaso" data-toggle="validator">
+                                    <form id="modTipoCaso" data-toggle="validator">
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label class="control-label">Codigo Tipo caso</label>

@@ -7,9 +7,11 @@ package com.softcoisoweb.controller;
 
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.controller.exceptions.PreexistingEntityException;
+import com.softcoisoweb.model.Persona;
 import com.softcoisoweb.model.TipoContrato;
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CacheStoreMode;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
@@ -109,6 +111,7 @@ public class TipoContratoJpaController implements Serializable {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             cq.select(cq.from(TipoContrato.class));
             Query q = em.createQuery(cq);
+            q.setHint("javax.persistence.cache.storeMode", CacheStoreMode.REFRESH);
             if (!all) {
                 q.setMaxResults(maxResults);
                 q.setFirstResult(firstResult);
@@ -141,4 +144,21 @@ public class TipoContratoJpaController implements Serializable {
         }
     }
     
+    public List<Persona> contratoXpersona(String codigo) {
+        EntityManager em = null;
+        List<Persona> ContratoXpersona= null;
+        try {
+            String QuerySelect = "select * from persona where tipo_contrato_codigo_tipo_contrato = '" + codigo + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            ContratoXpersona = em.createNativeQuery(QuerySelect, Persona.class).getResultList();
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return ContratoXpersona;
+    }
+
 }

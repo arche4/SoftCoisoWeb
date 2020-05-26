@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!--===============================================================================================-->	
-        <link rel="icon" type="${pageContext.servletContext.contextPath}/image/png" href="img/favicon.png"/>
+        <link href="${pageContext.servletContext.contextPath}/img/favicon.png" rel="icon">
         <!--===============================================================================================-->
         <link rel="stylesheet" type="text/css" href="${pageContext.servletContext.contextPath}/login/vendor/bootstrap/css/bootstrap.min.css"/>
         <!--===============================================================================================-->

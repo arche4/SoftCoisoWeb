@@ -52,9 +52,10 @@ public class EstadoCaso implements Serializable {
         this.codigoEstado = codigoEstado;
     }
 
-    public EstadoCaso(String codigoEstado, String nombreEstado) {
+    public EstadoCaso(String codigoEstado, String nombreEstado, String descripcion) {
         this.codigoEstado = codigoEstado;
         this.nombreEstado = nombreEstado;
+        this.descripcion = descripcion;
     }
 
     public String getCodigoEstado() {

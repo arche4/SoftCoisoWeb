@@ -83,7 +83,7 @@ function guardar() {
     }
 }
 function validar() {
-    var elmForm = $("#userMod");
+    var elmForm = $("#modTipoCaso");
     if (elmForm) {
         elmForm.validator('validate');
         var elmErr = elmForm.find('.has-error');

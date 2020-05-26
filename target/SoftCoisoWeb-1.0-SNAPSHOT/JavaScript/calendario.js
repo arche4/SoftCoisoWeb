@@ -1,5 +1,4 @@
 var fechaCompleta1;
-var loader = document.getElementById('loader');
 $(window).load(function () {
     $(".loader").fadeOut("slow");
 });
@@ -39,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 + '<input type="number" class="form-control" id="citaCedula" name="citaCedula"  placeholder="Cedula"  readonly> </div>'
                                 + '<div class="form-group col-md-6">'
                                 + ' <label class="control-label">Nombre</label>'
-                                + '<input type="text" class="form-control" id="citaNom" name="citaNom"> </div> </div>'
+                                + '<input type="text" class="form-control" id="citaNom" name="citaNom" readonly> </div> </div>'
                                 + '<div class="form-row"> <div class="form-group col-md-6">'
                                 + '<label class="control-label">Hora de inicio</label>'
                                 + '<input type="time" class="form-control" id="CitaIniHora" name="CitaIniHora"> </div>'
@@ -154,23 +153,21 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+$(document).ready(function() {
+    $('.js-example-basic-single').select2();
+});
 function myFunctionReload() {
     location.reload();
 }
 function guardar() {
-    if (loader.style.display === 'none') {
-        loader.style.display = 'block';
-    } else {
-        loader.style.display = 'none';
-    }
+    $(".loader").fadeIn("slow");
     var horaIni = $('#horaIni').val();
     var horaFin = $('#horaFin').val();
     var iniHora = horaIni[0] + "" + horaIni[1] + "" + horaIni[3] + "" + horaIni[4] + "" + '00';
     var finHora = horaFin[0] + "" + horaFin[1] + "" + horaFin[3] + "" + horaFin[4] + "" + '00';
     if (finHora > iniHora) {
         var btnCrearCita = 'si';
-        var cedula = $('#cedula').val();
-        var nombrePersona = $('#nombrePersona').val();
+        var persona = $('#persona').val();
         var email = $('#emailPersona').val();
         var emailUsuario = $('#emailUsuario').val();
         var cedulaUsuario = $('#cedulaUsuario').val();
@@ -185,17 +182,12 @@ function guardar() {
             async: false,
             type: "POST",
             url: "/CalendarServlet",
-            data: 'cedula=' + cedula + '&nombrePersona=' + nombrePersona + '&iniHora=' + iniHora + '&finHora=' + finHora + '&email=' + email +
+            data: 'persona=' + persona + '&iniHora=' + iniHora + '&finHora=' + finHora + '&email=' + email +
                     '&emailUsuario=' + emailUsuario + '&cedulaUsuario=' + cedulaUsuario + '&titulo=' + titulo + '&comentario=' + comentario + '&btnCrearCita=' + btnCrearCita
                     + '&ano=' + ano + '&mes=' + mes + '&dia=' + dia,
             success: function (data) {
                 event.preventDefault();
-                $('#crearCita').modal('hide');
-                if (loader.style.display === 'none') {
-                    loader.style.display = 'block';
-                } else {
-                    loader.style.display = 'none';
-                }
+                $(".loader").fadeOut("slow");
                 if (data === "Exitoso") {
                     var cadena = ' <div class="form-row">'
                             + '<h5>Sus cambios fueron guardados con ex\u00EDto.</h3>'
@@ -212,11 +204,7 @@ function guardar() {
             }
         });
     } else {
-        if (loader.style.display === 'none') {
-            loader.style.display = 'block';
-        } else {
-            loader.style.display = 'none';
-        }
+        $(".loader").fadeOut("slow");
         $('#ErrorFechas').fadeIn(7000);
         setTimeout(function () {
             $('#ErrorFechas').fadeOut(7000);
@@ -236,11 +224,7 @@ function validar() {
 
 function Modificar() {
     $('#modalValidar').modal('hide');
-    if (loader.style.display === 'none') {
-        loader.style.display = 'block';
-    } else {
-        loader.style.display = 'none';
-    }
+    $(".loader").fadeIn("slow");
     var btnModificarCita = 'ok';
     var citaCedula = $('#citaCedula').val();
     var citaNom = $('#citaNom').val();
@@ -272,11 +256,7 @@ function Modificar() {
                     + '&codigoCita=' + codigoCita + '&anoCita=' + anoCita + '&mesCita=' + mesCita + '&diaCita=' + diaCita + '&enviarCorreo=' + enviarCorreo,
             success: function (data) {
                 event.preventDefault();
-                if (loader.style.display === 'none') {
-                    loader.style.display = 'block';
-                } else {
-                    loader.style.display = 'none';
-                }
+                $(".loader").fadeOut("slow");
                 if (data === "Exitoso") {
                     var cadena = ' <div class="form-row">'
                             + '<h4>Genial!!!.</h4>'
@@ -295,11 +275,7 @@ function Modificar() {
             }
         });
     } else {
-        if (loader.style.display === 'none') {
-            loader.style.display = 'block';
-        } else {
-            loader.style.display = 'none';
-        }
+        $(".loader").fadeOut("slow");
         $('#ErrorFechas').fadeIn(7000);
         setTimeout(function () {
             $('#ErrorFechas').fadeOut(7000);
@@ -319,11 +295,7 @@ function validarEliminar() {
 
 function Eliminar() {
     $('#modalEliminar').modal('hide');
-    if (loader.style.display === 'none') {
-        loader.style.display = 'block';
-    } else {
-        loader.style.display = 'none';
-    }
+    $(".loader").fadeIn("slow");
     var btnEliminarCita = 'ok';
     var codigoCita = $('#codigoCita').val();
     $.ajax({
@@ -333,11 +305,7 @@ function Eliminar() {
         data: 'btnEliminarCita=' + btnEliminarCita + '&codigoCita=' + codigoCita,
         success: function (data) {
             event.preventDefault();
-            if (loader.style.display === 'none') {
-                loader.style.display = 'block';
-            } else {
-                loader.style.display = 'none';
-            }
+            $(".loader").fadeOut("slow");
             if (data === "Exitoso") {
                 var cadena = ' <div class="form-row">'
                         + '<h4>Genial!!!.</h4>'

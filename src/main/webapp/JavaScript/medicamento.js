@@ -85,7 +85,7 @@ function guardar() {
     }
 }
 function validar() {
-    var elmForm = $("#userMod");
+    var elmForm = $("#modMedMo");
     if (elmForm) {
         elmForm.validator('validate');
         var elmErr = elmForm.find('.has-error');

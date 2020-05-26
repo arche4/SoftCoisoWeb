@@ -52,8 +52,8 @@ public class TipoCasoServlet extends HttpServlet {
                 out.print(datos);
             }
             if (btnModificar != null && btnModificar.equals("ok")) {
-                String modMed = modificarTipoCaso(request);
-                out.print(modMed);
+                String modificar = modificarTipoCaso(request);
+                out.print(modificar);
             }
             if (btnEliminar != null) {
                 String codTipo = eliminarTipoCaso(btnEliminar);

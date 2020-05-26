@@ -7,8 +7,10 @@ package com.softcoisoweb.servlet;
 
 import com.softcoisoweb.clase.EnviarCorreo;
 import com.softcoisoweb.controller.CitasJpaController;
+import com.softcoisoweb.controller.PersonaJpaController;
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.model.Citas;
+import com.softcoisoweb.model.Persona;
 import com.softcoisoweb.util.JPAFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -68,8 +70,8 @@ public class CalendarServlet extends HttpServlet {
         String respuesta = null;
         RequestDispatcher rd = null;
         CitasJpaController jpaCita = new CitasJpaController(JPAFactory.getFACTORY());
-        String codigoPersona = request.getParameter("cedula");
-        String nombrePersona = request.getParameter("nombrePersona");
+        PersonaJpaController personaJpa = new PersonaJpaController(JPAFactory.getFACTORY());
+        String personaC = request.getParameter("persona");
         String emailPersona = request.getParameter("email");
         String horaIni = request.getParameter("iniHora");
         String horaFin = request.getParameter("finHora");
@@ -82,7 +84,9 @@ public class CalendarServlet extends HttpServlet {
         String dia = request.getParameter("dia");
         //PARA GUARDAR LOS DATOS SE NECESITA VALIDAR QUE LA PERSONA EXISTA.
         try {
-            Citas cita = new Citas(Integer.parseInt(ano), Integer.parseInt(mes), Integer.parseInt(dia), horaIni, horaFin, titulo, comentario, codigoPersona, emailPersona, nombrePersona, emailUsuario, cedulaUsuario, "Creada");
+            Persona persona = personaJpa.findPersona(personaC);
+            String nombrePersona = persona.getNombrePersona()+" "+persona.getApellidoPersona();
+            Citas cita = new Citas(Integer.parseInt(ano), Integer.parseInt(mes), Integer.parseInt(dia), horaIni, horaFin, titulo, comentario, persona.getCedula(), emailPersona, nombrePersona, emailUsuario, cedulaUsuario, "Creada");
             jpaCita.create(cita);
             String asuntoCorreo = "Invitación: " + titulo;
             String descripcion = "Te han invitado a una cita";
@@ -126,7 +130,7 @@ public class CalendarServlet extends HttpServlet {
     }
 
     public String modificarCita(HttpServletRequest request, HttpServletResponse response) {
-        String respuesta = "Error";
+        String respuesta;
         CitasJpaController jpaCita = new CitasJpaController(JPAFactory.getFACTORY());
         String codigoCita = request.getParameter("codigoCita");
         String anoCita = request.getParameter("anoCita");
@@ -190,7 +194,7 @@ public class CalendarServlet extends HttpServlet {
 
     public void enviarCorreo(String ano, String mes, String dia, String IniHora, String FinHora,
             String asuntoCorreo, String descripcion, String comentario, String correoPersona, String emailUsuario) throws IOException {
-        String[] correos = {correoPersona, emailUsuario};
+        String correos = correoPersona+","+emailUsuario;
         EnviarCorreo enviarCorreo = new EnviarCorreo();
 
         String hIni = IniHora.substring(0, 2);
