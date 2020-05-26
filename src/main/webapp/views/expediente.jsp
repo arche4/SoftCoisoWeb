@@ -51,7 +51,7 @@
                     <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
                 </div>
                 <!--logo start-->
-                <a href="index.html" class="logo"><b>SOF<span>COISO</span></b></a>
+                <a href="${pageContext.servletContext.contextPath}/views/dashboard.jsp" class="logo"><b>SOF<span>COISO</span></b></a>
 
                 <div class="top-menu">
                     <ul class="nav pull-right top-menu">
@@ -70,7 +70,7 @@
                 <div id="sidebar" class="nav-collapse ">
                     <!-- sidebar menu start-->
                     <ul class="sidebar-menu" id="nav-accordion">
-                        <p class="centered"><a href="profile.html"><img src="${pageContext.servletContext.contextPath}/img/ui-sam.jpg" class="img-circle" width="80"></a></p>
+                        <p class="centered"><a href="${pageContext.servletContext.contextPath}/views/perfil.jsp"><img src="${pageContext.servletContext.contextPath}/img/icono-user.png" class="img-circle" width="80"></a></p>
                         <h5 class="centered">${sessionScope.USUARIO.nombreUsuario} ${sessionScope.USUARIO.apellidoUsuario}</h5>
                         <li class="mt">
                             <a href="${pageContext.servletContext.contextPath}/views/dashboard.jsp">
@@ -105,19 +105,24 @@
                                 <li><a href="usuario.jsp">Reporte Medicamentos</a></li>
                             </ul>
                         </li>
-                        <li class="sub-menu">
-                            <a href="javascript:;">
-                                <i class="fa fa-desktop"></i>
-                                <span>Modulos Administrativos</span>
-                            </a>
-                            <ul class="sub">
-                                <li ><a href="${pageContext.servletContext.contextPath}/views/usuario.jsp">Usuarios</a></li>
-                                <li ><a href="usuario.jsp">Formaciones</a></li>
-                                <li><a href="panels.html">Tipo de casos</a></li>
-                                <li><a href="font_awesome.html">Estados de caso</a></li>
-                                <li><a href="font_awesome.html">Medicamentos</a></li>
-                            </ul>
-                        </li>
+                        <c:choose>
+                            <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">
+                                <li class="sub-menu">
+                                    <a href="javascript:;">
+                                        <i class="fa fa-desktop"></i>
+                                        <span>Modulos Administrativos</span>
+                                    </a>
+                                    <ul class="sub">
+                                        <li><a href="${pageContext.servletContext.contextPath}/views/usuario.jsp">Usuarios</a></li>
+                                        <li><a href="${pageContext.servletContext.contextPath}/views/medicamento.jsp">Medicamentos</a></li>
+                                        <li><a href="${pageContext.servletContext.contextPath}/views/tipoCaso.jsp">Tipo de casos</a></li>
+                                        <li><a href="${pageContext.servletContext.contextPath}/views/estadoCaso.jsp">Estados de caso</a></li>
+                                        <li><a href="${pageContext.servletContext.contextPath}/views/tipoContrato.jsp">Tipos de Contratos</a></li>
+                                        <li><a href="${pageContext.servletContext.contextPath}/views/grupoSindicales.jsp">Grupos Sindicales</a></li>
+                                    </ul>
+                                </li>
+                            </c:when>
+                        </c:choose>
 
                     </ul>
                     <!-- sidebar menu end-->
@@ -560,7 +565,7 @@
                             </div>
                             <div class="form-group col-md-12">
                                 <label class="control-label">Quieres agregar algun comentario ? </label>
-                                <textarea class="form-control " id="casoDescripcion" name="casoDescripcion" placeholder="Coementar..."></textarea>
+                                <textarea class="form-control " id="comentarioEstado" name="comentarioEstado" placeholder="Comentar..."></textarea>
                             </div>
                             <input class="form-control " id="fechaCreacion" type="hidden" name="fechaCreacion" value="${sessionScope.FlujoCaso.getFechaCreacion()}">
                             <input class="form-control " id="casoid" type="hidden" name="casoid" value="${sessionScope.FlujoCaso.getCasoPersonaIdCaso()}">
