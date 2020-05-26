@@ -23,7 +23,9 @@ public class EnviarCorreo {
 
     public String EnviarCorreo(String correos, String asunto, StringBuilder cuerpo) throws MessagingException {
         Properties propiedad = new Properties();
-        propiedad.put("mail.smtp.host", "smtp.sparkpostmail.com");
+        final String correoEnvia = "coiso2008@gmail.com";
+        final String contraseña = "coiso2015";
+        propiedad.put("mail.smtp.host", "smtp.google.com");
         propiedad.put("mail.smtp.port", "587");
         propiedad.put("mail.smtp.auth", "true");
         propiedad.put("mail.smtp.socketFactory.port", "587");
@@ -32,11 +34,12 @@ public class EnviarCorreo {
         propiedad.put("mail.smtp.starttls.required", "true");
         propiedad.put("mail.smtp.ssl.enable", "false");
         propiedad.put("#mail.smtp.debug", "true");
+        propiedad.put("mail.username",correoEnvia);
+        propiedad.put("mail.password",contraseña);
         
         
         String resultado = "Error";
-        final String correoEnvia = "coiso2008@gmail.com";
-        final String contraseña = "coiso2015";
+        
 
         Session session = Session.getInstance(propiedad, new javax.mail.Authenticator() {
             @Override
