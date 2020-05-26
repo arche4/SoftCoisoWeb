@@ -5,11 +5,28 @@
  */
 package com.softcoisoweb.servlet;
 
+import com.softcoisoweb.controller.AfpJpaController;
+import com.softcoisoweb.controller.ArlJpaController;
+import com.softcoisoweb.controller.EpsJpaController;
+import com.softcoisoweb.controller.EstadoCasoJpaController;
+import com.softcoisoweb.controller.MedicamentosJpaController;
+import com.softcoisoweb.controller.OrganizacionSindicalJpaController;
+import com.softcoisoweb.controller.PersonaJpaController;
+import com.softcoisoweb.controller.TipoCasoJpaController;
+import com.softcoisoweb.controller.TipoContratoJpaController;
 import com.softcoisoweb.controller.UsuarioJpaController;
+import com.softcoisoweb.model.Afp;
+import com.softcoisoweb.model.Arl;
+import com.softcoisoweb.model.Eps;
+import com.softcoisoweb.model.EstadoCaso;
+import com.softcoisoweb.model.Medicamentos;
+import com.softcoisoweb.model.OrganizacionSindical;
+import com.softcoisoweb.model.Persona;
+import com.softcoisoweb.model.TipoCaso;
+import com.softcoisoweb.model.TipoContrato;
 import com.softcoisoweb.model.Usuario;
 import com.softcoisoweb.util.JPAFactory;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -41,8 +58,22 @@ public class ServletLogin extends HttpServlet {
         RequestDispatcher rd = null;
         String cedula = request.getParameter("usuario");
         String clave = request.getParameter("clave");
+        HttpSession misession = (HttpSession) request.getSession();
+
+        EpsJpaController eps = new EpsJpaController(JPAFactory.getFACTORY());
+        ArlJpaController arl = new ArlJpaController(JPAFactory.getFACTORY());
+        AfpJpaController afp = new AfpJpaController(JPAFactory.getFACTORY());
+        TipoContratoJpaController contrato = new TipoContratoJpaController(JPAFactory.getFACTORY());
+        OrganizacionSindicalJpaController sindical = new OrganizacionSindicalJpaController(JPAFactory.getFACTORY());
+        TipoCasoJpaController tipoCaso = new TipoCasoJpaController(JPAFactory.getFACTORY());
+        EstadoCasoJpaController estadoJpa = new EstadoCasoJpaController(JPAFactory.getFACTORY());
+        PersonaJpaController Persona = new PersonaJpaController(JPAFactory.getFACTORY());
+        MedicamentosJpaController medicamentoJpa = new MedicamentosJpaController(JPAFactory.getFACTORY());
 
         try {
+            if (misession.equals(true)) {
+                rd = request.getRequestDispatcher("index.jsp");
+            }
             UsuarioJpaController ujc = new UsuarioJpaController(JPAFactory.getFACTORY());
             Usuario usuario = ujc.buscarUsuario(cedula, clave);
             String Mensaje = "";
@@ -50,19 +81,38 @@ public class ServletLogin extends HttpServlet {
                 Mensaje = "Email o Clave no validos";
                 session.setAttribute("MENSAJE", Mensaje);
                 rd = request.getRequestDispatcher("index.jsp");
-
             } else {
+                session.setAttribute("user", usuario);
                 session.setAttribute("USUARIO", usuario);
                 List<Usuario> listUsuario = ujc.findUsuarioEntities();
                 session.setAttribute("listUsuario", listUsuario);
+                session.setAttribute("rol", "Administrador");
+                List<Eps> listEps = eps.findEpsEntities();
+                session.setAttribute("EPS", listEps);
+                List<Arl> ListArl = arl.findArlEntities();
+                session.setAttribute("ARL", ListArl);
+                List<Afp> ListAfp = afp.findAfpEntities();
+                session.setAttribute("AFP", ListAfp);
+                List<TipoContrato> listContrato = contrato.findTipoContratoEntities();
+                session.setAttribute("Contrato", listContrato);
+                List<OrganizacionSindical> listSindicato = sindical.findOrganizacionSindicalEntities();
+                session.setAttribute("Sindicato", listSindicato);
+                List<Persona> listPerson = Persona.findPersonaEntities();
+                session.setAttribute("Persona", listPerson);
+                session.setAttribute("TieneCaso", "No");
+                List<TipoCaso> listTipoCaso = tipoCaso.findTipoCasoEntities();
+                session.setAttribute("Tipo", listTipoCaso);
+                List<EstadoCaso> ListEstado = estadoJpa.findEstadoCasoEntities();
+                session.setAttribute("Estado", ListEstado);
+                List<Medicamentos> listMedicamento = medicamentoJpa.findMedicamentosEntities();
+                session.setAttribute("listMedicamento", listMedicamento);
                 rd = request.getRequestDispatcher("views/dashboard.jsp");
-                //Mensaje = "Email o Clave no validos";
             }
-            rd.forward(request, response);
-
         } catch (Exception e) {
+            rd = request.getRequestDispatcher("index.jsp");
             System.out.println("Error buscando al usuario: " + e);
         }
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

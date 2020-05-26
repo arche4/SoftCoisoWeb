@@ -4,7 +4,30 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>com.softcoisoweb.model.Usuario</class>
     <class>com.softcoisoweb.model.Citas</class>
+    <class>com.softcoisoweb.model.Eps</class>
+    <class>com.softcoisoweb.model.PersonaDireccion</class>
+    <class>com.softcoisoweb.model.Empresa</class>
+    <class>com.softcoisoweb.model.Formacion</class>
+    <class>com.softcoisoweb.model.Persona</class>
+    <class>com.softcoisoweb.model.OrganizacionSindical</class>
+    <class>com.softcoisoweb.model.TipoContrato</class>
+    <class>com.softcoisoweb.model.Afp</class>
+    <class>com.softcoisoweb.model.Arl</class>
+    <class>com.softcoisoweb.model.CasoPersona</class>
+    <class>com.softcoisoweb.model.EstadoCaso</class>
+    <class>com.softcoisoweb.model.TipoCaso</class>
+    <class>com.softcoisoweb.model.FlujoCaso</class>
+    <class>com.softcoisoweb.model.SeguimientoCaso</class>
+    <class>com.softcoisoweb.model.Medicamentos</class>
+    <class>com.softcoisoweb.model.ProcesoCalificacion</class>
+    <class>com.softcoisoweb.model.MedicamentosCaso</class>
+    <class>com.softcoisoweb.model.Calificacion</class>
+    <class>com.softcoisoweb.model.ProcesoReclamacion</class>
+    <class>com.softcoisoweb.model.Diagnostico</class>
+    <class>com.softcoisoweb.model.Actividades</class>
+    <class>com.softcoisoweb.model.CasoAcciones</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <shared-cache-mode>ALL</shared-cache-mode>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://coiso.org:3306/coiso_BDpdn?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>
       <property name="javax.persistence.jdbc.user" value="coiso_BDAdmon20"/>

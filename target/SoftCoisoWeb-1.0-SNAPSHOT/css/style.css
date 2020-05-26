@@ -98,7 +98,7 @@ a, a:hover, a:focus {
 .btn-theme {
     color: #fff;
     background-color: #6675df;
-    border-color: #48bcb4;
+    border-color: #6675df;
 }
 .btn-theme:hover,
 .btn-theme:focus,
@@ -106,14 +106,14 @@ a, a:hover, a:focus {
 .btn-theme.active,
 .open .dropdown-toggle.btn-theme {
     color: #fff;
-    background-color: #48bcb4;
-    border-color: #48bcb4;
+    background-color: #6675df;
+    border-color: #6675df;
 }
 
 .btn-theme02 {
     color: #fff;
-    background-color: #ac92ec;
-    border-color: #967adc;
+    background-color: #6675df;
+    border-color: #6675df;
 }
 .btn-theme02:hover,
 .btn-theme02:focus,
@@ -121,14 +121,14 @@ a, a:hover, a:focus {
 .btn-theme02.active,
 .open .dropdown-toggle.btn-theme02 {
     color: #fff;
-    background-color: #967adc;
-    border-color: #967adc;
+    background-color: #6675df;
+    border-color: #6675df;
 }
 
 .btn-theme03 {
     color: #fff;
-    background-color: #48cfad;
-    border-color: #37bc9b;
+    background-color: #6675df;
+    border-color: #6675df;
 }
 .btn-theme03:hover,
 .btn-theme03:focus,
@@ -136,14 +136,14 @@ a, a:hover, a:focus {
 .btn-theme03.active,
 .open .dropdown-toggle.btn-theme03 {
     color: #fff;
-    background-color: #37bc9b;
-    border-color: #37bc9b;
+    background-color: #6675df;
+    border-color: #6675df;
 }
 
 .btn-theme04 {
     color: #fff;
-    background-color: #ed5565;
-    border-color: #da4453;
+    background-color: #6675df;
+    border-color: #6675df;
 }
 .btn-theme04:hover,
 .btn-theme04:focus,
@@ -151,8 +151,8 @@ a, a:hover, a:focus {
 .btn-theme04.active,
 .open .dropdown-toggle.btn-theme04 {
     color: #fff;
-    background-color: #da4453;
-    border-color: #da4453;
+    background-color: #6675df;
+    border-color: #6675df;
 }
 
 .btn-clear-g {
@@ -2061,7 +2061,7 @@ profile-text p {
     text-transform: uppercase;
     border-bottom: 1px solid #e2e2e2;
     font-weight: 700;
-    color: #48cfad;
+    color: #6675df;
 }
 
 ul.my-friends {
@@ -2116,7 +2116,6 @@ ul.my-friends li .friends-pic {
     border-radius: 5px;
     -webkit-border-radius: 5px;
     position: relative;
-    text-align: center;
 }
 
 .activity-panel h5{
