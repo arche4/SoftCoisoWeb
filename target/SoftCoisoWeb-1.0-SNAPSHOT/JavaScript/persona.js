@@ -1,4 +1,3 @@
-var loader = document.getElementById('loader');
 $(document).ready(function () {
     $('#table_id').dataTable();
     var btnFinish = $('<button></button>').text('Finalizar').addClass('btn btn-theme').on('click', function () {
@@ -17,11 +16,7 @@ $(document).ready(function () {
                 } else {
                     event.preventDefault();
                     $('#personaModal').modal('hide');
-                    if (loader.style.display === 'none') {
-                        loader.style.display = 'block';
-                    } else {
-                        loader.style.display = 'none';
-                    }
+                     $(".loader").fadeIn("slow");
                     var btnCrearPersona = 'ok';
                     var cedula = $('#cedula').val();
                     var nombrePersona = $('#nombrePersona').val();
@@ -58,11 +53,7 @@ $(document).ready(function () {
                         timeout: 30000,
                         success: function (data) {
                             event.preventDefault();
-                            if (loader.style.display === 'none') {
-                                loader.style.display = 'block';
-                            } else {
-                                loader.style.display = 'none';
-                            }
+                            $(".loader").fadeOut("slow");
                             if (data === "Exitoso") {
                                 var cadena = ' <div class="form-row">'
                                         + '<h5>Sus cambios fueron guardados con ex\u00EDto.</h3>'
@@ -98,11 +89,7 @@ $(document).ready(function () {
                 } else {
                     event.preventDefault();
                     $('#verPersona').modal('hide');
-                    if (loader.style.display === 'none') {
-                        loader.style.display = 'block';
-                    } else {
-                        loader.style.display = 'none';
-                    }
+                     $(".loader").fadeIn("slow");
                     var btnModificar = 'ok';
                     var cedulaPersona = $('#cedulaPersona').val();
                     var PersonaNombre = $('#PersonaNombre').val();
@@ -139,12 +126,7 @@ $(document).ready(function () {
                                 + '&PersonCargo=' + PersonCargo + '&personExperiencia=' + personExperiencia + '&personFechaClinica=' + personFechaClinica + '&personRecomendado=' + personRecomendado
                                 + '&casoAsociado=' + casoAsociado,
                         success: function (data) {
-                            if (loader.style.display === 'none') {
-                                loader.style.display = 'block';
-                            } else {
-                                loader.style.display = 'none';
-                            }
-
+                           $(".loader").fadeOut("slow");
                             if (data === "Exitoso") {
                                 var cadena = ' <div class="form-row">'
                                         + '<h5>Sus cambios fueron guardados con ex\u00EDto.</h3>'
@@ -249,28 +231,21 @@ $(document).ready(function () {
         $("#cedulaPersona").val(casoCrear);
         $('#crearCaso').modal('show');
     });
-    $("#caso").validate({
-
-    });
+    
+});
+$(window).load(function () {
+    $(".loader").fadeOut("slow");
 });
 $("body").on("click", "#selectConsulta", function () {
     var selectConsulta = $(this).val();
-    if (loader.style.display === 'none') {
-        loader.style.display = 'block';
-    } else {
-        loader.style.display = 'none';
-    }
+   $(".loader").fadeIn("slow");
     $.ajax({
         async: false,
         type: "GET",
         url: "/PersonaServlet",
         data: 'selectConsulta=' + selectConsulta,
         success: function (data) {
-            if (loader.style.display === 'none') {
-                loader.style.display = 'block';
-            } else {
-                loader.style.display = 'none';
-            }
+            $(".loader").fadeOut("slow");
             var respuesta = $.trim(data);
             if (respuesta !== "" && respuesta !== null) {
                 respuesta = respuesta.split(",");
@@ -333,11 +308,7 @@ function guardarCaso() {
         if (elmErr && elmErr.length > 0) {
             return false;
         } else {
-            if (loader.style.display === 'none') {
-                loader.style.display = 'block';
-            } else {
-                loader.style.display = 'none';
-            }
+             $(".loader").fadeIn("slow");
             event.preventDefault();
             $('#crearCaso').modal('hide');
             var btnCrearCaso = 'ok';
@@ -358,22 +329,14 @@ function guardarCaso() {
                 success: function (data) {
                     event.preventDefault();
                     if (data === "Exitoso") {
-                        if (loader.style.display === 'none') {
-                        loader.style.display = 'block';
-                    } else {
-                        loader.style.display = 'none';
-                    }
+                        $(".loader").fadeOut("slow");
                         var cadena = ' <div class="form-row">'
                                 + '<h5>Sus cambios fueron guardados con ex\u00EDto.</h3>'
                                 + ' </div>';
                         $('#modInfexito').html(cadena);
                         $('#modalInfexito').modal('show');
                     } else {
-                        if (loader.style.display === 'none') {
-                        loader.style.display = 'block';
-                    } else {
-                        loader.style.display = 'none';
-                    }
+                        $(".loader").fadeOut("slow");
                         var cadena = '<div class="form-row">'
                                 + '<h5>Lo sentimos, se ha presentado un problema guardando los datos .</h3>'
                                 + ' </div>';

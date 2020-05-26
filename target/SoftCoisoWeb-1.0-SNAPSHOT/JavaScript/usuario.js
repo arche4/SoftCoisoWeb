@@ -1,6 +1,3 @@
-$(window).load(function () {
-    $(".loader").fadeOut("slow");
-});
 
 $(document).ready(function () {
     $('#table_id').dataTable();
@@ -36,6 +33,9 @@ $(document).ready(function () {
         });
 
     });
+});
+$(window).load(function () {
+    $(".loader").fadeOut("slow");
 });
 
 function myFunctionReload() {
