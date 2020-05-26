@@ -23,10 +23,17 @@ public class EnviarCorreo {
 
     public String EnviarCorreo(String correos, String asunto, StringBuilder cuerpo) throws MessagingException {
         Properties propiedad = new Properties();
-        propiedad.put("mail.smtp.auth", "true");
-        propiedad.put("mail.smtp.starttls.enable", "true");
-        propiedad.put("mail.smtp.host", "smtp.gmail.com");
+        propiedad.put("mail.smtp.host", "smtp.sparkpostmail.com");
         propiedad.put("mail.smtp.port", "587");
+        propiedad.put("mail.smtp.auth", "true");
+        propiedad.put("mail.smtp.socketFactory.port", "587");
+        propiedad.put("mail.smtp.socketFactory.fallback", "true");
+        propiedad.put("mail.smtp.starttls.enable", "true");
+        propiedad.put("mail.smtp.starttls.required", "true");
+        propiedad.put("mail.smtp.ssl.enable", "false");
+        propiedad.put("#mail.smtp.debug", "true");
+        
+        
         String resultado = "Error";
         final String correoEnvia = "coiso2008@gmail.com";
         final String contraseña = "coiso2015";

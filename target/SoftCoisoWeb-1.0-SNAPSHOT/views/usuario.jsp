@@ -24,6 +24,8 @@
         <!-- Bootstrap core CSS -->
 
         <link href="${pageContext.servletContext.contextPath}/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+                <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>
+
         <script src="${pageContext.servletContext.contextPath}/lib/jquery/jquery.min.js"></script>
         <!--external css-->
         <script type="text/javascript" language="javascript" src="${pageContext.servletContext.contextPath}/lib/advanced-datatable/js/jquery.dataTables.js"></script>
