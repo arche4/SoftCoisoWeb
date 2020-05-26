@@ -22,7 +22,7 @@
 
         <link href="${pageContext.servletContext.contextPath}/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+        <script src="${pageContext.servletContext.contextPath}/lib/jquery/jquery.min.js" type="text/javascript"></script>
         <!--external css-->
         <script type="text/javascript" language="javascript" src="${pageContext.servletContext.contextPath}/lib/advanced-datatable/js/jquery.dataTables.js"></script>
 
@@ -78,7 +78,7 @@
                 <div id="sidebar" class="nav-collapse ">
                     <!-- sidebar menu start-->
                     <ul class="sidebar-menu" id="nav-accordion">
-                        <p class="centered"><a href="profile.html"><img src="${pageContext.servletContext.contextPath}/img/ui-sam.jpg" class="img-circle" width="80"></a></p>
+                        <p class="centered"><a href="${pageContext.servletContext.contextPath}/views/perfil.jsp"><img src="${pageContext.servletContext.contextPath}/img/icono-user.png" class="img-circle" width="80"></a></p>
                         <h5 class="centered">${sessionScope.USUARIO.nombreUsuario} ${sessionScope.USUARIO.apellidoUsuario}</h5>
                         <li class="mt">
                             <a href="${pageContext.servletContext.contextPath}/views/dashboard.jsp">
@@ -113,19 +113,24 @@
                                 <li><a href="usuario.jsp">Reporte Medicamentos</a></li>
                             </ul>
                         </li>
-                        <li class="sub-menu">
-                            <a href="javascript:;">
-                                <i class="fa fa-desktop"></i>
-                                <span>Modulos Administrativos</span>
-                            </a>
-                            <ul class="sub">
-                                <li ><a href="${pageContext.servletContext.contextPath}/views/usuario.jsp">Usuarios</a></li>
-                                <li ><a href="usuario.jsp">Formaciones</a></li>
-                                <li><a href="panels.html">Tipo de casos</a></li>
-                                <li><a href="font_awesome.html">Estados de caso</a></li>
-                                <li><a href="font_awesome.html">Medicamentos</a></li>
-                            </ul>
-                        </li>
+                        <c:choose>
+                            <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">
+                                <li class="sub-menu">
+                                    <a href="javascript:;">
+                                        <i class="fa fa-desktop"></i>
+                                        <span>Modulos Administrativos</span>
+                                    </a>
+                                    <ul class="sub">
+                                        <li><a href="${pageContext.servletContext.contextPath}/views/usuario.jsp">Usuarios</a></li>
+                                        <li><a href="${pageContext.servletContext.contextPath}/views/medicamento.jsp">Medicamentos</a></li>
+                                        <li><a href="${pageContext.servletContext.contextPath}/views/tipoCaso.jsp">Tipo de casos</a></li>
+                                        <li><a href="${pageContext.servletContext.contextPath}/views/estadoCaso.jsp">Estados de caso</a></li>
+                                        <li><a href="${pageContext.servletContext.contextPath}/views/tipoContrato.jsp">Tipos de Contratos</a></li>
+                                        <li><a href="${pageContext.servletContext.contextPath}/views/grupoSindicales.jsp">Grupos Sindicales</a></li>
+                                    </ul>
+                                </li>
+                            </c:when>
+                        </c:choose>
 
                     </ul>
                     <!-- sidebar menu end-->
@@ -715,10 +720,10 @@
             </footer>
             <!--footer end-->
         </section>
-        <div class="loader" id="loader" style="display:none"></div>
+        <div class="loader"></div>
         <!-- js placed at the end of the document so the pages load faster -->
-        <script src="${pageContext.servletContext.contextPath}/lib/bootstrap/js/validator.min.js" type="text/javascript"></script>
         <script src="${pageContext.servletContext.contextPath}/JavaScript/persona.js" type="text/javascript"></script>
+        <script src="${pageContext.servletContext.contextPath}/lib/bootstrap/js/validator.min.js" type="text/javascript"></script>
         <script type="text/javascript" src="${pageContext.servletContext.contextPath}/lib/advanced-datatable/js/DT_bootstrap.js"></script>
 
         <script src="${pageContext.servletContext.contextPath}/lib/bootstrap/js/bootstrap.min.js"></script>
