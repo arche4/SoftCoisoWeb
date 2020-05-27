@@ -14,6 +14,7 @@ $(document).ready(function () {
         var url = "/CargaArchivoServlet";
         var form = $("#sampleUploadFrm")[0];
         var data = new FormData(form);
+        var src = $(this).attr('src');
         $.ajax({
             type: "POST",
             encType: "multipart/form-data",

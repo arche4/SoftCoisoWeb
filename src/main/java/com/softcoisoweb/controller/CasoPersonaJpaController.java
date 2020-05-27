@@ -7,6 +7,7 @@ package com.softcoisoweb.controller;
 
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.controller.exceptions.PreexistingEntityException;
+import com.softcoisoweb.model.CasoAcciones;
 import com.softcoisoweb.model.CasoPersona;
 import java.io.Serializable;
 import java.util.List;
@@ -160,6 +161,10 @@ public class CasoPersonaJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+
+    public void create(CasoAcciones casoAcciones) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
