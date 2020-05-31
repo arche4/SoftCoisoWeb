@@ -3,8 +3,10 @@ com\softcoisoweb\controller\exceptions\IllegalOrphanException.class
 com\softcoisoweb\controller\TipoContratoJpaController.class
 com\softcoisoweb\util\GeneracionLogsErrores.class
 com\softcoisoweb\model\FlujoCaso.class
+com\softcoisoweb\conexion\exceptions\PreexistingEntityException.class
 com\softcoisoweb\servlet\TipoContratoServlet.class
 com\softcoisoweb\servlet\ServletLogin.class
+com\softcoisoweb\conexion\exceptions\NonexistentEntityException.class
 com\softcoisoweb\model\Arl_.class
 com\softcoisoweb\servlet\TipoCasoServlet.class
 com\softcoisoweb\model\MedicamentosCaso.class
@@ -23,6 +25,7 @@ com\softcoisoweb\model\ProcesoReclamacion.class
 com\softcoisoweb\model\Diagnostico_.class
 com\softcoisoweb\controller\DiagnosticoJpaController.class
 com\softcoisoweb\model\Eps_.class
+com\softcoisoweb\conexion\exceptions\IllegalOrphanException.class
 com\softcoisoweb\model\MedicamentosCaso_.class
 com\softcoisoweb\model\TipoContrato.class
 com\softcoisoweb\model\OrganizacionSindical_.class

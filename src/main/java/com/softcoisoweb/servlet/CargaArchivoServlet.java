@@ -3,6 +3,7 @@ package com.softcoisoweb.servlet;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URL;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -38,8 +39,8 @@ public class CargaArchivoServlet extends HttpServlet {
      * response)
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        final String UPLOAD_DIRECTORY = "C:\\Users\\manue\\Documents\\NetBeansProjects\\SoftCoisoWeb\\Archivos";
         String archivo = null;
+        String UPLOAD_DIRECTORY = getClass().getClassLoader().getResource(".").getPath();
         if (ServletFileUpload.isMultipartContent(request)) {
             try {
                 List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
@@ -59,7 +60,7 @@ public class CargaArchivoServlet extends HttpServlet {
             }
 
             PrintWriter out = response.getWriter();
-            String respuesta = "1"+","+archivo;
+            String respuesta = "1" + "," + archivo;
             out.print(respuesta);
         }
 

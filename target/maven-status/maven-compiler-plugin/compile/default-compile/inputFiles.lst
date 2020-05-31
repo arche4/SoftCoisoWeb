@@ -4,6 +4,7 @@ C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoi
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\EpsJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\DiagnosticoJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\model\ProcesoReclamacion.java
+C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\conexion\exceptions\PreexistingEntityException.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\PersonaDireccionJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\conexion\Conexion.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\model\Empresa.java
@@ -39,6 +40,7 @@ C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoi
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\EstadoCasoServlet.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\AfpJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\CargaArchivoServlet.java
+C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\conexion\exceptions\NonexistentEntityException.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\ArlJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\MedicamentosJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\conexion\OperacionesBD.java
@@ -47,6 +49,7 @@ C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoi
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\UsuarioJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\model\Eps.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\util\JPAFactory.java
+C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\conexion\exceptions\IllegalOrphanException.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\EmpresaJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\model\PersonaDireccion.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\model\SeguimientoCaso.java
