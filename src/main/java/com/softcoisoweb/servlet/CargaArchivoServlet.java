@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -40,7 +42,8 @@ public class CargaArchivoServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String archivo = null;
-        String UPLOAD_DIRECTORY =  System.getProperty("user.dir");
+        Path currentRelativePath = Paths.get("").toAbsolutePath().getParent();
+        String UPLOAD_DIRECTORY = currentRelativePath.toAbsolutePath().toString();
         if (ServletFileUpload.isMultipartContent(request)) {
             try {
                 List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
@@ -53,7 +56,7 @@ public class CargaArchivoServlet extends HttpServlet {
                         String name = new File(item.getName()).getName();
                         item.write(new File(UPLOAD_DIRECTORY + File.separator + name));
                         archivo = UPLOAD_DIRECTORY + File.separator + name;
-                        
+
                     }
                 }
             } catch (Exception e) {
