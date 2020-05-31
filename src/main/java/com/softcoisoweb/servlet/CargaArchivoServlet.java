@@ -44,21 +44,20 @@ public class CargaArchivoServlet extends HttpServlet {
 //        Path currentRelativePath = Paths.get("").toAbsolutePath().getParent();
 //        String UPLOAD_DIRECTORY = currentRelativePath.toAbsolutePath().toString();
         String UPLOAD_DIRECTORY = System.getProperty("user.dir");
-        String complemento = "_com.co.softcoisoweb_SoftCoisoWeb_war_1.0-SNAPSHOTPU";
 
         if (ServletFileUpload.isMultipartContent(request)) {
             try {
                 List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
                 for (FileItem item : multiparts) {
                     if (!item.isFormField()) {
-                        File fileSaveDir = new File(UPLOAD_DIRECTORY + complemento);
+                        File fileSaveDir = new File(UPLOAD_DIRECTORY );
                         if (!fileSaveDir.exists()) {
                             fileSaveDir.mkdir();
                         }
                         String name = new File(item.getName()).getName();
 
-                        item.write(new File(UPLOAD_DIRECTORY + File.separator + complemento + File.separator + name));
-                        archivo = UPLOAD_DIRECTORY + File.separator + complemento + File.separator + name;
+                        item.write(new File(UPLOAD_DIRECTORY + File.separator + name));
+                        archivo = UPLOAD_DIRECTORY + File.separator + name;
                     }
                 }
             } catch (Exception e) {
