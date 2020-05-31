@@ -40,7 +40,7 @@ public class CargaArchivoServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String archivo = null;
-        String UPLOAD_DIRECTORY = "/app/target/tomcat.18675/webapps/expanded/WEB-INF/classes/_com.co.softcoisoweb_SoftCoisoWeb_war_1.0-SNAPSHOTPU";
+        String UPLOAD_DIRECTORY = getClass().getClassLoader().getResource(".").getPath();
         if (ServletFileUpload.isMultipartContent(request)) {
             try {
                 List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
@@ -51,8 +51,9 @@ public class CargaArchivoServlet extends HttpServlet {
                             fileSaveDir.mkdir();
                         }
                         String name = new File(item.getName()).getName();
-                        item.write(new File(UPLOAD_DIRECTORY + File.separator + name));
-                        archivo = UPLOAD_DIRECTORY + File.separator + name;
+                        String complemento = "/_com.co.softcoisoweb_SoftCoisoWeb_war_1.0-SNAPSHOTPU/Archivos";
+                        item.write(new File(UPLOAD_DIRECTORY + File.separator +complemento + File.separator+ name));
+                        archivo = UPLOAD_DIRECTORY + File.separator +complemento + File.separator+ name;
                     }
                 }
             } catch (Exception e) {
