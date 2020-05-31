@@ -3,7 +3,8 @@ package com.softcoisoweb.servlet;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -40,20 +41,23 @@ public class CargaArchivoServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String archivo = null;
-        String UPLOAD_DIRECTORY = getClass().getClassLoader().getResource(".").getPath();
+        Path currentRelativePath = Paths.get("").toAbsolutePath().getParent();
+        String UPLOAD_DIRECTORY = currentRelativePath.toAbsolutePath().toString();
+        String complemento = "_com.co.softcoisoweb_SoftCoisoWeb_war_1.0-SNAPSHOTPU";
+
         if (ServletFileUpload.isMultipartContent(request)) {
             try {
                 List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
                 for (FileItem item : multiparts) {
                     if (!item.isFormField()) {
-                        File fileSaveDir = new File(UPLOAD_DIRECTORY);
+                        File fileSaveDir = new File(UPLOAD_DIRECTORY + complemento);
                         if (!fileSaveDir.exists()) {
                             fileSaveDir.mkdir();
                         }
                         String name = new File(item.getName()).getName();
-                        String complemento = "/_com.co.softcoisoweb_SoftCoisoWeb_war_1.0-SNAPSHOTPU";
-                        item.write(new File(UPLOAD_DIRECTORY + File.separator +complemento + File.separator+ name));
-                        archivo = UPLOAD_DIRECTORY + File.separator +complemento + File.separator+ name;
+
+                        item.write(new File(UPLOAD_DIRECTORY + File.separator + complemento + File.separator + name));
+                        archivo = UPLOAD_DIRECTORY + File.separator + complemento + File.separator + name;
                     }
                 }
             } catch (Exception e) {
