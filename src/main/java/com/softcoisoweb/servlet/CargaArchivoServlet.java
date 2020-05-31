@@ -1,15 +1,9 @@
 package com.softcoisoweb.servlet;
 
-import com.softcoisoweb.controller.CasoAccionesJpaController;
-import com.softcoisoweb.controller.CasoPersonaJpaController;
-import com.softcoisoweb.model.CasoAcciones;
-import com.softcoisoweb.util.JPAFactory;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
-import java.util.Base64;
+import java.net.URL;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -20,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.fileupload.util.Streams;
 
 public class CargaArchivoServlet extends HttpServlet {
 
@@ -46,27 +39,20 @@ public class CargaArchivoServlet extends HttpServlet {
      * response)
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        final String UPLOAD_DIRECTORY = "C:\\Users\\manue\\Documents\\NetBeansProjects\\SoftCoisoWeb\\Archivos";
         String archivo = null;
+        String UPLOAD_DIRECTORY = getClass().getClassLoader().getResource(".").getPath();
         if (ServletFileUpload.isMultipartContent(request)) {
             try {
                 List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
-
                 for (FileItem item : multiparts) {
                     if (!item.isFormField()) {
-                        String name = item.getFieldName();
-                        InputStream stream = item.getInputStream();
                         File fileSaveDir = new File(UPLOAD_DIRECTORY);
                         if (!fileSaveDir.exists()) {
                             fileSaveDir.mkdir();
                         }
-                        byte[] pdf = stream.readAllBytes();
-                        CasoAccionesJpaController accionJpa = new CasoAccionesJpaController(JPAFactory.getFACTORY());
-                        CasoAcciones list = accionJpa.findCasoAcciones(11);
-                        byte[] image = list.getArchivos();
-                        archivo = new String(image);
+                        String name = new File(item.getName()).getName();
                         item.write(new File(UPLOAD_DIRECTORY + File.separator + name));
-//                        archivo = UPLOAD_DIRECTORY + File.separator + name;
+                        archivo = UPLOAD_DIRECTORY + File.separator + name;
                     }
                 }
             } catch (Exception e) {
