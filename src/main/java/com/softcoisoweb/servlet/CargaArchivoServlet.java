@@ -51,7 +51,7 @@ public class CargaArchivoServlet extends HttpServlet {
                             fileSaveDir.mkdir();
                         }
                         String name = new File(item.getName()).getName();
-                        String complemento = "/_com.co.softcoisoweb_SoftCoisoWeb_war_1.0-SNAPSHOTPU/Archivos";
+                        String complemento = "/_com.co.softcoisoweb_SoftCoisoWeb_war_1.0-SNAPSHOTPU";
                         item.write(new File(UPLOAD_DIRECTORY + File.separator +complemento + File.separator+ name));
                         archivo = UPLOAD_DIRECTORY + File.separator +complemento + File.separator+ name;
                     }
