@@ -41,8 +41,9 @@ public class CargaArchivoServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String archivo = null;
-        Path currentRelativePath = Paths.get("").toAbsolutePath().getParent();
-        String UPLOAD_DIRECTORY = currentRelativePath.toAbsolutePath().toString();
+//        Path currentRelativePath = Paths.get("").toAbsolutePath().getParent();
+//        String UPLOAD_DIRECTORY = currentRelativePath.toAbsolutePath().toString();
+        String UPLOAD_DIRECTORY = System.getProperty("user.dir");
         String complemento = "_com.co.softcoisoweb_SoftCoisoWeb_war_1.0-SNAPSHOTPU";
 
         if (ServletFileUpload.isMultipartContent(request)) {
