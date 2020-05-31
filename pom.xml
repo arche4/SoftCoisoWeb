@@ -108,6 +108,8 @@
                             <goal>copy</goal>
                         </goals>
                         <configuration>
+                             <assembleDirectory>target</assembleDirectory>
+                            <generateRepository>true</generateRepository>
                             <outputDirectory>${endorsed.dir}</outputDirectory>
                             <silent>true</silent>
                             <artifactItems>
