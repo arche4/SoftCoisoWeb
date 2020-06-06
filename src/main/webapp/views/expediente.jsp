@@ -262,14 +262,14 @@
                                                 <div class="col-md-6 detailed" >
                                                     <label>Comentarios</label>
                                                     <div class="recent-activity">
-                                                        <c:forEach var="acciones" items="${sessionScope.listAcciones}">
+                                                        <c:forEach var="comentario" items="${sessionScope.listComentario}">
                                                             <div class="activity-panel">
                                                                 <div class="task-title">
-                                                                    <p><c:out value="${acciones.getComentario()}"/></p>
+                                                                    <p><c:out value="${comentario.getComentario()}"/></p>
                                                                     <span class="badge bg-theme"><c:out value="${acciones.getUsuario()}"/></span>
                                                                     <div class="pull-right hidden-phone">
-                                                                        <button type="button" id ="btnConsultarCometario" name="btnConsultarCometario"  value="${acciones.getCodigo()}" class="btn btn-primary btn-xs fa fa-pencil"></button>
-                                                                        <button type="button" id="btnEliminarComentario" name="btnEliminarComentario" value="${acciones.getCodigo()}" class="btn btn-danger btn-xs fa fa-trash-o"></button>
+                                                                        <button type="button" id ="btnConsultarCometario" name="btnConsultarCometario"  value="${comentario.getCodigo()}" class="btn btn-primary btn-xs fa fa-pencil"></button>
+                                                                        <button type="button" id="btnEliminarComentario" name="btnEliminarComentario" value="${comentario.getCodigo()}" class="btn btn-danger btn-xs fa fa-trash-o"></button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -295,13 +295,12 @@
                                                     <label>Archivos Cargados</label>
                                                     <div class=" file-drop-zone clearfix">
                                                         <div class="file-preview-thumbnails clearfix">
-                                                            <c:forEach var="accionesA" items="${sessionScope.listAcciones}">
-                                                                <div class="file-preview-frame krajee-default  kv-preview-thumb" id="thumb-input-700-4289183_Copia-de-seguridad-de-onza_factura_muestra.pdf" data-fileindex="0" data-fileid="4289183_Copia-de-seguridad-de-onza_factura_muestra.pdf" data-template="pdf" title="Copia-de-seguridad-de-onza factura muestra.pdf"><div class="kv-file-content">
-                                                                        <embed class="kv-preview-data file-preview-pdf" src="${accionesA.getArchivoRuta()}" type="application/pdf" style="width:100%;height:160px;position:relative;">
+                                                            <c:forEach var="archivo" items="${sessionScope.listArchivos}">
+                                                                <div class="file-preview-frame krajee-default  kv-preview-thumb" id="archivo" data-fileindex="0" data-fileid="4289183_${archivo.getArchivoNombre()}" data-template="pdf" title="${archivo.getArchivoNombre()}"><div class="kv-file-content">
+                                                                        <embed class="kv-preview-data file-preview-pdf" src="${archivo.getArchivoRuta()}" type="application/pdf" style="width:100%;height:160px;position:relative;">
                                                                     </div><div class="file-thumbnail-footer">
-                                                                        <div class="file-footer-caption" title="Copia-de-seguridad-de-onza factura muestra.pdf">
-                                                                            <div class="file-caption-info">Copia-de-seguridad-de-onza factura muestra.pdf</div>
-                                                                            <div class="file-size-info"> <samp>(4.09 MB)</samp></div>
+                                                                        <div class="file-footer-caption" title="${archivo.getArchivoNombre()}">
+                                                                            <div class="file-caption-info">${archivo.getArchivoNombre()}</div>
                                                                         </div>
 
                                                                         <div class="file-upload-indicator" title="No subido todavÃ&shy;a"><i class="glyphicon glyphicon-plus-sign text-warning"></i></div>
