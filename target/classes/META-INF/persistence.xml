@@ -35,6 +35,7 @@
       <property name="javax.persistence.jdbc.user" value="coiso_BDAdmon20"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="Coiso2020"/>
+      <property name="eclipselink.query-results-cache" value="false"/>
     </properties>
   </persistence-unit>
 </persistence>

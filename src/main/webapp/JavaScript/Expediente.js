@@ -12,6 +12,7 @@ $(document).ready(function () {
     });
 
     $("#uploadBtn").on("click", function () {
+        $(".loader").fadeIn("slow");
         var url = "/CargaArchivoServlet";
         var form = $("#sampleUploadFrm")[0];
         var data = new FormData(form);
@@ -25,12 +26,13 @@ $(document).ready(function () {
             data: data,
             success: function (data) {
                 var respuesta = $.trim(data);
+                $(".loader").fadeOut("slow");
                 if (respuesta !== "") {
                     respuesta = respuesta.split(",");
                     var estatus = respuesta[0];
-                    if (estatus == 1) {
-                        $("#rutaArchivo").val(respuesta[1]);
-                        $("#nombreArchivo").val(respuesta[2]);
+                    if (estatus === "Exitoso") {
+                        $("#nombreArchivo").val(respuesta[1]);
+                        $("#rutaArchivo").val(respuesta[2]);
                         $('#cargarArchivos').modal('hide');
                         $('#Exitoso').fadeIn(5000);
                         setTimeout(function () {
@@ -52,34 +54,7 @@ $(document).ready(function () {
             }
         });
     });
-    $("body").on("click", "#eliminarComentario", function () {
-        $(".loader").fadeIn("slow");
-        var btnEliminarComentario = $(this).val();
-        $.ajax({
-            async: false,
-            type: "POST",
-            url: "/ExpedienteServlet",
-            data: 'btnEliminarComentario=' + btnEliminarComentario,
-            success: function (data) {
-                event.preventDefault();
-                $(".loader").fadeOut("slow");
-                if (data === "Exitoso") {
-                    var cadena = ' <div class="form-row">'
-                            + '<h5>Sus cambios fueron guardados con ex\u00EDto.</h3>'
-                            + ' </div>';
-                    $('#modInfexito').html(cadena);
-                    $('#modalInfexito').modal('show');
-                } else {
-                    var cadena = '<div class="form-row">'
-                            + '<h5>Lo sentimos, se ha presentado un problema guardando los datos .</h3>'
-                            + ' </div>';
-                    $('#modInferror').html(cadena);
-                    $('#modalInfError').modal('show');
-                }
-            }
-        });
-    });
-    $("body").on("click", "#editarComentario", function () {
+    $("body").on("click", "#btnEliminarComentario", function () {
         $(".loader").fadeIn("slow");
         var btnConsultarCometario = $(this).val();
         $.ajax({
@@ -90,6 +65,32 @@ $(document).ready(function () {
             success: function (data) {
                 event.preventDefault();
                 $(".loader").fadeOut("slow");
+                var respuesta = $.trim(data);
+                if (respuesta !== "" && respuesta !== null) {
+                    respuesta = respuesta.split("#");
+                    $("#codigoComentario").val(respuesta[0]);
+                    $("#comentarioEliminar").val(respuesta[2]);
+                    $('#eliminarComentarioMod').modal('show');
+                } else {
+                    var cadena = '<div class="form-row">'
+                            + '<h5>Lo sentimos, se ha presentado un problema consultado los datos .</h3>'
+                            + ' </div>';
+                    $('#modInferror').html(cadena);
+                    $('#modalInfError').modal('show');
+                }
+            }
+        });
+    });
+    $("body").on("click", "#btnConsultarCometario", function () {
+        $(".loader").fadeIn("slow");
+        var btnConsultarCometario = $(this).val();
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: "/ExpedienteServlet",
+            data: 'btnConsultarCometario=' + btnConsultarCometario,
+            success: function (data) {
+                event.preventDefault();
                 $(".loader").fadeOut("slow");
                 var respuesta = $.trim(data);
                 if (respuesta !== "" && respuesta !== null) {
@@ -142,6 +143,33 @@ $(document).ready(function () {
         });
 
     });
+    $("body").on("click", "#btnConsultarArchivo", function () {
+        var btnConsultarArchivo = $(this).val();
+        $.ajax({
+            async: false,
+            type: "GET",
+            url: "/ExpedienteServlet",
+            data: 'btnConsultarArchivo=' + btnConsultarArchivo,
+            success: function (data) {
+                $(".loader").fadeOut("slow");
+                event.preventDefault();
+                var respuesta = $.trim(data);
+                if (respuesta !== "" && respuesta !== null) {
+                    respuesta = respuesta.split(",");
+                    $("#pdf").attr("src", respuesta[1]);
+                    $("#nombre").val(respuesta[0]);
+                    $('#visualizarPdf').modal('show');
+                } else {
+                    var cadena = '<div class="form-row">'
+                            + '<h5>Lo sentimos, se ha presentado un problema guardando los datos .</h3>'
+                            + ' </div>';
+                    $('#modInferror').html(cadena);
+                    $('#modalInfError').modal('show');
+                }
+            }
+        });
+    });
+
 });
 
 function myFunctionReload() {
@@ -175,6 +203,7 @@ function cambiarEstado() {
             return false;
         } else {
             $(".loader").fadeIn("slow");
+            $('#cambiarEstado').modal('hide');
             var btnCambiarEstado = 'ok';
             var codigoEstado = $('#codigoEstado').val();
             var comentarioEstado = $('#comentarioEstado').val();
@@ -218,6 +247,7 @@ function cambiarEstado() {
     }
 }
 function modificarCaso() {
+     $(".loader").fadeIn("slow");
     $('#modalValidar').modal('hide');
     var btnModificarCasoExp = 'ok';
     var IdCaso = $('#IdCaso').val();
@@ -239,6 +269,7 @@ function modificarCaso() {
                 '&casoCedulaPersona=' + casoCedulaPersona + '&CreadoPor=' + CreadoPor + '&Asignado=' + Asignado + '&cedulaUsuario=' + cedulaUsuario,
         success: function (data) {
             event.preventDefault();
+            $(".loader").fadeOut("slow");
             if (data === "Exitoso") {
                 var cadena = ' <div class="form-row">'
                         + '<h5>Sus cambios fueron guardados con ex\u00EDto.</h3>'
@@ -294,8 +325,9 @@ function comentar() {
     });
 }
 
-function modificarComentario(){
+function comentarioModificar() {
     $(".loader").fadeIn("slow");
+    $('#modificarComentario').modal('hide');
     var btnModificarComentario = 'ok';
     var comentario = $('#comentarioMod').val();
     var codigoCaso = $('#codigoCasoMod').val();
@@ -306,7 +338,7 @@ function modificarComentario(){
         type: "POST",
         url: "/ExpedienteServlet",
         data: 'btnModificarComentario=' + btnModificarComentario + '&comentario=' + comentario + '&codigoCaso=' + codigoCaso
-                + '&codigoComentario=' + codigoComentario+ '&usuario=' + usuario,
+                + '&codigoComentario=' + codigoComentario + '&usuario=' + usuario,
         success: function (data) {
             event.preventDefault();
             $(".loader").fadeOut("slow");
@@ -325,4 +357,85 @@ function modificarComentario(){
             }
         }
     });
+}
+
+function eliminarComentario() {
+    $('#eliminarComentarioMod').modal('hide');
+    $(".loader").fadeIn("slow");
+    var btnEliminarComentario = $('#codigoComentario').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/ExpedienteServlet",
+        data: 'btnEliminarComentario=' + btnEliminarComentario,
+        success: function (data) {
+            event.preventDefault();
+            $(".loader").fadeOut("slow");
+            if (data === "Exitoso") {
+                var cadena = ' <div class="form-row">'
+                        + '<h5>Sus cambios fueron guardados con ex\u00EDto.</h3>'
+                        + ' </div>';
+                $('#modInfexito').html(cadena);
+                $('#modalInfexito').modal('show');
+            } else {
+                var cadena = '<div class="form-row">'
+                        + '<h5>Lo sentimos, se ha presentado un problema guardando los datos .</h3>'
+                        + ' </div>';
+                $('#modInferror').html(cadena);
+                $('#modalInfError').modal('show');
+            }
+        }
+    });
+
+}
+
+function asignarUsuario() {
+    var elmForm = $("#asignarForm");
+    if (elmForm) {
+        elmForm.validator('validate');
+        var elmErr = elmForm.find('.has-error');
+        if (elmErr && elmErr.length > 0) {
+            return false;
+        } else {
+            $('#CambiarUsuario').modal('hide');
+            $(".loader").fadeIn("slow");
+            var btnAsginarUsuario = 'ok';
+            var usuarioRespo = $('#usuarioRespo').val();
+            var comentarioAsig = $('#comentarioAsig').val();
+            var casoUsuer = $('#casoUsuer').val();
+            var usuarioGestor = $('#usuarioGestor').val();
+            $.ajax({
+                async: false,
+                type: "POST",
+                url: "/ExpedienteServlet",
+                data: 'btnAsginarUsuario=' + btnAsginarUsuario  + '&usuarioRespo=' + usuarioRespo + '&comentarioAsig=' + comentarioAsig
+                + '&casoUsuer=' + casoUsuer + '&usuarioGestor=' + usuarioGestor,
+                success: function (data) {
+                    event.preventDefault();
+                    $(".loader").fadeOut("slow");
+                    if (data === "0") {
+                        var cadena = ' <div class="form-row">'
+                                + '<h5>Sus cambios fueron guardados con ex\u00EDto.</h3>'
+                                + ' </div>';
+                        $('#modInfexito').html(cadena);
+                        $('#modalInfexito').modal('show');
+                    } else if (data === "1") {
+                        var cadena = '<div class="form-row">'
+                                + '<h5>Lo sentimos, se ha presentado un problema cambiando el estado .</h3>'
+                                + ' </div>';
+                        $('#modInferror').html(cadena);
+                        $('#modalInfError').modal('show');
+                    } else if (data === "2") {
+                        var cadena = '<div class="form-row">'
+                                + '<h5>Lo sentimos, se ha presentado un problema actualizando el expediente .</h3>'
+                                + ' </div>';
+                        $('#modInferror').html(cadena);
+                        $('#modalInfError').modal('show');
+
+                    }
+                }
+            });
+        }
+    }
+
 }

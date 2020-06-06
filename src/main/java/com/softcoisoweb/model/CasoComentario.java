@@ -87,6 +87,15 @@ public class CasoComentario implements Serializable {
         this.fechaActualizacion = fechaActualizacion;
     }
 
+    public CasoComentario(Integer codigo, String codigoCaso, String comentario, String usuarioCedula, String usuarioNombre, String fechaActualizacion) {
+        this.codigo = codigo;
+        this.codigoCaso = codigoCaso;
+        this.comentario = comentario;
+        this.usuarioCedula = usuarioCedula;
+        this.usuarioNombre = usuarioNombre;
+        this.fechaActualizacion = fechaActualizacion;
+    }
+
     
     public Integer getCodigo() {
         return codigo;

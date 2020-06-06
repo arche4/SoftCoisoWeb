@@ -162,4 +162,20 @@ public class CasoPersonaJpaController implements Serializable {
         }
     }
 
+    public void asignarUsuario(String casoId, String usuarioAsignado) throws NonexistentEntityException {
+        EntityManager em = null;
+        try {
+            String Query = "UPDATE caso_persona SET asignado = '" + usuarioAsignado + "' WHERE id_caso = '" + casoId + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.createNativeQuery(Query).executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+             throw new NonexistentEntityException("Se presento inconvenientes al  cambiar el responsable del caso " + casoId + ", El eror es: ", e);
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
 }

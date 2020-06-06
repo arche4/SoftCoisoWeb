@@ -261,20 +261,22 @@
                                             <div class="row">
                                                 <div class="col-md-6 detailed" >
                                                     <label>Comentarios</label>
-                                                    <div class="recent-activity">
-                                                        <c:forEach var="comentario" items="${sessionScope.listComentario}">
+                                                    <c:forEach var="comentario" items="${sessionScope.listComentario}">
+                                                        <div class="recent-activity">
                                                             <div class="activity-panel">
                                                                 <div class="task-title">
-                                                                    <p><c:out value="${comentario.getComentario()}"/></p>
-                                                                    <span class="badge bg-theme"><c:out value="${acciones.getUsuario()}"/></span>
+                                                                    <span class="badge bg-theme"><c:out value="${comentario.getUsuarioNombre()}"/></span> - Añadio un comentario - <c:out value="${comentario.getFechaActualizacion()}"/>
                                                                     <div class="pull-right hidden-phone">
                                                                         <button type="button" id ="btnConsultarCometario" name="btnConsultarCometario"  value="${comentario.getCodigo()}" class="btn btn-primary btn-xs fa fa-pencil"></button>
                                                                         <button type="button" id="btnEliminarComentario" name="btnEliminarComentario" value="${comentario.getCodigo()}" class="btn btn-danger btn-xs fa fa-trash-o"></button>
                                                                     </div>
+                                                                    <p></p>
+                                                                    <p><c:out value="${comentario.getComentario()}"/></p>
                                                                 </div>
                                                             </div>
-                                                        </c:forEach>
-                                                    </div>
+                                                        </div>
+                                                        <br>
+                                                    </c:forEach>
                                                     <!-- /recent-activity -->
                                                     <h4></h4>
                                                     <textarea rows="3" id="comentarioExpediente" name="comentarioExpediente" class="form-control" placeholder="Comentar.."></textarea>
@@ -306,14 +308,7 @@
                                                                         <div class="file-upload-indicator" title="No subido todavÃ&shy;a"><i class="glyphicon glyphicon-plus-sign text-warning"></i></div>
                                                                         <div class="file-actions">
                                                                             <div class="file-footer-buttons">
-                                                                                <button type="button" class="kv-file-zoom btn btn-sm btn-kv btn-default btn-outline-secondary" title="Ver detalles"><i class="glyphicon glyphicon-zoom-in"></i></button>     </div>
-                                                                        </div>
-
-                                                                        <div class="clearfix"></div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="kv-zoom-cache" style="display:none"><div class="file-preview-frame krajee-default  kv-zoom-thumb" id="zoom-thumb-input-700-4289183_Copia-de-seguridad-de-onza_factura_muestra.pdf" data-fileindex="0" data-fileid="4289183_Copia-de-seguridad-de-onza_factura_muestra.pdf" data-template="pdf" title="Copia-de-seguridad-de-onza factura muestra.pdf"><div class="kv-file-content">
-                                                                            <embed class="kv-preview-data file-preview-pdf" src="blob:http://localhost:8080/660a6404-012d-488a-a8e6-a14b997dfc71" type="application/pdf" style="width:100%;height:160px;position:relative;">
+                                                                                <button type="button" id ="btnConsultarArchivo" name="btnConsultarArchivo"  value="${archivo.getCodigo()}" ><i class="glyphicon glyphicon-zoom-in"></i></button></div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -464,18 +459,15 @@
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
+                            <div class="pull-right hidden-phone">
+                                <button type="button" class="btn btn-sm btn-kv btn-default btn-outline-secondary btn-close" title="Cerrar vista detallada" data-dismiss="modal" aria-hidden="true"><i class="glyphicon glyphicon-remove"></i></button>
+                            </div>  
                             <h5 class="modal-title">Vista previa detallada</h5>
-                            <span class="kv-zoom-title" title="Copia-de-seguridad-de-onza factura muestra.pdf  (4.09 MB)">Copia-de-seguridad-de-onza factura muestra.pdf  <samp>(4.09 MB)</samp></span>
-                            <div class="kv-zoom-actions">
-                                <button type="button" class="btn btn-sm btn-kv btn-default btn-outline-secondary btn-toggleheader" title="Mostrar encabezado" data-toggle="button" aria-pressed="false" autocomplete="off"><i class="glyphicon glyphicon-resize-vertical"></i></button>
-                                <button type="button" class="btn btn-sm btn-kv btn-default btn-outline-secondary btn-fullscreen" title="Pantalla completa" data-toggle="button" aria-pressed="false" autocomplete="off"><i class="glyphicon glyphicon-fullscreen"></i>
-                                </button>
-                                <button type="button" class="btn btn-sm btn-kv btn-default btn-outline-secondary btn-borderless" title="Modo sin bordes" data-toggle="button" aria-pressed="false" autocomplete="off"><i class="glyphicon glyphicon-resize-full"></i></button>
-                                <button type="button" class="btn btn-sm btn-kv btn-default btn-outline-secondary btn-close" title="Cerrar vista detallada" data-dismiss="modal" aria-hidden="true"><i class="glyphicon glyphicon-remove"></i></button></div>
+                            <span class="kv-zoom-title" title="pdf"  id="nombre"></span>
+
                         </div>
                         <div class="modal-body">
-
-                            <embed src="https://drive.google.com/file/d/1FPKTn_id0i34RGjA8iX2EGxzMApqyo3o/view?usp=sharing/MANUELA_JIMENEZ.pdf" type="application/pdf" width="100%" height="600px" />
+                            <embed id="pdf" src="" type="application/pdf" width="100%" height="600px" />
                         </div>
                     </div>
                 </div>
@@ -487,15 +479,15 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <h4 class="modal-title" id="myModalLabel">Asigar Expediente</h4>
                         </div>
-                        <form id="asignar" data-toggle="validator">
+                        <form id="asignarForm" data-toggle="validator">
                             <br>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label class="control-label">Asginar Usuario </label>
-                                    <select name="usuarioCod" id="usuarioCod" class="form-control-sm form-control" required>
+                                    <select name="usuarioRespo" id="usuarioRespo" class="form-control-sm form-control" required>
                                         <option value="">Usuario </option>
-                                        <c:forEach var="usuarioCod" items="${sessionScope.listUsuario}">
-                                            <option value="${usuarioCod.getCedula()}"><c:out value="${usuarioCod.getNombreUsuario()}"/> <c:out value="${usuarioCod.getApellidoUsuario()}"/></option>
+                                        <c:forEach var="usuarioRespo" items="${sessionScope.listUsuario}">
+                                            <option value="${usuarioRespo.getCedula()}"><c:out value="${usuarioRespo.getNombreUsuario()}"/> <c:out value="${usuarioRespo.getApellidoUsuario()}"/></option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -505,7 +497,7 @@
                                 <textarea class="form-control " id="comentarioAsig" name="comentarioAsig" placeholder="Comentar..."></textarea>
                             </div>
                             <input class="form-control " id="casoUsuer" type="hidden" name="casoUsuer" value="${sessionScope.FlujoCaso.getCasoPersonaIdCaso()}">
-                            <input class="form-control " id="usuarioAsig" type="hidden" name="usuarioAsig" value="${sessionScope.USUARIO.cedula}">
+                            <input class="form-control " id="usuarioGestor" type="hidden" name="usuarioGestor" value="${sessionScope.USUARIO.cedula}">
                             <br><br><br><br><br><br><br><br><br>
                             <div class="modal-footer">
                                 <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="asignarUsuario()">
@@ -525,16 +517,17 @@
                             <h4 class="modal-title" id="myModalLabel">Comentario</h4>
                         </div>
                         <form id="modificarComentario" data-toggle="validator">
+                            <br>
                             <div class="form-group col-md-12">
-                                <label class="control-label">Quieres agregar algun comentario ? </label>
-                                <textarea class="form-control " id="comentarioMod" name="comentarioMod" placeholder="Comentar..."></textarea>
+                                <label class="control-label">Modifica tu comentario </label>
+                                <textarea class="form-control " rows="10" cols="50" id="comentarioMod" name="comentarioMod" required></textarea>
                             </div>
                             <input class="form-control " id="codigoCasoMod" type="hidden" name="codigoCasoMod">
                             <input class="form-control " id="codigoComentarioMod" type="hidden" name="codigoComentarioMod">
                             <input class="form-control " id="usuarioCambio" type="hidden" name="usuarioCambio" value="${sessionScope.USUARIO.cedula}">
-                            <br><br><br><br><br><br><br><br><br>
+                            <br><br><br><br><br><br>
                             <div class="modal-footer">
-                                <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="modificarComentario()">
+                                <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="comentarioModificar()">
                                     Guardar
                                 </button>
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
@@ -543,6 +536,31 @@
                     </div>
                 </div>
             </div>              
+            <div class="modal fade" id="eliminarComentarioMod" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Eliminar Comentario</h4>
+                        </div>
+                        <form id="modificarComentario" data-toggle="validator">
+                            <br>
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Estas seguro que quieres eliminar este comentario ? </label>
+                                <textarea class="form-control "  id="comentarioEliminar" name="comentarioEliminar" readonly></textarea>
+                            </div>
+                            <input class="form-control " id="codigoComentario" type="hidden" name="codigoComentario">
+                            <br><br><br><br><br><br>
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success" id="eliminar" onclick="eliminarComentario()">
+                                    Si
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div> 
             <div class="modal fade" id="cambiarEstado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">

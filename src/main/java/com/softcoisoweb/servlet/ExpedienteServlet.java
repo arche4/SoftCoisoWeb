@@ -59,14 +59,16 @@ public class ExpedienteServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
-        
+
         String verExpediente = request.getParameter("verExpediente");
         String btnCambiarEstado = request.getParameter("btnCambiarEstado");
         String btnComentar = request.getParameter("btnComentar");
         String btnEliminarComentario = request.getParameter("btnEliminarComentario");
         String btnConsultarCometario = request.getParameter("btnConsultarCometario");
         String btnModificarComentario = request.getParameter("btnModificarComentario");
-        
+        String btnAsginarUsuario = request.getParameter("btnAsginarUsuario");
+        String btnConsultarArchivo = request.getParameter("btnConsultarArchivo");
+
         try ( PrintWriter out = response.getWriter()) {
             if (verExpediente != null && !verExpediente.equals("")) {
                 String codigoCaso = verExpediente;
@@ -92,9 +94,18 @@ public class ExpedienteServlet extends HttpServlet {
                 String consultarComentario = consultarComentario(btnConsultarCometario);
                 out.print(consultarComentario);
             }
+            if (btnAsginarUsuario != null && btnAsginarUsuario.equals("ok")) {
+                String asignarUsuario = asignarUsuario(request);
+                out.print(asignarUsuario);
+            }
+            if (btnConsultarArchivo != null && !btnConsultarArchivo.equals("")) {
+                String consultarArchivo = consultarArchivo(request, btnConsultarArchivo);
+                out.print(consultarArchivo);
+            }
+
         }
     }
-    
+
     public void buscarExpediente(HttpServletRequest request, HttpServletResponse response, String codigoCaso, String cargar) throws ServletException, IOException {
         CasoPersonaJpaController casojpa = new CasoPersonaJpaController(JPAFactory.getFACTORY());
         TipoCasoJpaController tipoCasoJpa = new TipoCasoJpaController(JPAFactory.getFACTORY());
@@ -129,7 +140,7 @@ public class ExpedienteServlet extends HttpServlet {
             session.setAttribute("creadoPor", usuarioInformador);
             session.setAttribute("Asignado", usuarioAsignado);
             session.setAttribute("FlujoCaso", flujo);
-            
+
         } catch (Exception e) {
             System.err.println("Error buscando el expediente  del caso, el error es: " + e);
         }
@@ -140,7 +151,7 @@ public class ExpedienteServlet extends HttpServlet {
             rd.forward(request, response);
         }
     }
-    
+
     public String cambiarEstado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, Exception {
         String resultado;
         String estado = request.getParameter("codigoEstado");
@@ -149,18 +160,17 @@ public class ExpedienteServlet extends HttpServlet {
         String rutaArchivo = request.getParameter("rutaArchivo");
         String cedulaUsuario = request.getParameter("cedulaUsuario");
         String nombreArchivo = request.getParameter("nombreArchivo");
-        
+
         try {
-            resultado = guardarAcciones(request, response, casoid, cedulaUsuario, estado, comentarioEstado, "Estado",
-                    nombreArchivo, rutaArchivo);
-            buscarExpediente(request, response, casoid, "No");
+            resultado = guardarAcciones(casoid, cedulaUsuario, estado, comentarioEstado, "Estado",
+                    nombreArchivo, rutaArchivo, "", "");
         } catch (ExceptionInInitializerError e) {
             System.err.println("Se presento un error cambiando el estado del expediente: " + casoid + " El Error es: " + e);
             resultado = "2";
         }
         return resultado;
     }
-    
+
     private String gestionCaso(String casoId, String usuarioCedula, String fechaActual, String codigoEstado) {
         FlujoCasoJpaController flujoJpa = new FlujoCasoJpaController(JPAFactory.getFACTORY());
         SeguimientoCasoJpaController seguimientoJpa = new SeguimientoCasoJpaController(JPAFactory.getFACTORY());
@@ -174,30 +184,30 @@ public class ExpedienteServlet extends HttpServlet {
             System.err.println("Se presento un error cambiando actualizando el expediente: " + casoId + " El Error es: " + e);
             respuesta = "Error";
         }
-        
+
         return respuesta;
     }
-    
+
     private String guardarComentario(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String respuesta;
         String casoId = request.getParameter("casoComentario");
         String comentarioUsuario = request.getParameter("comentarioUsuario");
         String comentarioExpediente = request.getParameter("comentarioExpediente");
         try {
-            respuesta = guardarAcciones(request, response, casoId, comentarioUsuario, "", comentarioExpediente, "Comentario",
-                    "", "");
-            buscarExpediente(request, response, casoId, "No");
+            respuesta = guardarAcciones(casoId, comentarioUsuario, "", comentarioExpediente, "Comentario",
+                    "", "", "", "");
         } catch (IOException | ServletException e) {
             System.err.println("Se presento un error agregando comentario al expediente: " + casoId + " El Error es: " + e);
             respuesta = "2";
         }
         return respuesta;
     }
-    
-    private String guardarAcciones(HttpServletRequest request, HttpServletResponse response,
+
+    private String guardarAcciones(
             String casoId, String usuarioCedula, String codigoEstado, String comentario,
-            String operacion, String nombreArchivo, String rutaArchivo) throws ServletException, IOException, Exception {
+            String operacion, String nombreArchivo, String rutaArchivo, String codigoComentario, String usuarioResponsable) throws ServletException, IOException, Exception {
         String resultado = null;
+        CasoPersonaJpaController caso = new CasoPersonaJpaController(JPAFactory.getFACTORY());
         CasoComentarioJpaController comentarioJpa = new CasoComentarioJpaController(JPAFactory.getFACTORY());
         CasoArchivoJpaController archivoJpa = new CasoArchivoJpaController(JPAFactory.getFACTORY());
         UsuarioJpaController usuarioJpa = new UsuarioJpaController(JPAFactory.getFACTORY());
@@ -216,41 +226,50 @@ public class ExpedienteServlet extends HttpServlet {
             String nombreUsuario = usuario.getNombreUsuario() + " " + usuario.getApellidoUsuario();
             switch (operacion) {
                 case "Comentario":
-                    comentarioC = new CasoComentario(casoId, comentario, usuarioCedula, nombreUsuario, fechaActual);
+                    comentarioC = new CasoComentario(casoId, comentario, usuarioCedula, nombreUsuario, fecha_Actual);
                     comentarioJpa.create(comentarioC);
                     resultado = "0";
                     break;
                 case "Estado":
                     if (!comentario.equals("")) {
-                        comentarioC = new CasoComentario(casoId, comentario, usuarioCedula, nombreUsuario, fechaActual);
+                        comentarioC = new CasoComentario(casoId, comentario, usuarioCedula, nombreUsuario, fecha_Actual);
                         comentarioJpa.create(comentarioC);
                     }
                     if (!rutaArchivo.equals("")) {
-                        archivo = new CasoArchivo(casoId, usuarioCedula, usuarioCedula, nombreArchivo, rutaArchivo, fechaActual);
+                        archivo = new CasoArchivo(casoId, usuarioCedula, usuarioCedula, nombreArchivo, rutaArchivo, fecha_Actual);
                         archivoJpa.create(archivo);
-                        String seguimiento = gestionCaso(casoId, usuarioCedula, fecha_Actual, codigoEstado);
-                        if (seguimiento.equals("Exitoso")) {
-                            resultado = "0";
-                        } else {
-                            resultado = "1";
-                        }
+                    }
+                    String seguimiento = gestionCaso(casoId, usuarioCedula, fecha_Actual, codigoEstado);
+                    if (seguimiento.equals("Exitoso")) {
+                        resultado = "0";
+                    } else {
+                        resultado = "1";
                     }
                     break;
                 case "ModificarComentario":
-                    comentarioC = new CasoComentario(casoId, comentario, usuarioCedula, nombreUsuario, fechaActual);
+                    comentarioC = new CasoComentario(Integer.parseInt(codigoComentario), casoId, comentario, usuarioCedula, nombreUsuario, fecha_Actual);
                     comentarioJpa.edit(comentarioC);
                     break;
-                default:
-                    break;
+                case "AsignarUsuario":
+                    try {
+                    caso.asignarUsuario(casoId, usuarioResponsable);
+                    if (!comentario.equals("")) {
+                        comentarioC = new CasoComentario(casoId, comentario, usuarioCedula, nombreUsuario, fecha_Actual);
+                        comentarioJpa.create(comentarioC); 
+                    }
+                    resultado = "0";
+                } catch (NonexistentEntityException e) {
+                    System.err.println("Se presento un error cambiando el usuario del expediente: " + casoId + " El Error es: " + e);
+                }
+                break;
             }
-            buscarExpediente(request, response, casoId, "No");
         } catch (ParseException e) {
             System.err.println("Se presento un error guardando acciones del expediente: " + casoId + " El Error es: " + e);
             resultado = "2";
         }
         return resultado;
     }
-    
+
     private String eliminarComentario(String codigoComentario) {
         String respuesta;
         CasoComentarioJpaController comentarioJpa = new CasoComentarioJpaController(JPAFactory.getFACTORY());
@@ -263,7 +282,7 @@ public class ExpedienteServlet extends HttpServlet {
         }
         return respuesta;
     }
-    
+
     private String consultarComentario(String codigoComentario) {
         String respuesta = null;
         CasoComentarioJpaController comentarioJpa = new CasoComentarioJpaController(JPAFactory.getFACTORY());
@@ -275,28 +294,57 @@ public class ExpedienteServlet extends HttpServlet {
         }
         return respuesta;
     }
-    
+
     private String modificarComentario(HttpServletRequest request) {
         String respuesta;
         String casoId = request.getParameter("codigoCaso");
-        String comentario = request.getParameter("codigoComentario");
+        String comentario = request.getParameter("comentario");
         String codigoComentario = request.getParameter("codigoComentario");
         String cedulaUsuario = request.getParameter("usuario");
-        
+
         try {
+            guardarAcciones(casoId, cedulaUsuario, "", comentario, "ModificarComentario", "", "", codigoComentario, "");
             respuesta = "Exitoso";
         } catch (Exception e) {
-            System.err.println("Se presento un error modificar el  comentario del expediente: " +e +" El Error es: " + e);
+            System.err.println("Se presento un error modificar el  comentario del expediente: " + casoId + " El Error es: " + e);
             respuesta = "Error";
         }
         return respuesta;
     }
-    
+
+    public String asignarUsuario(HttpServletRequest request) {
+        String resultado;
+        String casoId = request.getParameter("casoUsuer");
+        String cedulaUsuario = request.getParameter("usuarioGestor");
+        String usuarioResponsable = request.getParameter("usuarioRespo");
+        String comentario = request.getParameter("comentarioAsig");
+        try {
+            resultado = guardarAcciones(casoId, cedulaUsuario, "", comentario, "AsignarUsuario", "", "", "", usuarioResponsable);
+        } catch (Exception e) {
+            System.err.println("Se presento un error cambiando el usuario del expediente: " + casoId + " El Error es: " + e);
+            resultado = "2";
+        }
+        return resultado;
+    }
+
+    private String consultarArchivo(HttpServletRequest request, String idArchivo) {
+        String resultado = null;
+        HttpSession session = request.getSession();
+        CasoArchivoJpaController archivoJpa = new CasoArchivoJpaController(JPAFactory.getFACTORY());
+        try {
+            CasoArchivo archivo = archivoJpa.findCasoArchivo(Integer.parseInt(idArchivo));
+            resultado = archivo.getArchivoNombre() + "," + archivo.getArchivoRuta();
+        } catch (NumberFormatException e) {
+            System.err.println("Se presento un error consultando el archivo del expediente: " + idArchivo + " El Error es: " + e);
+        }
+        return resultado;
+    }
+
     private String obtenerFechaActual() {
         final Calendar capturar_fecha = Calendar.getInstance();
         return Integer.toString(capturar_fecha.get(Calendar.YEAR)) + agregarCerosIzquierda(Integer.toString((capturar_fecha.get(Calendar.MONTH)) + 1)) + agregarCerosIzquierda(Integer.toString(capturar_fecha.get(Calendar.DATE)));
     }
-    
+
     private String agregarCerosIzquierda(final String diames) {
         final StringBuffer retorno = new StringBuffer();
         if (Integer.parseInt(diames) < 10) {
@@ -307,7 +355,7 @@ public class ExpedienteServlet extends HttpServlet {
         }
         return retorno.toString();
     }
-    
+
     private String obtenerHoraActual() {
         final Time sqlTime = new Time(new java.util.Date().getTime());
         return sqlTime.toString();

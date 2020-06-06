@@ -7,6 +7,7 @@ package com.softcoisoweb.model;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -22,6 +23,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "flujo_caso")
+@Cacheable(false)
 @NamedQueries({
     @NamedQuery(name = "FlujoCaso.findAll", query = "SELECT f FROM FlujoCaso f"),
     @NamedQuery(name = "FlujoCaso.findByFechaCreacion", query = "SELECT f FROM FlujoCaso f WHERE f.fechaCreacion = :fechaCreacion"),
