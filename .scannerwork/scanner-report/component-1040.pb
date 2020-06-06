@@ -1,0 +1,1 @@
+ê 2jsXlhrPtarget/SoftCoisoWeb-1.0-SNAPSHOT/lib/bootstrap-fileinput-master/js/locales/he.js

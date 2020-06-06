@@ -154,8 +154,8 @@
                                                 <button  id ="editCaso"  name="editCaso"  class="btn btn-sm btn-theme" value="${sessionScope.Expediente.getIdCaso()}">
                                                     Editar</button>
                                                 <button class="btn btn-sm btn-theme" data-toggle="modal" data-target="#cambiarEstado" type="button">Cambiar Estado</button>
-                                                <button class="btn btn-sm btn-theme"  type="button">Asignar Usuario</button>
-                                                <button class="btn btn-sm btn-theme"  type="button">Citar</button>
+                                                <button class="btn btn-sm btn-theme"  data-toggle="modal" data-target="#CambiarUsuario" type="button">Asignar Usuario</button>
+                                                <a href="${pageContext.servletContext.contextPath}/views/calendar.jsp" class="btn btn-sm btn-theme"  type="button">Citar</a>
                                             </div>
                                         </div>
                                     </div>
@@ -259,140 +259,68 @@
                                     <div class="tab-content">
                                         <div id="overview" class="tab-pane active">
                                             <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="detailed mt">
-                                                        <h4>Comentarios</h4>
-                                                        <div class="recent-activity">
+                                                <div class="col-md-6 detailed" >
+                                                    <label>Comentarios</label>
+                                                    <div class="recent-activity">
+                                                        <c:forEach var="acciones" items="${sessionScope.listAcciones}">
                                                             <div class="activity-panel">
                                                                 <div class="task-title">
-                                                                    <p>Dashio - Admin Panel skjhfjhdjkfhdjkhfjkdhgkjhdfkjghjkdfhgjkdhkjghjkdfhjgkhdjkghdjkhgk
-                                                                        jhdjkhgjkdhjkghdkjhfgkjdhfgkhdkfg& Front-end Theme</p>
-                                                                    <span class="badge bg-theme">Manuela Jimenez</span>
+                                                                    <p><c:out value="${acciones.getComentario()}"/></p>
+                                                                    <span class="badge bg-theme"><c:out value="${acciones.getUsuario()}"/></span>
                                                                     <div class="pull-right hidden-phone">
-                                                                        <button class="btn btn-primary btn-xs fa fa-pencil"></button>
-                                                                        <button class="btn btn-danger btn-xs fa fa-trash-o"></button>
+                                                                        <button type="button" id ="btnConsultarCometario" name="btnConsultarCometario"  value="${acciones.getCodigo()}" class="btn btn-primary btn-xs fa fa-pencil"></button>
+                                                                        <button type="button" id="btnEliminarComentario" name="btnEliminarComentario" value="${acciones.getCodigo()}" class="btn btn-danger btn-xs fa fa-trash-o"></button>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="activity-panel">
-                                                                <div class="task-title">
-                                                                    <span class="task-title-sp">Dashio - Admin Panel &skjhfjhdjkfhdjkhfjkdhgkjhdfkjghjkdfhgjkdhkjghjkdfhjgkhdjkghdjkhgkjhdjkhgjkdhjkghdkjhfgkjdhfgkhdkfg Front-end Theme</span>
-                                                                    <span class="badge bg-theme">Manuela Jimenez</span>
-                                                                    <div class="pull-right hidden-phone">
-                                                                        <button class="btn btn-primary btn-xs fa fa-pencil"></button>
-                                                                        <button class="btn btn-danger btn-xs fa fa-trash-o"></button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                        <!-- /recent-activity -->
+                                                        </c:forEach>
                                                     </div>
+                                                    <!-- /recent-activity -->
                                                     <h4></h4>
-                                                    <textarea rows="3" class="form-control" placeholder="Comentar.."></textarea>
+                                                    <textarea rows="3" id="comentarioExpediente" name="comentarioExpediente" class="form-control" placeholder="Comentar.."></textarea>
                                                     <div class="grey-style">
                                                         <div class="pull-right">
-                                                            <button class="btn btn-sm btn-theme03">Comentar</button>
+                                                            <input class="form-control " id="casoComentario" type="hidden" name="casoComentario" value="${sessionScope.FlujoCaso.getCasoPersonaIdCaso()}">
+                                                            <input class="form-control " id="comentarioUsuario" type="hidden" name="comentarioUsuario" value="${sessionScope.USUARIO.cedula}">
+                                                            <button  type="submit" class="btn btn-sm btn-theme03" id="btnComentar" onclick="comentar()">
+                                                                Comentar
+                                                            </button>
                                                         </div>
                                                     </div>
                                                     <!-- /detailed -->
+
                                                 </div>
                                                 <!-- /col-md-6 -->
                                                 <div class="col-md-6 detailed">
-                                                    <h4>User Stats</h4>
-                                                    <div class="row centered mt mb">
-                                                        <div class="col-sm-4">
-                                                            <h1><i class="fa fa-money"></i></h1>
-                                                            <h3>$22,980</h3>
-                                                            <h6>LIFETIME EARNINGS</h6>
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <h1><i class="fa fa-trophy"></i></h1>
-                                                            <h3>37</h3>
-                                                            <h6>COMPLETED TASKS</h6>
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <h1><i class="fa fa-shopping-cart"></i></h1>
-                                                            <h3>1980</h3>
-                                                            <h6>ITEMS SOLD</h6>
+                                                    <label>Archivos Cargados</label>
+                                                    <div class=" file-drop-zone clearfix">
+                                                        <div class="file-preview-thumbnails clearfix">
+                                                            <c:forEach var="accionesA" items="${sessionScope.listAcciones}">
+                                                                <div class="file-preview-frame krajee-default  kv-preview-thumb" id="thumb-input-700-4289183_Copia-de-seguridad-de-onza_factura_muestra.pdf" data-fileindex="0" data-fileid="4289183_Copia-de-seguridad-de-onza_factura_muestra.pdf" data-template="pdf" title="Copia-de-seguridad-de-onza factura muestra.pdf"><div class="kv-file-content">
+                                                                        <embed class="kv-preview-data file-preview-pdf" src="${accionesA.getArchivoRuta()}" type="application/pdf" style="width:100%;height:160px;position:relative;">
+                                                                    </div><div class="file-thumbnail-footer">
+                                                                        <div class="file-footer-caption" title="Copia-de-seguridad-de-onza factura muestra.pdf">
+                                                                            <div class="file-caption-info">Copia-de-seguridad-de-onza factura muestra.pdf</div>
+                                                                            <div class="file-size-info"> <samp>(4.09 MB)</samp></div>
+                                                                        </div>
+
+                                                                        <div class="file-upload-indicator" title="No subido todavÃ&shy;a"><i class="glyphicon glyphicon-plus-sign text-warning"></i></div>
+                                                                        <div class="file-actions">
+                                                                            <div class="file-footer-buttons">
+                                                                                <button type="button" class="kv-file-zoom btn btn-sm btn-kv btn-default btn-outline-secondary" title="Ver detalles"><i class="glyphicon glyphicon-zoom-in"></i></button>     </div>
+                                                                        </div>
+
+                                                                        <div class="clearfix"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="kv-zoom-cache" style="display:none"><div class="file-preview-frame krajee-default  kv-zoom-thumb" id="zoom-thumb-input-700-4289183_Copia-de-seguridad-de-onza_factura_muestra.pdf" data-fileindex="0" data-fileid="4289183_Copia-de-seguridad-de-onza_factura_muestra.pdf" data-template="pdf" title="Copia-de-seguridad-de-onza factura muestra.pdf"><div class="kv-file-content">
+                                                                            <embed class="kv-preview-data file-preview-pdf" src="blob:http://localhost:8080/660a6404-012d-488a-a8e6-a14b997dfc71" type="application/pdf" style="width:100%;height:160px;position:relative;">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </c:forEach>
                                                         </div>
                                                     </div>
-                                                    <!-- /row -->
-                                                    <h4>My Friends</h4>
-                                                    <div class="row centered mb">
-                                                        <ul class="my-friends">
-                                                            <li>
-                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-01.jpg"></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-02.jpg"></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-03.jpg"></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-04.jpg"></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-05.jpg"></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-06.jpg"></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-07.jpg"></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-08.jpg"></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-09.jpg"></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-10.jpg"></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-11.jpg"></div>
-                                                            </li>
-                                                        </ul>
-                                                        <div class="row mt">
-                                                            <div class="col-md-4 col-md-offset-4">
-                                                                <h6><a href="#">VIEW ALL</a></h6>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- /row -->
-                                                    <h4>Pending Tasks</h4>
-                                                    <div class="row centered">
-                                                        <div class="col-md-8 col-md-offset-2">
-                                                            <h5>Dashboard Update (40%)</h5>
-                                                            <div class="progress">
-                                                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                                                    <span class="sr-only">40% Complete (success)</span>
-                                                                </div>
-                                                            </div>
-                                                            <h5>Unanswered Messages (80%)</h5>
-                                                            <div class="progress">
-                                                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                                                                    <span class="sr-only">80% Complete (success)</span>
-                                                                </div>
-                                                            </div>
-                                                            <h5>Product Review (60%)</h5>
-                                                            <div class="progress">
-                                                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                                                    <span class="sr-only">60% Complete (success)</span>
-                                                                </div>
-                                                            </div>
-                                                            <h5>Friend Requests (90%)</h5>
-                                                            <div class="progress">
-                                                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 90%">
-                                                                    <span class="sr-only">90% Complete (success)</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- /col-md-8 -->
-                                                    </div>
-                                                    <!-- /row -->
                                                 </div>
                                                 <!-- /col-md-6 -->
                                             </div>
@@ -533,9 +461,89 @@
                 <!-- /wrapper -->
             </section>
             <!-- /MAIN CONTENT -->
-            <!--main content end-->
-            <!--footer start-->
+            <div class="modal fade" id="visualizarPdf" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Vista previa detallada</h5>
+                            <span class="kv-zoom-title" title="Copia-de-seguridad-de-onza factura muestra.pdf  (4.09 MB)">Copia-de-seguridad-de-onza factura muestra.pdf  <samp>(4.09 MB)</samp></span>
+                            <div class="kv-zoom-actions">
+                                <button type="button" class="btn btn-sm btn-kv btn-default btn-outline-secondary btn-toggleheader" title="Mostrar encabezado" data-toggle="button" aria-pressed="false" autocomplete="off"><i class="glyphicon glyphicon-resize-vertical"></i></button>
+                                <button type="button" class="btn btn-sm btn-kv btn-default btn-outline-secondary btn-fullscreen" title="Pantalla completa" data-toggle="button" aria-pressed="false" autocomplete="off"><i class="glyphicon glyphicon-fullscreen"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-kv btn-default btn-outline-secondary btn-borderless" title="Modo sin bordes" data-toggle="button" aria-pressed="false" autocomplete="off"><i class="glyphicon glyphicon-resize-full"></i></button>
+                                <button type="button" class="btn btn-sm btn-kv btn-default btn-outline-secondary btn-close" title="Cerrar vista detallada" data-dismiss="modal" aria-hidden="true"><i class="glyphicon glyphicon-remove"></i></button></div>
+                        </div>
+                        <div class="modal-body">
 
+                            <embed src="https://drive.google.com/file/d/1FPKTn_id0i34RGjA8iX2EGxzMApqyo3o/view?usp=sharing/MANUELA_JIMENEZ.pdf" type="application/pdf" width="100%" height="600px" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="CambiarUsuario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Asigar Expediente</h4>
+                        </div>
+                        <form id="asignar" data-toggle="validator">
+                            <br>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="control-label">Asginar Usuario </label>
+                                    <select name="usuarioCod" id="usuarioCod" class="form-control-sm form-control" required>
+                                        <option value="">Usuario </option>
+                                        <c:forEach var="usuarioCod" items="${sessionScope.listUsuario}">
+                                            <option value="${usuarioCod.getCedula()}"><c:out value="${usuarioCod.getNombreUsuario()}"/> <c:out value="${usuarioCod.getApellidoUsuario()}"/></option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Quieres agregar algun comentario ? </label>
+                                <textarea class="form-control " id="comentarioAsig" name="comentarioAsig" placeholder="Comentar..."></textarea>
+                            </div>
+                            <input class="form-control " id="casoUsuer" type="hidden" name="casoUsuer" value="${sessionScope.FlujoCaso.getCasoPersonaIdCaso()}">
+                            <input class="form-control " id="usuarioAsig" type="hidden" name="usuarioAsig" value="${sessionScope.USUARIO.cedula}">
+                            <br><br><br><br><br><br><br><br><br>
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="asignarUsuario()">
+                                    Asignar
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modificarComentario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Comentario</h4>
+                        </div>
+                        <form id="modificarComentario" data-toggle="validator">
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Quieres agregar algun comentario ? </label>
+                                <textarea class="form-control " id="comentarioMod" name="comentarioMod" placeholder="Comentar..."></textarea>
+                            </div>
+                            <input class="form-control " id="codigoCasoMod" type="hidden" name="codigoCasoMod">
+                            <input class="form-control " id="codigoComentarioMod" type="hidden" name="codigoComentarioMod">
+                            <input class="form-control " id="usuarioCambio" type="hidden" name="usuarioCambio" value="${sessionScope.USUARIO.cedula}">
+                            <br><br><br><br><br><br><br><br><br>
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="modificarComentario()">
+                                    Guardar
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>              
             <div class="modal fade" id="cambiarEstado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -543,17 +551,17 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <h4 class="modal-title" id="myModalLabel">Cambiar Estado</h4>
                         </div>
-                        <form id="caso">
+                        <form id="estadoCaso" data-toggle="validator">
                             <br>
                             <div class="alert alert-success" id="Exitoso" style="display:none;">
                                 <strong>¡Bien hecho!</strong>Se guardo a cargado correctamente el archivo.
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <select name="estadoCaso" id="estadoCaso" class="form-control-sm form-control" required>
+                                    <select name="codigoEstado" id="codigoEstado" class="form-control-sm form-control" required>
                                         <option value="">Estado </option>
-                                        <c:forEach var="estado" items="${sessionScope.Estado}">
-                                            <option value="${estado.getCodigoEstado()}"><c:out value="${estado.getNombreEstado()}"/></option>
+                                        <c:forEach var="codigoEstado" items="${sessionScope.Estado}">
+                                            <option value="${codigoEstado.getCodigoEstado()}"><c:out value="${codigoEstado.getNombreEstado()}"/></option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -567,13 +575,13 @@
                                 <label class="control-label">Quieres agregar algun comentario ? </label>
                                 <textarea class="form-control " id="comentarioEstado" name="comentarioEstado" placeholder="Comentar..."></textarea>
                             </div>
-                            <input class="form-control " id="fechaCreacion" type="hidden" name="fechaCreacion" value="${sessionScope.FlujoCaso.getFechaCreacion()}">
                             <input class="form-control " id="casoid" type="hidden" name="casoid" value="${sessionScope.FlujoCaso.getCasoPersonaIdCaso()}">
                             <input class="form-control " id="cedulaUsuario" type="hidden" name="cedulaUsuario" value="${sessionScope.USUARIO.cedula}">
                             <input class="form-control " id="rutaArchivo" type="hidden" name="rutaArchivo">
+                            <input class="form-control " id="nombreArchivo" type="hidden" name="nombreArchivo">
                             <br><br><br><br><br><br><br><br><br>
                             <div class="modal-footer">
-                                <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="validarEstado()">
+                                <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="cambiarEstado()">
                                     Cambiar Estado
                                 </button>
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
@@ -710,7 +718,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="validarEstado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal fade" id="validarEstadoMod" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
 
                     <!-- Modal content-->
@@ -800,7 +808,7 @@
         </section>
         <div class="loader"></div>
         <!-- js placed at the end of the document so the pages load faster -->
-
+        <script src="${pageContext.servletContext.contextPath}/lib/bootstrap/js/validator.min.js" type="text/javascript"></script>
         <script src="${pageContext.servletContext.contextPath}/JavaScript/Expediente.js" type="text/javascript"></script>
         <script src="${pageContext.servletContext.contextPath}/lib/bootstrap-fileinput-master/js/locales/es.js" type="text/javascript"></script>
         <script src="${pageContext.servletContext.contextPath}/lib/bootstrap/js/bootstrap.min.js"></script>

@@ -1,0 +1,1 @@
+Ö 2cssXhrXtarget/SoftCoisoWeb-1.0-SNAPSHOT/login/fonts/font-awesome-4.7.0/scss/_screen-reader.scss

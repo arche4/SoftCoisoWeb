@@ -1,0 +1,1 @@
+ø 2xmlX)hr'target/classes/META-INF/persistence.xml

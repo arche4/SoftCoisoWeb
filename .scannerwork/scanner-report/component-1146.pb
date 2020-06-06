@@ -1,0 +1,1 @@
+ú 2cssX¢hrFtarget/SoftCoisoWeb-1.0-SNAPSHOT/lib/font-awesome/css/font-awesome.css

@@ -1,0 +1,1 @@
+â 2jsXähr@target/SoftCoisoWeb-1.0-SNAPSHOT/lib/fancybox/jquery.fancybox.js

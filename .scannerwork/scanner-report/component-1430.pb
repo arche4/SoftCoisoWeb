@@ -1,0 +1,1 @@
+– 2jsXîhr\target/SoftCoisoWeb-1.0-SNAPSHOT/lib/jquery-smartwizard-master/dist/js/jquery.smartWizard.js

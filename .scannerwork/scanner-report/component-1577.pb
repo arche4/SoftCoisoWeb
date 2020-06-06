@@ -1,0 +1,1 @@
+© 2cssXährAtarget/SoftCoisoWeb-1.0-SNAPSHOT/login/vendor/select2/select2.css

@@ -141,4 +141,22 @@ public class FlujoCasoJpaController implements Serializable {
         }
     }
     
+    public void actualizarFlujoCaso(String casoId, String fechaActulización, String estado, String usuarioCedula) throws NonexistentEntityException {
+        EntityManager em = null;
+        try {
+            String Query = "UPDATE coiso_BDpdn.flujo_caso set fecha_actualizacion = '" + fechaActulización + "',"
+                    + " usuario_cedula = '" + usuarioCedula + "',  estado_caso_codigo_estado = '" + estado + "' WHERE caso_persona_id_caso = '" + casoId + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.createNativeQuery(Query).executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+             throw new NonexistentEntityException("Se presento inconvenientes al actualizar  el caso " + casoId + "El eror es: ", e);
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+    
 }

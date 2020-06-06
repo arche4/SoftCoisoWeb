@@ -1,0 +1,1 @@
+û 2javaXhrEtarget/generated-sources/annotations/com/softcoisoweb/model/Afp_.java

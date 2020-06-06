@@ -1,0 +1,1 @@
+½ 2cssX#hrRtarget/SoftCoisoWeb-1.0-SNAPSHOT/login/fonts/font-awesome-4.7.0/less/animated.less

@@ -1,0 +1,1 @@
+§ 2cssXhrAsrc/main/webapp/login/fonts/font-awesome-4.7.0/scss/_stacked.scss

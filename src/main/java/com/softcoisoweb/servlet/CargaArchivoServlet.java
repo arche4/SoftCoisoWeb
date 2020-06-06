@@ -1,11 +1,14 @@
 package com.softcoisoweb.servlet;
 
+import com.softcoisoweb.servicio.rest.restCargarArchivo;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -28,45 +31,58 @@ public class CargaArchivoServlet extends HttpServlet {
     }
 
     /**
+     * @param request
+     * @param response
+     * @throws javax.servlet.ServletException
+     * @throws java.io.IOException
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
      * response)
      */
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request, response);
     }
 
     /**
+     * @param request
+     * @param response
+     * @throws javax.servlet.ServletException
+     * @throws java.io.IOException
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
      * response)
      */
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String archivo = null;
-//        Path currentRelativePath = Paths.get("").toAbsolutePath().getParent();
-//        String UPLOAD_DIRECTORY = currentRelativePath.toAbsolutePath().toString();
-        String UPLOAD_DIRECTORY = System.getProperty("user.dir");
-
+        final String baseTempPath = System.getProperty("java.io.tmpdir");
+        restCargarArchivo cargarArchivo = new restCargarArchivo();
+        String name = null;
+        String resultado = null;
         if (ServletFileUpload.isMultipartContent(request)) {
             try {
                 List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
+
                 for (FileItem item : multiparts) {
                     if (!item.isFormField()) {
-                        File fileSaveDir = new File(UPLOAD_DIRECTORY );
-                        if (!fileSaveDir.exists()) {
-                            fileSaveDir.mkdir();
-                        }
-                        String name = new File(item.getName()).getName();
+                        Random rand = new Random();
+                        int randomInt = 1 + rand.nextInt();
 
-                        item.write(new File(UPLOAD_DIRECTORY + File.separator + name));
-                        archivo = UPLOAD_DIRECTORY + File.separator + name;
+                        File tempDir = new File(baseTempPath + File.separator + "tempDir" + randomInt);
+                        if (tempDir.exists() == false) {
+                            tempDir.mkdir();
+                        }
+                        name = new File(item.getName()).getName();
+                        item.write(new File(tempDir + File.separator + name));
+                        File file = new File(tempDir + File.separator + name);
+                        resultado = cargarArchivo.cargarArchivo(file, 2);
                     }
                 }
             } catch (Exception e) {
-                System.out.println("Error  El error es" + e);
+                System.out.println("Error cargando el archivo, El error es" + e);
+                resultado = "Error";
             }
 
             PrintWriter out = response.getWriter();
-            String respuesta = "1" + "," + archivo;
-            out.print(respuesta);
+            out.print(resultado);
         }
 
     }

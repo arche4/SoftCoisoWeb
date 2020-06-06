@@ -1,0 +1,363 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.softcoisoweb.servlet;
+
+import com.softcoisoweb.controller.CasoArchivoJpaController;
+import com.softcoisoweb.controller.CasoComentarioJpaController;
+import com.softcoisoweb.controller.CasoPersonaJpaController;
+import com.softcoisoweb.controller.EstadoCasoJpaController;
+import com.softcoisoweb.controller.FlujoCasoJpaController;
+import com.softcoisoweb.controller.PersonaJpaController;
+import com.softcoisoweb.controller.SeguimientoCasoJpaController;
+import com.softcoisoweb.controller.TipoCasoJpaController;
+import com.softcoisoweb.controller.UsuarioJpaController;
+import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
+import com.softcoisoweb.model.CasoArchivo;
+import com.softcoisoweb.model.CasoComentario;
+import com.softcoisoweb.model.CasoPersona;
+import com.softcoisoweb.model.EstadoCaso;
+import com.softcoisoweb.model.FlujoCaso;
+import com.softcoisoweb.model.Persona;
+import com.softcoisoweb.model.SeguimientoCaso;
+import com.softcoisoweb.model.TipoCaso;
+import com.softcoisoweb.model.Usuario;
+import com.softcoisoweb.util.JPAFactory;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+/**
+ *
+ * @author manue
+ */
+public class ExpedienteServlet extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, Exception {
+        
+        String verExpediente = request.getParameter("verExpediente");
+        String btnCambiarEstado = request.getParameter("btnCambiarEstado");
+        String btnComentar = request.getParameter("btnComentar");
+        String btnEliminarComentario = request.getParameter("btnEliminarComentario");
+        String btnConsultarCometario = request.getParameter("btnConsultarCometario");
+        String btnModificarComentario = request.getParameter("btnModificarComentario");
+        
+        try ( PrintWriter out = response.getWriter()) {
+            if (verExpediente != null && !verExpediente.equals("")) {
+                String codigoCaso = verExpediente;
+                buscarExpediente(request, response, codigoCaso, "No");
+            }
+            if (btnCambiarEstado != null && btnCambiarEstado.equals("ok")) {
+                String estado = cambiarEstado(request, response);
+                out.print(estado);
+            }
+            if (btnComentar != null && btnComentar.equals("ok")) {
+                String comentario = guardarComentario(request, response);
+                out.print(comentario);
+            }
+            if (btnModificarComentario != null && btnModificarComentario.equals("ok")) {
+                String comentarioMod = modificarComentario(request);
+                out.print(comentarioMod);
+            }
+            if (btnEliminarComentario != null && !btnEliminarComentario.equals("")) {
+                String eliminarComentario = eliminarComentario(btnEliminarComentario);
+                out.print(eliminarComentario);
+            }
+            if (btnConsultarCometario != null && !btnConsultarCometario.equals("")) {
+                String consultarComentario = consultarComentario(btnConsultarCometario);
+                out.print(consultarComentario);
+            }
+        }
+    }
+    
+    public void buscarExpediente(HttpServletRequest request, HttpServletResponse response, String codigoCaso, String cargar) throws ServletException, IOException {
+        CasoPersonaJpaController casojpa = new CasoPersonaJpaController(JPAFactory.getFACTORY());
+        TipoCasoJpaController tipoCasoJpa = new TipoCasoJpaController(JPAFactory.getFACTORY());
+        FlujoCasoJpaController flujoJpa = new FlujoCasoJpaController(JPAFactory.getFACTORY());
+        EstadoCasoJpaController estadoJpa = new EstadoCasoJpaController(JPAFactory.getFACTORY());
+        UsuarioJpaController usuarioJpa = new UsuarioJpaController(JPAFactory.getFACTORY());
+        CasoComentarioJpaController comentarioJpa = new CasoComentarioJpaController(JPAFactory.getFACTORY());
+        CasoArchivoJpaController archivoJpa = new CasoArchivoJpaController(JPAFactory.getFACTORY());
+        SeguimientoCasoJpaController seguimientoJpa = new SeguimientoCasoJpaController(JPAFactory.getFACTORY());
+        CasoPersona caso = casojpa.findCasoPersona(codigoCaso);
+        HttpSession session = request.getSession();
+        RequestDispatcher rd = null;
+        try {
+            TipoCaso tipoCaso = tipoCasoJpa.findTipoCaso(caso.getTipoCasoCodigoTipoCaso());
+            FlujoCaso flujo = flujoJpa.findFlujoCaso(codigoCaso);
+            EstadoCaso estado = estadoJpa.findEstadoCaso(flujo.getEstadoCasoCodigoEstado());
+            Usuario creadoPor = usuarioJpa.findUsuario(caso.getCreadoPor());
+            Usuario asignado = usuarioJpa.findUsuario(caso.getAsignado());
+            String usuarioInformador = creadoPor.getNombreUsuario() + " " + creadoPor.getApellidoUsuario();
+            String usuarioAsignado = asignado.getNombreUsuario() + " " + asignado.getApellidoUsuario();
+            session.setAttribute("Expediente", caso);
+            PersonaJpaController Personajpa = new PersonaJpaController(JPAFactory.getFACTORY());
+            Persona persona = Personajpa.findPersona(caso.getPersonaCedula());
+            String nombrePersona = persona.getNombrePersona() + " " + persona.getApellidoPersona();
+            List<CasoComentario> listComentarios = comentarioJpa.casoXcomentario(codigoCaso);
+            List<CasoArchivo> listArchivos = archivoJpa.casoXarchivo(codigoCaso);
+            session.setAttribute("listComentario", listComentarios);
+            session.setAttribute("listArchivos", listArchivos);
+            session.setAttribute("PersonaNombre", nombrePersona);
+            session.setAttribute("nombreTipoCaso", tipoCaso.getTipoCaso());
+            session.setAttribute("nombreEstado", estado.getNombreEstado());
+            session.setAttribute("creadoPor", usuarioInformador);
+            session.setAttribute("Asignado", usuarioAsignado);
+            session.setAttribute("FlujoCaso", flujo);
+            
+        } catch (Exception e) {
+            System.err.println("Error buscando el expediente  del caso, el error es: " + e);
+        }
+        if (!cargar.equals("Cargar")) {
+            rd = request.getRequestDispatcher("views/expediente.jsp");
+        }
+        if (rd != null) {
+            rd.forward(request, response);
+        }
+    }
+    
+    public String cambiarEstado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, Exception {
+        String resultado;
+        String estado = request.getParameter("codigoEstado");
+        String comentarioEstado = request.getParameter("comentarioEstado");
+        String casoid = request.getParameter("casoid");
+        String rutaArchivo = request.getParameter("rutaArchivo");
+        String cedulaUsuario = request.getParameter("cedulaUsuario");
+        String nombreArchivo = request.getParameter("nombreArchivo");
+        
+        try {
+            resultado = guardarAcciones(request, response, casoid, cedulaUsuario, estado, comentarioEstado, "Estado",
+                    nombreArchivo, rutaArchivo);
+            buscarExpediente(request, response, casoid, "No");
+        } catch (ExceptionInInitializerError e) {
+            System.err.println("Se presento un error cambiando el estado del expediente: " + casoid + " El Error es: " + e);
+            resultado = "2";
+        }
+        return resultado;
+    }
+    
+    private String gestionCaso(String casoId, String usuarioCedula, String fechaActual, String codigoEstado) {
+        FlujoCasoJpaController flujoJpa = new FlujoCasoJpaController(JPAFactory.getFACTORY());
+        SeguimientoCasoJpaController seguimientoJpa = new SeguimientoCasoJpaController(JPAFactory.getFACTORY());
+        String respuesta;
+        try {
+            SeguimientoCaso seguimiento = new SeguimientoCaso(casoId, codigoEstado, usuarioCedula, fechaActual);
+            flujoJpa.actualizarFlujoCaso(casoId, fechaActual, codigoEstado, usuarioCedula);
+            seguimientoJpa.create(seguimiento);
+            respuesta = "Exitoso";
+        } catch (NonexistentEntityException e) {
+            System.err.println("Se presento un error cambiando actualizando el expediente: " + casoId + " El Error es: " + e);
+            respuesta = "Error";
+        }
+        
+        return respuesta;
+    }
+    
+    private String guardarComentario(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String respuesta;
+        String casoId = request.getParameter("casoComentario");
+        String comentarioUsuario = request.getParameter("comentarioUsuario");
+        String comentarioExpediente = request.getParameter("comentarioExpediente");
+        try {
+            respuesta = guardarAcciones(request, response, casoId, comentarioUsuario, "", comentarioExpediente, "Comentario",
+                    "", "");
+            buscarExpediente(request, response, casoId, "No");
+        } catch (IOException | ServletException e) {
+            System.err.println("Se presento un error agregando comentario al expediente: " + casoId + " El Error es: " + e);
+            respuesta = "2";
+        }
+        return respuesta;
+    }
+    
+    private String guardarAcciones(HttpServletRequest request, HttpServletResponse response,
+            String casoId, String usuarioCedula, String codigoEstado, String comentario,
+            String operacion, String nombreArchivo, String rutaArchivo) throws ServletException, IOException, Exception {
+        String resultado = null;
+        CasoComentarioJpaController comentarioJpa = new CasoComentarioJpaController(JPAFactory.getFACTORY());
+        CasoArchivoJpaController archivoJpa = new CasoArchivoJpaController(JPAFactory.getFACTORY());
+        UsuarioJpaController usuarioJpa = new UsuarioJpaController(JPAFactory.getFACTORY());
+        String fecha, fecha_Actual;
+        CasoComentario comentarioC;
+        CasoArchivo archivo;
+        try {
+            Usuario usuario = usuarioJpa.findUsuario(usuarioCedula);
+            String fechaActual = obtenerFechaActual();
+            String horaActual = obtenerHoraActual();
+            SimpleDateFormat formatterFecha = new SimpleDateFormat("yyyyMMdd");
+            SimpleDateFormat formatterFecha2 = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = formatterFecha.parse(fechaActual);
+            fecha = formatterFecha2.format(date);
+            fecha_Actual = fecha + " " + horaActual;
+            String nombreUsuario = usuario.getNombreUsuario() + " " + usuario.getApellidoUsuario();
+            switch (operacion) {
+                case "Comentario":
+                    comentarioC = new CasoComentario(casoId, comentario, usuarioCedula, nombreUsuario, fechaActual);
+                    comentarioJpa.create(comentarioC);
+                    resultado = "0";
+                    break;
+                case "Estado":
+                    if (!comentario.equals("")) {
+                        comentarioC = new CasoComentario(casoId, comentario, usuarioCedula, nombreUsuario, fechaActual);
+                        comentarioJpa.create(comentarioC);
+                    }
+                    if (!rutaArchivo.equals("")) {
+                        archivo = new CasoArchivo(casoId, usuarioCedula, usuarioCedula, nombreArchivo, rutaArchivo, fechaActual);
+                        archivoJpa.create(archivo);
+                        String seguimiento = gestionCaso(casoId, usuarioCedula, fecha_Actual, codigoEstado);
+                        if (seguimiento.equals("Exitoso")) {
+                            resultado = "0";
+                        } else {
+                            resultado = "1";
+                        }
+                    }
+                    break;
+                case "ModificarComentario":
+                    comentarioC = new CasoComentario(casoId, comentario, usuarioCedula, nombreUsuario, fechaActual);
+                    comentarioJpa.edit(comentarioC);
+                    break;
+                default:
+                    break;
+            }
+            buscarExpediente(request, response, casoId, "No");
+        } catch (ParseException e) {
+            System.err.println("Se presento un error guardando acciones del expediente: " + casoId + " El Error es: " + e);
+            resultado = "2";
+        }
+        return resultado;
+    }
+    
+    private String eliminarComentario(String codigoComentario) {
+        String respuesta;
+        CasoComentarioJpaController comentarioJpa = new CasoComentarioJpaController(JPAFactory.getFACTORY());
+        try {
+            comentarioJpa.destroy(Integer.parseInt(codigoComentario));
+            respuesta = "Exitoso";
+        } catch (NonexistentEntityException e) {
+            System.err.println("Se presento un error eliminando  comentario del expediente: " + codigoComentario + " El Error es: " + e);
+            respuesta = "Error";
+        }
+        return respuesta;
+    }
+    
+    private String consultarComentario(String codigoComentario) {
+        String respuesta = null;
+        CasoComentarioJpaController comentarioJpa = new CasoComentarioJpaController(JPAFactory.getFACTORY());
+        try {
+            CasoComentario comentario = comentarioJpa.findCasoComentario(Integer.parseInt(codigoComentario));
+            respuesta = comentario.getCodigo().toString() + "#" + comentario.getCodigoCaso() + "#" + comentario.getComentario();
+        } catch (NumberFormatException e) {
+            System.err.println("Se presento un error consultando comentario del expediente: " + codigoComentario + " El Error es: " + e);
+        }
+        return respuesta;
+    }
+    
+    private String modificarComentario(HttpServletRequest request) {
+        String respuesta;
+        String casoId = request.getParameter("codigoCaso");
+        String comentario = request.getParameter("codigoComentario");
+        String codigoComentario = request.getParameter("codigoComentario");
+        String cedulaUsuario = request.getParameter("usuario");
+        
+        try {
+            respuesta = "Exitoso";
+        } catch (Exception e) {
+            System.err.println("Se presento un error modificar el  comentario del expediente: " +e +" El Error es: " + e);
+            respuesta = "Error";
+        }
+        return respuesta;
+    }
+    
+    private String obtenerFechaActual() {
+        final Calendar capturar_fecha = Calendar.getInstance();
+        return Integer.toString(capturar_fecha.get(Calendar.YEAR)) + agregarCerosIzquierda(Integer.toString((capturar_fecha.get(Calendar.MONTH)) + 1)) + agregarCerosIzquierda(Integer.toString(capturar_fecha.get(Calendar.DATE)));
+    }
+    
+    private String agregarCerosIzquierda(final String diames) {
+        final StringBuffer retorno = new StringBuffer();
+        if (Integer.parseInt(diames) < 10) {
+            final String add = "0" + diames;
+            retorno.append(add);
+        } else {
+            retorno.append(diames);
+        }
+        return retorno.toString();
+    }
+    
+    private String obtenerHoraActual() {
+        final Time sqlTime = new Time(new java.util.Date().getTime());
+        return sqlTime.toString();
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(ExpedienteServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(ExpedienteServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+}

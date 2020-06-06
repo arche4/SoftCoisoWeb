@@ -1,0 +1,1 @@
+é 2jsXWhrRtarget/SoftCoisoWeb-1.0-SNAPSHOT/lib/file-uploader/js/cors/jquery.xdr-transport.js

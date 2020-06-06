@@ -1,0 +1,1 @@
+Ô 2cssXhrOtarget/SoftCoisoWeb-1.0-SNAPSHOT/login/fonts/font-awesome-4.7.0/scss/_path.scss

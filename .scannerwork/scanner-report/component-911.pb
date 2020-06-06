@@ -1,0 +1,1 @@
+è 2javaXhrQtarget/generated-sources/annotations/com/softcoisoweb/model/SeguimientoCaso_.java

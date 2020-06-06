@@ -1,0 +1,1 @@
+  2jsXrhr9target/SoftCoisoWeb-1.0-SNAPSHOT/lib/jquery.nicescroll.js

@@ -1,0 +1,1 @@
+˜ 2jsX!hrCsrc/main/webapp/lib/fullcalendar/packages/bundle/locales/sr-cyrl.js

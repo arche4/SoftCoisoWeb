@@ -1,0 +1,1 @@
+Í 2cssXhrZtarget/SoftCoisoWeb-1.0-SNAPSHOT/login/fonts/font-awesome-4.7.0/scss/_bordered-pulled.scss

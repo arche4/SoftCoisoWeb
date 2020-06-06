@@ -26,6 +26,8 @@
     <class>com.softcoisoweb.model.Diagnostico</class>
     <class>com.softcoisoweb.model.Actividades</class>
     <class>com.softcoisoweb.model.CasoAcciones</class>
+    <class>com.softcoisoweb.model.CasoComentario</class>
+    <class>com.softcoisoweb.model.CasoArchivo</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <shared-cache-mode>ALL</shared-cache-mode>
     <properties>

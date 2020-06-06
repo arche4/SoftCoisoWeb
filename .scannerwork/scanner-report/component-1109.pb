@@ -1,0 +1,1 @@
+Õ 2jsXthr<target/SoftCoisoWeb-1.0-SNAPSHOT/lib/calendar-conf-events.js
