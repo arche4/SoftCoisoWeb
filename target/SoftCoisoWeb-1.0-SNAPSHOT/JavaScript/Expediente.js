@@ -171,6 +171,35 @@ $(document).ready(function () {
             }
         });
     });
+    
+    $("body").on("click", "#btnConsultarProceso", function () {
+        $(".loader").fadeIn("slow");
+        var btnConsultarProceso = $(this).val();
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: "/procesoCalificacionServlet",
+            data: 'btnConsultarProceso=' + btnConsultarProceso,
+            success: function (data) {
+                event.preventDefault();
+                $(".loader").fadeOut("slow");
+                var respuesta = $.trim(data);
+                if (respuesta !== "" && respuesta !== null) {
+                    respuesta = respuesta.split("#");
+                    $("#codigoProceso").val(respuesta[0]);
+                    $("#procesoMod").val(respuesta[1]);
+                    $("#comentarioProcesoMod").val(respuesta[2]);
+                    $('#modificarProcesoCalificacion').modal('show');
+                } else {
+                    var cadena = '<div class="form-row">'
+                            + '<h5>Lo sentimos, se ha presentado un problema consultado los datos .</h3>'
+                            + ' </div>';
+                    $('#modInferror').html(cadena);
+                    $('#modalInfError').modal('show');
+                }
+            }
+        });
+    });
 
 });
 
@@ -442,7 +471,7 @@ function asignarUsuario() {
 
 }
 
-function asignarUsuario() {
+function guardarProceso() {
     var elmForm = $("#procesoCalificacion");
     if (elmForm) {
         elmForm.validator('validate');
@@ -452,20 +481,36 @@ function asignarUsuario() {
         } else {
             $('#agregarProcesoCalificacion').modal('hide');
             $(".loader").fadeIn("slow");
-            var btnAsginarUsuario = 'ok';
-            var usuarioRespo = $('#usuarioRespo').val();
-            var comentarioAsig = $('#comentarioAsig').val();
-            var casoUsuer = $('#casoUsuer').val();
-            var usuarioGestor = $('#usuarioGestor').val();
+            var btnCrearProceso = 'ok';
+            var proceso = $('#proceso').val();
+            var comentarioProceso = $('#comentarioProceso').val();
+            var nombreArchivoProceso = $('#nombreArchivo').val();
+            var rutaArchivoProceso = $('#rutaArchivo').val();
+            var usuarioProceso = $('#usuarioProceso').val();
+            var casoIdProceso = $('#casoIdProceso').val();
             $.ajax({
                 async: false,
                 type: "POST",
                 url: "/procesoCalificacionServlet",
-                data: 'btnAsginarUsuario=' + btnAsginarUsuario + '&usuarioRespo=' + usuarioRespo + '&comentarioAsig=' + comentarioAsig
-                        + '&casoUsuer=' + casoUsuer + '&usuarioGestor=' + usuarioGestor,
+                data: 'btnCrearProceso=' + btnCrearProceso + '&proceso=' + proceso + '&comentarioProceso=' + comentarioProceso
+                        + '&nombreArchivoProceso=' + nombreArchivoProceso + '&rutaArchivoProceso=' + rutaArchivoProceso
+                        + '&usuarioProceso=' + usuarioProceso + '&casoIdProceso=' + casoIdProceso,
                 success: function (data) {
                     event.preventDefault();
                     $(".loader").fadeOut("slow");
+                    if (data === "Exitoso") {
+                        var cadena = ' <div class="form-row">'
+                                + '<h5>Sus cambios fueron guardados con ex\u00EDto.</h3>'
+                                + ' </div>';
+                        $('#modInfexito').html(cadena);
+                        $('#modalInfexito').modal('show');
+                    } else {
+                        var cadena = '<div class="form-row">'
+                                + '<h5>Lo sentimos, se ha presentado un problema guardando los datos .</h3>'
+                                + ' </div>';
+                        $('#modInferror').html(cadena);
+                        $('#modalInfError').modal('show');
+                    }
                 }
             });
         }

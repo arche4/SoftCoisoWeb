@@ -84,6 +84,7 @@ com\softcoisoweb\model\Persona.class
 com\softcoisoweb\controller\FlujoCasoJpaController.class
 com\softcoisoweb\clase\Expediente.class
 com\softcoisoweb\controller\AfpJpaController.class
+com\softcoisoweb\clase\obtenerFecha.class
 com\softcoisoweb\model\Calificacion.class
 com\softcoisoweb\controller\CasoArchivoJpaController.class
 com\softcoisoweb\model\OrganizacionSindical.class

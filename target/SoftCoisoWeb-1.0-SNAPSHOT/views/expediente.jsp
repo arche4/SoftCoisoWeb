@@ -247,13 +247,13 @@
                                             <a data-toggle="tab" href="#Calificacion">Proceso de Calificación</a>
                                         </li>
                                         <li>
-                                            <a data-toggle="tab" href="#edit">Reclamación</a>
+                                            <a data-toggle="tab" href="#reclamacion">Reclamación</a>
                                         </li>
                                         <li>
-                                            <a data-toggle="tab" href="#edit">Medicacion</a>
+                                            <a data-toggle="tab" href="#medicacion">Medicacion</a>
                                         </li>
                                         <li>
-                                            <a data-toggle="tab" href="#edit">Diagnostico</a>
+                                            <a data-toggle="tab" href="#diagnostico">Diagnostico</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -362,44 +362,175 @@
                                         <!-- /tab-pane -->
                                         <div id="Calificacion" class="tab-pane">
                                             <div class="row">
-                                                <div class="col-lg-8 col-lg-offset-2 detailed">
-                                                    <h4 class="mb">Proceso de calificación</h4> 
-                                                    <button class="btn btn-sm btn-theme"  data-toggle="modal" data-target="#agregarProcesoCalificacion" type="button">Agregar Proceso de Calificacion</button>
-                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        <div class="custom-box">
-                                                            <div class="servicetitle">
-                                                                <h4>Standard</h4>
-                                                                <hr>
+                                                <div class="col-lg-12">
+                                                    <div class="room-desk">
+                                                        <h4 class="pull-left">Proceso de calificación </h4>
+                                                        <button class="pull-right btn btn-theme02" data-toggle="modal" data-target="#agregarProcesoCalificacion" type="button">+ Agregar Proceso de Calificacion</button>
+                                                        <c:forEach var="proceso" items="${sessionScope.listProceso}" varStatus="myIndex">
+                                                            <div class="room-box">
+                                                                <h5 class="text-primary"><a href="chat_room.html">${proceso.getProceso()}</a></h5>
+                                                                <div class="pull-right hidden-phone">
+                                                                    <button type="button" id ="btnConsultarCometario" name="btnConsultarCometario"  value="${comentario.getCodigo()}" class="btn btn-primary btn-xs fa fa-pencil"></button>
+                                                                    <button type="button" id="btnEliminarComentario" name="btnEliminarComentario" value="${comentario.getCodigo()}" class="btn btn-danger btn-xs fa fa-trash-o"></button>
+                                                                </div>
+                                                                <p>${proceso.getComentario()}</p>
+                                                                <p><span class="text-muted">Creado :</span> ${proceso.getFechaCreacion()} | <span class="text-muted">Ultima Actualización :</span> ${proceso.getFechaActualizada()} | <span class="text-muted">Creado por :</span> 2 min ago</p>
+                                                                <div class="pull-right hidden-phone"> 
+                                                                </div>
                                                             </div>
-                                                            <div class="icn-main-container">
-                                                                <span class="icn-container">$25</span>
-                                                            </div>
-                                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry.</p>
-                                                            <ul class="pricing">
-                                                                <li>150 Mb Storage</li>
-                                                                <li>1 Domain</li>
-                                                                <li>2 Sub Domains</li>
-                                                                <li>3 MySQL DBs</li>
-                                                                <li>2 Emails</li>
-                                                                <li>WordPress Installation</li>
-                                                                <li>24/7 Support</li>
-                                                            </ul>
-                                                            <a class="btn btn-theme" href="#">Order Now</a>
-                                                        </div>
-                                                        <!-- end custombox -->
+                                                        </c:forEach>
+                                                    </div>
+                                                    <h4 class="pull-left">Archivos</h4>
+                                                    <div class="room-desk">
+                                                        <c:forEach var="proceso" items="${sessionScope.listProceso}" varStatus="myIndex">
+                                                            <c:if test="${!empty proceso.getNombreArchivo()}">
+                                                                <div class="form-row">
+                                                                    <div class="col-sm-4 col-md-3">
+                                                                        <div class=" file-drop-zone clearfix" style="margin: 0px; padding: 0px">
+                                                                            <div class="file-preview-thumbnails clearfix">
+                                                                                <div class="file-preview-frame krajee-default  kv-preview-thumb" id="archivo" data-fileindex="0" data-fileid="4289183_${proceso.getNombreArchivo()}" data-template="pdf" title="${proceso.getNombreArchivo()}" >
+                                                                                    <div class="kv-file-content">
+                                                                                        <embed class="kv-preview-data file-preview-pdf" src="${proceso.getRutaArchivo()}" type="application/pdf" style="width:100%;height:160px;position:relative;">
+                                                                                    </div><div class="file-thumbnail-footer">
+                                                                                        <div class="file-footer-caption" title="${proceso.getNombreArchivo()}">
+                                                                                            <div class="file-caption-info">${proceso.getNombreArchivo()}</div>
+                                                                                        </div>
+                                                                                        <div class="file-actions">
+                                                                                            <div class="file-footer-buttons">
+                                                                                                <button type="button" id ="btnConsultarArchivo" name="btnConsultarArchivo"  value="${proceso.getCodigo()}" ><i class="glyphicon glyphicon-zoom-in"></i></button>
+                                                                                                <button type="button" id ="btnConsultarArchivo" name="btnConsultarArchivo"  value="${proceso.getCodigo()}" ><i class="glyphicon glyphicon-remove"></i></button>
+
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </c:if>
+                                                        </c:forEach>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- /tab-pane -->
+                                        <div id="reclamacion" class="tab-pane">
+                                            <div class="row">
+                                                 <div class="room-desk">
+                                                    <h4 class="pull-left">Reclamacion </h4>
+                                                    <button class="pull-right btn btn-theme02" data-toggle="modal" data-target="#agregarProcesoCalificacion" type="button">+ Agregar Proceso de Calificacion</button>
+                                                    <div class="mt"></div>
+                                                    <div class="row content-panel mt mb">
+                                                        <div class="col-md-6">
+                                                            <h2 contenteditable="true">Dashio is a fully responsive admin dashboard template built with Bootstrap 3.1.1 Framework</h2>
+                                                            <h3 contenteditable="true">Following the Equator, Complete</h3>
+                                                            <h5 contenteditable="true">Mark Twain (Samuel Clemens)</h5>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <p contenteditable="true" class="mt">Later, when we reached the city, and glanced down the chief avenue, smouldering in its crushed-strawberry tint, those splendid effects were repeated; for every balcony, and every fanciful bird-cage of a snuggery countersunk in the house-fronts,
+                                                                and all the long lines of roofs were crowded with people, and each crowd was an explosion of brilliant color.</p>
+                                                            <p contenteditable="true">For color, and picturesqueness, and novelty, and outlandishness, and sustained interest and fascination, it was the most satisfying show I had ever seen, and I suppose I shall not have the privilege of looking upon its like again.</p>
+                                                            <p contenteditable="true">In the first place God made idiots. This was for practice. Then He made School Boards. --Pudd'nhead Wilson's New Calendar.</p>
+                                                            <p contenteditable="true">"I pray please to give me some action (work) for I am very poor boy I have no one to help me even so father for it so it seemed in thy good sight, you give the Telegraph Office, and another work what is your wish I am very poor boy, this understand
+                                                                what is your wish you my father I am your son this understand what is your wish.</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt"></div>
+                                                    <div class="row content-panel mt mb">
+                                                        <div class="col-md-6">
+                                                            <h3 contenteditable="true">The Count of Monte Cristo</h3>
+                                                            <h4 contenteditable="true">Alexander Dumas, Pere</h4>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <p contenteditable="true" class="mt">"What, still keeping up this silly jest? My dear fellow, it is perfectly ridiculous--stupid! You had better tell me at once that you intend starving me to death."</p>
+                                                            <p contenteditable="true">"And what am I to pay with, brute?" said Danglars, enraged. "Do you suppose I carry 100,000 francs in my pocket?"</p>
+                                                            <p contenteditable="true">"Your excellency has 5,050,000 francs in your pocket; that will be fifty fowls at 100,000 francs apiece, and half a fowl for the 50,000."</p>
+                                                            <p contenteditable="true">Danglars shuddered. The bandage fell from his eyes, and he understood the joke, which he did not think quite so stupid as he had done just before. "Come," he said, "if I pay you the 100,000 francs, will you be satisfied, and allow me to eat
+                                                                at my ease?"</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="medicacion" class="tab-pane">
+                                            <div class="row">
+                                                <div class="col-md-12 detailed">
+                                                    <h4>Medicacion</h4>
+                                                    <div class="mt"></div>
+                                                    <div class="row content-panel mt mb">
+                                                        <div class="col-md-6">
+                                                            <h2 contenteditable="true">Dashio is a fully responsive admin dashboard template built with Bootstrap 3.1.1 Framework</h2>
+                                                            <h3 contenteditable="true">Following the Equator, Complete</h3>
+                                                            <h5 contenteditable="true">Mark Twain (Samuel Clemens)</h5>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <p contenteditable="true" class="mt">Later, when we reached the city, and glanced down the chief avenue, smouldering in its crushed-strawberry tint, those splendid effects were repeated; for every balcony, and every fanciful bird-cage of a snuggery countersunk in the house-fronts,
+                                                                and all the long lines of roofs were crowded with people, and each crowd was an explosion of brilliant color.</p>
+                                                            <p contenteditable="true">For color, and picturesqueness, and novelty, and outlandishness, and sustained interest and fascination, it was the most satisfying show I had ever seen, and I suppose I shall not have the privilege of looking upon its like again.</p>
+                                                            <p contenteditable="true">In the first place God made idiots. This was for practice. Then He made School Boards. --Pudd'nhead Wilson's New Calendar.</p>
+                                                            <p contenteditable="true">"I pray please to give me some action (work) for I am very poor boy I have no one to help me even so father for it so it seemed in thy good sight, you give the Telegraph Office, and another work what is your wish I am very poor boy, this understand
+                                                                what is your wish you my father I am your son this understand what is your wish.</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt"></div>
+                                                    <div class="row content-panel mt mb">
+                                                        <div class="col-md-6">
+                                                            <h3 contenteditable="true">The Count of Monte Cristo</h3>
+                                                            <h4 contenteditable="true">Alexander Dumas, Pere</h4>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <p contenteditable="true" class="mt">"What, still keeping up this silly jest? My dear fellow, it is perfectly ridiculous--stupid! You had better tell me at once that you intend starving me to death."</p>
+                                                            <p contenteditable="true">"And what am I to pay with, brute?" said Danglars, enraged. "Do you suppose I carry 100,000 francs in my pocket?"</p>
+                                                            <p contenteditable="true">"Your excellency has 5,050,000 francs in your pocket; that will be fifty fowls at 100,000 francs apiece, and half a fowl for the 50,000."</p>
+                                                            <p contenteditable="true">Danglars shuddered. The bandage fell from his eyes, and he understood the joke, which he did not think quite so stupid as he had done just before. "Come," he said, "if I pay you the 100,000 francs, will you be satisfied, and allow me to eat
+                                                                at my ease?"</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="diagnostico" class="tab-pane">
+                                            <div class="row">
+                                                <div class="col-md-12 detailed">
+                                                    <h4>Diagnostico</h4>
+                                                    <div class="mt"></div>
+                                                    <div class="row content-panel mt mb">
+                                                        <div class="col-md-6">
+                                                            <h2 contenteditable="true">Dashio is a fully responsive admin dashboard template built with Bootstrap 3.1.1 Framework</h2>
+                                                            <h3 contenteditable="true">Following the Equator, Complete</h3>
+                                                            <h5 contenteditable="true">Mark Twain (Samuel Clemens)</h5>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <p contenteditable="true" class="mt">Later, when we reached the city, and glanced down the chief avenue, smouldering in its crushed-strawberry tint, those splendid effects were repeated; for every balcony, and every fanciful bird-cage of a snuggery countersunk in the house-fronts,
+                                                                and all the long lines of roofs were crowded with people, and each crowd was an explosion of brilliant color.</p>
+                                                            <p contenteditable="true">For color, and picturesqueness, and novelty, and outlandishness, and sustained interest and fascination, it was the most satisfying show I had ever seen, and I suppose I shall not have the privilege of looking upon its like again.</p>
+                                                            <p contenteditable="true">In the first place God made idiots. This was for practice. Then He made School Boards. --Pudd'nhead Wilson's New Calendar.</p>
+                                                            <p contenteditable="true">"I pray please to give me some action (work) for I am very poor boy I have no one to help me even so father for it so it seemed in thy good sight, you give the Telegraph Office, and another work what is your wish I am very poor boy, this understand
+                                                                what is your wish you my father I am your son this understand what is your wish.</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt"></div>
+                                                    <div class="row content-panel mt mb">
+                                                        <div class="col-md-6">
+                                                            <h3 contenteditable="true">The Count of Monte Cristo</h3>
+                                                            <h4 contenteditable="true">Alexander Dumas, Pere</h4>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <p contenteditable="true" class="mt">"What, still keeping up this silly jest? My dear fellow, it is perfectly ridiculous--stupid! You had better tell me at once that you intend starving me to death."</p>
+                                                            <p contenteditable="true">"And what am I to pay with, brute?" said Danglars, enraged. "Do you suppose I carry 100,000 francs in my pocket?"</p>
+                                                            <p contenteditable="true">"Your excellency has 5,050,000 francs in your pocket; that will be fifty fowls at 100,000 francs apiece, and half a fowl for the 50,000."</p>
+                                                            <p contenteditable="true">Danglars shuddered. The bandage fell from his eyes, and he understood the joke, which he did not think quite so stupid as he had done just before. "Come," he said, "if I pay you the 100,000 francs, will you be satisfied, and allow me to eat
+                                                                at my ease?"</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <!-- /tab-content -->
                                 </div>
-                                <!-- /panel-body -->
                             </div>
-                            <!-- /col-lg-12 -->
                         </div>
-                    </div>
                 </section>
                 <!-- /wrapper -->
             </section>
@@ -431,25 +562,65 @@
                         <div class="alert alert-success" id="Exitoso" style="display:none;">
                             <strong>¡Bien hecho!</strong>Se guardo a cargado correctamente el archivo.
                         </div>
-                            <form id="procesoCalificacion" data-toggle="validator">
+                        <form id="procesoCalificacion" data-toggle="validator">
                             <br>
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label class="control-label">Proceso</label>
-                                    <input type="text" class="form-control" id="proceso" name="proceso" placeholder="Proceso" required>
+                                    <input type="text" class="form-control" id="proceso" name="proceso" placeholder="proceso" required>
                                 </div>
                             </div>
                             <div class="form-group col-md-12">
                                 <label class="control-label">Quieres agregar algun comentario ? </label>
-                                <textarea class="form-control " id="comentarioAsig" name="comentarioAsig" placeholder="Comentar..."></textarea>
+                                <textarea class="form-control " id="comentarioProceso" name="comentarioProceso" placeholder="Comentar..."></textarea>
                             </div>
                             <div class="form-group col-md-6">
                                 <button type="button" class="btn btn-theme" data-toggle="modal" data-target="#cargarArchivos">
                                     Cargar Archivos
                                 </button>
                             </div>
-                            <input class="form-control " id="casoUsuer" type="hidden" name="casoUsuer" value="${sessionScope.FlujoCaso.getCasoPersonaIdCaso()}">
-                            <input class="form-control " id="usuarioGestor" type="hidden" name="usuarioGestor" value="${sessionScope.USUARIO.cedula}">
+                            <input class="form-control " id="casoIdProceso" type="hidden" name="casoIdProceso" value="${sessionScope.FlujoCaso.getCasoPersonaIdCaso()}">
+                            <input class="form-control " id="usuarioProceso" type="hidden" name="usuarioProceso" value="${sessionScope.USUARIO.cedula}">
+                            <input class="form-control " id="nombreArchivo" type="hidden" name="nombreArchivo">
+                            <input class="form-control " id="rutaArchivo" type="hidden" name="rutaArchivo">
+                            <br><br><br><br><br><br><br><br><br><br><br><br>
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="guardarProceso()">
+                                    Guardar
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modificarProcesoCalificacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Proceso de Calificación</h4>
+                        </div>
+                        <form id="procesoCalificacionMod" data-toggle="validator">
+                            <br>
+                            <input class="form-control " id="codigoProceso" type="hidden" name="codigoProceso">
+
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Proceso</label>
+                                    <input type="text" class="form-control" id="procesoMod" name="procesoMod" placeholder="Proceso" required>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Quieres agregar algun comentario ? </label>
+                                <textarea class="form-control " id="comentarioProcesoMod" name="comentarioProcesoMod" placeholder="Comentar..."></textarea>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <button type="button" class="btn btn-theme" data-toggle="modal" data-target="#cargarArchivos">
+                                    Cargar Archivos
+                                </button>
+                            </div>
+                            <input class="form-control " id="usuarioProceso" type="hidden" name="usuarioProcesoMod" value="${sessionScope.USUARIO.cedula}">
                             <br><br><br><br><br><br><br><br><br><br><br><br>
                             <div class="modal-footer">
                                 <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="guardarProceso()">

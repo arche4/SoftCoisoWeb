@@ -25,7 +25,6 @@ import com.softcoisoweb.model.CasoPersona;
 import com.softcoisoweb.model.Citas;
 import com.softcoisoweb.model.EstadoCaso;
 import com.softcoisoweb.model.FlujoCaso;
-import com.softcoisoweb.model.Medicamentos;
 import com.softcoisoweb.model.MedicamentosCaso;
 import com.softcoisoweb.model.Persona;
 import com.softcoisoweb.model.ProcesoCalificacion;
@@ -146,8 +145,10 @@ public class ExpedienteServlet extends HttpServlet {
             FlujoCaso flujo = flujoJpa.findFlujoCaso(codigoCaso);
             EstadoCaso estado = estadoJpa.findEstadoCaso(flujo.getEstadoCasoCodigoEstado());
 
+            //Usuarios que gestionan el expediente
             Usuario creadoPor = usuarioJpa.findUsuario(caso.getCreadoPor());
             Usuario asignado = usuarioJpa.findUsuario(caso.getAsignado());
+            
             String usuarioInformador = creadoPor.getNombreUsuario() + " " + creadoPor.getApellidoUsuario();
             String usuarioAsignado = asignado.getNombreUsuario() + " " + asignado.getApellidoUsuario();
             Persona persona = Personajpa.findPersona(caso.getPersonaCedula());
