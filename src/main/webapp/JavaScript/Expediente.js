@@ -4,6 +4,8 @@ $(window).load(function () {
 
 $(document).ready(function () {
 
+    $('#table_id').dataTable();
+
     $("#input-700").fileinput({
         language: 'es',
         showUpload: false,
@@ -247,7 +249,7 @@ function cambiarEstado() {
     }
 }
 function modificarCaso() {
-     $(".loader").fadeIn("slow");
+    $(".loader").fadeIn("slow");
     $('#modalValidar').modal('hide');
     var btnModificarCasoExp = 'ok';
     var IdCaso = $('#IdCaso').val();
@@ -408,8 +410,8 @@ function asignarUsuario() {
                 async: false,
                 type: "POST",
                 url: "/ExpedienteServlet",
-                data: 'btnAsginarUsuario=' + btnAsginarUsuario  + '&usuarioRespo=' + usuarioRespo + '&comentarioAsig=' + comentarioAsig
-                + '&casoUsuer=' + casoUsuer + '&usuarioGestor=' + usuarioGestor,
+                data: 'btnAsginarUsuario=' + btnAsginarUsuario + '&usuarioRespo=' + usuarioRespo + '&comentarioAsig=' + comentarioAsig
+                        + '&casoUsuer=' + casoUsuer + '&usuarioGestor=' + usuarioGestor,
                 success: function (data) {
                     event.preventDefault();
                     $(".loader").fadeOut("slow");
@@ -438,4 +440,34 @@ function asignarUsuario() {
         }
     }
 
+}
+
+function asignarUsuario() {
+    var elmForm = $("#procesoCalificacion");
+    if (elmForm) {
+        elmForm.validator('validate');
+        var elmErr = elmForm.find('.has-error');
+        if (elmErr && elmErr.length > 0) {
+            return false;
+        } else {
+            $('#agregarProcesoCalificacion').modal('hide');
+            $(".loader").fadeIn("slow");
+            var btnAsginarUsuario = 'ok';
+            var usuarioRespo = $('#usuarioRespo').val();
+            var comentarioAsig = $('#comentarioAsig').val();
+            var casoUsuer = $('#casoUsuer').val();
+            var usuarioGestor = $('#usuarioGestor').val();
+            $.ajax({
+                async: false,
+                type: "POST",
+                url: "/procesoCalificacionServlet",
+                data: 'btnAsginarUsuario=' + btnAsginarUsuario + '&usuarioRespo=' + usuarioRespo + '&comentarioAsig=' + comentarioAsig
+                        + '&casoUsuer=' + casoUsuer + '&usuarioGestor=' + usuarioGestor,
+                success: function (data) {
+                    event.preventDefault();
+                    $(".loader").fadeOut("slow");
+                }
+            });
+        }
+    }
 }

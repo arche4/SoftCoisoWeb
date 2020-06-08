@@ -5,8 +5,15 @@
  */
 package com.softcoisoweb.servlet;
 
+import com.softcoisoweb.clase.obtenerFecha;
+import com.softcoisoweb.controller.MedicamentosCasoJpaController;
+import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
+import com.softcoisoweb.model.MedicamentosCaso;
+import com.softcoisoweb.util.JPAFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,20 +37,118 @@ public class MedicamentosCasoServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+            throws ServletException, IOException, Exception {
+
+        String btnCrear = request.getParameter("btnCrearMedicamento");
+        String btnModificar = request.getParameter("btnModificarMedicamento");
+        String btnConsultar = request.getParameter("btnConsultarMedicamento");
+        String btnEliminar = request.getParameter("btnEliminarMedicamento");
+
         try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet MedicamentosCasoServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet MedicamentosCasoServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            if (btnCrear != null && btnCrear.equals("ok")) {
+                String crear = crear(request);
+                out.print(crear);
+            }
+            if (btnConsultar != null) {
+                String datos = consultar(btnConsultar);
+                out.print(datos);
+            }
+            if (btnModificar != null && btnModificar.equals("ok")) {
+                String modfiicar = modificar(request);
+                out.print(modfiicar);
+            }
+            if (btnEliminar != null) {
+                String eliminar = eliminar(btnEliminar);
+                out.print(eliminar);
+            }
         }
+    }
+
+    private String crear(HttpServletRequest request) {
+        String respuesta;
+        MedicamentosCasoJpaController medicamentoJpa = new MedicamentosCasoJpaController(JPAFactory.getFACTORY());
+        String casoIdMedicamento = request.getParameter("casoIdMedicamento");
+        String codigoMedicamento = request.getParameter("codigoMedicamento");
+        String dosificacion = request.getParameter("dosificacion");
+        String cantidadMedicamento = request.getParameter("cantidadMedicamento");
+        String ccomentarioMedicamento = request.getParameter("ccomentarioMedicamento");
+        String usuarioMedicamento = request.getParameter("usuarioMedicamento");
+        String nombreArchivoMedicamento = request.getParameter("nombreArchivoMedicamento");
+        String rutaArchivoMedicamento = request.getParameter("rutaArchivoMedicamento");
+
+        try {
+            obtenerFecha fecha = new obtenerFecha();
+            String fechaActual = fecha.ObtenerFecha();
+            MedicamentosCaso medicamentroCreate = new MedicamentosCaso(casoIdMedicamento, fechaActual, codigoMedicamento,
+                    dosificacion, cantidadMedicamento, ccomentarioMedicamento, usuarioMedicamento, nombreArchivoMedicamento,
+                    rutaArchivoMedicamento,fechaActual);
+            medicamentoJpa.create(medicamentroCreate);
+            respuesta = "Exitoso";
+        } catch (Exception e) {
+            System.err.println("Se presento un error creando el medicamento al expediente, El Error es: " + e);
+            respuesta = "Error";
+        }
+        return respuesta;
+    }
+
+    private String consultar(String codigoMedicamento) {
+        String respuesta = null;
+        MedicamentosCasoJpaController medicamentoJpa = new MedicamentosCasoJpaController(JPAFactory.getFACTORY());
+        try {
+            MedicamentosCaso getMedicamento = medicamentoJpa.findMedicamentosCaso(Integer.parseInt(codigoMedicamento));
+            respuesta = getMedicamento.getCodigoMedicamento() + "#" + getMedicamento.getCasoPersonaIdCaso() + "#" + getMedicamento.getFechaMedicamento()
+                    + "#" + getMedicamento.getDosificacion() + "#" + getMedicamento.getCantidad() + "#" + getMedicamento.getComentario()
+                    + "#" + getMedicamento.getUsuarioCedula()+ "#" + getMedicamento.getNombreArchivo()+ "#" + getMedicamento.getRutaArchivo()
+                    + "#" + getMedicamento.getFechaActualizacion();
+        } catch (NumberFormatException e) {
+            System.out.println("Error consultando el medicamento: " + codigoMedicamento + "El error es:" + e);
+        }
+
+        return respuesta;
+    }
+
+    private String modificar(HttpServletRequest request) throws Exception {
+        String respuesta;
+        MedicamentosCasoJpaController medicamentoJpa = new MedicamentosCasoJpaController(JPAFactory.getFACTORY());
+        String idMedicamento = request.getParameter("idMedicamento");
+        String casoIdMedicamento = request.getParameter("casoIdMedicamento");
+        String codigoMedicamento = request.getParameter("codigoMedicamento");
+        String dosificacion = request.getParameter("dosificacion");
+        String cantidadMedicamento = request.getParameter("cantidadMedicamento");
+        String ccomentarioMedicamento = request.getParameter("ccomentarioMedicamento");
+        String usuarioMedicamento = request.getParameter("usuarioMedicamento");
+        String nombreArchivoMedicamento = request.getParameter("nombreArchivoMedicamento");
+        String rutaArchivoMedicamento = request.getParameter("rutaArchivoMedicamento");
+        String fechaMedicamento = request.getParameter("fechaMedicamento");
+        
+        try {
+           obtenerFecha fecha = new obtenerFecha();
+            String fechaActual = fecha.ObtenerFecha();
+            MedicamentosCaso medicamentoUpdate = new MedicamentosCaso(Integer.parseInt(idMedicamento), casoIdMedicamento, fechaMedicamento, codigoMedicamento,
+                    dosificacion, cantidadMedicamento, ccomentarioMedicamento, usuarioMedicamento, nombreArchivoMedicamento,
+                    rutaArchivoMedicamento,fechaActual);
+            medicamentoJpa.edit(medicamentoUpdate);
+            respuesta = "Exitoso";
+        } catch (NumberFormatException e) {
+            System.err.println("Se presento un error modificando el medicamento al expediente: " + casoIdMedicamento + " El Error es: " + e);
+            respuesta = "Error";
+        }
+
+        return respuesta;
+
+    }
+
+    private String eliminar(String codigoMedicamento) {
+        String resultado;
+        MedicamentosCasoJpaController medicamentoJpa = new MedicamentosCasoJpaController(JPAFactory.getFACTORY());
+        try {
+            medicamentoJpa.destroy(Integer.parseInt(codigoMedicamento));
+            resultado = "Exitoso";
+        } catch (NonexistentEntityException | NumberFormatException e) {
+            System.err.println("Se presento un error eliminando el medicamento al expediente: " + codigoMedicamento + " El Error es: " + e);
+            resultado = "Error";
+        }
+        return resultado;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -58,7 +163,11 @@ public class MedicamentosCasoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(MedicamentosCasoServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -72,7 +181,11 @@ public class MedicamentosCasoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(MedicamentosCasoServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

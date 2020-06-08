@@ -5,6 +5,11 @@
  */
 package com.softcoisoweb.servlet;
 
+import com.softcoisoweb.clase.obtenerFecha;
+import com.softcoisoweb.controller.DiagnosticoJpaController;
+import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
+import com.softcoisoweb.model.Diagnostico;
+import com.softcoisoweb.util.JPAFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -31,19 +36,113 @@ public class DiagnosticoServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+
+        String btnCrear = request.getParameter("btnCrearDiagnostico");
+        String btnModificar = request.getParameter("btnModificarDiagnostico");
+        String btnConsultar = request.getParameter("btnConsultarDiagnostico");
+        String btnEliminar = request.getParameter("btnEliminarDiagnostico");
+
         try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet DiagnosticoServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet DiagnosticoServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            if (btnCrear != null && btnCrear.equals("ok")) {
+                String crear = crear(request);
+                out.print(crear);
+            }
+            if (btnConsultar != null) {
+                String datos = consultar(btnConsultar);
+                out.print(datos);
+            }
+            if (btnModificar != null && btnModificar.equals("ok")) {
+                String modfiicar = modificar(request);
+                out.print(modfiicar);
+            }
+            if (btnEliminar != null) {
+                String eliminar = eliminar(btnEliminar);
+                out.print(eliminar);
+            }
         }
+    }
+
+    private String crear(HttpServletRequest request) {
+        String respuesta;
+        DiagnosticoJpaController diagnosticoJpa = new DiagnosticoJpaController(JPAFactory.getFACTORY());
+        String diagnostico = request.getParameter("diagnostico");
+        String fechaDiagnostico = request.getParameter("fechaDiagnostico");
+        String comentarioDiagnostico = request.getParameter("comentarioDiagnostico");
+        String idCasoDiagnostico = request.getParameter("idCasoDiagnostico");
+        String usuarioDiagnostico = request.getParameter("usuarioDiagnostico");
+        String nombreArchivoDiagnostico = request.getParameter("nombreArchivoDiagnostico");
+        String rutaArchivoDiagnostico = request.getParameter("rutaArchivoDiagnostico");
+
+        try {
+            obtenerFecha fecha = new obtenerFecha();
+            String fechaActual = fecha.ObtenerFecha();
+            Diagnostico diagnosticoCreate = new Diagnostico(diagnostico, fechaDiagnostico, comentarioDiagnostico,
+                    idCasoDiagnostico, usuarioDiagnostico, nombreArchivoDiagnostico, rutaArchivoDiagnostico, fechaActual);
+            diagnosticoJpa.create(diagnosticoCreate);
+            respuesta = "Exitoso";
+        } catch (Exception e) {
+            System.err.println("Se presento un error creando el diagnostico al expediente," + idCasoDiagnostico + " El Error es: " + e);
+            respuesta = "Error";
+        }
+        return respuesta;
+    }
+
+    private String consultar(String codigo) {
+        String respuesta = null;
+        DiagnosticoJpaController diagnosticoJpa = new DiagnosticoJpaController(JPAFactory.getFACTORY());
+        try {
+            Diagnostico diagnostico = diagnosticoJpa.findDiagnostico(Integer.parseInt(codigo));
+
+            respuesta = diagnostico.getCodigoDiagnostico()
+                    + "#" + diagnostico.getDiagnostico()
+                    + "#" + diagnostico.getFechaDiagnostico()
+                    + "#" + diagnostico.getComentario() + "#" + diagnostico.getIdCaso() + "#" + diagnostico.getUsuarioCedula()
+                    + "#" + diagnostico.getNombreArchivo() + "#" + diagnostico.getRutaArchivo() + "#" + diagnostico.getFechaCreacion();
+        } catch (NumberFormatException e) {
+            System.out.println("Error consultando el diagnostico: " + codigo + "El error es:" + e);
+        }
+        return respuesta;
+    }
+
+    private String modificar(HttpServletRequest request) {
+        String respuesta;
+        DiagnosticoJpaController diagnosticoJpa = new DiagnosticoJpaController(JPAFactory.getFACTORY());
+        String codigoDiagnostico = request.getParameter("codigo");
+        String diagnostico = request.getParameter("diagnostico");
+        String fechaDiagnostico = request.getParameter("fechaDiagnostico");
+        String comentarioDiagnostico = request.getParameter("comentarioDiagnostico");
+        String idCasoDiagnostico = request.getParameter("idCasoDiagnostico");
+        String usuarioDiagnostico = request.getParameter("usuarioDiagnostico");
+        String nombreArchivoDiagnostico = request.getParameter("nombreArchivoDiagnostico");
+        String rutaArchivoDiagnostico = request.getParameter("rutaArchivoDiagnostico");
+
+        try {
+            obtenerFecha fecha = new obtenerFecha();
+            String fechaActual = fecha.ObtenerFecha();
+            Diagnostico diagnosticoCreate = new Diagnostico(Integer.parseInt(codigoDiagnostico), diagnostico, fechaDiagnostico, comentarioDiagnostico,
+                    idCasoDiagnostico, usuarioDiagnostico, nombreArchivoDiagnostico, rutaArchivoDiagnostico, fechaActual);
+            diagnosticoJpa.create(diagnosticoCreate);
+            respuesta = "Exitoso";
+        } catch (NumberFormatException e) {
+            System.err.println("Se presento un error modificando el diagnostico al expediente: " + codigoDiagnostico + " El Error es: " + e);
+            respuesta = "Error";
+        }
+
+        return respuesta;
+
+    }
+
+    private String eliminar(String codigoDiagnostico) {
+        String resultado;
+        DiagnosticoJpaController diagnosticoJpa = new DiagnosticoJpaController(JPAFactory.getFACTORY());
+        try {
+            diagnosticoJpa.destroy(Integer.parseInt(codigoDiagnostico));
+            resultado = "Exitoso";
+        } catch (NonexistentEntityException | NumberFormatException e) {
+            System.err.println("Se presento un error eliminando el diagnostico al expediente: " + codigoDiagnostico + " El Error es: " + e);
+            resultado = "Error";
+        }
+        return resultado;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -135,4 +135,21 @@ public class CitasJpaController implements Serializable {
         }
     }
     
+    public List<Citas> citasXCaso(String cedula) {
+        EntityManager em = null;
+        List<Citas> listCitaXcaso = null;
+        try {
+            String QuerySelect = "select * from citas where codigo_caso_persona  =  '" + cedula + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            listCitaXcaso = em.createNativeQuery(QuerySelect, Citas.class).getResultList();
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return listCitaXcaso;
+    }
+    
 }

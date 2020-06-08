@@ -8,9 +8,13 @@ package com.softcoisoweb.servlet;
 import com.softcoisoweb.controller.CasoArchivoJpaController;
 import com.softcoisoweb.controller.CasoComentarioJpaController;
 import com.softcoisoweb.controller.CasoPersonaJpaController;
+import com.softcoisoweb.controller.CitasJpaController;
 import com.softcoisoweb.controller.EstadoCasoJpaController;
 import com.softcoisoweb.controller.FlujoCasoJpaController;
+import com.softcoisoweb.controller.MedicamentosCasoJpaController;
 import com.softcoisoweb.controller.PersonaJpaController;
+import com.softcoisoweb.controller.ProcesoCalificacionJpaController;
+import com.softcoisoweb.controller.ProcesoReclamacionJpaController;
 import com.softcoisoweb.controller.SeguimientoCasoJpaController;
 import com.softcoisoweb.controller.TipoCasoJpaController;
 import com.softcoisoweb.controller.UsuarioJpaController;
@@ -18,9 +22,14 @@ import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.model.CasoArchivo;
 import com.softcoisoweb.model.CasoComentario;
 import com.softcoisoweb.model.CasoPersona;
+import com.softcoisoweb.model.Citas;
 import com.softcoisoweb.model.EstadoCaso;
 import com.softcoisoweb.model.FlujoCaso;
+import com.softcoisoweb.model.Medicamentos;
+import com.softcoisoweb.model.MedicamentosCaso;
 import com.softcoisoweb.model.Persona;
+import com.softcoisoweb.model.ProcesoCalificacion;
+import com.softcoisoweb.model.ProcesoReclamacion;
 import com.softcoisoweb.model.SeguimientoCaso;
 import com.softcoisoweb.model.TipoCaso;
 import com.softcoisoweb.model.Usuario;
@@ -114,24 +123,37 @@ public class ExpedienteServlet extends HttpServlet {
         UsuarioJpaController usuarioJpa = new UsuarioJpaController(JPAFactory.getFACTORY());
         CasoComentarioJpaController comentarioJpa = new CasoComentarioJpaController(JPAFactory.getFACTORY());
         CasoArchivoJpaController archivoJpa = new CasoArchivoJpaController(JPAFactory.getFACTORY());
+        CitasJpaController citasJpa = new CitasJpaController(JPAFactory.getFACTORY());
         SeguimientoCasoJpaController seguimientoJpa = new SeguimientoCasoJpaController(JPAFactory.getFACTORY());
+        ProcesoCalificacionJpaController procesoJpa = new ProcesoCalificacionJpaController(JPAFactory.getFACTORY());
+        PersonaJpaController Personajpa = new PersonaJpaController(JPAFactory.getFACTORY());
+        ProcesoReclamacionJpaController reclamacionJpa = new ProcesoReclamacionJpaController(JPAFactory.getFACTORY());
+        MedicamentosCasoJpaController medicamentoJpa = new MedicamentosCasoJpaController(JPAFactory.getFACTORY());
+
         CasoPersona caso = casojpa.findCasoPersona(codigoCaso);
         HttpSession session = request.getSession();
         RequestDispatcher rd = null;
+
         try {
+            List<CasoComentario> listComentarios = comentarioJpa.casoXcomentario(codigoCaso);
+            List<CasoArchivo> listArchivos = archivoJpa.casoXarchivo(codigoCaso);
+            List<Citas> listCita = citasJpa.citasXCaso(caso.getPersonaCedula());
+            List<ProcesoCalificacion> listProceso = procesoJpa.procesoXexpediente(codigoCaso);
+            List<ProcesoReclamacion> listReclamacion = reclamacionJpa.reclamacionxExpediente(codigoCaso);
+            List<MedicamentosCaso> listMedicamentosCasos = medicamentoJpa.medicamentoXexpediente(codigoCaso);
+
             TipoCaso tipoCaso = tipoCasoJpa.findTipoCaso(caso.getTipoCasoCodigoTipoCaso());
             FlujoCaso flujo = flujoJpa.findFlujoCaso(codigoCaso);
             EstadoCaso estado = estadoJpa.findEstadoCaso(flujo.getEstadoCasoCodigoEstado());
+
             Usuario creadoPor = usuarioJpa.findUsuario(caso.getCreadoPor());
             Usuario asignado = usuarioJpa.findUsuario(caso.getAsignado());
             String usuarioInformador = creadoPor.getNombreUsuario() + " " + creadoPor.getApellidoUsuario();
             String usuarioAsignado = asignado.getNombreUsuario() + " " + asignado.getApellidoUsuario();
-            session.setAttribute("Expediente", caso);
-            PersonaJpaController Personajpa = new PersonaJpaController(JPAFactory.getFACTORY());
             Persona persona = Personajpa.findPersona(caso.getPersonaCedula());
             String nombrePersona = persona.getNombrePersona() + " " + persona.getApellidoPersona();
-            List<CasoComentario> listComentarios = comentarioJpa.casoXcomentario(codigoCaso);
-            List<CasoArchivo> listArchivos = archivoJpa.casoXarchivo(codigoCaso);
+
+            session.setAttribute("Expediente", caso);
             session.setAttribute("listComentario", listComentarios);
             session.setAttribute("listArchivos", listArchivos);
             session.setAttribute("PersonaNombre", nombrePersona);
@@ -140,6 +162,10 @@ public class ExpedienteServlet extends HttpServlet {
             session.setAttribute("creadoPor", usuarioInformador);
             session.setAttribute("Asignado", usuarioAsignado);
             session.setAttribute("FlujoCaso", flujo);
+            session.setAttribute("listCitas", listCita);
+            session.setAttribute("listProceso", listProceso);
+            session.setAttribute("listReclamacion", listReclamacion);
+            session.setAttribute("listMedicamentosCasos", listMedicamentosCasos);
 
         } catch (Exception e) {
             System.err.println("Error buscando el expediente  del caso, el error es: " + e);
@@ -255,7 +281,7 @@ public class ExpedienteServlet extends HttpServlet {
                     caso.asignarUsuario(casoId, usuarioResponsable);
                     if (!comentario.equals("")) {
                         comentarioC = new CasoComentario(casoId, comentario, usuarioCedula, nombreUsuario, fecha_Actual);
-                        comentarioJpa.create(comentarioC); 
+                        comentarioJpa.create(comentarioC);
                     }
                     resultado = "0";
                 } catch (NonexistentEntityException e) {

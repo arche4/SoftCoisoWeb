@@ -65,6 +65,10 @@
         <servlet-name>TipoContratoServlet</servlet-name>
         <servlet-class>com.softcoisoweb.servlet.TipoContratoServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>procesoCalificacionServlet</servlet-name>
+        <servlet-class>com.softcoisoweb.servlet.procesoCalificacionServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CerrarSesionServlet</servlet-name>
         <url-pattern>/CerrarSesionServlet</url-pattern>
@@ -116,6 +120,10 @@
     <servlet-mapping>
         <servlet-name>TipoContratoServlet</servlet-name>
         <url-pattern>/TipoContratoServlet</url-pattern>
+    </servlet-mapping> 
+    <servlet-mapping>
+        <servlet-name>procesoCalificacionServlet</servlet-name>
+        <url-pattern>/procesoCalificacionServlet</url-pattern>
     </servlet-mapping> 
     <session-config>
         <session-timeout>

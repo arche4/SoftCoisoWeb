@@ -135,4 +135,22 @@ public class ProcesoCalificacionJpaController implements Serializable {
         }
     }
     
+    
+    public List<ProcesoCalificacion> procesoXexpediente(String codigoCaso) {
+        EntityManager em = null;
+        List<ProcesoCalificacion> listProcesoXexpediente = null;
+        try {
+            String QuerySelect = "select * from proceso_calificacion where caso_persona_id_caso   =  '" + codigoCaso + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            listProcesoXexpediente = em.createNativeQuery(QuerySelect, ProcesoCalificacion.class).getResultList();
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return listProcesoXexpediente;
+    }
+    
 }

@@ -28,9 +28,12 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "ProcesoReclamacion.findAll", query = "SELECT p FROM ProcesoReclamacion p"),
     @NamedQuery(name = "ProcesoReclamacion.findByCodigo", query = "SELECT p FROM ProcesoReclamacion p WHERE p.codigo = :codigo"),
     @NamedQuery(name = "ProcesoReclamacion.findByComentarios", query = "SELECT p FROM ProcesoReclamacion p WHERE p.comentarios = :comentarios"),
-    @NamedQuery(name = "ProcesoReclamacion.findByArchivos", query = "SELECT p FROM ProcesoReclamacion p WHERE p.archivos = :archivos"),
+    @NamedQuery(name = "ProcesoReclamacion.findByNombreArchivo", query = "SELECT p FROM ProcesoReclamacion p WHERE p.nombreArchivo = :nombreArchivo"),
+    @NamedQuery(name = "ProcesoReclamacion.findByRutaArchivos", query = "SELECT p FROM ProcesoReclamacion p WHERE p.rutaArchivos = :rutaArchivos"),
     @NamedQuery(name = "ProcesoReclamacion.findByCasoPersonaIdCaso", query = "SELECT p FROM ProcesoReclamacion p WHERE p.casoPersonaIdCaso = :casoPersonaIdCaso"),
-    @NamedQuery(name = "ProcesoReclamacion.findByUsuarioCedula", query = "SELECT p FROM ProcesoReclamacion p WHERE p.usuarioCedula = :usuarioCedula")})
+    @NamedQuery(name = "ProcesoReclamacion.findByUsuarioCedula", query = "SELECT p FROM ProcesoReclamacion p WHERE p.usuarioCedula = :usuarioCedula"),
+    @NamedQuery(name = "ProcesoReclamacion.findByFechaCreacion", query = "SELECT p FROM ProcesoReclamacion p WHERE p.fechaCreacion = :fechaCreacion"),
+    @NamedQuery(name = "ProcesoReclamacion.findByFechaActualizacion", query = "SELECT p FROM ProcesoReclamacion p WHERE p.fechaActualizacion = :fechaActualizacion")})
 public class ProcesoReclamacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,9 +45,12 @@ public class ProcesoReclamacion implements Serializable {
     @Size(max = 4000)
     @Column(name = "comentarios")
     private String comentarios;
+    @Size(max = 45)
+    @Column(name = "nombreArchivo")
+    private String nombreArchivo;
     @Size(max = 100)
-    @Column(name = "archivos")
-    private String archivos;
+    @Column(name = "rutaArchivos")
+    private String rutaArchivos;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 15)
@@ -55,6 +61,12 @@ public class ProcesoReclamacion implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "usuario_cedula")
     private String usuarioCedula;
+    @Size(max = 25)
+    @Column(name = "fecha_creacion")
+    private String fechaCreacion;
+    @Size(max = 25)
+    @Column(name = "fecha_actualizacion")
+    private String fechaActualizacion;
 
     public ProcesoReclamacion() {
     }
@@ -69,6 +81,28 @@ public class ProcesoReclamacion implements Serializable {
         this.usuarioCedula = usuarioCedula;
     }
 
+    public ProcesoReclamacion(Integer codigo, String comentarios, String nombreArchivo, String rutaArchivos, String casoPersonaIdCaso, String usuarioCedula, String fechaCreacion, String fechaActualizacion) {
+        this.codigo = codigo;
+        this.comentarios = comentarios;
+        this.nombreArchivo = nombreArchivo;
+        this.rutaArchivos = rutaArchivos;
+        this.casoPersonaIdCaso = casoPersonaIdCaso;
+        this.usuarioCedula = usuarioCedula;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaActualizacion = fechaActualizacion;
+    }
+
+    public ProcesoReclamacion(String comentarios, String nombreArchivo, String rutaArchivos, String casoPersonaIdCaso, String usuarioCedula, String fechaCreacion, String fechaActualizacion) {
+        this.comentarios = comentarios;
+        this.nombreArchivo = nombreArchivo;
+        this.rutaArchivos = rutaArchivos;
+        this.casoPersonaIdCaso = casoPersonaIdCaso;
+        this.usuarioCedula = usuarioCedula;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaActualizacion = fechaActualizacion;
+    }
+
+    
     public Integer getCodigo() {
         return codigo;
     }
@@ -85,12 +119,20 @@ public class ProcesoReclamacion implements Serializable {
         this.comentarios = comentarios;
     }
 
-    public String getArchivos() {
-        return archivos;
+    public String getNombreArchivo() {
+        return nombreArchivo;
     }
 
-    public void setArchivos(String archivos) {
-        this.archivos = archivos;
+    public void setNombreArchivo(String nombreArchivo) {
+        this.nombreArchivo = nombreArchivo;
+    }
+
+    public String getRutaArchivos() {
+        return rutaArchivos;
+    }
+
+    public void setRutaArchivos(String rutaArchivos) {
+        this.rutaArchivos = rutaArchivos;
     }
 
     public String getCasoPersonaIdCaso() {
@@ -107,6 +149,22 @@ public class ProcesoReclamacion implements Serializable {
 
     public void setUsuarioCedula(String usuarioCedula) {
         this.usuarioCedula = usuarioCedula;
+    }
+
+    public String getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(String fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public String getFechaActualizacion() {
+        return fechaActualizacion;
+    }
+
+    public void setFechaActualizacion(String fechaActualizacion) {
+        this.fechaActualizacion = fechaActualizacion;
     }
 
     @Override

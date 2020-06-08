@@ -32,6 +32,9 @@
         <link href="${pageContext.servletContext.contextPath}/lib/bootstrap-fileinput-master/css/fileinput.min.css" rel="stylesheet" type="text/css"/>
         <script src="${pageContext.servletContext.contextPath}/lib/bootstrap-fileinput-master/js/fileinput.min.js" type="text/javascript"></script>
 
+        <link href="${pageContext.servletContext.contextPath}/lib/advanced-datatable/css/demo_table.css" rel="stylesheet" />
+        <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/lib/advanced-datatable/css/DT_bootstrap.css" />
+        <script type="text/javascript" language="javascript" src="${pageContext.servletContext.contextPath}/lib/advanced-datatable/js/jquery.dataTables.js"></script>
         <!-- =======================================================
           Template Name: Dashio
           Template URL: https://templatemag.com/dashio-bootstrap-admin-template/
@@ -238,10 +241,10 @@
                                             <a data-toggle="tab" href="#overview">Acciones</a>
                                         </li>
                                         <li>
-                                            <a data-toggle="tab" href="#edit">Citas</a>
+                                            <a data-toggle="tab" href="#citas">Citas</a>
                                         </li>
                                         <li>
-                                            <a data-toggle="tab" href="#edit">Proceso de Calificación</a>
+                                            <a data-toggle="tab" href="#Calificacion">Proceso de Calificación</a>
                                         </li>
                                         <li>
                                             <a data-toggle="tab" href="#edit">Reclamación</a>
@@ -321,32 +324,35 @@
                                             <!-- /OVERVIEW -->
                                         </div>
                                         <!-- /tab-pane -->
-                                        <div id="contact" class="tab-pane">
+                                        <div id="citas" class="tab-pane">
                                             <div class="row">
-                                                <div class="col-md-6">
-                                                    <div id="map"></div>
-                                                </div>
-                                                <!-- /col-md-6 -->
-                                                <div class="col-md-6 detailed">
-                                                    <h4>Location</h4>
-                                                    <div class="col-md-8 col-md-offset-2 mt">
-                                                        <p>
-                                                            Postal Address<br/> PO BOX 12988, Sutter Ave<br/> Brownsville, New York.
-                                                        </p>
-                                                        <br>
-                                                        <p>
-                                                            Headquarters<br/> 844 Sutter Ave,<br/> 9003, New York.
-                                                        </p>
-                                                    </div>
-                                                    <h4>Contacts</h4>
-                                                    <div class="col-md-8 col-md-offset-2 mt">
-                                                        <p>
-                                                            Phone: +33 4898-4303<br/> Cell: 48 4389-4393<br/>
-                                                        </p>
-                                                        <br>
-                                                        <p>
-                                                            Email: hello@dashiotheme.com<br/> Skype: UseDashio<br/> Website: http://Alvarez.is
-                                                        </p>
+                                                <div class="col-md-12 detailed">
+                                                    <h4>Citas</h4>
+                                                    <div class="content-panel" style="margin: 10px;">
+                                                        <div class="adv-table">
+                                                            <table id="table_id" class="display" cellspacing="0" width="100%">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th scope="col">Titulo Cita</th>
+                                                                        <th scope="col">Fecha</th>
+                                                                        <th scope="col">Hora Inicio</th>
+                                                                        <th scope="col">Hora Fin</th>
+                                                                        <th scope="col">Descripcion</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <c:forEach var="citas" items="${sessionScope.listCitas}" varStatus="myIndex">
+                                                                        <tr>
+                                                                            <td><c:out value="${citas.getTitulo()}"/></td>
+                                                                            <td><c:out value="${citas.getDia()}"/>/<c:out value="${citas.getMes()}"/>/<c:out value="${citas.getAno()}"/></td>
+                                                                            <td><c:out value="${citas.getHoraInicio()}"/></td>
+                                                                            <td><c:out value="${citas.getHoraFin()}"/></td>
+                                                                            <td><c:out value="${citas.getDescripcion()}"/></td>
+                                                                        </tr>
+                                                                    </c:forEach>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <!-- /col-md-6 -->
@@ -354,93 +360,36 @@
                                             <!-- /row -->
                                         </div>
                                         <!-- /tab-pane -->
-                                        <div id="edit" class="tab-pane">
+                                        <div id="Calificacion" class="tab-pane">
                                             <div class="row">
                                                 <div class="col-lg-8 col-lg-offset-2 detailed">
-                                                    <h4 class="mb">Personal Information</h4>
-                                                    <form role="form" class="form-horizontal">
-                                                        <div class="form-group">
-                                                            <label class="col-lg-2 control-label"> Avatar</label>
-                                                            <div class="col-lg-6">
-                                                                <input type="file" id="exampleInputFile" class="file-pos">
+                                                    <h4 class="mb">Proceso de calificación</h4> 
+                                                    <button class="btn btn-sm btn-theme"  data-toggle="modal" data-target="#agregarProcesoCalificacion" type="button">Agregar Proceso de Calificacion</button>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                        <div class="custom-box">
+                                                            <div class="servicetitle">
+                                                                <h4>Standard</h4>
+                                                                <hr>
                                                             </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Company</label>
-                                                            <div class="col-lg-6">
-                                                                <input type="text" placeholder=" " id="c-name" class="form-control">
+                                                            <div class="icn-main-container">
+                                                                <span class="icn-container">$25</span>
                                                             </div>
+                                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry.</p>
+                                                            <ul class="pricing">
+                                                                <li>150 Mb Storage</li>
+                                                                <li>1 Domain</li>
+                                                                <li>2 Sub Domains</li>
+                                                                <li>3 MySQL DBs</li>
+                                                                <li>2 Emails</li>
+                                                                <li>WordPress Installation</li>
+                                                                <li>24/7 Support</li>
+                                                            </ul>
+                                                            <a class="btn btn-theme" href="#">Order Now</a>
                                                         </div>
-                                                        <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Lives In</label>
-                                                            <div class="col-lg-6">
-                                                                <input type="text" placeholder=" " id="lives-in" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Country</label>
-                                                            <div class="col-lg-6">
-                                                                <input type="text" placeholder=" " id="country" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Description</label>
-                                                            <div class="col-lg-10">
-                                                                <textarea rows="10" cols="30" class="form-control" id="" name=""></textarea>
-                                                            </div>
-                                                        </div>
-                                                    </form>
+                                                        <!-- end custombox -->
+                                                    </div>
                                                 </div>
-                                                <div class="col-lg-8 col-lg-offset-2 detailed mt">
-                                                    <h4 class="mb">Contact Information</h4>
-                                                    <form role="form" class="form-horizontal">
-                                                        <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Address 1</label>
-                                                            <div class="col-lg-6">
-                                                                <input type="text" placeholder=" " id="addr1" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Address 2</label>
-                                                            <div class="col-lg-6">
-                                                                <input type="text" placeholder=" " id="addr2" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Phone</label>
-                                                            <div class="col-lg-6">
-                                                                <input type="text" placeholder=" " id="phone" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Cell</label>
-                                                            <div class="col-lg-6">
-                                                                <input type="text" placeholder=" " id="cell" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Email</label>
-                                                            <div class="col-lg-6">
-                                                                <input type="text" placeholder=" " id="email" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Skype</label>
-                                                            <div class="col-lg-6">
-                                                                <input type="text" placeholder=" " id="skype" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <div class="col-lg-offset-2 col-lg-10">
-                                                                <button class="btn btn-theme" type="submit">Save</button>
-                                                                <button class="btn btn-theme04" type="button">Cancel</button>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                                <!-- /col-lg-8 -->
                                             </div>
-                                            <!-- /row -->
                                         </div>
                                         <!-- /tab-pane -->
                                     </div>
@@ -469,6 +418,46 @@
                         <div class="modal-body">
                             <embed id="pdf" src="" type="application/pdf" width="100%" height="600px" />
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="agregarProcesoCalificacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Agregar Proceso de Calificación</h4>
+                        </div>
+                        <div class="alert alert-success" id="Exitoso" style="display:none;">
+                            <strong>¡Bien hecho!</strong>Se guardo a cargado correctamente el archivo.
+                        </div>
+                            <form id="procesoCalificacion" data-toggle="validator">
+                            <br>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Proceso</label>
+                                    <input type="text" class="form-control" id="proceso" name="proceso" placeholder="Proceso" required>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Quieres agregar algun comentario ? </label>
+                                <textarea class="form-control " id="comentarioAsig" name="comentarioAsig" placeholder="Comentar..."></textarea>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <button type="button" class="btn btn-theme" data-toggle="modal" data-target="#cargarArchivos">
+                                    Cargar Archivos
+                                </button>
+                            </div>
+                            <input class="form-control " id="casoUsuer" type="hidden" name="casoUsuer" value="${sessionScope.FlujoCaso.getCasoPersonaIdCaso()}">
+                            <input class="form-control " id="usuarioGestor" type="hidden" name="usuarioGestor" value="${sessionScope.USUARIO.cedula}">
+                            <br><br><br><br><br><br><br><br><br><br><br><br>
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="guardarProceso()">
+                                    Guardar
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -825,6 +814,7 @@
         </section>
         <div class="loader"></div>
         <!-- js placed at the end of the document so the pages load faster -->
+        <script type="text/javascript" src="${pageContext.servletContext.contextPath}/lib/advanced-datatable/js/DT_bootstrap.js"></script>
         <script src="${pageContext.servletContext.contextPath}/lib/bootstrap/js/validator.min.js" type="text/javascript"></script>
         <script src="${pageContext.servletContext.contextPath}/JavaScript/Expediente.js" type="text/javascript"></script>
         <script src="${pageContext.servletContext.contextPath}/lib/bootstrap-fileinput-master/js/locales/es.js" type="text/javascript"></script>
