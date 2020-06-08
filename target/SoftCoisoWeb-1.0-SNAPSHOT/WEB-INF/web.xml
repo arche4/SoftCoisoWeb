@@ -69,6 +69,18 @@
         <servlet-name>procesoCalificacionServlet</servlet-name>
         <servlet-class>com.softcoisoweb.servlet.procesoCalificacionServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReclamacionServlet</servlet-name>
+        <servlet-class>com.softcoisoweb.servlet.ReclamacionServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MedicamentosCasoServlet</servlet-name>
+        <servlet-class>com.softcoisoweb.servlet.MedicamentosCasoServlet</servlet-class>
+    </servlet>
+     <servlet>
+        <servlet-name>DiagnosticoServlet</servlet-name>
+        <servlet-class>com.softcoisoweb.servlet.DiagnosticoServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CerrarSesionServlet</servlet-name>
         <url-pattern>/CerrarSesionServlet</url-pattern>
@@ -124,6 +136,18 @@
     <servlet-mapping>
         <servlet-name>procesoCalificacionServlet</servlet-name>
         <url-pattern>/procesoCalificacionServlet</url-pattern>
+    </servlet-mapping> 
+    <servlet-mapping>
+        <servlet-name>ReclamacionServlet</servlet-name>
+        <url-pattern>/ReclamacionServlet</url-pattern>
+    </servlet-mapping> 
+     <servlet-mapping>
+        <servlet-name>MedicamentosCasoServlet</servlet-name>
+        <url-pattern>/MedicamentosCasoServlet</url-pattern>
+    </servlet-mapping> 
+    <servlet-mapping>
+        <servlet-name>DiagnosticoServlet</servlet-name>
+        <url-pattern>/DiagnosticoServlet</url-pattern>
     </servlet-mapping> 
     <session-config>
         <session-timeout>
