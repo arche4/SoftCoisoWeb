@@ -3,6 +3,7 @@ com\softcoisoweb\controller\exceptions\IllegalOrphanException.class
 com\softcoisoweb\controller\TipoContratoJpaController.class
 com\softcoisoweb\servlet\ActividadesServlet.class
 com\softcoisoweb\util\GeneracionLogsErrores.class
+com\softcoisoweb\servlet\GraficasServlet.class
 com\softcoisoweb\servlet\FormacionServlet.class
 com\softcoisoweb\model\FlujoCaso.class
 com\softcoisoweb\servlet\EpsServlet.class
@@ -41,7 +42,6 @@ com\softcoisoweb\model\Actividades.class
 com\softcoisoweb\model\EstadoCaso_.class
 com\softcoisoweb\util\JPAFactory.class
 com\softcoisoweb\servlet\ArlServlet.class
-com\softcoisoweb\model\Empresa.class
 com\softcoisoweb\controller\exceptions\PreexistingEntityException.class
 com\softcoisoweb\servicio\rest\restCargarArchivo.class
 com\softcoisoweb\model\EstadoCaso.class
@@ -79,7 +79,6 @@ com\softcoisoweb\model\Actividades_.class
 com\softcoisoweb\controller\EstadoCasoJpaController.class
 com\softcoisoweb\servlet\PersonaServlet.class
 com\softcoisoweb\model\CasoPersona.class
-com\softcoisoweb\controller\EmpresaJpaController.class
 com\softcoisoweb\model\Persona.class
 com\softcoisoweb\controller\FlujoCasoJpaController.class
 com\softcoisoweb\clase\Expediente.class
@@ -94,7 +93,6 @@ com\softcoisoweb\controller\ProcesoReclamacionJpaController.class
 com\softcoisoweb\model\Afp_.class
 com\softcoisoweb\model\Medicamentos_.class
 com\softcoisoweb\controller\MedicamentosJpaController.class
-com\softcoisoweb\model\Empresa_.class
 com\softcoisoweb\model\Formacion_.class
 com\softcoisoweb\servlet\DiagnosticoServlet.class
 com\softcoisoweb\model\CasoPersona_.class
