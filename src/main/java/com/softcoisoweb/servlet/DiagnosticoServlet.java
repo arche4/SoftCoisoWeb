@@ -5,7 +5,7 @@
  */
 package com.softcoisoweb.servlet;
 
-import com.softcoisoweb.clase.GestionarAccionesExpediente;
+import com.softcoisoweb.clase.AccionesExpediente;
 import com.softcoisoweb.controller.DiagnosticoJpaController;
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.model.Diagnostico;
@@ -65,7 +65,7 @@ public class DiagnosticoServlet extends HttpServlet {
     private String crear(HttpServletRequest request) {
         String respuesta;
         DiagnosticoJpaController diagnosticoJpa = new DiagnosticoJpaController(JPAFactory.getFACTORY());
-        GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
+        AccionesExpediente accionesExpediente = new AccionesExpediente();
         String diagnostico = request.getParameter("diagnostico");
         String fechaDiagnostico = request.getParameter("fechaDiagnostico");
         String comentario = request.getParameter("comentarioDiagnostico");
@@ -112,7 +112,7 @@ public class DiagnosticoServlet extends HttpServlet {
     private String modificar(HttpServletRequest request) {
         String respuesta;
         DiagnosticoJpaController diagnosticoJpa = new DiagnosticoJpaController(JPAFactory.getFACTORY());
-        GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
+        AccionesExpediente accionesExpediente = new AccionesExpediente();
         String codigo = request.getParameter("codigo");
         String diagnostico = request.getParameter("diagnostico");
         String comentario = request.getParameter("comentarioDiagnostico");

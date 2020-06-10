@@ -5,7 +5,7 @@
  */
 package com.softcoisoweb.servlet;
 
-import com.softcoisoweb.clase.GestionarAccionesExpediente;
+import com.softcoisoweb.clase.AccionesExpediente;
 import com.softcoisoweb.controller.MedicamentosCasoJpaController;
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.model.MedicamentosCaso;
@@ -67,7 +67,7 @@ public class MedicamentosCasoServlet extends HttpServlet {
     private String crear(HttpServletRequest request) {
         String respuesta;
         MedicamentosCasoJpaController medicamentoJpa = new MedicamentosCasoJpaController(JPAFactory.getFACTORY());
-        GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
+        AccionesExpediente accionesExpediente = new AccionesExpediente();
         String casoId = request.getParameter("casoIdMedicamento");
         String codigoMedicamento = request.getParameter("codigoMedicamento");
         String dosificacion = request.getParameter("dosificacion");
@@ -112,7 +112,7 @@ public class MedicamentosCasoServlet extends HttpServlet {
     private String modificar(HttpServletRequest request) throws Exception {
         String respuesta;
         MedicamentosCasoJpaController medicamentoJpa = new MedicamentosCasoJpaController(JPAFactory.getFACTORY());
-        GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
+        AccionesExpediente accionesExpediente = new AccionesExpediente();
         String idMedicamento = request.getParameter("idMedicamento");
         String codigoMedicamento = request.getParameter("codigoMedicamento");
         String dosificacion = request.getParameter("dosificacion");

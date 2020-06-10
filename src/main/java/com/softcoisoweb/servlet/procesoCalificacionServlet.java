@@ -5,7 +5,7 @@
  */
 package com.softcoisoweb.servlet;
 
-import com.softcoisoweb.clase.GestionarAccionesExpediente;
+import com.softcoisoweb.clase.AccionesExpediente;
 import com.softcoisoweb.controller.ProcesoCalificacionJpaController;
 import com.softcoisoweb.controller.UsuarioJpaController;
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
@@ -81,7 +81,7 @@ public class procesoCalificacionServlet extends HttpServlet {
         String respuesta;
         UsuarioJpaController usuarioJpa = new UsuarioJpaController(JPAFactory.getFACTORY());
         ProcesoCalificacionJpaController procesoJpa = new ProcesoCalificacionJpaController(JPAFactory.getFACTORY());
-        GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
+        AccionesExpediente accionesExpediente = new AccionesExpediente();
         String nombreProceso = request.getParameter("proceso");
         String comentarioProceso = request.getParameter("comentarioProceso");
         String nombreArchivoProceso = request.getParameter("nombreArchivoProceso");
@@ -123,7 +123,7 @@ public class procesoCalificacionServlet extends HttpServlet {
     private String modificar(HttpServletRequest request) {
         String respuesta;
         ProcesoCalificacionJpaController procesoJpa = new ProcesoCalificacionJpaController(JPAFactory.getFACTORY());
-        GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
+        AccionesExpediente accionesExpediente = new AccionesExpediente();
         String codigoProceso = request.getParameter("codigoProceso");
         String nombreProceso = request.getParameter("proceso");
         String comentarioProceso = request.getParameter("comentarioProceso");
@@ -164,7 +164,7 @@ public class procesoCalificacionServlet extends HttpServlet {
         ProcesoCalificacionJpaController procesoJpa = new ProcesoCalificacionJpaController(JPAFactory.getFACTORY());
         try {
             procesoJpa.destroy(Integer.parseInt(codigoProceso));
-            GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
+            AccionesExpediente accionesExpediente = new AccionesExpediente();
             resultado = "Exitoso";
         } catch (NonexistentEntityException | NumberFormatException e) {
             System.err.println("Se presento un error eliminando el proceso de calificacion: " + codigoProceso + " El Error es: " + e);
@@ -187,7 +187,7 @@ public class procesoCalificacionServlet extends HttpServlet {
 
     private String agregarArchivo(HttpServletRequest request) {
         String respuesta;
-        GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
+        AccionesExpediente accionesExpediente = new AccionesExpediente();
         String codigoProceso = request.getParameter("codigoProceso");
         String nombreArchivo = request.getParameter("nombreArchivoProceso");
         String rutaArchivoProceso = request.getParameter("rutaArchivoProceso");
@@ -215,7 +215,7 @@ public class procesoCalificacionServlet extends HttpServlet {
     private String eliminarArchivo(String codigoProceso) {
         String respuesta;
         ProcesoCalificacionJpaController procesoJpa = new ProcesoCalificacionJpaController(JPAFactory.getFACTORY());
-        GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
+        AccionesExpediente accionesExpediente = new AccionesExpediente();
 
         try {
 

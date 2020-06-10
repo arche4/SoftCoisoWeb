@@ -5,7 +5,7 @@
  */
 package com.softcoisoweb.servlet;
 
-import com.softcoisoweb.clase.GestionarAccionesExpediente;
+import com.softcoisoweb.clase.AccionesExpediente;
 import com.softcoisoweb.controller.ProcesoReclamacionJpaController;
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.model.ProcesoReclamacion;
@@ -66,7 +66,7 @@ public class ReclamacionServlet extends HttpServlet {
 
     private String crear(HttpServletRequest request) {
         String respuesta;
-        GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
+        AccionesExpediente accionesExpediente = new AccionesExpediente();
         ProcesoReclamacionJpaController reclamacionJpa = new ProcesoReclamacionJpaController(JPAFactory.getFACTORY());
         String comentarioReclamacion = request.getParameter("comentarioReclamacion");
         String nombreArchivoReclamacion = request.getParameter("nombreArchivoReclamacion");
@@ -105,7 +105,7 @@ public class ReclamacionServlet extends HttpServlet {
 
     private String modificar(HttpServletRequest request) throws Exception {
         String respuesta;
-        GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
+        AccionesExpediente accionesExpediente = new AccionesExpediente();
         ProcesoReclamacionJpaController reclamacionJpa = new ProcesoReclamacionJpaController(JPAFactory.getFACTORY());
         String codigo = request.getParameter("codigoReclamacion");
         String comentario = request.getParameter("comentarioReclamacion");

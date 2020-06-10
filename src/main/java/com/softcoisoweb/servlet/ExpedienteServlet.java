@@ -5,7 +5,7 @@
  */
 package com.softcoisoweb.servlet;
 
-import com.softcoisoweb.clase.GestionarAccionesExpediente;
+import com.softcoisoweb.clase.AccionesExpediente;
 import com.softcoisoweb.controller.CasoArchivoJpaController;
 import com.softcoisoweb.controller.CasoComentarioJpaController;
 import com.softcoisoweb.controller.CasoPersonaJpaController;
@@ -289,7 +289,7 @@ public class ExpedienteServlet extends HttpServlet {
                         comentarioC = new CasoComentario(casoId, comentario, usuarioCedula, nombreUsuario, fecha_Actual);
                         comentarioJpa.create(comentarioC);
                     }
-                    GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
+                    AccionesExpediente accionesExpediente = new AccionesExpediente();
                     String acciones = "Se cambia el responsable del expediente";
                     accionesExpediente.guardarAccionesExpediente(casoId, usuarioCedula, acciones);
                     resultado = "0";

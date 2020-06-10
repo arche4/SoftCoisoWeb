@@ -5,7 +5,7 @@
  */
 package com.softcoisoweb.servlet;
 
-import com.softcoisoweb.clase.GestionarAccionesExpediente;
+import com.softcoisoweb.clase.AccionesExpediente;
 import com.softcoisoweb.controller.CasoPersonaJpaController;
 import com.softcoisoweb.controller.EstadoCasoJpaController;
 import com.softcoisoweb.controller.FlujoCasoJpaController;
@@ -167,7 +167,7 @@ public class CasoServlet extends HttpServlet {
         String estadoCaso = "101";
         FlujoCasoJpaController flujoJpa = new FlujoCasoJpaController(JPAFactory.getFACTORY());
         SeguimientoCasoJpaController gestionCasoJpa = new SeguimientoCasoJpaController(JPAFactory.getFACTORY());
-        GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
+        AccionesExpediente accionesExpediente = new AccionesExpediente();
         SeguimientoCaso gestionCaso;
         try {
             String fechaActual = accionesExpediente.ObtenerFecha();
