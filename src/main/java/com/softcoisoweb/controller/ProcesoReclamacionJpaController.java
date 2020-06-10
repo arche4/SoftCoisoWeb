@@ -151,5 +151,4 @@ public class ProcesoReclamacionJpaController implements Serializable {
         }
         return listReclamacionExpediente;
     }
-    
 }

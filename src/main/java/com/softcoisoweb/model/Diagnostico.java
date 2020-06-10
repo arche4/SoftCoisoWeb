@@ -32,6 +32,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Diagnostico.findByComentario", query = "SELECT d FROM Diagnostico d WHERE d.comentario = :comentario"),
     @NamedQuery(name = "Diagnostico.findByIdCaso", query = "SELECT d FROM Diagnostico d WHERE d.idCaso = :idCaso"),
     @NamedQuery(name = "Diagnostico.findByUsuarioCedula", query = "SELECT d FROM Diagnostico d WHERE d.usuarioCedula = :usuarioCedula"),
+    @NamedQuery(name = "Diagnostico.findByNombreUsuario", query = "SELECT d FROM Diagnostico d WHERE d.nombreUsuario = :nombreUsuario"),
     @NamedQuery(name = "Diagnostico.findByNombreArchivo", query = "SELECT d FROM Diagnostico d WHERE d.nombreArchivo = :nombreArchivo"),
     @NamedQuery(name = "Diagnostico.findByRutaArchivo", query = "SELECT d FROM Diagnostico d WHERE d.rutaArchivo = :rutaArchivo"),
     @NamedQuery(name = "Diagnostico.findByFechaCreacion", query = "SELECT d FROM Diagnostico d WHERE d.fechaCreacion = :fechaCreacion")})
@@ -67,6 +68,9 @@ public class Diagnostico implements Serializable {
     @Column(name = "usuario_cedula")
     private String usuarioCedula;
     @Size(max = 45)
+    @Column(name = "nombre_usuario")
+    private String nombreUsuario;
+    @Size(max = 45)
     @Column(name = "nombre_archivo")
     private String nombreArchivo;
     @Size(max = 250)
@@ -91,31 +95,32 @@ public class Diagnostico implements Serializable {
         this.usuarioCedula = usuarioCedula;
     }
 
-    public Diagnostico(Integer codigoDiagnostico, String diagnostico, String fechaDiagnostico, String comentario, String idCaso, String usuarioCedula, String nombreArchivo, String rutaArchivo, String fechaCreacion) {
+    public Diagnostico(Integer codigoDiagnostico, String diagnostico, String fechaDiagnostico, String comentario, String idCaso, String usuarioCedula, String nombreUsuario, String nombreArchivo, String rutaArchivo, String fechaCreacion) {
         this.codigoDiagnostico = codigoDiagnostico;
         this.diagnostico = diagnostico;
         this.fechaDiagnostico = fechaDiagnostico;
         this.comentario = comentario;
         this.idCaso = idCaso;
         this.usuarioCedula = usuarioCedula;
+        this.nombreUsuario = nombreUsuario;
         this.nombreArchivo = nombreArchivo;
         this.rutaArchivo = rutaArchivo;
         this.fechaCreacion = fechaCreacion;
     }
 
-    public Diagnostico(String diagnostico, String fechaDiagnostico, String comentario, String idCaso, String usuarioCedula, String nombreArchivo, String rutaArchivo, String fechaCreacion) {
+    public Diagnostico(String diagnostico, String fechaDiagnostico, String comentario, String idCaso, String usuarioCedula, String nombreUsuario, String nombreArchivo, String rutaArchivo, String fechaCreacion) {
         this.diagnostico = diagnostico;
         this.fechaDiagnostico = fechaDiagnostico;
         this.comentario = comentario;
         this.idCaso = idCaso;
         this.usuarioCedula = usuarioCedula;
+        this.nombreUsuario = nombreUsuario;
         this.nombreArchivo = nombreArchivo;
         this.rutaArchivo = rutaArchivo;
         this.fechaCreacion = fechaCreacion;
     }
-    
-    
 
+    
     public Integer getCodigoDiagnostico() {
         return codigoDiagnostico;
     }
@@ -162,6 +167,14 @@ public class Diagnostico implements Serializable {
 
     public void setUsuarioCedula(String usuarioCedula) {
         this.usuarioCedula = usuarioCedula;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
     public String getNombreArchivo() {

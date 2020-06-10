@@ -5,7 +5,8 @@
  */
 package com.softcoisoweb.servlet;
 
-import com.softcoisoweb.clase.obtenerFecha;
+import com.softcoisoweb.clase.GestionarAccionesExpediente;
+import com.softcoisoweb.clase.ObtenerFecha;
 import com.softcoisoweb.controller.DiagnosticoJpaController;
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.model.Diagnostico;
@@ -65,23 +66,29 @@ public class DiagnosticoServlet extends HttpServlet {
     private String crear(HttpServletRequest request) {
         String respuesta;
         DiagnosticoJpaController diagnosticoJpa = new DiagnosticoJpaController(JPAFactory.getFACTORY());
+        GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
+        ObtenerFecha fecha = new ObtenerFecha();
         String diagnostico = request.getParameter("diagnostico");
         String fechaDiagnostico = request.getParameter("fechaDiagnostico");
-        String comentarioDiagnostico = request.getParameter("comentarioDiagnostico");
-        String idCasoDiagnostico = request.getParameter("idCasoDiagnostico");
-        String usuarioDiagnostico = request.getParameter("usuarioDiagnostico");
+        String comentario = request.getParameter("comentarioDiagnostico");
+        String casoid = request.getParameter("idCasoDiagnostico");
+        String usuario = request.getParameter("usuarioDiagnostico");
         String nombreArchivoDiagnostico = request.getParameter("nombreArchivoDiagnostico");
         String rutaArchivoDiagnostico = request.getParameter("rutaArchivoDiagnostico");
+        String accion = "Se agregar un diagnostico al expediente";
 
         try {
-            obtenerFecha fecha = new obtenerFecha();
+
             String fechaActual = fecha.ObtenerFecha();
-            Diagnostico diagnosticoCreate = new Diagnostico(diagnostico, fechaDiagnostico, comentarioDiagnostico,
-                    idCasoDiagnostico, usuarioDiagnostico, nombreArchivoDiagnostico, rutaArchivoDiagnostico, fechaActual);
+            String nombreUsuario = accionesExpediente.getUsuarioSession(usuario);
+            Diagnostico diagnosticoCreate = new Diagnostico(diagnostico, fechaDiagnostico, comentario,
+                    casoid, usuario, nombreUsuario, nombreArchivoDiagnostico, rutaArchivoDiagnostico, fechaActual);
             diagnosticoJpa.create(diagnosticoCreate);
+            accionesExpediente.guardarAccionesExpediente(casoid, usuario, accion);
+
             respuesta = "Exitoso";
         } catch (Exception e) {
-            System.err.println("Se presento un error creando el diagnostico al expediente," + idCasoDiagnostico + " El Error es: " + e);
+            System.err.println("Se presento un error creando el diagnostico al expediente," + casoid + " El Error es: " + e);
             respuesta = "Error";
         }
         return respuesta;
@@ -107,24 +114,38 @@ public class DiagnosticoServlet extends HttpServlet {
     private String modificar(HttpServletRequest request) {
         String respuesta;
         DiagnosticoJpaController diagnosticoJpa = new DiagnosticoJpaController(JPAFactory.getFACTORY());
-        String codigoDiagnostico = request.getParameter("codigo");
+        GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
+        ObtenerFecha fecha = new ObtenerFecha();
+        String codigo = request.getParameter("codigo");
         String diagnostico = request.getParameter("diagnostico");
-        String fechaDiagnostico = request.getParameter("fechaDiagnostico");
-        String comentarioDiagnostico = request.getParameter("comentarioDiagnostico");
-        String idCasoDiagnostico = request.getParameter("idCasoDiagnostico");
-        String usuarioDiagnostico = request.getParameter("usuarioDiagnostico");
-        String nombreArchivoDiagnostico = request.getParameter("nombreArchivoDiagnostico");
-        String rutaArchivoDiagnostico = request.getParameter("rutaArchivoDiagnostico");
-
+        String comentario = request.getParameter("comentarioDiagnostico");
+        String casoId = request.getParameter("idCasoDiagnostico");
+        String usuario = request.getParameter("usuarioDiagnostico");
+        String nombreArchivo = request.getParameter("nombreArchivoDiagnostico");
+        String rutaArchivo = request.getParameter("rutaArchivoDiagnostico");
+        String accion = "Se modifica el diagnostico al expediente";
         try {
-            obtenerFecha fecha = new obtenerFecha();
+
             String fechaActual = fecha.ObtenerFecha();
-            Diagnostico diagnosticoCreate = new Diagnostico(Integer.parseInt(codigoDiagnostico), diagnostico, fechaDiagnostico, comentarioDiagnostico,
-                    idCasoDiagnostico, usuarioDiagnostico, nombreArchivoDiagnostico, rutaArchivoDiagnostico, fechaActual);
+            String nombreUsuario = accionesExpediente.getUsuarioSession(usuario);
+
+            Diagnostico getDiagnostico = diagnosticoJpa.findDiagnostico(Integer.parseInt(codigo));
+
+            Diagnostico diagnosticoCreate;
+            if (!rutaArchivo.equals("")) {
+                diagnosticoCreate = new Diagnostico(Integer.parseInt(codigo), diagnostico, getDiagnostico.getFechaDiagnostico(), comentario,
+                        casoId, usuario, nombreUsuario, nombreArchivo, rutaArchivo, fechaActual);
+            } else {
+                diagnosticoCreate = new Diagnostico(Integer.parseInt(codigo), diagnostico, getDiagnostico.getFechaDiagnostico(), comentario,
+                        casoId, usuario, nombreUsuario, getDiagnostico.getNombreArchivo(), getDiagnostico.getRutaArchivo(), fechaActual);
+            }
+
             diagnosticoJpa.create(diagnosticoCreate);
+            accionesExpediente.guardarAccionesExpediente(casoId, usuario, accion);
+
             respuesta = "Exitoso";
         } catch (NumberFormatException e) {
-            System.err.println("Se presento un error modificando el diagnostico al expediente: " + codigoDiagnostico + " El Error es: " + e);
+            System.err.println("Se presento un error modificando el diagnostico al expediente: " + casoId + " El Error es: " + e);
             respuesta = "Error";
         }
 

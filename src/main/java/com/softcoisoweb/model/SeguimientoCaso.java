@@ -28,8 +28,9 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "SeguimientoCaso.findAll", query = "SELECT s FROM SeguimientoCaso s"),
     @NamedQuery(name = "SeguimientoCaso.findByCodigo", query = "SELECT s FROM SeguimientoCaso s WHERE s.codigo = :codigo"),
     @NamedQuery(name = "SeguimientoCaso.findByCodigoCaso", query = "SELECT s FROM SeguimientoCaso s WHERE s.codigoCaso = :codigoCaso"),
-    @NamedQuery(name = "SeguimientoCaso.findByEstadoCaso", query = "SELECT s FROM SeguimientoCaso s WHERE s.estadoCaso = :estadoCaso"),
+    @NamedQuery(name = "SeguimientoCaso.findByAccion", query = "SELECT s FROM SeguimientoCaso s WHERE s.accion = :accion"),
     @NamedQuery(name = "SeguimientoCaso.findByUsuario", query = "SELECT s FROM SeguimientoCaso s WHERE s.usuario = :usuario"),
+    @NamedQuery(name = "SeguimientoCaso.findByNombreUsuario", query = "SELECT s FROM SeguimientoCaso s WHERE s.nombreUsuario = :nombreUsuario"),
     @NamedQuery(name = "SeguimientoCaso.findByFechaActualizacion", query = "SELECT s FROM SeguimientoCaso s WHERE s.fechaActualizacion = :fechaActualizacion")})
 public class SeguimientoCaso implements Serializable {
 
@@ -44,19 +45,20 @@ public class SeguimientoCaso implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "codigo_caso")
     private String codigoCaso;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 10)
-    @Column(name = "estado_caso")
-    private String estadoCaso;
+    @Size(max = 45)
+    @Column(name = "accion")
+    private String accion;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 15)
     @Column(name = "usuario")
     private String usuario;
+    @Size(max = 45)
+    @Column(name = "nombre_usuario")
+    private String nombreUsuario;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 15)
+    @Size(min = 1, max = 35)
     @Column(name = "fecha_actualizacion")
     private String fechaActualizacion;
 
@@ -67,12 +69,22 @@ public class SeguimientoCaso implements Serializable {
         this.codigo = codigo;
     }
 
-    public SeguimientoCaso(String codigoCaso, String estadoCaso, String usuario, String fechaActualizacion) {
+    public SeguimientoCaso(Integer codigo, String codigoCaso, String usuario, String fechaActualizacion) {
+        this.codigo = codigo;
         this.codigoCaso = codigoCaso;
-        this.estadoCaso = estadoCaso;
         this.usuario = usuario;
         this.fechaActualizacion = fechaActualizacion;
     }
+
+    public SeguimientoCaso(String codigoCaso, String accion, String usuario, String nombreUsuario, String fechaActualizacion) {
+        this.codigoCaso = codigoCaso;
+        this.accion = accion;
+        this.usuario = usuario;
+        this.nombreUsuario = nombreUsuario;
+        this.fechaActualizacion = fechaActualizacion;
+    }
+    
+    
 
     public Integer getCodigo() {
         return codigo;
@@ -90,12 +102,12 @@ public class SeguimientoCaso implements Serializable {
         this.codigoCaso = codigoCaso;
     }
 
-    public String getEstadoCaso() {
-        return estadoCaso;
+    public String getAccion() {
+        return accion;
     }
 
-    public void setEstadoCaso(String estadoCaso) {
-        this.estadoCaso = estadoCaso;
+    public void setAccion(String accion) {
+        this.accion = accion;
     }
 
     public String getUsuario() {
@@ -104,6 +116,14 @@ public class SeguimientoCaso implements Serializable {
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
     public String getFechaActualizacion() {

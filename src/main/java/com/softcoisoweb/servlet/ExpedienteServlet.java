@@ -5,6 +5,7 @@
  */
 package com.softcoisoweb.servlet;
 
+import com.softcoisoweb.clase.GestionarAccionesExpediente;
 import com.softcoisoweb.controller.CasoArchivoJpaController;
 import com.softcoisoweb.controller.CasoComentarioJpaController;
 import com.softcoisoweb.controller.CasoPersonaJpaController;
@@ -140,6 +141,7 @@ public class ExpedienteServlet extends HttpServlet {
             List<ProcesoCalificacion> listProceso = procesoJpa.procesoXexpediente(codigoCaso);
             List<ProcesoReclamacion> listReclamacion = reclamacionJpa.reclamacionxExpediente(codigoCaso);
             List<MedicamentosCaso> listMedicamentosCasos = medicamentoJpa.medicamentoXexpediente(codigoCaso);
+            List<SeguimientoCaso> listSeguimiento = seguimientoJpa.seguimientoExpediente(codigoCaso);
 
             TipoCaso tipoCaso = tipoCasoJpa.findTipoCaso(caso.getTipoCasoCodigoTipoCaso());
             FlujoCaso flujo = flujoJpa.findFlujoCaso(codigoCaso);
@@ -148,7 +150,7 @@ public class ExpedienteServlet extends HttpServlet {
             //Usuarios que gestionan el expediente
             Usuario creadoPor = usuarioJpa.findUsuario(caso.getCreadoPor());
             Usuario asignado = usuarioJpa.findUsuario(caso.getAsignado());
-            
+
             String usuarioInformador = creadoPor.getNombreUsuario() + " " + creadoPor.getApellidoUsuario();
             String usuarioAsignado = asignado.getNombreUsuario() + " " + asignado.getApellidoUsuario();
             Persona persona = Personajpa.findPersona(caso.getPersonaCedula());
@@ -167,6 +169,8 @@ public class ExpedienteServlet extends HttpServlet {
             session.setAttribute("listProceso", listProceso);
             session.setAttribute("listReclamacion", listReclamacion);
             session.setAttribute("listMedicamentosCasos", listMedicamentosCasos);
+            session.setAttribute("ListSeguimiento", listSeguimiento
+            );
 
         } catch (Exception e) {
             System.err.println("Error buscando el expediente  del caso, el error es: " + e);
@@ -198,12 +202,12 @@ public class ExpedienteServlet extends HttpServlet {
         return resultado;
     }
 
-    private String gestionCaso(String casoId, String usuarioCedula, String fechaActual, String codigoEstado) {
+    private String gestionCaso(String casoId, String usuarioCedula, String fechaActual, String codigoEstado, String accion, String nombreUsuario) {
         FlujoCasoJpaController flujoJpa = new FlujoCasoJpaController(JPAFactory.getFACTORY());
         SeguimientoCasoJpaController seguimientoJpa = new SeguimientoCasoJpaController(JPAFactory.getFACTORY());
         String respuesta;
         try {
-            SeguimientoCaso seguimiento = new SeguimientoCaso(casoId, codigoEstado, usuarioCedula, fechaActual);
+            SeguimientoCaso seguimiento = new SeguimientoCaso(casoId, accion, usuarioCedula, nombreUsuario, fechaActual);
             flujoJpa.actualizarFlujoCaso(casoId, fechaActual, codigoEstado, usuarioCedula);
             seguimientoJpa.create(seguimiento);
             respuesta = "Exitoso";
@@ -266,7 +270,8 @@ public class ExpedienteServlet extends HttpServlet {
                         archivo = new CasoArchivo(casoId, usuarioCedula, usuarioCedula, nombreArchivo, rutaArchivo, fecha_Actual);
                         archivoJpa.create(archivo);
                     }
-                    String seguimiento = gestionCaso(casoId, usuarioCedula, fecha_Actual, codigoEstado);
+                    String accion = "Se cambia el caso del expediente ";
+                    String seguimiento = gestionCaso(casoId, usuarioCedula, fecha_Actual, codigoEstado, accion, nombreUsuario);
                     if (seguimiento.equals("Exitoso")) {
                         resultado = "0";
                     } else {
@@ -284,6 +289,9 @@ public class ExpedienteServlet extends HttpServlet {
                         comentarioC = new CasoComentario(casoId, comentario, usuarioCedula, nombreUsuario, fecha_Actual);
                         comentarioJpa.create(comentarioC);
                     }
+                    GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
+                    String acciones = "Se cambia el responsable del expediente";
+                    accionesExpediente.guardarAccionesExpediente(casoId, usuarioCedula, acciones);
                     resultado = "0";
                 } catch (NonexistentEntityException e) {
                     System.err.println("Se presento un error cambiando el usuario del expediente: " + casoId + " El Error es: " + e);

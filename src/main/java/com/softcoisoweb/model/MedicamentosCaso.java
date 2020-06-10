@@ -34,6 +34,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "MedicamentosCaso.findByCantidad", query = "SELECT m FROM MedicamentosCaso m WHERE m.cantidad = :cantidad"),
     @NamedQuery(name = "MedicamentosCaso.findByComentario", query = "SELECT m FROM MedicamentosCaso m WHERE m.comentario = :comentario"),
     @NamedQuery(name = "MedicamentosCaso.findByUsuarioCedula", query = "SELECT m FROM MedicamentosCaso m WHERE m.usuarioCedula = :usuarioCedula"),
+    @NamedQuery(name = "MedicamentosCaso.findByNombrePersona", query = "SELECT m FROM MedicamentosCaso m WHERE m.nombrePersona = :nombrePersona"),
     @NamedQuery(name = "MedicamentosCaso.findByNombreArchivo", query = "SELECT m FROM MedicamentosCaso m WHERE m.nombreArchivo = :nombreArchivo"),
     @NamedQuery(name = "MedicamentosCaso.findByRutaArchivo", query = "SELECT m FROM MedicamentosCaso m WHERE m.rutaArchivo = :rutaArchivo"),
     @NamedQuery(name = "MedicamentosCaso.findByFechaActualizacion", query = "SELECT m FROM MedicamentosCaso m WHERE m.fechaActualizacion = :fechaActualizacion")})
@@ -75,6 +76,9 @@ public class MedicamentosCaso implements Serializable {
     @Column(name = "usuario_cedula")
     private String usuarioCedula;
     @Size(max = 45)
+    @Column(name = "nombre_persona")
+    private String nombrePersona;
+    @Size(max = 45)
     @Column(name = "nombre_archivo")
     private String nombreArchivo;
     @Size(max = 500)
@@ -99,7 +103,7 @@ public class MedicamentosCaso implements Serializable {
         this.usuarioCedula = usuarioCedula;
     }
 
-    public MedicamentosCaso(Integer codigoMedicamento, String casoPersonaIdCaso, String fechaMedicamento, String medicamentosCodigoMedicamento, String dosificacion, String cantidad, String comentario, String usuarioCedula, String nombreArchivo, String rutaArchivo, String fechaActualizacion) {
+    public MedicamentosCaso(Integer codigoMedicamento, String casoPersonaIdCaso, String fechaMedicamento, String medicamentosCodigoMedicamento, String dosificacion, String cantidad, String comentario, String usuarioCedula, String nombrePersona, String nombreArchivo, String rutaArchivo, String fechaActualizacion) {
         this.codigoMedicamento = codigoMedicamento;
         this.casoPersonaIdCaso = casoPersonaIdCaso;
         this.fechaMedicamento = fechaMedicamento;
@@ -108,12 +112,13 @@ public class MedicamentosCaso implements Serializable {
         this.cantidad = cantidad;
         this.comentario = comentario;
         this.usuarioCedula = usuarioCedula;
+        this.nombrePersona = nombrePersona;
         this.nombreArchivo = nombreArchivo;
         this.rutaArchivo = rutaArchivo;
         this.fechaActualizacion = fechaActualizacion;
     }
 
-    public MedicamentosCaso(String casoPersonaIdCaso, String fechaMedicamento, String medicamentosCodigoMedicamento, String dosificacion, String cantidad, String comentario, String usuarioCedula, String nombreArchivo, String rutaArchivo, String fechaActualizacion) {
+    public MedicamentosCaso(String casoPersonaIdCaso, String fechaMedicamento, String medicamentosCodigoMedicamento, String dosificacion, String cantidad, String comentario, String usuarioCedula, String nombrePersona, String nombreArchivo, String rutaArchivo, String fechaActualizacion) {
         this.casoPersonaIdCaso = casoPersonaIdCaso;
         this.fechaMedicamento = fechaMedicamento;
         this.medicamentosCodigoMedicamento = medicamentosCodigoMedicamento;
@@ -121,13 +126,13 @@ public class MedicamentosCaso implements Serializable {
         this.cantidad = cantidad;
         this.comentario = comentario;
         this.usuarioCedula = usuarioCedula;
+        this.nombrePersona = nombrePersona;
         this.nombreArchivo = nombreArchivo;
         this.rutaArchivo = rutaArchivo;
         this.fechaActualizacion = fechaActualizacion;
     }
-    
-    
 
+    
     public Integer getCodigoMedicamento() {
         return codigoMedicamento;
     }
@@ -190,6 +195,14 @@ public class MedicamentosCaso implements Serializable {
 
     public void setUsuarioCedula(String usuarioCedula) {
         this.usuarioCedula = usuarioCedula;
+    }
+
+    public String getNombrePersona() {
+        return nombrePersona;
+    }
+
+    public void setNombrePersona(String nombrePersona) {
+        this.nombrePersona = nombrePersona;
     }
 
     public String getNombreArchivo() {

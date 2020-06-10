@@ -5,6 +5,8 @@
  */
 package com.softcoisoweb.servlet;
 
+import com.softcoisoweb.clase.GestionarAccionesExpediente;
+import com.softcoisoweb.clase.ObtenerFecha;
 import com.softcoisoweb.controller.CasoPersonaJpaController;
 import com.softcoisoweb.controller.EstadoCasoJpaController;
 import com.softcoisoweb.controller.FlujoCasoJpaController;
@@ -165,27 +167,23 @@ public class CasoServlet extends HttpServlet {
 
     private String gestionCaso(String operacion, String casoId, String usuario, String estado, String fechaCracion) {
         String respuesta;
+        ObtenerFecha fecha = new ObtenerFecha();
         String estadoCaso = "101";
-        String fecha_Actual, fecha;
         FlujoCasoJpaController flujoJpa = new FlujoCasoJpaController(JPAFactory.getFACTORY());
         SeguimientoCasoJpaController gestionCasoJpa = new SeguimientoCasoJpaController(JPAFactory.getFACTORY());
+         GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
         SeguimientoCaso gestionCaso;
         try {
-            String fechaActual = obtenerFechaActual();
-            String horaActual = obtenerHoraActual();
-            SimpleDateFormat formatterFecha = new SimpleDateFormat("yyyyMMdd");
-            SimpleDateFormat formatterFecha2 = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = formatterFecha.parse(fechaActual);
-            fecha = formatterFecha2.format(date);
-            fecha_Actual = fecha + " " + horaActual;
+            String fechaActual = fecha.ObtenerFecha();
+             String nombreUsuario = accionesExpediente.getUsuarioSession(usuario);
             if (operacion.equals("Crear")) {
-                FlujoCaso flujoCaso = new FlujoCaso(fecha_Actual, fecha_Actual, casoId, usuario, estadoCaso);
+                FlujoCaso flujoCaso = new FlujoCaso(fechaActual, fechaActual, casoId, usuario, estadoCaso);
                 flujoJpa.create(flujoCaso);
-                gestionCaso = new SeguimientoCaso(casoId, estadoCaso, usuario, fechaActual);
+                gestionCaso = new SeguimientoCaso(casoId,"Se crea el caso", usuario,nombreUsuario, fechaActual);
             } else {
-                FlujoCaso flujoCaso = new FlujoCaso(fechaCracion, fecha_Actual, casoId, usuario, estado);
+                FlujoCaso flujoCaso = new FlujoCaso(fechaCracion, fechaActual, casoId, usuario, estado);
                 flujoJpa.edit(flujoCaso);
-                gestionCaso = new SeguimientoCaso(casoId, estadoCaso, usuario, fechaActual);
+                gestionCaso = new SeguimientoCaso(casoId,"Se edita el caso", usuario, nombreUsuario, fechaActual);
             }
             gestionCasoJpa.create(gestionCaso);
             respuesta = "Exitoso";

@@ -32,6 +32,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "ProcesoReclamacion.findByRutaArchivos", query = "SELECT p FROM ProcesoReclamacion p WHERE p.rutaArchivos = :rutaArchivos"),
     @NamedQuery(name = "ProcesoReclamacion.findByCasoPersonaIdCaso", query = "SELECT p FROM ProcesoReclamacion p WHERE p.casoPersonaIdCaso = :casoPersonaIdCaso"),
     @NamedQuery(name = "ProcesoReclamacion.findByUsuarioCedula", query = "SELECT p FROM ProcesoReclamacion p WHERE p.usuarioCedula = :usuarioCedula"),
+    @NamedQuery(name = "ProcesoReclamacion.findByNombreUsuario", query = "SELECT p FROM ProcesoReclamacion p WHERE p.nombreUsuario = :nombreUsuario"),
     @NamedQuery(name = "ProcesoReclamacion.findByFechaCreacion", query = "SELECT p FROM ProcesoReclamacion p WHERE p.fechaCreacion = :fechaCreacion"),
     @NamedQuery(name = "ProcesoReclamacion.findByFechaActualizacion", query = "SELECT p FROM ProcesoReclamacion p WHERE p.fechaActualizacion = :fechaActualizacion")})
 public class ProcesoReclamacion implements Serializable {
@@ -61,6 +62,9 @@ public class ProcesoReclamacion implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "usuario_cedula")
     private String usuarioCedula;
+    @Size(max = 45)
+    @Column(name = "nombre_usuario")
+    private String nombreUsuario;
     @Size(max = 25)
     @Column(name = "fecha_creacion")
     private String fechaCreacion;
@@ -81,23 +85,25 @@ public class ProcesoReclamacion implements Serializable {
         this.usuarioCedula = usuarioCedula;
     }
 
-    public ProcesoReclamacion(Integer codigo, String comentarios, String nombreArchivo, String rutaArchivos, String casoPersonaIdCaso, String usuarioCedula, String fechaCreacion, String fechaActualizacion) {
+    public ProcesoReclamacion(Integer codigo, String comentarios, String nombreArchivo, String rutaArchivos, String casoPersonaIdCaso, String usuarioCedula, String nombreUsuario, String fechaCreacion, String fechaActualizacion) {
         this.codigo = codigo;
         this.comentarios = comentarios;
         this.nombreArchivo = nombreArchivo;
         this.rutaArchivos = rutaArchivos;
         this.casoPersonaIdCaso = casoPersonaIdCaso;
         this.usuarioCedula = usuarioCedula;
+        this.nombreUsuario = nombreUsuario;
         this.fechaCreacion = fechaCreacion;
         this.fechaActualizacion = fechaActualizacion;
     }
 
-    public ProcesoReclamacion(String comentarios, String nombreArchivo, String rutaArchivos, String casoPersonaIdCaso, String usuarioCedula, String fechaCreacion, String fechaActualizacion) {
+    public ProcesoReclamacion(String comentarios, String nombreArchivo, String rutaArchivos, String casoPersonaIdCaso, String usuarioCedula, String nombreUsuario, String fechaCreacion, String fechaActualizacion) {
         this.comentarios = comentarios;
         this.nombreArchivo = nombreArchivo;
         this.rutaArchivos = rutaArchivos;
         this.casoPersonaIdCaso = casoPersonaIdCaso;
         this.usuarioCedula = usuarioCedula;
+        this.nombreUsuario = nombreUsuario;
         this.fechaCreacion = fechaCreacion;
         this.fechaActualizacion = fechaActualizacion;
     }
@@ -149,6 +155,14 @@ public class ProcesoReclamacion implements Serializable {
 
     public void setUsuarioCedula(String usuarioCedula) {
         this.usuarioCedula = usuarioCedula;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
     public String getFechaCreacion() {

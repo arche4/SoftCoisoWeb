@@ -5,7 +5,8 @@
  */
 package com.softcoisoweb.servlet;
 
-import com.softcoisoweb.clase.obtenerFecha;
+import com.softcoisoweb.clase.GestionarAccionesExpediente;
+import com.softcoisoweb.clase.ObtenerFecha;
 import com.softcoisoweb.controller.ProcesoReclamacionJpaController;
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.model.ProcesoReclamacion;
@@ -38,12 +39,12 @@ public class ReclamacionServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
-        
+
         String btnCrear = request.getParameter("btnCrearReclamacion");
         String btnModificar = request.getParameter("btnModificarReclamacion");
         String btnConsultar = request.getParameter("btnConsultarReclamacion");
         String btnEliminar = request.getParameter("btnEliminarReclamacion");
-       
+
         try ( PrintWriter out = response.getWriter()) {
             if (btnCrear != null && btnCrear.equals("ok")) {
                 String crear = crear(request);
@@ -63,21 +64,25 @@ public class ReclamacionServlet extends HttpServlet {
             }
         }
     }
-    
+
     private String crear(HttpServletRequest request) {
         String respuesta;
-        ProcesoReclamacionJpaController reclamacionJpa= new ProcesoReclamacionJpaController(JPAFactory.getFACTORY());
+        ObtenerFecha fecha = new ObtenerFecha();
+        GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
+        ProcesoReclamacionJpaController reclamacionJpa = new ProcesoReclamacionJpaController(JPAFactory.getFACTORY());
         String comentarioReclamacion = request.getParameter("comentarioReclamacion");
         String nombreArchivoReclamacion = request.getParameter("nombreArchivoReclamacion");
         String rutaArchivoReclamacion = request.getParameter("rutaArchivoReclamacion");
-        String casoIdReclamacion = request.getParameter("casoIdReclamacion");
-        String usuarioReclamacion = request.getParameter("usuarioReclamacion");
+        String casoid = request.getParameter("casoIdReclamacion");
+        String usuario = request.getParameter("usuarioReclamacion");
+        String accion = "Se agregar un proceso de reclamación al expediente";
         try {
-            obtenerFecha fecha = new obtenerFecha();
+            String nombreUsuario = accionesExpediente.getUsuarioSession(usuario);
             String fechaActual = fecha.ObtenerFecha();
             ProcesoReclamacion reclamacionCreate = new ProcesoReclamacion(comentarioReclamacion, nombreArchivoReclamacion, rutaArchivoReclamacion,
-                    casoIdReclamacion, usuarioReclamacion,fechaActual, fechaActual);
+                    casoid, usuario, nombreUsuario, fechaActual, fechaActual);
             reclamacionJpa.create(reclamacionCreate);
+            accionesExpediente.guardarAccionesExpediente(casoid, usuario, accion);
             respuesta = "Exitoso";
         } catch (Exception e) {
             System.err.println("Se presento un error creando la reclamacion, El Error es: " + e);
@@ -88,11 +93,11 @@ public class ReclamacionServlet extends HttpServlet {
 
     private String consultar(String codigoReclamacion) {
         String respuesta = null;
-        ProcesoReclamacionJpaController reclamacionJpa= new ProcesoReclamacionJpaController(JPAFactory.getFACTORY());
+        ProcesoReclamacionJpaController reclamacionJpa = new ProcesoReclamacionJpaController(JPAFactory.getFACTORY());
         try {
             ProcesoReclamacion getReclamacion = reclamacionJpa.findProcesoReclamacion(Integer.parseInt(codigoReclamacion));
             respuesta = getReclamacion.getCodigo() + "#" + getReclamacion.getComentarios() + "#" + getReclamacion.getNombreArchivo()
-                    + "#" + getReclamacion.getRutaArchivos()+ "#" + getReclamacion.getCasoPersonaIdCaso() + "#" + getReclamacion.getUsuarioCedula() + "#" + getReclamacion.getFechaCreacion();
+                    + "#" + getReclamacion.getRutaArchivos() + "#" + getReclamacion.getCasoPersonaIdCaso() + "#" + getReclamacion.getUsuarioCedula() + "#" + getReclamacion.getFechaCreacion();
         } catch (NumberFormatException e) {
             System.out.println("Error consultando al proceso: " + codigoReclamacion + "El error es:" + e);
         }
@@ -102,23 +107,33 @@ public class ReclamacionServlet extends HttpServlet {
 
     private String modificar(HttpServletRequest request) throws Exception {
         String respuesta;
-        ProcesoReclamacionJpaController reclamacionJpa= new ProcesoReclamacionJpaController(JPAFactory.getFACTORY());
-        String codigoReclamacion = request.getParameter("codigoReclamacion");
-        String comentarioReclamacion = request.getParameter("comentarioReclamacion");
-        String nombreArchivoReclamacion = request.getParameter("nombreArchivoReclamacion");
-        String rutaArchivoReclamacion = request.getParameter("rutaArchivoReclamacion");
-        String casoIdReclamacion = request.getParameter("casoIdReclamacion");
-        String usuarioReclamacion = request.getParameter("usuarioReclamacion");
-        String fechaCreacionReclamacion = request.getParameter("usuarioReclamacion");
+        ObtenerFecha fecha = new ObtenerFecha();
+        GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
+        ProcesoReclamacionJpaController reclamacionJpa = new ProcesoReclamacionJpaController(JPAFactory.getFACTORY());
+        String codigo = request.getParameter("codigoReclamacion");
+        String comentario = request.getParameter("comentarioReclamacion");
+        String nombreArchivo = request.getParameter("nombreArchivoReclamacion");
+        String rutaArchivo = request.getParameter("rutaArchivoReclamacion");
+        String casoId = request.getParameter("casoIdReclamacion");
+        String usuario = request.getParameter("usuarioReclamacion");
+        String accion = "Se modifica el proceso de reclamación" + codigo + " al expediente";
         try {
-            obtenerFecha fecha = new obtenerFecha();
+            String nombreUsuario = accionesExpediente.getUsuarioSession(usuario);
             String fechaActual = fecha.ObtenerFecha();
-            ProcesoReclamacion reclamacionCreate = new ProcesoReclamacion(Integer.parseInt(codigoReclamacion), comentarioReclamacion, nombreArchivoReclamacion, rutaArchivoReclamacion,
-                    casoIdReclamacion, usuarioReclamacion,fechaCreacionReclamacion, fechaActual);
+            ProcesoReclamacion getReclamacion = reclamacionJpa.findProcesoReclamacion(Integer.parseInt(codigo));
+            ProcesoReclamacion reclamacionCreate;
+            if (!rutaArchivo.equals("")) {
+                reclamacionCreate = new ProcesoReclamacion(Integer.parseInt(codigo), comentario, nombreArchivo, rutaArchivo,
+                        getReclamacion.getFechaCreacion(), usuario, nombreUsuario, getReclamacion.getFechaCreacion(), fechaActual);
+            } else {
+                reclamacionCreate = new ProcesoReclamacion(Integer.parseInt(codigo), comentario, getReclamacion.getNombreArchivo(),
+                        getReclamacion.getRutaArchivos(), getReclamacion.getFechaCreacion(), usuario, nombreUsuario, getReclamacion.getFechaCreacion(), fechaActual);
+            }
             reclamacionJpa.edit(reclamacionCreate);
+            accionesExpediente.guardarAccionesExpediente(casoId, usuario, accion);
             respuesta = "Exitoso";
         } catch (NumberFormatException e) {
-            System.err.println("Se presento un error creando el proceso de calificacion: " + codigoReclamacion + " El Error es: " + e);
+            System.err.println("Se presento un error creando el proceso de calificacion: " + codigo + " El Error es: " + e);
             respuesta = "Error";
         }
 
@@ -128,7 +143,7 @@ public class ReclamacionServlet extends HttpServlet {
 
     private String eliminar(String codigoReclamacion) {
         String resultado;
-        ProcesoReclamacionJpaController reclamacionJpa= new ProcesoReclamacionJpaController(JPAFactory.getFACTORY());
+        ProcesoReclamacionJpaController reclamacionJpa = new ProcesoReclamacionJpaController(JPAFactory.getFACTORY());
         try {
             reclamacionJpa.destroy(Integer.parseInt(codigoReclamacion));
             resultado = "Exitoso";

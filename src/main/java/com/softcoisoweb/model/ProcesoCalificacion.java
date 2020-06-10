@@ -32,6 +32,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "ProcesoCalificacion.findByNombreArchivo", query = "SELECT p FROM ProcesoCalificacion p WHERE p.nombreArchivo = :nombreArchivo"),
     @NamedQuery(name = "ProcesoCalificacion.findByRutaArchivo", query = "SELECT p FROM ProcesoCalificacion p WHERE p.rutaArchivo = :rutaArchivo"),
     @NamedQuery(name = "ProcesoCalificacion.findByUsuarioCedula", query = "SELECT p FROM ProcesoCalificacion p WHERE p.usuarioCedula = :usuarioCedula"),
+    @NamedQuery(name = "ProcesoCalificacion.findByNombreUsuario", query = "SELECT p FROM ProcesoCalificacion p WHERE p.nombreUsuario = :nombreUsuario"),
     @NamedQuery(name = "ProcesoCalificacion.findByCasoPersonaIdCaso", query = "SELECT p FROM ProcesoCalificacion p WHERE p.casoPersonaIdCaso = :casoPersonaIdCaso"),
     @NamedQuery(name = "ProcesoCalificacion.findByFechaCreacion", query = "SELECT p FROM ProcesoCalificacion p WHERE p.fechaCreacion = :fechaCreacion"),
     @NamedQuery(name = "ProcesoCalificacion.findByFechaActualizada", query = "SELECT p FROM ProcesoCalificacion p WHERE p.fechaActualizada = :fechaActualizada")})
@@ -60,6 +61,9 @@ public class ProcesoCalificacion implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "usuario_cedula")
     private String usuarioCedula;
+    @Size(max = 45)
+    @Column(name = "nombre_usuario")
+    private String nombreUsuario;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 15)
@@ -85,24 +89,26 @@ public class ProcesoCalificacion implements Serializable {
         this.casoPersonaIdCaso = casoPersonaIdCaso;
     }
 
-    public ProcesoCalificacion(String proceso, String comentario, String nombreArchivo, String rutaArchivo, String usuarioCedula, String casoPersonaIdCaso, String fechaCreacion, String fechaActualizada) {
-        this.proceso = proceso;
-        this.comentario = comentario;
-        this.nombreArchivo = nombreArchivo;
-        this.rutaArchivo = rutaArchivo;
-        this.usuarioCedula = usuarioCedula;
-        this.casoPersonaIdCaso = casoPersonaIdCaso;
-        this.fechaCreacion = fechaCreacion;
-        this.fechaActualizada = fechaActualizada;
-    }
-
-    public ProcesoCalificacion(Integer codigo, String proceso, String comentario, String nombreArchivo, String rutaArchivo, String usuarioCedula, String casoPersonaIdCaso, String fechaCreacion, String fechaActualizada) {
+    public ProcesoCalificacion(Integer codigo, String proceso, String comentario, String nombreArchivo, String rutaArchivo, String usuarioCedula, String nombreUsuario, String casoPersonaIdCaso, String fechaCreacion, String fechaActualizada) {
         this.codigo = codigo;
         this.proceso = proceso;
         this.comentario = comentario;
         this.nombreArchivo = nombreArchivo;
         this.rutaArchivo = rutaArchivo;
         this.usuarioCedula = usuarioCedula;
+        this.nombreUsuario = nombreUsuario;
+        this.casoPersonaIdCaso = casoPersonaIdCaso;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaActualizada = fechaActualizada;
+    }
+
+    public ProcesoCalificacion(String proceso, String comentario, String nombreArchivo, String rutaArchivo, String usuarioCedula, String nombreUsuario, String casoPersonaIdCaso, String fechaCreacion, String fechaActualizada) {
+        this.proceso = proceso;
+        this.comentario = comentario;
+        this.nombreArchivo = nombreArchivo;
+        this.rutaArchivo = rutaArchivo;
+        this.usuarioCedula = usuarioCedula;
+        this.nombreUsuario = nombreUsuario;
         this.casoPersonaIdCaso = casoPersonaIdCaso;
         this.fechaCreacion = fechaCreacion;
         this.fechaActualizada = fechaActualizada;
@@ -156,6 +162,14 @@ public class ProcesoCalificacion implements Serializable {
 
     public void setUsuarioCedula(String usuarioCedula) {
         this.usuarioCedula = usuarioCedula;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
     public String getCasoPersonaIdCaso() {

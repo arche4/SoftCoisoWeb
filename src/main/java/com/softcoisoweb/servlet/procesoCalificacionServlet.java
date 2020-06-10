@@ -5,15 +5,17 @@
  */
 package com.softcoisoweb.servlet;
 
-import com.softcoisoweb.clase.obtenerFecha;
+import com.softcoisoweb.clase.GestionarAccionesExpediente;
+import com.softcoisoweb.clase.ObtenerFecha;
 import com.softcoisoweb.controller.ProcesoCalificacionJpaController;
+import com.softcoisoweb.controller.UsuarioJpaController;
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.model.ProcesoCalificacion;
+import com.softcoisoweb.model.Usuario;
 import com.softcoisoweb.util.JPAFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -78,6 +80,7 @@ public class procesoCalificacionServlet extends HttpServlet {
 
     private String crear(HttpServletRequest request) {
         String respuesta;
+        UsuarioJpaController usuarioJpa = new UsuarioJpaController(JPAFactory.getFACTORY());
         ProcesoCalificacionJpaController procesoJpa = new ProcesoCalificacionJpaController(JPAFactory.getFACTORY());
         String nombreProceso = request.getParameter("proceso");
         String comentarioProceso = request.getParameter("comentarioProceso");
@@ -86,11 +89,17 @@ public class procesoCalificacionServlet extends HttpServlet {
         String usuarioProceso = request.getParameter("usuarioProceso");
         String casoIdProceso = request.getParameter("casoIdProceso");
         try {
-            obtenerFecha fecha = new obtenerFecha();
+            ObtenerFecha fecha = new ObtenerFecha();
             String fechaActual = fecha.ObtenerFecha();
+
+            Usuario usuario = usuarioJpa.findUsuario(usuarioProceso);
+            String nombreUsuario = usuario.getNombreUsuario() + " " + usuario.getApellidoUsuario();
+
             ProcesoCalificacion procesoCreate = new ProcesoCalificacion(nombreProceso, comentarioProceso, nombreArchivoProceso,
-                    rutaArchivoProceso, usuarioProceso, casoIdProceso, fechaActual, fechaActual);
+                    rutaArchivoProceso, usuarioProceso, nombreUsuario, casoIdProceso, fechaActual, fechaActual);
             procesoJpa.create(procesoCreate);
+            GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
+            accionesExpediente.guardarAccionesExpediente(casoIdProceso, usuarioProceso, "Se agrega un proceso de calificación");
             respuesta = "Exitoso";
         } catch (Exception e) {
             System.err.println("Se presento un error creando el proceso de calificacion: " + nombreProceso + " El Error es: " + e);
@@ -115,18 +124,33 @@ public class procesoCalificacionServlet extends HttpServlet {
     private String modificar(HttpServletRequest request) {
         String respuesta;
         ProcesoCalificacionJpaController procesoJpa = new ProcesoCalificacionJpaController(JPAFactory.getFACTORY());
+        GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
         String codigoProceso = request.getParameter("codigoProceso");
         String nombreProceso = request.getParameter("proceso");
         String comentarioProceso = request.getParameter("comentarioProceso");
-        String usuarioProceso = request.getParameter("usuarioProceso");
+        String usuario = request.getParameter("usuarioProceso");
+        String nombreArchivo = request.getParameter("nombreArchivoProceso");
+        String rutaArchivo = request.getParameter("rutaArchivoProceso");
 
         try {
-            obtenerFecha fecha = new obtenerFecha();
+            ObtenerFecha fecha = new ObtenerFecha();
             String fechaActual = fecha.ObtenerFecha();
+            String nombreUsuario = accionesExpediente.getUsuarioSession(usuario);
+            
+            ProcesoCalificacion procesoCreate;
+
             ProcesoCalificacion getProceso = procesoJpa.findProcesoCalificacion(Integer.parseInt(codigoProceso));
-            ProcesoCalificacion procesoCreate = new ProcesoCalificacion(Integer.parseInt(codigoProceso), nombreProceso, comentarioProceso, getProceso.getNombreArchivo(),
-                    getProceso.getRutaArchivo(), usuarioProceso, getProceso.getCasoPersonaIdCaso(), getProceso.getFechaCreacion(), fechaActual);
+            if (!rutaArchivo.equals("")) {
+                procesoCreate = new ProcesoCalificacion(Integer.parseInt(codigoProceso), nombreProceso, comentarioProceso, nombreArchivo,
+                        rutaArchivo, usuario, nombreUsuario, getProceso.getCasoPersonaIdCaso(), getProceso.getFechaCreacion(), fechaActual);
+            } else {
+                procesoCreate = new ProcesoCalificacion(Integer.parseInt(codigoProceso), nombreProceso, comentarioProceso, getProceso.getNombreArchivo(),
+                        getProceso.getRutaArchivo(), usuario, nombreUsuario, getProceso.getCasoPersonaIdCaso(), getProceso.getFechaCreacion(), fechaActual);
+            }
+
             procesoJpa.edit(procesoCreate);
+            accionesExpediente.guardarAccionesExpediente(getProceso.getCasoPersonaIdCaso(), usuario, "Se modifica el proceso de calificación" + nombreProceso);
+
             respuesta = "Exitoso";
         } catch (Exception e) {
             System.err.println("Se presento un error creando el proceso de calificacion: " + nombreProceso + " El Error es: " + e);
@@ -142,6 +166,7 @@ public class procesoCalificacionServlet extends HttpServlet {
         ProcesoCalificacionJpaController procesoJpa = new ProcesoCalificacionJpaController(JPAFactory.getFACTORY());
         try {
             procesoJpa.destroy(Integer.parseInt(codigoProceso));
+            GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
             resultado = "Exitoso";
         } catch (NonexistentEntityException | NumberFormatException e) {
             System.err.println("Se presento un error eliminando el proceso de calificacion: " + codigoProceso + " El Error es: " + e);
@@ -168,13 +193,17 @@ public class procesoCalificacionServlet extends HttpServlet {
         String nombreArchivo = request.getParameter("nombreArchivoProceso");
         String rutaArchivoProceso = request.getParameter("rutaArchivoProceso");
         String usuarioProceso = request.getParameter("usuarioProceso");
+        UsuarioJpaController usuarioJpa = new UsuarioJpaController(JPAFactory.getFACTORY());
         ProcesoCalificacionJpaController procesoJpa = new ProcesoCalificacionJpaController(JPAFactory.getFACTORY());
         try {
-            obtenerFecha fecha = new obtenerFecha();
+            ObtenerFecha fecha = new ObtenerFecha();
             String fechaActual = fecha.ObtenerFecha();
+            Usuario usuario = usuarioJpa.findUsuario(usuarioProceso);
+            String nombreUsuario = usuario.getNombreUsuario() + " " + usuario.getApellidoUsuario();
+
             ProcesoCalificacion getProceso = procesoJpa.findProcesoCalificacion(Integer.parseInt(codigoProceso));
             ProcesoCalificacion procesoCreate = new ProcesoCalificacion(Integer.parseInt(codigoProceso), getProceso.getProceso(), getProceso.getComentario(), nombreArchivo,
-                    rutaArchivoProceso, usuarioProceso, getProceso.getCasoPersonaIdCaso(), getProceso.getFechaCreacion(), fechaActual);
+                    rutaArchivoProceso, usuarioProceso, nombreUsuario, getProceso.getCasoPersonaIdCaso(), getProceso.getFechaCreacion(), fechaActual);
             procesoJpa.edit(procesoCreate);
             respuesta = "Exitoso";
         } catch (Exception e) {
@@ -183,18 +212,20 @@ public class procesoCalificacionServlet extends HttpServlet {
         }
         return respuesta;
     }
-    
-    private String eliminarArchivo(String codigoProceso){
-     String respuesta;
-     ProcesoCalificacionJpaController procesoJpa = new ProcesoCalificacionJpaController(JPAFactory.getFACTORY());
+
+    private String eliminarArchivo(String codigoProceso) {
+        String respuesta;
+        ProcesoCalificacionJpaController procesoJpa = new ProcesoCalificacionJpaController(JPAFactory.getFACTORY());
         try {
-            obtenerFecha fecha = new obtenerFecha();
+            ObtenerFecha fecha = new ObtenerFecha();
             String fechaActual = fecha.ObtenerFecha();
             ProcesoCalificacion getProceso = procesoJpa.findProcesoCalificacion(Integer.parseInt(codigoProceso));
             ProcesoCalificacion procesoCreate = new ProcesoCalificacion(Integer.parseInt(codigoProceso), getProceso.getProceso(), getProceso.getComentario(), "",
-                    "", getProceso.getUsuarioCedula(), getProceso.getCasoPersonaIdCaso(), getProceso.getFechaCreacion(), fechaActual);
+                    "", getProceso.getUsuarioCedula(), getProceso.getNombreUsuario(), getProceso.getCasoPersonaIdCaso(), getProceso.getFechaCreacion(), fechaActual);
             procesoJpa.edit(procesoCreate);
-            respuesta = "Exitoso"; 
+            GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
+            accionesExpediente.guardarAccionesExpediente(getProceso.getCasoPersonaIdCaso(), getProceso.getUsuarioCedula(), "Se Eliminar el archivo del proceso de calificación" + getProceso.getProceso());
+            respuesta = "Exitoso";
         } catch (Exception e) {
             System.err.println("Se presento un error eliminando un archivo al proceso de calificacion: " + codigoProceso + " El Error es: " + e);
             respuesta = "Error";

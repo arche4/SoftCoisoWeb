@@ -135,7 +135,6 @@ public class ProcesoCalificacionJpaController implements Serializable {
         }
     }
     
-    
     public List<ProcesoCalificacion> procesoXexpediente(String codigoCaso) {
         EntityManager em = null;
         List<ProcesoCalificacion> listProcesoXexpediente = null;

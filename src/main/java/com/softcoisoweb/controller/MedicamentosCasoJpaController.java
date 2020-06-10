@@ -135,7 +135,7 @@ public class MedicamentosCasoJpaController implements Serializable {
         }
     }
     
-    public List<MedicamentosCaso> medicamentoXexpediente(String codigoCaso) {
+     public List<MedicamentosCaso> medicamentoXexpediente(String codigoCaso) {
         EntityManager em = null;
         List<MedicamentosCaso> listmedicamentoXexpediente = null;
         try {
@@ -151,5 +151,4 @@ public class MedicamentosCasoJpaController implements Serializable {
         }
         return listmedicamentoXexpediente;
     }
-    
 }
