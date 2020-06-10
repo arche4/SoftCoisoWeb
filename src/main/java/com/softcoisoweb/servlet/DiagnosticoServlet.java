@@ -6,7 +6,6 @@
 package com.softcoisoweb.servlet;
 
 import com.softcoisoweb.clase.GestionarAccionesExpediente;
-import com.softcoisoweb.clase.ObtenerFecha;
 import com.softcoisoweb.controller.DiagnosticoJpaController;
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.model.Diagnostico;
@@ -67,7 +66,6 @@ public class DiagnosticoServlet extends HttpServlet {
         String respuesta;
         DiagnosticoJpaController diagnosticoJpa = new DiagnosticoJpaController(JPAFactory.getFACTORY());
         GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
-        ObtenerFecha fecha = new ObtenerFecha();
         String diagnostico = request.getParameter("diagnostico");
         String fechaDiagnostico = request.getParameter("fechaDiagnostico");
         String comentario = request.getParameter("comentarioDiagnostico");
@@ -79,7 +77,7 @@ public class DiagnosticoServlet extends HttpServlet {
 
         try {
 
-            String fechaActual = fecha.ObtenerFecha();
+            String fechaActual = accionesExpediente.ObtenerFecha();
             String nombreUsuario = accionesExpediente.getUsuarioSession(usuario);
             Diagnostico diagnosticoCreate = new Diagnostico(diagnostico, fechaDiagnostico, comentario,
                     casoid, usuario, nombreUsuario, nombreArchivoDiagnostico, rutaArchivoDiagnostico, fechaActual);
@@ -115,7 +113,6 @@ public class DiagnosticoServlet extends HttpServlet {
         String respuesta;
         DiagnosticoJpaController diagnosticoJpa = new DiagnosticoJpaController(JPAFactory.getFACTORY());
         GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
-        ObtenerFecha fecha = new ObtenerFecha();
         String codigo = request.getParameter("codigo");
         String diagnostico = request.getParameter("diagnostico");
         String comentario = request.getParameter("comentarioDiagnostico");
@@ -126,7 +123,7 @@ public class DiagnosticoServlet extends HttpServlet {
         String accion = "Se modifica el diagnostico al expediente";
         try {
 
-            String fechaActual = fecha.ObtenerFecha();
+            String fechaActual = accionesExpediente.ObtenerFecha();
             String nombreUsuario = accionesExpediente.getUsuarioSession(usuario);
 
             Diagnostico getDiagnostico = diagnosticoJpa.findDiagnostico(Integer.parseInt(codigo));

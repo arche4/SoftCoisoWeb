@@ -6,7 +6,6 @@
 package com.softcoisoweb.servlet;
 
 import com.softcoisoweb.clase.GestionarAccionesExpediente;
-import com.softcoisoweb.clase.ObtenerFecha;
 import com.softcoisoweb.controller.ProcesoReclamacionJpaController;
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.model.ProcesoReclamacion;
@@ -67,7 +66,6 @@ public class ReclamacionServlet extends HttpServlet {
 
     private String crear(HttpServletRequest request) {
         String respuesta;
-        ObtenerFecha fecha = new ObtenerFecha();
         GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
         ProcesoReclamacionJpaController reclamacionJpa = new ProcesoReclamacionJpaController(JPAFactory.getFACTORY());
         String comentarioReclamacion = request.getParameter("comentarioReclamacion");
@@ -78,7 +76,7 @@ public class ReclamacionServlet extends HttpServlet {
         String accion = "Se agregar un proceso de reclamación al expediente";
         try {
             String nombreUsuario = accionesExpediente.getUsuarioSession(usuario);
-            String fechaActual = fecha.ObtenerFecha();
+            String fechaActual = accionesExpediente.ObtenerFecha();
             ProcesoReclamacion reclamacionCreate = new ProcesoReclamacion(comentarioReclamacion, nombreArchivoReclamacion, rutaArchivoReclamacion,
                     casoid, usuario, nombreUsuario, fechaActual, fechaActual);
             reclamacionJpa.create(reclamacionCreate);
@@ -107,7 +105,6 @@ public class ReclamacionServlet extends HttpServlet {
 
     private String modificar(HttpServletRequest request) throws Exception {
         String respuesta;
-        ObtenerFecha fecha = new ObtenerFecha();
         GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
         ProcesoReclamacionJpaController reclamacionJpa = new ProcesoReclamacionJpaController(JPAFactory.getFACTORY());
         String codigo = request.getParameter("codigoReclamacion");
@@ -119,7 +116,7 @@ public class ReclamacionServlet extends HttpServlet {
         String accion = "Se modifica el proceso de reclamación" + codigo + " al expediente";
         try {
             String nombreUsuario = accionesExpediente.getUsuarioSession(usuario);
-            String fechaActual = fecha.ObtenerFecha();
+            String fechaActual = accionesExpediente.ObtenerFecha();
             ProcesoReclamacion getReclamacion = reclamacionJpa.findProcesoReclamacion(Integer.parseInt(codigo));
             ProcesoReclamacion reclamacionCreate;
             if (!rutaArchivo.equals("")) {

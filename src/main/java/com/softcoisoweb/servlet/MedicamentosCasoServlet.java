@@ -6,7 +6,6 @@
 package com.softcoisoweb.servlet;
 
 import com.softcoisoweb.clase.GestionarAccionesExpediente;
-import com.softcoisoweb.clase.ObtenerFecha;
 import com.softcoisoweb.controller.MedicamentosCasoJpaController;
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.model.MedicamentosCaso;
@@ -69,7 +68,6 @@ public class MedicamentosCasoServlet extends HttpServlet {
         String respuesta;
         MedicamentosCasoJpaController medicamentoJpa = new MedicamentosCasoJpaController(JPAFactory.getFACTORY());
         GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
-        ObtenerFecha fecha = new ObtenerFecha();
         String casoId = request.getParameter("casoIdMedicamento");
         String codigoMedicamento = request.getParameter("codigoMedicamento");
         String dosificacion = request.getParameter("dosificacion");
@@ -81,7 +79,7 @@ public class MedicamentosCasoServlet extends HttpServlet {
         String accion = "Se crea un nuevo medicamento al expediente";
         try {
             String nombreUsuario = accionesExpediente.getUsuarioSession(usuario);
-            String fechaActual = fecha.ObtenerFecha();
+            String fechaActual = accionesExpediente.ObtenerFecha();
             MedicamentosCaso medicamentroCreate = new MedicamentosCaso(casoId, fechaActual, codigoMedicamento,
                     dosificacion, cantidadMedicamento, ccomentarioMedicamento, usuario, nombreUsuario, nombreArchivoMedicamento,
                     rutaArchivoMedicamento, fechaActual);
@@ -115,7 +113,6 @@ public class MedicamentosCasoServlet extends HttpServlet {
         String respuesta;
         MedicamentosCasoJpaController medicamentoJpa = new MedicamentosCasoJpaController(JPAFactory.getFACTORY());
         GestionarAccionesExpediente accionesExpediente = new GestionarAccionesExpediente();
-        ObtenerFecha fecha = new ObtenerFecha();
         String idMedicamento = request.getParameter("idMedicamento");
         String codigoMedicamento = request.getParameter("codigoMedicamento");
         String dosificacion = request.getParameter("dosificacion");
@@ -130,7 +127,7 @@ public class MedicamentosCasoServlet extends HttpServlet {
 
         try {
             getMedicamento = medicamentoJpa.findMedicamentosCaso(Integer.parseInt(codigoMedicamento));
-            String fechaActual = fecha.ObtenerFecha();
+            String fechaActual = accionesExpediente.ObtenerFecha();
             String nombreUsuario = accionesExpediente.getUsuarioSession(usuario);
 
             if (!rutaArchivo.equals("")) {
