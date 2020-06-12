@@ -171,7 +171,21 @@ $(document).ready(function () {
             }
         });
     });
-    
+
+    $("body").on("click", "#verArchivo", function () {
+        var rutaArchivo = $(this).val();
+        $(".loader").fadeOut("slow");
+        $("#pdf").attr("src", rutaArchivo);
+        $('#visualizarPdf').modal('show');
+    });
+
+    $("body").on("click", "#btnEliminarArchivoProceso", function () {
+        var cadena = ' <div class="form-row">'
+                + '<h5> ¿ Esta seguro que quieres eliminar el archivo ?</h3>'
+                + ' </div>';
+        $('#modvalidar').html(cadena);
+        $('#modValidarArhivoProceso').modal('show');
+    });
     $("body").on("click", "#btnConsultarProceso", function () {
         $(".loader").fadeIn("slow");
         var btnConsultarProceso = $(this).val();
@@ -225,6 +239,8 @@ function validarEstado() {
     $('#validarEstadoMod').modal('show');
 
 }
+
+
 function cambiarEstado() {
     var elmForm = $("#estadoCaso");
     if (elmForm) {
@@ -515,4 +531,120 @@ function guardarProceso() {
             });
         }
     }
+}
+
+function modificarProceso() {
+    var elmForm = $("#procesoCalificacionMod");
+    if (elmForm) {
+        elmForm.validator('validate');
+        var elmErr = elmForm.find('.has-error');
+        if (elmErr && elmErr.length > 0) {
+            return false;
+        } else {
+            $('#agregarProcesoCalificacion').modal('hide');
+            $(".loader").fadeIn("slow");
+            var btnModificarProceso = 'ok';
+            var codigoProceso = $('#codigoProceso').val();
+            var proceso = $('#procesoMod').val();
+            var comentarioProceso = $('#comentarioProcesoMod').val();
+            var usuarioProceso = $('#usuarioProcesoMod').val();
+            var nombreArchivoProceso = $('#nombreArchivo').val();
+            var rutaArchivoProceso = $('#rutaArchivo').val();
+            $.ajax({
+                async: false,
+                type: "POST",
+                url: "/procesoCalificacionServlet",
+                data: 'btnModificarProceso=' + btnModificarProceso + '&codigoProceso=' + codigoProceso + '&proceso=' + proceso
+                        + '&comentarioProceso=' + comentarioProceso + '&usuarioProceso=' + usuarioProceso + '&nombreArchivoProceso='
+                        + nombreArchivoProceso + '&rutaArchivoProceso=' + rutaArchivoProceso,
+                success: function (data) {
+                    $('#modificarProcesoCalificacion').modal('hide');
+                    event.preventDefault();
+                    $(".loader").fadeOut("slow");
+                    if (data === "Exitoso") {
+                        var cadena = ' <div class="form-row">'
+                                + '<h5>Sus cambios fueron guardados con ex\u00EDto.</h3>'
+                                + ' </div>';
+                        $('#modInfexito').html(cadena);
+                        $('#modalInfexito').modal('show');
+                    } else {
+                        var cadena = '<div class="form-row">'
+                                + '<h5>Lo sentimos, se ha presentado un problema guardando los datos .</h3>'
+                                + ' </div>';
+                        $('#modInferror').html(cadena);
+                        $('#modalInfError').modal('show');
+                    }
+                }
+            });
+        }
+    }
+}
+
+
+function validarProcesoCalificacion() {
+    var cadena = ' <div class="form-row">'
+            + '<h5> ¿ Esta seguro que quieres eliminar el proceso de calificación ?</h3>'
+            + ' </div>';
+    $('#infoEstado').html(cadena);
+    $('#modValidarProcesoCalificacion').modal('show');
+
+}
+
+function eliminarProceso() {
+    $('#agregarProcesoCalificacion').modal('hide');
+    $(".loader").fadeIn("slow");
+    var btnEliminarProceso = $('#proceso').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/procesoCalificacionServlet",
+        data: 'btnEliminarProceso=' + btnEliminarProceso,
+        success: function (data) {
+            event.preventDefault();
+            $(".loader").fadeOut("slow");
+            if (data === "Exitoso") {
+                var cadena = ' <div class="form-row">'
+                        + '<h5>Sus cambios fueron guardados con ex\u00EDto.</h3>'
+                        + ' </div>';
+                $('#modInfexito').html(cadena);
+                $('#modalInfexito').modal('show');
+            } else {
+                var cadena = '<div class="form-row">'
+                        + '<h5>Lo sentimos, se ha presentado un problema guardando los datos .</h3>'
+                        + ' </div>';
+                $('#modInferror').html(cadena);
+                $('#modalInfError').modal('show');
+            }
+        }
+    });
+}
+
+function eliminarArchivo() {
+    $('#modValidarArhivoProceso').modal('hide');
+    $(".loader").fadeIn("slow");
+    var btnEliminarArchivo = $('#btnEliminarArchivoProceso').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/procesoCalificacionServlet",
+        data: 'btnEliminarArchivo=' + btnEliminarArchivo,
+        success: function (data) {
+            event.preventDefault();
+            $(".loader").fadeOut("slow");
+            if (data === "Exitoso") {
+                var cadena = ' <div class="form-row">'
+                        + '<h5>Sus cambios fueron guardados con ex\u00EDto.</h3>'
+                        + ' </div>';
+                $('#modInfexito').html(cadena);
+                $('#modalInfexito').modal('show');
+            } else {
+                var cadena = '<div class="form-row">'
+                        + '<h5>Lo sentimos, se ha presentado un problema guardando los datos .</h3>'
+                        + ' </div>';
+                $('#modInferror').html(cadena);
+                $('#modalInfError').modal('show');
+            }
+        }
+    });
+
 }

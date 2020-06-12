@@ -14,6 +14,8 @@ import com.softcoisoweb.model.Usuario;
 import com.softcoisoweb.util.JPAFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +26,8 @@ import javax.servlet.http.HttpServletResponse;
  * @author manue
  */
 public class procesoCalificacionServlet extends HttpServlet {
+
+    private final static Logger LOGGER = Logger.getLogger("LogsErrores");
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -101,7 +105,7 @@ public class procesoCalificacionServlet extends HttpServlet {
             accionesExpediente.guardarAccionesExpediente(casoIdProceso, usuarioProceso, "Se agrega un proceso de calificación");
             respuesta = "Exitoso";
         } catch (Exception e) {
-            System.err.println("Se presento un error creando el proceso de calificacion: " + nombreProceso + " El Error es: " + e);
+            LOGGER.log(Level.SEVERE, "Se presento un error creando el proceso de calificacion:  {0} El error es: {1}", new Object[]{nombreProceso, e});
             respuesta = "Error";
         }
         return respuesta;
@@ -114,7 +118,7 @@ public class procesoCalificacionServlet extends HttpServlet {
             ProcesoCalificacion getProceso = procesoJpa.findProcesoCalificacion(Integer.parseInt(codigoProceso));
             respuesta = getProceso.getCodigo() + "#" + getProceso.getProceso() + "#" + getProceso.getComentario();
         } catch (NumberFormatException e) {
-            System.out.println("Error consultando al proceso: " + codigoProceso + "El error es:" + e);
+            LOGGER.log(Level.SEVERE, "Error consultando al proceso:  {0} El error es: {1}", new Object[]{codigoProceso, e});
         }
 
         return respuesta;
@@ -151,7 +155,7 @@ public class procesoCalificacionServlet extends HttpServlet {
 
             respuesta = "Exitoso";
         } catch (Exception e) {
-            System.err.println("Se presento un error creando el proceso de calificacion: " + nombreProceso + " El Error es: " + e);
+            LOGGER.log(Level.SEVERE, "Se presento un error creando el proceso de calificacion:  {0} El error es: {1}", new Object[]{nombreProceso, e});
             respuesta = "Error";
         }
 
@@ -164,10 +168,9 @@ public class procesoCalificacionServlet extends HttpServlet {
         ProcesoCalificacionJpaController procesoJpa = new ProcesoCalificacionJpaController(JPAFactory.getFACTORY());
         try {
             procesoJpa.destroy(Integer.parseInt(codigoProceso));
-            AccionesExpediente accionesExpediente = new AccionesExpediente();
             resultado = "Exitoso";
         } catch (NonexistentEntityException | NumberFormatException e) {
-            System.err.println("Se presento un error eliminando el proceso de calificacion: " + codigoProceso + " El Error es: " + e);
+            LOGGER.log(Level.SEVERE, "Se presento un error eliminando el proceso de calificacion:  {0} El error es: {1}", new Object[]{codigoProceso, e});
             resultado = "Error";
         }
         return resultado;
@@ -180,7 +183,7 @@ public class procesoCalificacionServlet extends HttpServlet {
             ProcesoCalificacion getProceso = procesoJpa.findProcesoCalificacion(Integer.parseInt(idProceso));
             respuesta = getProceso.getCodigo() + "," + getProceso.getRutaArchivo();
         } catch (NumberFormatException e) {
-            System.err.println("Se presento un error consultando el archivo del proceso: " + idProceso + " El Error es: " + e);
+            LOGGER.log(Level.SEVERE, "Se presento un error consultando el archivo del proceso:  {0} El error es: {1}", new Object[]{idProceso, e});
         }
         return respuesta;
     }
@@ -227,7 +230,7 @@ public class procesoCalificacionServlet extends HttpServlet {
             accionesExpediente.guardarAccionesExpediente(getProceso.getCasoPersonaIdCaso(), getProceso.getUsuarioCedula(), "Se Eliminar el archivo del proceso de calificación" + getProceso.getProceso());
             respuesta = "Exitoso";
         } catch (Exception e) {
-            System.err.println("Se presento un error eliminando un archivo al proceso de calificacion: " + codigoProceso + " El Error es: " + e);
+            LOGGER.log(Level.SEVERE, "Se presento un error eliminando un archivo al proceso de calificacion:  {0} El error es: {1}", new Object[]{codigoProceso, e});
             respuesta = "Error";
         }
         return respuesta;

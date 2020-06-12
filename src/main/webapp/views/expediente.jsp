@@ -373,11 +373,11 @@
                                                                     <div class="room-box">
                                                                         <h5 class="text-primary"><a href="chat_room.html">${proceso.getProceso()}</a></h5>
                                                                         <div class="pull-right hidden-phone">
-                                                                            <button type="button" id ="btnConsultarCometario" name="btnConsultarCometario"  value="${comentario.getCodigo()}" class="btn btn-primary btn-xs fa fa-pencil"></button>
-                                                                            <button type="button" id="btnEliminarComentario" name="btnEliminarComentario" value="${comentario.getCodigo()}" class="btn btn-danger btn-xs fa fa-trash-o"></button>
+                                                                            <button type="button" id ="btnConsultarProceso" name="btnConsultarProceso"  value="${proceso.getCodigo()}" class="btn btn-primary btn-xs fa fa-pencil"></button>
+                                                                            <button type="button" id="btnEliminarProceso" name="btnEliminarProceso" value="${proceso.getCodigo()}" class="btn btn-danger btn-xs fa fa-trash-o"></button>
                                                                         </div>
                                                                         <p>${proceso.getComentario()}</p>
-                                                                        <p><span class="text-muted">Creado :</span> ${proceso.getFechaCreacion()} | <span class="text-muted">Ultima Actualización :</span> ${proceso.getFechaActualizada()} | <span class="text-muted">Creado por :</span> 2 min ago</p>
+                                                                        <p><span class="text-muted">Creado por :</span> ${proceso.getNombreUsuario()} | <span class="text-muted">Fecha Creada :</span> ${proceso.getFechaCreacion()} | <span class="text-muted">Ultima Actualización :</span> ${proceso.getFechaActualizada()}</p>
                                                                         <div class="pull-right hidden-phone"> 
                                                                         </div>
                                                                     </div>
@@ -385,40 +385,37 @@
                                                             </div>
                                                         </aside>
                                                         <aside class="right-side">
-                                                            <c:forEach var="calificacion" items="${sessionScope.listCalificacion()}" varStatus="myIndex">
-                                                                <div class="invite-row">
-                                                                    <h4 class="pull-left">Calificación</h4>
-                                                                    <c:choose>
-                                                                        <c:when test="${!empty calificacion.getCodigo()}"> 
-                                                                            <a href="#" class="btn btn-theme04 pull-right">+ calificacion</a>
-                                                                        </c:when> 
-                                                                        <c:otherwise>
-                                                                            <button  id ="editCalificacion"  name="editCalificacion"  class="btn btn-theme04 pull-righ" value="${calificacion.getCodigo()}">
-                                                                                Editar Calificacion</button>
-                                                                            </c:otherwise>
-                                                                        </c:choose>
-                                                                </div>
+                                                            <div class="invite-row">
+                                                                <h4 class="pull-left">Calificación</h4>
+                                                                <c:if test="${!empty sessionScope.listCalificacion}">
+                                                                    <button  id ="editCalificacion"  name="editCalificacion"  class="btn btn-theme04 pull-righ" value="${sessionScope.listCalificacion.getCodigo()}">
+                                                                        Editar Calificacion</button>
+                                                                    </c:if>
+                                                                    <c:if test="${empty sessionScope.listCalificacion}">
+                                                                    <a href="#" class="btn btn-theme04 pull-right">+ calificacion</a>
+                                                                </c:if>
+                                                            </div>
+                                                            <center>
                                                                 <div class="servicetitle">
                                                                     <h4>Porcentaje de Calificacion</h4>
                                                                     <hr>
                                                                 </div>
-                                                                <div class="icn-main-container">
-                                                                    <center>
+                                                                <c:forEach var="calificacion" items="${sessionScope.listCalificacion}" varStatus="myIndex">
+                                                                    <div class="icn-main-container">
                                                                         <span class="icn-container">${calificacion.getPorcentaje()}%</span>
-                                                                    </center>
-                                                                </div>
-                                                                <center>
+                                                                    </div>
                                                                     <p>${calificacion.getComentario()}.</p>
-                                                                </center>
-                                                                <ul class="pricing">
-                                                                    <li>1 Domain</li>
-                                                                    <li>2 Sub Domains</li>
-                                                                    <li>3 MySQL DBs</li>
-                                                                    <li>2 Emails</li>
-                                                                    <li>WordPress Installation</li>
-                                                                    <li>24/7 Support</li>
-                                                                </ul>
-                                                            </c:forEach>
+
+                                                                    <ul class="pricing">
+                                                                        <li>1 Domain</li>
+                                                                        <li>2 Sub Domains</li>
+                                                                        <li>3 MySQL DBs</li>
+                                                                        <li>2 Emails</li>
+                                                                        <li>WordPress Installation</li>
+                                                                        <li>24/7 Support</li>
+                                                                    </ul>
+                                                                </c:forEach>
+                                                            </center>
                                                         </aside>
                                                     </div>
                                                     <h4 class="pull-left">Archivos</h4>
@@ -438,11 +435,9 @@
                                                                                         </div>
                                                                                         <div class="file-actions">
                                                                                             <div class="file-footer-buttons">
-                                                                                                <button type="button" id ="btnConsultarArchivo" name="btnConsultarArchivo"  value="${proceso.getCodigo()}" ><i class="glyphicon glyphicon-zoom-in"></i></button>
-                                                                                                <button type="button" id ="btnConsultarArchivo" name="btnConsultarArchivo"  value="${proceso.getCodigo()}" ><i class="glyphicon glyphicon-remove"></i></button>
-
+                                                                                                <button type="button" id ="verArchivo" name="verArchivo"  value="${proceso.getRutaArchivo()}" ><i class="glyphicon glyphicon-zoom-in"></i></button>
+                                                                                                <button type="button" id ="btnEliminarArchivoProceso" name="btnEliminarArchivoProceso"  value="${proceso.getCodigo()}" ><i class="glyphicon glyphicon-remove"></i></button>
                                                                                             </div>
-
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -661,10 +656,12 @@
                                     Cargar Archivos
                                 </button>
                             </div>
-                            <input class="form-control " id="usuarioProceso" type="hidden" name="usuarioProcesoMod" value="${sessionScope.USUARIO.cedula}">
+                            <input class="form-control " id="usuarioProcesoMod" type="hidden" name="usuarioProcesoMod" value="${sessionScope.USUARIO.cedula}">
+                            <input class="form-control " id="nombreArchivo" type="hidden" name="nombreArchivo">
+                            <input class="form-control " id="rutaArchivo" type="hidden" name="rutaArchivo">
                             <br><br><br><br><br><br><br><br><br><br><br><br>
                             <div class="modal-footer">
-                                <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="guardarProceso()">
+                                <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="modificarProceso()">
                                     Guardar
                                 </button>
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
@@ -904,6 +901,59 @@
                             <div class="modal-footer">
                                 <hr width="0%">
                                 <button type="button" id="Guardar" class="btn btn-primary" onclick="myFunctionReload()">Ok</button>
+                            </div>                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modValidarProcesoCalificacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+
+                    <!-- Modal content-->
+                    <div class="modal-content" id="modales-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Confirmar Cambios</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-row">
+                                <div class="col-md-12">
+                                    <form method="post" name="modConfirmar" id="modConfirmar" action="">
+                                        <div class="modal-body" id="InfoConfirmar">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success" id="btnModificar" onclick="eliminarProceso()">
+                                    Si
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                            </div>                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modValidarArhivoProceso" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <!-- Modal content-->
+                    <div class="modal-content" id="modales-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Confirmar Cambios</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-row">
+                                <div class="col-md-12">
+                                    <form method="post" name="modvalidar" id="modvalidar" action="">
+                                        <div class="modal-body" id="modvalidar">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success" id="btnModificar" onclick="eliminarArchivo()">
+                                    Si
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
                             </div>                           
                         </div>
                     </div>
