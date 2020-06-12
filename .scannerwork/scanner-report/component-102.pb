@@ -1,1 +1,0 @@
-f 2xmlX)hr+src/main/resources/META-INF/persistence.xml

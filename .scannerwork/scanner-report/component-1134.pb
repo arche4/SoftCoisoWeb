@@ -1,1 +1,0 @@
-î 2jsXxhrStarget/SoftCoisoWeb-1.0-SNAPSHOT/lib/file-uploader/js/jquery.fileupload-validate.js

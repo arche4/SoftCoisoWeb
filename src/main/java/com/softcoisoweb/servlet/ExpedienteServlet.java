@@ -6,6 +6,7 @@
 package com.softcoisoweb.servlet;
 
 import com.softcoisoweb.clase.AccionesExpediente;
+import com.softcoisoweb.controller.CalificacionJpaController;
 import com.softcoisoweb.controller.CasoArchivoJpaController;
 import com.softcoisoweb.controller.CasoComentarioJpaController;
 import com.softcoisoweb.controller.CasoPersonaJpaController;
@@ -20,6 +21,7 @@ import com.softcoisoweb.controller.SeguimientoCasoJpaController;
 import com.softcoisoweb.controller.TipoCasoJpaController;
 import com.softcoisoweb.controller.UsuarioJpaController;
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
+import com.softcoisoweb.model.Calificacion;
 import com.softcoisoweb.model.CasoArchivo;
 import com.softcoisoweb.model.CasoComentario;
 import com.softcoisoweb.model.CasoPersona;
@@ -129,6 +131,7 @@ public class ExpedienteServlet extends HttpServlet {
         PersonaJpaController Personajpa = new PersonaJpaController(JPAFactory.getFACTORY());
         ProcesoReclamacionJpaController reclamacionJpa = new ProcesoReclamacionJpaController(JPAFactory.getFACTORY());
         MedicamentosCasoJpaController medicamentoJpa = new MedicamentosCasoJpaController(JPAFactory.getFACTORY());
+        CalificacionJpaController calificacionJpa = new CalificacionJpaController(JPAFactory.getFACTORY());
 
         CasoPersona caso = casojpa.findCasoPersona(codigoCaso);
         HttpSession session = request.getSession();
@@ -142,6 +145,7 @@ public class ExpedienteServlet extends HttpServlet {
             List<ProcesoReclamacion> listReclamacion = reclamacionJpa.reclamacionxExpediente(codigoCaso);
             List<MedicamentosCaso> listMedicamentosCasos = medicamentoJpa.medicamentoXexpediente(codigoCaso);
             List<SeguimientoCaso> listSeguimiento = seguimientoJpa.seguimientoExpediente(codigoCaso);
+            List<Calificacion> listCalificacion = calificacionJpa.calificacionExpediente(codigoCaso);
 
             TipoCaso tipoCaso = tipoCasoJpa.findTipoCaso(caso.getTipoCasoCodigoTipoCaso());
             FlujoCaso flujo = flujoJpa.findFlujoCaso(codigoCaso);
@@ -169,8 +173,8 @@ public class ExpedienteServlet extends HttpServlet {
             session.setAttribute("listProceso", listProceso);
             session.setAttribute("listReclamacion", listReclamacion);
             session.setAttribute("listMedicamentosCasos", listMedicamentosCasos);
-            session.setAttribute("ListSeguimiento", listSeguimiento
-            );
+            session.setAttribute("ListSeguimiento", listSeguimiento);
+            session.setAttribute("listCalificacion", listCalificacion);
 
         } catch (Exception e) {
             System.err.println("Error buscando el expediente  del caso, el error es: " + e);

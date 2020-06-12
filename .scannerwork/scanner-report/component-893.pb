@@ -1,1 +1,0 @@
-ý 2javaXhrNtarget/generated-sources/annotations/com/softcoisoweb/model/Calificacion_.java

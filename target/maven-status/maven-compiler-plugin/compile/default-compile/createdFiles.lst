@@ -4,6 +4,7 @@ com\softcoisoweb\controller\TipoContratoJpaController.class
 com\softcoisoweb\servlet\ActividadesServlet.class
 com\softcoisoweb\util\GeneracionLogsErrores.class
 com\softcoisoweb\servlet\GraficasServlet.class
+com\softcoisoweb\model\CambioEstadoHistorico.class
 com\softcoisoweb\servlet\FormacionServlet.class
 com\softcoisoweb\model\FlujoCaso.class
 com\softcoisoweb\servlet\EpsServlet.class
@@ -18,12 +19,14 @@ com\softcoisoweb\controller\PersonaDireccionJpaController.class
 com\softcoisoweb\model\ProcesoCalificacion.class
 com\softcoisoweb\model\TipoContrato_.class
 com\softcoisoweb\servlet\MedicamentosServlet.class
+com\softcoisoweb\model\TerminosCondiciones.class
 com\softcoisoweb\conexion\Conexion.class
 com\softcoisoweb\model\Medicamentos.class
 com\softcoisoweb\model\Usuario_.class
 com\softcoisoweb\model\CasoArchivo.class
 com\softcoisoweb\servlet\FilterSecurity.class
 com\softcoisoweb\controller\MedicamentosCasoJpaController.class
+com\softcoisoweb\model\TerminosCondiciones_.class
 com\softcoisoweb\model\ProcesoReclamacion.class
 com\softcoisoweb\model\Diagnostico_.class
 com\softcoisoweb\controller\DiagnosticoJpaController.class
@@ -34,6 +37,7 @@ com\softcoisoweb\model\OrganizacionSindical_.class
 com\softcoisoweb\controller\ArlJpaController.class
 com\softcoisoweb\servlet\procesoCalificacionServlet.class
 com\softcoisoweb\clase\EnviarCorreo$1.class
+com\softcoisoweb\controller\TerminosCondicionesJpaController.class
 com\softcoisoweb\model\CasoComentario_.class
 com\softcoisoweb\model\PersonaDireccion.class
 com\softcoisoweb\controller\ActividadesJpaController.class
@@ -45,6 +49,7 @@ com\softcoisoweb\servlet\ArlServlet.class
 com\softcoisoweb\controller\exceptions\PreexistingEntityException.class
 com\softcoisoweb\servicio\rest\restCargarArchivo.class
 com\softcoisoweb\model\EstadoCaso.class
+com\softcoisoweb\model\CambioEstadoHistorico_.class
 com\softcoisoweb\model\Citas_.class
 com\softcoisoweb\servlet\CargarDatosCalendarServlet.class
 com\softcoisoweb\controller\CitasJpaController.class
@@ -70,6 +75,7 @@ com\softcoisoweb\servlet\UsuarioServlet.class
 com\softcoisoweb\model\Eps.class
 com\softcoisoweb\model\FlujoCaso_.class
 com\softcoisoweb\controller\SeguimientoCasoJpaController.class
+com\softcoisoweb\controller\CambioEstadoHistoricoJpaController.class
 com\softcoisoweb\servlet\CalendarServlet.class
 com\softcoisoweb\servlet\CargaArchivoServlet.class
 com\softcoisoweb\controller\EpsJpaController.class
@@ -83,7 +89,6 @@ com\softcoisoweb\model\Persona.class
 com\softcoisoweb\controller\FlujoCasoJpaController.class
 com\softcoisoweb\clase\Expediente.class
 com\softcoisoweb\controller\AfpJpaController.class
-com\softcoisoweb\clase\obtenerFecha.class
 com\softcoisoweb\model\Calificacion.class
 com\softcoisoweb\controller\CasoArchivoJpaController.class
 com\softcoisoweb\model\OrganizacionSindical.class
@@ -103,6 +108,7 @@ com\softcoisoweb\controller\exceptions\NonexistentEntityException.class
 com\softcoisoweb\servlet\perfilServlet.class
 com\softcoisoweb\controller\PersonaJpaController.class
 com\softcoisoweb\servlet\EstadoCasoServlet.class
+com\softcoisoweb\clase\AccionesExpediente.class
 com\softcoisoweb\model\PersonaDireccion_.class
 com\softcoisoweb\controller\CasoPersonaJpaController.class
 com\softcoisoweb\model\Arl.class

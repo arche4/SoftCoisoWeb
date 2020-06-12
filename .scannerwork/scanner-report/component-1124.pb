@@ -1,1 +1,0 @@
-ä 2cssXhrXtarget/SoftCoisoWeb-1.0-SNAPSHOT/lib/file-uploader/css/jquery.fileupload-ui-noscript.css

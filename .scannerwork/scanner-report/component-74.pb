@@ -1,1 +1,0 @@
-J 2javaXèhr9src/main/java/com/softcoisoweb/model/SeguimientoCaso.java

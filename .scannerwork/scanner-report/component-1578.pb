@@ -1,1 +1,0 @@
-ª 2jsX²2hr@target/SoftCoisoWeb-1.0-SNAPSHOT/login/vendor/select2/select2.js

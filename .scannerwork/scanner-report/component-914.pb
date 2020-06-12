@@ -1,1 +1,0 @@
-’ 2javaXhrItarget/generated-sources/annotations/com/softcoisoweb/model/Usuario_.java

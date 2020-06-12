@@ -1,1 +1,0 @@
-œ 2cssX#hrBsrc/main/webapp/login/fonts/font-awesome-4.7.0/scss/_animated.scss

@@ -12,6 +12,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,22 +21,24 @@ import java.util.Date;
  */
 public class AccionesExpediente {
 
+    private final static Logger LOGGER = Logger.getLogger("LogsErrores");
+
     public void guardarAccionesExpediente(String casoId, String usuarioCedula, String accion) {
         FlujoCasoJpaController flujoJpa = new FlujoCasoJpaController(JPAFactory.getFACTORY());
         SeguimientoCasoJpaController seguimientoJpa = new SeguimientoCasoJpaController(JPAFactory.getFACTORY());
 
-        String fechaActual = ObtenerFecha();
+        String fechaActual = getFecha();
         try {
             String nombreUsuario = getUsuarioSession(usuarioCedula);
             SeguimientoCaso seguimiento = new SeguimientoCaso(casoId, accion, usuarioCedula, nombreUsuario, fechaActual);
             seguimientoJpa.create(seguimiento);
-        } catch (Exception e) {
-            System.err.println("Se presento un error agreando actividad del expediente: " + casoId + " El Error es: " + e);
+        } catch (SecurityException e) {
+            LOGGER.log(Level.SEVERE, "Se presento un error agreando actividad del expediente::  {0} El error es: {1}", new Object[]{casoId, e});
         }
         try {
             flujoJpa.actualizarFechaFlujoCaso(casoId, fechaActual, usuarioCedula);
         } catch (NonexistentEntityException e) {
-            System.err.println("Se presento un error agreando actividad del expediente: " + casoId + " El Error es: " + e);
+            LOGGER.log(Level.SEVERE, "Se presento un error agreando actividad del expediente:  {0} El error es: {1}", new Object[]{casoId, e});
 
         }
     }
@@ -47,14 +51,16 @@ public class AccionesExpediente {
             Usuario usuario = usuarioJpa.findUsuario(cedula);
             nombreUsuario = usuario.getNombreUsuario() + " " + usuario.getApellidoUsuario();
         } catch (Exception e) {
-            System.err.println("Se presento un error buscando el usuario en sesion,  El Error es: " + e);
+            LOGGER.log(Level.SEVERE, "Se presento un error buscando el usuario en sesion,  El Error es:  {0}", new Object[]{e});
         }
 
         return nombreUsuario;
     }
 
-    public String ObtenerFecha() {
-        String fecha, fechaResultado = null;
+    public String getFecha() {
+        String fecha;
+        String fechaResultado = null;
+
         try {
             String fechaActual = obtenerFechaActual();
             String horaActual = obtenerHoraActual();
@@ -64,7 +70,7 @@ public class AccionesExpediente {
             fecha = formatterFecha2.format(date);
             fechaResultado = fecha + " " + horaActual;
         } catch (ParseException e) {
-            System.err.println("Error obteniendo la fechaa actual, El error es:" + e);
+            LOGGER.log(Level.SEVERE, "Error obteniendo la fechaa actual, El error es:  {0}", new Object[]{e});
 
         }
         return fechaResultado;
@@ -72,12 +78,12 @@ public class AccionesExpediente {
     }
 
     private String obtenerFechaActual() {
-        final Calendar capturar_fecha = Calendar.getInstance();
-        return Integer.toString(capturar_fecha.get(Calendar.YEAR)) + agregarCerosIzquierda(Integer.toString((capturar_fecha.get(Calendar.MONTH)) + 1)) + agregarCerosIzquierda(Integer.toString(capturar_fecha.get(Calendar.DATE)));
+        final Calendar capturarFecha = Calendar.getInstance();
+        return Integer.toString(capturarFecha.get(Calendar.YEAR)) + agregarCerosIzquierda(Integer.toString((capturarFecha.get(Calendar.MONTH)) + 1)) + agregarCerosIzquierda(Integer.toString(capturarFecha.get(Calendar.DATE)));
     }
 
     private String agregarCerosIzquierda(final String diames) {
-        final StringBuffer retorno = new StringBuffer();
+        final StringBuilder  retorno = new StringBuilder ();
         if (Integer.parseInt(diames) < 10) {
             final String add = "0" + diames;
             retorno.append(add);

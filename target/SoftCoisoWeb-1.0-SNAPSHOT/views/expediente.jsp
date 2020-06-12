@@ -159,6 +159,7 @@
                                                 <button class="btn btn-sm btn-theme" data-toggle="modal" data-target="#cambiarEstado" type="button">Cambiar Estado</button>
                                                 <button class="btn btn-sm btn-theme"  data-toggle="modal" data-target="#CambiarUsuario" type="button">Asignar Usuario</button>
                                                 <a href="${pageContext.servletContext.contextPath}/views/calendar.jsp" class="btn btn-sm btn-theme"  type="button">Citar</a>
+                                                <button type="button" class="btn btn-sm btn-theme" data-toggle="modal" data-target="#cargarArchivos">Cargar</button>
                                             </div>
                                         </div>
                                     </div>
@@ -311,7 +312,7 @@
                                                                         <div class="file-upload-indicator" title="No subido todavÃ&shy;a"><i class="glyphicon glyphicon-plus-sign text-warning"></i></div>
                                                                         <div class="file-actions">
                                                                             <div class="file-footer-buttons">
-                                                                                <button type="button" id ="btnConsultarArchivo" name="btnConsultarArchivo"  value="${archivo.getCodigo()}" ><i class="glyphicon glyphicon-zoom-in"></i></button></div>
+                                                                                <button type="button" id ="btnConsultarArchivo" name="btnConsultarArchivo"  value="${archivo.getCodigo()}" ><em class="glyphicon glyphicon-zoom-in"></em></button></div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -363,22 +364,62 @@
                                         <div id="Calificacion" class="tab-pane">
                                             <div class="row">
                                                 <div class="col-lg-12">
-                                                    <div class="room-desk">
-                                                        <h4 class="pull-left">Proceso de calificación </h4>
-                                                        <button class="pull-right btn btn-theme02" data-toggle="modal" data-target="#agregarProcesoCalificacion" type="button">+ Agregar Proceso de Calificacion</button>
-                                                        <c:forEach var="proceso" items="${sessionScope.listProceso}" varStatus="myIndex">
-                                                            <div class="room-box">
-                                                                <h5 class="text-primary"><a href="chat_room.html">${proceso.getProceso()}</a></h5>
-                                                                <div class="pull-right hidden-phone">
-                                                                    <button type="button" id ="btnConsultarCometario" name="btnConsultarCometario"  value="${comentario.getCodigo()}" class="btn btn-primary btn-xs fa fa-pencil"></button>
-                                                                    <button type="button" id="btnEliminarComentario" name="btnEliminarComentario" value="${comentario.getCodigo()}" class="btn btn-danger btn-xs fa fa-trash-o"></button>
-                                                                </div>
-                                                                <p>${proceso.getComentario()}</p>
-                                                                <p><span class="text-muted">Creado :</span> ${proceso.getFechaCreacion()} | <span class="text-muted">Ultima Actualización :</span> ${proceso.getFechaActualizada()} | <span class="text-muted">Creado por :</span> 2 min ago</p>
-                                                                <div class="pull-right hidden-phone"> 
-                                                                </div>
+                                                    <div class="chat-room mt">
+                                                        <aside class="mid-side">
+                                                            <div class="room-desk">
+                                                                <h4 class="pull-left">Proceso de calificación </h4>
+                                                                <button class="pull-right btn btn-theme02" data-toggle="modal" data-target="#agregarProcesoCalificacion" type="button">+ Agregar Proceso de Calificacion</button>
+                                                                <c:forEach var="proceso" items="${sessionScope.listProceso}" varStatus="myIndex">
+                                                                    <div class="room-box">
+                                                                        <h5 class="text-primary"><a href="chat_room.html">${proceso.getProceso()}</a></h5>
+                                                                        <div class="pull-right hidden-phone">
+                                                                            <button type="button" id ="btnConsultarCometario" name="btnConsultarCometario"  value="${comentario.getCodigo()}" class="btn btn-primary btn-xs fa fa-pencil"></button>
+                                                                            <button type="button" id="btnEliminarComentario" name="btnEliminarComentario" value="${comentario.getCodigo()}" class="btn btn-danger btn-xs fa fa-trash-o"></button>
+                                                                        </div>
+                                                                        <p>${proceso.getComentario()}</p>
+                                                                        <p><span class="text-muted">Creado :</span> ${proceso.getFechaCreacion()} | <span class="text-muted">Ultima Actualización :</span> ${proceso.getFechaActualizada()} | <span class="text-muted">Creado por :</span> 2 min ago</p>
+                                                                        <div class="pull-right hidden-phone"> 
+                                                                        </div>
+                                                                    </div>
+                                                                </c:forEach>
                                                             </div>
-                                                        </c:forEach>
+                                                        </aside>
+                                                        <aside class="right-side">
+                                                            <c:forEach var="calificacion" items="${sessionScope.listCalificacion()}" varStatus="myIndex">
+                                                                <div class="invite-row">
+                                                                    <h4 class="pull-left">Calificación</h4>
+                                                                    <c:choose>
+                                                                        <c:when test="${!empty calificacion.getCodigo()}"> 
+                                                                            <a href="#" class="btn btn-theme04 pull-right">+ calificacion</a>
+                                                                        </c:when> 
+                                                                        <c:otherwise>
+                                                                            <button  id ="editCalificacion"  name="editCalificacion"  class="btn btn-theme04 pull-righ" value="${calificacion.getCodigo()}">
+                                                                                Editar Calificacion</button>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                </div>
+                                                                <div class="servicetitle">
+                                                                    <h4>Porcentaje de Calificacion</h4>
+                                                                    <hr>
+                                                                </div>
+                                                                <div class="icn-main-container">
+                                                                    <center>
+                                                                        <span class="icn-container">${calificacion.getPorcentaje()}%</span>
+                                                                    </center>
+                                                                </div>
+                                                                <center>
+                                                                    <p>${calificacion.getComentario()}.</p>
+                                                                </center>
+                                                                <ul class="pricing">
+                                                                    <li>1 Domain</li>
+                                                                    <li>2 Sub Domains</li>
+                                                                    <li>3 MySQL DBs</li>
+                                                                    <li>2 Emails</li>
+                                                                    <li>WordPress Installation</li>
+                                                                    <li>24/7 Support</li>
+                                                                </ul>
+                                                            </c:forEach>
+                                                        </aside>
                                                     </div>
                                                     <h4 class="pull-left">Archivos</h4>
                                                     <div class="room-desk">
@@ -417,7 +458,7 @@
                                         </div>
                                         <div id="reclamacion" class="tab-pane">
                                             <div class="row">
-                                                 <div class="room-desk">
+                                                <div class="room-desk">
                                                     <h4 class="pull-left">Reclamacion </h4>
                                                     <button class="pull-right btn btn-theme02" data-toggle="modal" data-target="#agregarProcesoCalificacion" type="button">+ Agregar Proceso de Calificacion</button>
                                                     <div class="mt"></div>

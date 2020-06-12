@@ -1,1 +1,0 @@
-ò 2jsXLhr=target/SoftCoisoWeb-1.0-SNAPSHOT/lib/file-uploader/js/main.js

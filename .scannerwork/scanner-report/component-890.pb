@@ -1,1 +1,0 @@
-ú 2javaXhrMtarget/generated-sources/annotations/com/softcoisoweb/model/Actividades_.java

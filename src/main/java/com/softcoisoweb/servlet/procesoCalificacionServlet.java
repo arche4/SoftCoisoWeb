@@ -90,7 +90,7 @@ public class procesoCalificacionServlet extends HttpServlet {
         String casoIdProceso = request.getParameter("casoIdProceso");
         try {
 
-            String fechaActual = accionesExpediente.ObtenerFecha();
+            String fechaActual = accionesExpediente.getFecha();
 
             Usuario usuario = usuarioJpa.findUsuario(usuarioProceso);
             String nombreUsuario = usuario.getNombreUsuario() + " " + usuario.getApellidoUsuario();
@@ -132,7 +132,7 @@ public class procesoCalificacionServlet extends HttpServlet {
         String rutaArchivo = request.getParameter("rutaArchivoProceso");
 
         try {
-            String fechaActual = accionesExpediente.ObtenerFecha();
+            String fechaActual = accionesExpediente.getFecha();
             String nombreUsuario = accionesExpediente.getUsuarioSession(usuario);
 
             ProcesoCalificacion procesoCreate;
@@ -196,7 +196,7 @@ public class procesoCalificacionServlet extends HttpServlet {
         ProcesoCalificacionJpaController procesoJpa = new ProcesoCalificacionJpaController(JPAFactory.getFACTORY());
         try {
 
-            String fechaActual = accionesExpediente.ObtenerFecha();
+            String fechaActual = accionesExpediente.getFecha();
             Usuario usuario = usuarioJpa.findUsuario(usuarioProceso);
             String nombreUsuario = usuario.getNombreUsuario() + " " + usuario.getApellidoUsuario();
 
@@ -219,7 +219,7 @@ public class procesoCalificacionServlet extends HttpServlet {
 
         try {
 
-            String fechaActual = accionesExpediente.ObtenerFecha();
+            String fechaActual = accionesExpediente.getFecha();
             ProcesoCalificacion getProceso = procesoJpa.findProcesoCalificacion(Integer.parseInt(codigoProceso));
             ProcesoCalificacion procesoCreate = new ProcesoCalificacion(Integer.parseInt(codigoProceso), getProceso.getProceso(), getProceso.getComentario(), "",
                     "", getProceso.getUsuarioCedula(), getProceso.getNombreUsuario(), getProceso.getCasoPersonaIdCaso(), getProceso.getFechaCreacion(), fechaActual);

@@ -155,7 +155,7 @@ public class CasoServlet extends HttpServlet {
                 respuesta = "Error";
             }
         } catch (NumberFormatException e) {
-            System.out.println("Error creando el caso, el error es: " + e);
+            LOGGER.log(Level.SEVERE, "Error creando el caso, el error es  {0}", new Object[]{e});
             respuesta = "Error";
         }
 
@@ -170,7 +170,7 @@ public class CasoServlet extends HttpServlet {
         AccionesExpediente accionesExpediente = new AccionesExpediente();
         SeguimientoCaso gestionCaso;
         try {
-            String fechaActual = accionesExpediente.ObtenerFecha();
+            String fechaActual = accionesExpediente.getFecha();
             String nombreUsuario = accionesExpediente.getUsuarioSession(usuario);
             if (operacion.equals("Crear")) {
                 FlujoCaso flujoCaso = new FlujoCaso(fechaActual, fechaActual, casoId, usuario, estadoCaso);
@@ -184,7 +184,7 @@ public class CasoServlet extends HttpServlet {
             gestionCasoJpa.create(gestionCaso);
             respuesta = "Exitoso";
         } catch (Exception e) {
-            System.out.println("Error creando el caso, el error es: " + e);
+            LOGGER.log(Level.SEVERE, "Error creando el caso, el error es  {0}", new Object[]{e});
             respuesta = "Error";
         }
 
@@ -201,7 +201,7 @@ public class CasoServlet extends HttpServlet {
                     + "#" + caso.getTimepoIncapacidad() + "#" + caso.getDescripcionCaso() + "#" + caso.getCreadoPor()
                     + "#" + caso.getAsignado() + "#" + caso.getPersonaCedula();
         } catch (Exception e) {
-            System.out.println("Error consultado el caso, el error es: " + e);
+            LOGGER.log(Level.SEVERE, "Error consultado el caso, el error es  {0}", new Object[]{e});
             respuesta = "Error";
         }
         return respuesta;

@@ -1,1 +1,0 @@
-Å	 2jsX!hrOtarget/SoftCoisoWeb-1.0-SNAPSHOT/lib/fullcalendar/packages/bundle/locales/ru.js

@@ -1,1 +1,0 @@
-d 2javaXhr>src/main/java/com/softcoisoweb/util/GeneracionLogsErrores.java

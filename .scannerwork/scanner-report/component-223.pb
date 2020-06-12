@@ -1,1 +1,0 @@
-ß 2jsXlhr?src/main/webapp/lib/bootstrap-fileinput-master/js/locales/he.js

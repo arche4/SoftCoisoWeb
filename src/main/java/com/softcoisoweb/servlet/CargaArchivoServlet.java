@@ -6,9 +6,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,12 +26,16 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 public class CargaArchivoServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
+    private final Random rand;
+    private final static Logger LOGGER = Logger.getLogger("LogsErrores");
 
     /**
+     * @throws java.security.NoSuchAlgorithmException
      * @see HttpServlet#HttpServlet()
      */
-    public CargaArchivoServlet() {
+    public CargaArchivoServlet() throws NoSuchAlgorithmException {
         super();
+        this.rand = SecureRandom.getInstanceStrong();
     }
 
     /**
@@ -63,8 +71,7 @@ public class CargaArchivoServlet extends HttpServlet {
 
                 for (FileItem item : multiparts) {
                     if (!item.isFormField()) {
-                        Random rand = new Random();
-                        int randomInt = 1 + rand.nextInt();
+                        int randomInt = this.rand.nextInt();
 
                         File tempDir = new File(baseTempPath + File.separator + "tempDir" + randomInt);
                         if (tempDir.exists() == false) {
@@ -77,7 +84,7 @@ public class CargaArchivoServlet extends HttpServlet {
                     }
                 }
             } catch (Exception e) {
-                System.out.println("Error cargando el archivo, El error es" + e);
+                LOGGER.log(Level.SEVERE, "SError cargando el archivo, El error es:  {0}", new Object[]{e});
                 resultado = "Error";
             }
 

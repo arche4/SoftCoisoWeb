@@ -7,15 +7,18 @@ C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoi
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\model\ProcesoReclamacion.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\FormacionServlet.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\PersonaDireccionJpaController.java
+C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\model\CambioEstadoHistorico.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\GraficasServlet.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\ReclamacionServlet.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\conexion\Conexion.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\AfpServlet.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\model\Afp.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\servicio\rest\restCargarArchivo.java
+C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\CambioEstadoHistoricoJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\model\FlujoCaso.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\clase\Expediente.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\PersonaServlet.java
+C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\TerminosCondicionesJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\exceptions\IllegalOrphanException.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\FormacionJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\model\Usuario.java
@@ -38,7 +41,6 @@ C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoi
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\model\CasoPersona.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\ActividadesJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\model\TipoContrato.java
-C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\clase\obtenerFecha.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\GrupoSindicatoServlet.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\procesoCalificacionServlet.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\ServletLogin.java
@@ -53,6 +55,7 @@ C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoi
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\conexion\OperacionesBD.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\exceptions\NonexistentEntityException.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\model\Calificacion.java
+C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\clase\AccionesExpediente.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\UsuarioJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\model\Eps.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\util\JPAFactory.java
@@ -69,6 +72,7 @@ C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoi
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\model\Diagnostico.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\clase\EnviarCorreo.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\CalificacionJpaController.java
+C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\model\TerminosCondiciones.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\TipoContratoServlet.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\model\Arl.java
 C:\Users\manue\Documents\NetBeansProjects\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\ActividadesServlet.java

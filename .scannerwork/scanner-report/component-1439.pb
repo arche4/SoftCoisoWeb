@@ -1,1 +1,0 @@
-Ÿ 2jsXáhr@target/SoftCoisoWeb-1.0-SNAPSHOT/lib/jquery.dcjqaccordion.2.7.js

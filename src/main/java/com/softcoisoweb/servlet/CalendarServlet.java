@@ -17,6 +17,8 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.mail.MessagingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -31,6 +33,7 @@ import javax.servlet.http.HttpSession;
  */
 public class CalendarServlet extends HttpServlet {
 
+    private final static Logger LOGGER = Logger.getLogger("LogsErrores");
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -93,7 +96,7 @@ public class CalendarServlet extends HttpServlet {
             enviarCorreo(ano, mes, dia, horaIni, horaFin, asuntoCorreo, descripcion, comentario, emailPersona, emailUsuario);
             respuesta = "Exitoso";
         } catch (NumberFormatException e) {
-            System.out.println("Error creando una cita, el error es: " + e);
+            LOGGER.log(Level.SEVERE, "Error creando una cita, el error es:  {0}", new Object[]{e});
         }
         return respuesta;
     }
@@ -124,7 +127,7 @@ public class CalendarServlet extends HttpServlet {
                     + "," + cita.getUsuario();
 
         } catch (Exception e) {
-            System.out.println("Error buscando una cita, el error es: " + e);
+            LOGGER.log(Level.SEVERE, "Error buscando una cita, el error es:  {0}", new Object[]{e});
         }
         return respuesta;
     }
@@ -171,7 +174,7 @@ public class CalendarServlet extends HttpServlet {
             }
             respuesta = "Exitoso";
         } catch (Exception e) {
-            System.out.println("Error modificando una cita, el error es: " + e);
+            LOGGER.log(Level.SEVERE, "Error modificando una cita, el error es:  {0}", new Object[]{e});
             respuesta = "Error";
         }
 
@@ -179,14 +182,14 @@ public class CalendarServlet extends HttpServlet {
     }
 
     public String eliminarCita(HttpServletRequest request, HttpServletResponse response) {
-        String resultado = "Error";
+        String resultado;
         CitasJpaController jpaCita = new CitasJpaController(JPAFactory.getFACTORY());
         String codigoCita = request.getParameter("codigoCita");
         try {
             jpaCita.destroy(Integer.parseInt(codigoCita));
             resultado = "Exitoso";
         } catch (NonexistentEntityException e) {
-            System.out.println("Se presento un erro eliminando la cita: " + e);
+            LOGGER.log(Level.SEVERE, "Se presento un erro eliminando la cita:  {0}", new Object[]{e});
             resultado = "Error";
         }
         return resultado;
@@ -264,9 +267,9 @@ public class CalendarServlet extends HttpServlet {
             contenidoMensaje.append("</tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table>");
             contenidoMensaje.append("</body></html>");
 
-            enviarCorreo.EnviarCorreo(correos, asuntoCorreo, contenidoMensaje);
+            enviarCorreo.enviarCorreo(correos, asuntoCorreo, contenidoMensaje);
         } catch (MessagingException ex) {
-            System.out.println("Error enviando el correo: " + ex);
+            LOGGER.log(Level.SEVERE, "Error enviando el correo:  {0}", new Object[]{ex});
         }
 
     }

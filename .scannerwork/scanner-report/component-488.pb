@@ -1,1 +1,0 @@
-è 2jsX!hr<src/main/webapp/lib/fullcalendar/packages/core/locales/sq.js

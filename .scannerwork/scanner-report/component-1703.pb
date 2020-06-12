@@ -1,1 +1,0 @@
-§ 2xmlX)hrItarget/SoftCoisoWeb-1.0-SNAPSHOT/WEB-INF/classes/META-INF/persistence.xml

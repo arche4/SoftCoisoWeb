@@ -1,1 +1,0 @@
-; 2javaXÌhr5src/main/java/com/softcoisoweb/model/CasoPersona.java

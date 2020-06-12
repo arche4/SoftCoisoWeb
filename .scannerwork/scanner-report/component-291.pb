@@ -1,1 +1,0 @@
-£ 2jsX±Jhr:src/main/webapp/lib/bootstrap-wysihtml5/wysihtml5-0.3.0.js

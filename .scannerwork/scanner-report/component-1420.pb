@@ -1,1 +1,0 @@
-Œ 2cssXhrTtarget/SoftCoisoWeb-1.0-SNAPSHOT/lib/jquery-easy-pie-chart/jquery.easy-pie-chart.css

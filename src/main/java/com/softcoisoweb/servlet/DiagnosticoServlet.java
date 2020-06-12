@@ -77,7 +77,7 @@ public class DiagnosticoServlet extends HttpServlet {
 
         try {
 
-            String fechaActual = accionesExpediente.ObtenerFecha();
+            String fechaActual = accionesExpediente.getFecha();
             String nombreUsuario = accionesExpediente.getUsuarioSession(usuario);
             Diagnostico diagnosticoCreate = new Diagnostico(diagnostico, fechaDiagnostico, comentario,
                     casoid, usuario, nombreUsuario, nombreArchivoDiagnostico, rutaArchivoDiagnostico, fechaActual);
@@ -123,7 +123,7 @@ public class DiagnosticoServlet extends HttpServlet {
         String accion = "Se modifica el diagnostico al expediente";
         try {
 
-            String fechaActual = accionesExpediente.ObtenerFecha();
+            String fechaActual = accionesExpediente.getFecha();
             String nombreUsuario = accionesExpediente.getUsuarioSession(usuario);
 
             Diagnostico getDiagnostico = diagnosticoJpa.findDiagnostico(Integer.parseInt(codigo));

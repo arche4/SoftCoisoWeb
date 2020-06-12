@@ -1,1 +1,0 @@
-× 2jsX„hr4target/SoftCoisoWeb-1.0-SNAPSHOT/lib/chartjs-conf.js

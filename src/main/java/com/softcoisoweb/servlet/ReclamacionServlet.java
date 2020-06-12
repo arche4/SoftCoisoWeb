@@ -76,7 +76,7 @@ public class ReclamacionServlet extends HttpServlet {
         String accion = "Se agregar un proceso de reclamación al expediente";
         try {
             String nombreUsuario = accionesExpediente.getUsuarioSession(usuario);
-            String fechaActual = accionesExpediente.ObtenerFecha();
+            String fechaActual = accionesExpediente.getFecha();
             ProcesoReclamacion reclamacionCreate = new ProcesoReclamacion(comentarioReclamacion, nombreArchivoReclamacion, rutaArchivoReclamacion,
                     casoid, usuario, nombreUsuario, fechaActual, fechaActual);
             reclamacionJpa.create(reclamacionCreate);
@@ -116,7 +116,7 @@ public class ReclamacionServlet extends HttpServlet {
         String accion = "Se modifica el proceso de reclamación" + codigo + " al expediente";
         try {
             String nombreUsuario = accionesExpediente.getUsuarioSession(usuario);
-            String fechaActual = accionesExpediente.ObtenerFecha();
+            String fechaActual = accionesExpediente.getFecha();
             ProcesoReclamacion getReclamacion = reclamacionJpa.findProcesoReclamacion(Integer.parseInt(codigo));
             ProcesoReclamacion reclamacionCreate;
             if (!rutaArchivo.equals("")) {

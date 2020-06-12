@@ -1,1 +1,0 @@
-@ 2javaXohr4src/main/java/com/softcoisoweb/model/EstadoCaso.java

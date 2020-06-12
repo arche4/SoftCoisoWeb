@@ -1,6 +1,0 @@
-projectKey=SofCoiso
-serverUrl=http://localhost:9000
-serverVersion=8.3.1.34397
-dashboardUrl=http://localhost:9000/dashboard?id=SofCoiso
-ceTaskId=AXKBPx9fYuWybchI5O1l
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AXKBPx9fYuWybchI5O1l
