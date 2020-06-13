@@ -135,4 +135,20 @@ public class MedicamentosCasoJpaController implements Serializable {
         }
     }
     
+     public List<MedicamentosCaso> medicamentoXexpediente(String codigoCaso) {
+        EntityManager em = null;
+        List<MedicamentosCaso> listmedicamentoXexpediente = null;
+        try {
+            String QuerySelect = "select * from medicamentos_caso where caso_persona_id_caso   =  '" + codigoCaso + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            listmedicamentoXexpediente = em.createNativeQuery(QuerySelect, MedicamentosCaso.class).getResultList();
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return listmedicamentoXexpediente;
+    }
 }

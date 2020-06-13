@@ -111,7 +111,7 @@ public class MedicamentosJpaController implements Serializable {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             cq.select(cq.from(Medicamentos.class));
             Query q = em.createQuery(cq);
-            q.setHint("javax.persistence.cache.storeMode", CacheStoreMode.REFRESH);
+             q.setHint("javax.persistence.cache.storeMode", CacheStoreMode.REFRESH);
             if (!all) {
                 q.setMaxResults(maxResults);
                 q.setFirstResult(firstResult);
@@ -143,7 +143,6 @@ public class MedicamentosJpaController implements Serializable {
             em.close();
         }
     }
-    
     public List<MedicamentosCaso> medicamentoxCaso(String codigoMed) {
         EntityManager em = null;
         List<MedicamentosCaso> listMedxCaso = null;

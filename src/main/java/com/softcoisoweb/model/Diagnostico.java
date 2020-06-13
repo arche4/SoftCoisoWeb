@@ -28,10 +28,14 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Diagnostico.findAll", query = "SELECT d FROM Diagnostico d"),
     @NamedQuery(name = "Diagnostico.findByCodigoDiagnostico", query = "SELECT d FROM Diagnostico d WHERE d.codigoDiagnostico = :codigoDiagnostico"),
     @NamedQuery(name = "Diagnostico.findByDiagnostico", query = "SELECT d FROM Diagnostico d WHERE d.diagnostico = :diagnostico"),
-    @NamedQuery(name = "Diagnostico.findByFecha", query = "SELECT d FROM Diagnostico d WHERE d.fecha = :fecha"),
+    @NamedQuery(name = "Diagnostico.findByFechaDiagnostico", query = "SELECT d FROM Diagnostico d WHERE d.fechaDiagnostico = :fechaDiagnostico"),
+    @NamedQuery(name = "Diagnostico.findByComentario", query = "SELECT d FROM Diagnostico d WHERE d.comentario = :comentario"),
     @NamedQuery(name = "Diagnostico.findByIdCaso", query = "SELECT d FROM Diagnostico d WHERE d.idCaso = :idCaso"),
     @NamedQuery(name = "Diagnostico.findByUsuarioCedula", query = "SELECT d FROM Diagnostico d WHERE d.usuarioCedula = :usuarioCedula"),
-    @NamedQuery(name = "Diagnostico.findByArchivos", query = "SELECT d FROM Diagnostico d WHERE d.archivos = :archivos")})
+    @NamedQuery(name = "Diagnostico.findByNombreUsuario", query = "SELECT d FROM Diagnostico d WHERE d.nombreUsuario = :nombreUsuario"),
+    @NamedQuery(name = "Diagnostico.findByNombreArchivo", query = "SELECT d FROM Diagnostico d WHERE d.nombreArchivo = :nombreArchivo"),
+    @NamedQuery(name = "Diagnostico.findByRutaArchivo", query = "SELECT d FROM Diagnostico d WHERE d.rutaArchivo = :rutaArchivo"),
+    @NamedQuery(name = "Diagnostico.findByFechaCreacion", query = "SELECT d FROM Diagnostico d WHERE d.fechaCreacion = :fechaCreacion")})
 public class Diagnostico implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,14 +44,19 @@ public class Diagnostico implements Serializable {
     @Basic(optional = false)
     @Column(name = "codigo_diagnostico")
     private Integer codigoDiagnostico;
-    @Size(max = 250)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 250)
     @Column(name = "diagnostico")
     private String diagnostico;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 15)
-    @Column(name = "fecha")
-    private String fecha;
+    @Column(name = "fecha_diagnostico")
+    private String fechaDiagnostico;
+    @Size(max = 500)
+    @Column(name = "comentario")
+    private String comentario;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 15)
@@ -58,9 +67,18 @@ public class Diagnostico implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "usuario_cedula")
     private String usuarioCedula;
+    @Size(max = 45)
+    @Column(name = "nombre_usuario")
+    private String nombreUsuario;
+    @Size(max = 45)
+    @Column(name = "nombre_archivo")
+    private String nombreArchivo;
     @Size(max = 250)
-    @Column(name = "archivos")
-    private String archivos;
+    @Column(name = "ruta_archivo")
+    private String rutaArchivo;
+    @Size(max = 45)
+    @Column(name = "fecha_creacion")
+    private String fechaCreacion;
 
     public Diagnostico() {
     }
@@ -69,13 +87,40 @@ public class Diagnostico implements Serializable {
         this.codigoDiagnostico = codigoDiagnostico;
     }
 
-    public Diagnostico(Integer codigoDiagnostico, String fecha, String idCaso, String usuarioCedula) {
+    public Diagnostico(Integer codigoDiagnostico, String diagnostico, String fechaDiagnostico, String idCaso, String usuarioCedula) {
         this.codigoDiagnostico = codigoDiagnostico;
-        this.fecha = fecha;
+        this.diagnostico = diagnostico;
+        this.fechaDiagnostico = fechaDiagnostico;
         this.idCaso = idCaso;
         this.usuarioCedula = usuarioCedula;
     }
 
+    public Diagnostico(Integer codigoDiagnostico, String diagnostico, String fechaDiagnostico, String comentario, String idCaso, String usuarioCedula, String nombreUsuario, String nombreArchivo, String rutaArchivo, String fechaCreacion) {
+        this.codigoDiagnostico = codigoDiagnostico;
+        this.diagnostico = diagnostico;
+        this.fechaDiagnostico = fechaDiagnostico;
+        this.comentario = comentario;
+        this.idCaso = idCaso;
+        this.usuarioCedula = usuarioCedula;
+        this.nombreUsuario = nombreUsuario;
+        this.nombreArchivo = nombreArchivo;
+        this.rutaArchivo = rutaArchivo;
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public Diagnostico(String diagnostico, String fechaDiagnostico, String comentario, String idCaso, String usuarioCedula, String nombreUsuario, String nombreArchivo, String rutaArchivo, String fechaCreacion) {
+        this.diagnostico = diagnostico;
+        this.fechaDiagnostico = fechaDiagnostico;
+        this.comentario = comentario;
+        this.idCaso = idCaso;
+        this.usuarioCedula = usuarioCedula;
+        this.nombreUsuario = nombreUsuario;
+        this.nombreArchivo = nombreArchivo;
+        this.rutaArchivo = rutaArchivo;
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    
     public Integer getCodigoDiagnostico() {
         return codigoDiagnostico;
     }
@@ -92,12 +137,20 @@ public class Diagnostico implements Serializable {
         this.diagnostico = diagnostico;
     }
 
-    public String getFecha() {
-        return fecha;
+    public String getFechaDiagnostico() {
+        return fechaDiagnostico;
     }
 
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
+    public void setFechaDiagnostico(String fechaDiagnostico) {
+        this.fechaDiagnostico = fechaDiagnostico;
+    }
+
+    public String getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
     }
 
     public String getIdCaso() {
@@ -116,12 +169,36 @@ public class Diagnostico implements Serializable {
         this.usuarioCedula = usuarioCedula;
     }
 
-    public String getArchivos() {
-        return archivos;
+    public String getNombreUsuario() {
+        return nombreUsuario;
     }
 
-    public void setArchivos(String archivos) {
-        this.archivos = archivos;
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    public String getNombreArchivo() {
+        return nombreArchivo;
+    }
+
+    public void setNombreArchivo(String nombreArchivo) {
+        this.nombreArchivo = nombreArchivo;
+    }
+
+    public String getRutaArchivo() {
+        return rutaArchivo;
+    }
+
+    public void setRutaArchivo(String rutaArchivo) {
+        this.rutaArchivo = rutaArchivo;
+    }
+
+    public String getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(String fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
     @Override

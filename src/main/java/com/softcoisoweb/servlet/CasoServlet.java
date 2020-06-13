@@ -5,6 +5,7 @@
  */
 package com.softcoisoweb.servlet;
 
+import com.softcoisoweb.clase.AccionesExpediente;
 import com.softcoisoweb.controller.CasoPersonaJpaController;
 import com.softcoisoweb.controller.EstadoCasoJpaController;
 import com.softcoisoweb.controller.FlujoCasoJpaController;
@@ -22,9 +23,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Time;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
@@ -156,7 +155,7 @@ public class CasoServlet extends HttpServlet {
                 respuesta = "Error";
             }
         } catch (NumberFormatException e) {
-            System.out.println("Error creando el caso, el error es: " + e);
+            LOGGER.log(Level.SEVERE, "Error creando el caso, el error es  {0}", new Object[]{e});
             respuesta = "Error";
         }
 
@@ -166,31 +165,26 @@ public class CasoServlet extends HttpServlet {
     private String gestionCaso(String operacion, String casoId, String usuario, String estado, String fechaCracion) {
         String respuesta;
         String estadoCaso = "101";
-        String fecha_Actual, fecha;
         FlujoCasoJpaController flujoJpa = new FlujoCasoJpaController(JPAFactory.getFACTORY());
         SeguimientoCasoJpaController gestionCasoJpa = new SeguimientoCasoJpaController(JPAFactory.getFACTORY());
+        AccionesExpediente accionesExpediente = new AccionesExpediente();
         SeguimientoCaso gestionCaso;
         try {
-            String fechaActual = obtenerFechaActual();
-            String horaActual = obtenerHoraActual();
-            SimpleDateFormat formatterFecha = new SimpleDateFormat("yyyyMMdd");
-            SimpleDateFormat formatterFecha2 = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = formatterFecha.parse(fechaActual);
-            fecha = formatterFecha2.format(date);
-            fecha_Actual = fecha + " " + horaActual;
+            String fechaActual = accionesExpediente.getFecha();
+            String nombreUsuario = accionesExpediente.getUsuarioSession(usuario);
             if (operacion.equals("Crear")) {
-                FlujoCaso flujoCaso = new FlujoCaso(fecha_Actual, fecha_Actual, casoId, usuario, estadoCaso);
+                FlujoCaso flujoCaso = new FlujoCaso(fechaActual, fechaActual, casoId, usuario, estadoCaso);
                 flujoJpa.create(flujoCaso);
-                gestionCaso = new SeguimientoCaso(casoId, estadoCaso, usuario, fechaActual);
+                gestionCaso = new SeguimientoCaso(casoId, "Se crea el caso", usuario, nombreUsuario, fechaActual);
             } else {
-                FlujoCaso flujoCaso = new FlujoCaso(fechaCracion, fecha_Actual, casoId, usuario, estado);
+                FlujoCaso flujoCaso = new FlujoCaso(fechaCracion, fechaActual, casoId, usuario, estado);
                 flujoJpa.edit(flujoCaso);
-                gestionCaso = new SeguimientoCaso(casoId, estadoCaso, usuario, fechaActual);
+                gestionCaso = new SeguimientoCaso(casoId, "Se edita el caso", usuario, nombreUsuario, fechaActual);
             }
             gestionCasoJpa.create(gestionCaso);
             respuesta = "Exitoso";
         } catch (Exception e) {
-            System.out.println("Error creando el caso, el error es: " + e);
+            LOGGER.log(Level.SEVERE, "Error creando el caso, el error es  {0}", new Object[]{e});
             respuesta = "Error";
         }
 
@@ -207,7 +201,7 @@ public class CasoServlet extends HttpServlet {
                     + "#" + caso.getTimepoIncapacidad() + "#" + caso.getDescripcionCaso() + "#" + caso.getCreadoPor()
                     + "#" + caso.getAsignado() + "#" + caso.getPersonaCedula();
         } catch (Exception e) {
-            System.out.println("Error consultado el caso, el error es: " + e);
+            LOGGER.log(Level.SEVERE, "Error consultado el caso, el error es  {0}", new Object[]{e});
             respuesta = "Error";
         }
         return respuesta;

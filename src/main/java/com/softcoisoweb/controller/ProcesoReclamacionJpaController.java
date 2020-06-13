@@ -135,4 +135,20 @@ public class ProcesoReclamacionJpaController implements Serializable {
         }
     }
     
+    public List<ProcesoReclamacion> reclamacionxExpediente(String codigoCaso) {
+        EntityManager em = null;
+        List<ProcesoReclamacion> listReclamacionExpediente = null;
+        try {
+            String QuerySelect = "select * from proceso_reclamacion where caso_persona_id_caso   =  '" + codigoCaso + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            listReclamacionExpediente = em.createNativeQuery(QuerySelect, ProcesoReclamacion.class).getResultList();
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return listReclamacionExpediente;
+    }
 }

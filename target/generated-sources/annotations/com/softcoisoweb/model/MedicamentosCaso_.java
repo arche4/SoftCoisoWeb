@@ -4,13 +4,16 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2020-05-31T01:24:01")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2020-06-12T19:51:17")
 @StaticMetamodel(MedicamentosCaso.class)
 public class MedicamentosCaso_ { 
 
+    public static volatile SingularAttribute<MedicamentosCaso, String> nombreArchivo;
+    public static volatile SingularAttribute<MedicamentosCaso, String> rutaArchivo;
     public static volatile SingularAttribute<MedicamentosCaso, String> usuarioCedula;
-    public static volatile SingularAttribute<MedicamentosCaso, String> archivos;
     public static volatile SingularAttribute<MedicamentosCaso, Integer> codigoMedicamento;
+    public static volatile SingularAttribute<MedicamentosCaso, String> fechaActualizacion;
+    public static volatile SingularAttribute<MedicamentosCaso, String> nombrePersona;
     public static volatile SingularAttribute<MedicamentosCaso, String> cantidad;
     public static volatile SingularAttribute<MedicamentosCaso, String> casoPersonaIdCaso;
     public static volatile SingularAttribute<MedicamentosCaso, String> comentario;

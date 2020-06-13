@@ -8,7 +8,6 @@ package com.softcoisoweb.controller;
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.controller.exceptions.PreexistingEntityException;
 import com.softcoisoweb.model.CasoPersona;
-import com.softcoisoweb.model.MedicamentosCaso;
 import com.softcoisoweb.model.TipoCaso;
 import java.io.Serializable;
 import java.util.List;

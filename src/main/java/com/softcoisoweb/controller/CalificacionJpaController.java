@@ -134,5 +134,22 @@ public class CalificacionJpaController implements Serializable {
             em.close();
         }
     }
-    
+
+    public List<Calificacion> calificacionExpediente(String codigoCaso) {
+        EntityManager em = null;
+        List<Calificacion> listCalificacionExpediente = null;
+        try {
+            String QuerySelect = "select * from calificacion where caso_persona_id_caso  =  '" + codigoCaso + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            listCalificacionExpediente = em.createNativeQuery(QuerySelect, Calificacion.class).getResultList();
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return listCalificacionExpediente;
+    }
+
 }

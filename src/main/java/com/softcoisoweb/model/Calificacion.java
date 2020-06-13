@@ -30,10 +30,13 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Calificacion.findByDiagnostico", query = "SELECT c FROM Calificacion c WHERE c.diagnostico = :diagnostico"),
     @NamedQuery(name = "Calificacion.findByPorcentaje", query = "SELECT c FROM Calificacion c WHERE c.porcentaje = :porcentaje"),
     @NamedQuery(name = "Calificacion.findByComentario", query = "SELECT c FROM Calificacion c WHERE c.comentario = :comentario"),
-    @NamedQuery(name = "Calificacion.findByArchivos", query = "SELECT c FROM Calificacion c WHERE c.archivos = :archivos"),
+    @NamedQuery(name = "Calificacion.findByArchivoNombre", query = "SELECT c FROM Calificacion c WHERE c.archivoNombre = :archivoNombre"),
+    @NamedQuery(name = "Calificacion.findByArchivoRuta", query = "SELECT c FROM Calificacion c WHERE c.archivoRuta = :archivoRuta"),
     @NamedQuery(name = "Calificacion.findByUsuarioCedula", query = "SELECT c FROM Calificacion c WHERE c.usuarioCedula = :usuarioCedula"),
+    @NamedQuery(name = "Calificacion.findByUsuarioNombre", query = "SELECT c FROM Calificacion c WHERE c.usuarioNombre = :usuarioNombre"),
     @NamedQuery(name = "Calificacion.findByCasoPersonaIdCaso", query = "SELECT c FROM Calificacion c WHERE c.casoPersonaIdCaso = :casoPersonaIdCaso"),
-    @NamedQuery(name = "Calificacion.findByCodigoProceso", query = "SELECT c FROM Calificacion c WHERE c.codigoProceso = :codigoProceso")})
+    @NamedQuery(name = "Calificacion.findByFechaCalificacion", query = "SELECT c FROM Calificacion c WHERE c.fechaCalificacion = :fechaCalificacion"),
+    @NamedQuery(name = "Calificacion.findByFehcaActualizada", query = "SELECT c FROM Calificacion c WHERE c.fehcaActualizada = :fehcaActualizada")})
 public class Calificacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,23 +55,30 @@ public class Calificacion implements Serializable {
     @Column(name = "comentario")
     private String comentario;
     @Size(max = 100)
-    @Column(name = "archivos")
-    private String archivos;
+    @Column(name = "archivo_nombre")
+    private String archivoNombre;
+    @Size(max = 45)
+    @Column(name = "archivo_ruta")
+    private String archivoRuta;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "usuario_cedula")
     private String usuarioCedula;
+    @Size(max = 45)
+    @Column(name = "usuario_nombre")
+    private String usuarioNombre;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 15)
     @Column(name = "caso_persona_id_caso")
     private String casoPersonaIdCaso;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 15)
-    @Column(name = "codigo_proceso")
-    private String codigoProceso;
+    @Size(max = 45)
+    @Column(name = "fecha_calificacion")
+    private String fechaCalificacion;
+    @Size(max = 45)
+    @Column(name = "fehca_Actualizada")
+    private String fehcaActualizada;
 
     public Calificacion() {
     }
@@ -77,12 +87,42 @@ public class Calificacion implements Serializable {
         this.codigo = codigo;
     }
 
-    public Calificacion(Integer codigo, String usuarioCedula, String casoPersonaIdCaso, String codigoProceso) {
+    public Calificacion(Integer codigo, String usuarioCedula, String casoPersonaIdCaso) {
         this.codigo = codigo;
         this.usuarioCedula = usuarioCedula;
         this.casoPersonaIdCaso = casoPersonaIdCaso;
-        this.codigoProceso = codigoProceso;
     }
+
+    public Calificacion(String diagnostico, String porcentaje, String comentario, String archivoNombre, String archivoRuta, String usuarioCedula, String usuarioNombre, String casoPersonaIdCaso, String fechaCalificacion, String fehcaActualizada) {
+        this.diagnostico = diagnostico;
+        this.porcentaje = porcentaje;
+        this.comentario = comentario;
+        this.archivoNombre = archivoNombre;
+        this.archivoRuta = archivoRuta;
+        this.usuarioCedula = usuarioCedula;
+        this.usuarioNombre = usuarioNombre;
+        this.casoPersonaIdCaso = casoPersonaIdCaso;
+        this.fechaCalificacion = fechaCalificacion;
+        this.fehcaActualizada = fehcaActualizada;
+    }
+
+    public Calificacion(Integer codigo, String diagnostico, String porcentaje, String comentario, 
+            String archivoNombre, String archivoRuta, String usuarioCedula, String usuarioNombre, 
+            String casoPersonaIdCaso, String fechaCalificacion, String fehcaActualizada) {
+        this.codigo = codigo;
+        this.diagnostico = diagnostico;
+        this.porcentaje = porcentaje;
+        this.comentario = comentario;
+        this.archivoNombre = archivoNombre;
+        this.archivoRuta = archivoRuta;
+        this.usuarioCedula = usuarioCedula;
+        this.usuarioNombre = usuarioNombre;
+        this.casoPersonaIdCaso = casoPersonaIdCaso;
+        this.fechaCalificacion = fechaCalificacion;
+        this.fehcaActualizada = fehcaActualizada;
+    }
+    
+    
 
     public Integer getCodigo() {
         return codigo;
@@ -116,12 +156,20 @@ public class Calificacion implements Serializable {
         this.comentario = comentario;
     }
 
-    public String getArchivos() {
-        return archivos;
+    public String getArchivoNombre() {
+        return archivoNombre;
     }
 
-    public void setArchivos(String archivos) {
-        this.archivos = archivos;
+    public void setArchivoNombre(String archivoNombre) {
+        this.archivoNombre = archivoNombre;
+    }
+
+    public String getArchivoRuta() {
+        return archivoRuta;
+    }
+
+    public void setArchivoRuta(String archivoRuta) {
+        this.archivoRuta = archivoRuta;
     }
 
     public String getUsuarioCedula() {
@@ -132,6 +180,14 @@ public class Calificacion implements Serializable {
         this.usuarioCedula = usuarioCedula;
     }
 
+    public String getUsuarioNombre() {
+        return usuarioNombre;
+    }
+
+    public void setUsuarioNombre(String usuarioNombre) {
+        this.usuarioNombre = usuarioNombre;
+    }
+
     public String getCasoPersonaIdCaso() {
         return casoPersonaIdCaso;
     }
@@ -140,12 +196,20 @@ public class Calificacion implements Serializable {
         this.casoPersonaIdCaso = casoPersonaIdCaso;
     }
 
-    public String getCodigoProceso() {
-        return codigoProceso;
+    public String getFechaCalificacion() {
+        return fechaCalificacion;
     }
 
-    public void setCodigoProceso(String codigoProceso) {
-        this.codigoProceso = codigoProceso;
+    public void setFechaCalificacion(String fechaCalificacion) {
+        this.fechaCalificacion = fechaCalificacion;
+    }
+
+    public String getFehcaActualizada() {
+        return fehcaActualizada;
+    }
+
+    public void setFehcaActualizada(String fehcaActualizada) {
+        this.fehcaActualizada = fehcaActualizada;
     }
 
     @Override

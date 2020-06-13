@@ -10,6 +10,7 @@ import com.softcoisoweb.controller.exceptions.PreexistingEntityException;
 import com.softcoisoweb.model.FlujoCaso;
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CacheStoreMode;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
@@ -109,6 +110,7 @@ public class FlujoCasoJpaController implements Serializable {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             cq.select(cq.from(FlujoCaso.class));
             Query q = em.createQuery(cq);
+            q.setHint("javax.persistence.cache.storeMode", CacheStoreMode.REFRESH);
             if (!all) {
                 q.setMaxResults(maxResults);
                 q.setFirstResult(firstResult);
@@ -121,6 +123,7 @@ public class FlujoCasoJpaController implements Serializable {
 
     public FlujoCaso findFlujoCaso(String id) {
         EntityManager em = getEntityManager();
+        em.setProperty("javax.persistence.cache.storeMode", CacheStoreMode.BYPASS);
         try {
             return em.find(FlujoCaso.class, id);
         } finally {
@@ -140,5 +143,43 @@ public class FlujoCasoJpaController implements Serializable {
             em.close();
         }
     }
+
+    public void actualizarFlujoCaso(String casoId, String fechaActulización, String estado, String usuarioCedula) throws NonexistentEntityException {
+        EntityManager em = null;
+        try {
+            String Query = "UPDATE coiso_BDpdn.flujo_caso set fecha_actualizacion = '" + fechaActulización + "',"
+                    + " usuario_cedula = '" + usuarioCedula + "',  estado_caso_codigo_estado = '" + estado + "' WHERE caso_persona_id_caso = '" + casoId + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.createNativeQuery(Query).executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            throw new NonexistentEntityException("Se presento inconvenientes al actualizar  el caso " + casoId + "El eror es: ", e);
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
     
+    public void actualizarFechaFlujoCaso(String casoId, String fechaActulización, String usuarioCedula) throws NonexistentEntityException {
+        EntityManager em = null;
+        try {
+            String Query = "UPDATE coiso_BDpdn.flujo_caso set fecha_actualizacion = '" + fechaActulización + "',"
+                    + " usuario_cedula = '" + usuarioCedula + "' WHERE caso_persona_id_caso = '" + casoId + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.createNativeQuery(Query).executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            throw new NonexistentEntityException("Se presento inconvenientes al actualizar  el caso " + casoId + "El eror es: ", e);
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+    
+    
+
 }

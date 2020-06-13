@@ -1,11 +1,15 @@
 package com.softcoisoweb.servlet;
 
+import com.softcoisoweb.servicio.rest.restCargarArchivo;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.List;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,54 +23,70 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 public class CargaArchivoServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
+    private final Random rand;
+    private final static Logger LOGGER = Logger.getLogger("LogsErrores");
 
     /**
+     * @throws java.security.NoSuchAlgorithmException
      * @see HttpServlet#HttpServlet()
      */
-    public CargaArchivoServlet() {
+    public CargaArchivoServlet() throws NoSuchAlgorithmException {
         super();
+        this.rand = SecureRandom.getInstanceStrong();
     }
 
     /**
+     * @param request
+     * @param response
+     * @throws javax.servlet.ServletException
+     * @throws java.io.IOException
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
      * response)
      */
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request, response);
     }
 
     /**
+     * @param request
+     * @param response
+     * @throws javax.servlet.ServletException
+     * @throws java.io.IOException
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
      * response)
      */
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String archivo = null;
-//        Path currentRelativePath = Paths.get("").toAbsolutePath().getParent();
-//        String UPLOAD_DIRECTORY = currentRelativePath.toAbsolutePath().toString();
-        String UPLOAD_DIRECTORY = System.getProperty("user.dir");
-
+        final String baseTempPath = System.getProperty("java.io.tmpdir");
+        restCargarArchivo cargarArchivo = new restCargarArchivo();
+        String name;
+        String resultado = null;
         if (ServletFileUpload.isMultipartContent(request)) {
             try {
                 List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
+
                 for (FileItem item : multiparts) {
                     if (!item.isFormField()) {
-                        File fileSaveDir = new File(UPLOAD_DIRECTORY );
-                        if (!fileSaveDir.exists()) {
-                            fileSaveDir.mkdir();
-                        }
-                        String name = new File(item.getName()).getName();
+                        int randomInt = this.rand.nextInt();
 
-                        item.write(new File(UPLOAD_DIRECTORY + File.separator + name));
-                        archivo = UPLOAD_DIRECTORY + File.separator + name;
+                        File tempDir = new File(baseTempPath + File.separator + "tempDir" + randomInt);
+                        if (tempDir.exists() == false) {
+                            tempDir.mkdir();
+                        }
+                        name = new File(item.getName()).getName();
+                        item.write(new File(tempDir + File.separator + name));
+                        File file = new File(tempDir + File.separator + name);
+                        resultado = cargarArchivo.cargarArchivo(file, 2);
                     }
                 }
             } catch (Exception e) {
-                System.out.println("Error  El error es" + e);
+                LOGGER.log(Level.SEVERE, "Error cargando el archivo, El error es:  {0}", new Object[]{e});
+                resultado = "Error";
             }
 
             PrintWriter out = response.getWriter();
-            String respuesta = "1" + "," + archivo;
-            out.print(respuesta);
+            out.print(resultado);
         }
 
     }

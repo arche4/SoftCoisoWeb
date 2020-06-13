@@ -7,7 +7,6 @@ package com.softcoisoweb.controller;
 
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.controller.exceptions.PreexistingEntityException;
-import com.softcoisoweb.model.CasoAcciones;
 import com.softcoisoweb.model.CasoPersona;
 import java.io.Serializable;
 import java.util.List;
@@ -163,8 +162,20 @@ public class CasoPersonaJpaController implements Serializable {
         }
     }
 
-    public void create(CasoAcciones casoAcciones) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void asignarUsuario(String casoId, String usuarioAsignado) throws NonexistentEntityException {
+        EntityManager em = null;
+        try {
+            String Query = "UPDATE caso_persona SET asignado = '" + usuarioAsignado + "' WHERE id_caso = '" + casoId + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.createNativeQuery(Query).executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+             throw new NonexistentEntityException("Se presento inconvenientes al  cambiar el responsable del caso " + casoId + ", El eror es: ", e);
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
-
 }

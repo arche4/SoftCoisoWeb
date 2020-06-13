@@ -135,4 +135,21 @@ public class SeguimientoCasoJpaController implements Serializable {
         }
     }
     
+    public List<SeguimientoCaso> seguimientoExpediente(String codigoCaso) {
+        EntityManager em = null;
+        List<SeguimientoCaso> listmedicamentoXexpediente = null;
+        try {
+            String QuerySelect = "select * from seguimiento_caso where codigo_caso  =  '" + codigoCaso + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            listmedicamentoXexpediente = em.createNativeQuery(QuerySelect, SeguimientoCaso.class).getResultList();
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return listmedicamentoXexpediente;
+    }
+    
 }

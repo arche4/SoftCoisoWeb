@@ -126,6 +126,7 @@ public class EstadoCasoJpaController implements Serializable {
     public EstadoCaso findEstadoCaso(String id) {
         EntityManager em = getEntityManager();
         try {
+            em.setProperty("javax.persistence.cache.storeMode", CacheStoreMode.BYPASS);
             return em.find(EstadoCaso.class, id);
         } finally {
             em.close();
@@ -144,7 +145,7 @@ public class EstadoCasoJpaController implements Serializable {
             em.close();
         }
     }
-    
+
     public List<FlujoCaso> EstadoxCasos(String codigo) {
         EntityManager em = null;
         List<FlujoCaso> estadoXcaso = null;
@@ -161,5 +162,5 @@ public class EstadoCasoJpaController implements Serializable {
         }
         return estadoXcaso;
     }
-    
+
 }

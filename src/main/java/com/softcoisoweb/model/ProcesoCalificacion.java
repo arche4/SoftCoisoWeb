@@ -29,9 +29,13 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "ProcesoCalificacion.findByCodigo", query = "SELECT p FROM ProcesoCalificacion p WHERE p.codigo = :codigo"),
     @NamedQuery(name = "ProcesoCalificacion.findByProceso", query = "SELECT p FROM ProcesoCalificacion p WHERE p.proceso = :proceso"),
     @NamedQuery(name = "ProcesoCalificacion.findByComentario", query = "SELECT p FROM ProcesoCalificacion p WHERE p.comentario = :comentario"),
-    @NamedQuery(name = "ProcesoCalificacion.findByArchivo", query = "SELECT p FROM ProcesoCalificacion p WHERE p.archivo = :archivo"),
+    @NamedQuery(name = "ProcesoCalificacion.findByNombreArchivo", query = "SELECT p FROM ProcesoCalificacion p WHERE p.nombreArchivo = :nombreArchivo"),
+    @NamedQuery(name = "ProcesoCalificacion.findByRutaArchivo", query = "SELECT p FROM ProcesoCalificacion p WHERE p.rutaArchivo = :rutaArchivo"),
     @NamedQuery(name = "ProcesoCalificacion.findByUsuarioCedula", query = "SELECT p FROM ProcesoCalificacion p WHERE p.usuarioCedula = :usuarioCedula"),
-    @NamedQuery(name = "ProcesoCalificacion.findByCasoPersonaIdCaso", query = "SELECT p FROM ProcesoCalificacion p WHERE p.casoPersonaIdCaso = :casoPersonaIdCaso")})
+    @NamedQuery(name = "ProcesoCalificacion.findByNombreUsuario", query = "SELECT p FROM ProcesoCalificacion p WHERE p.nombreUsuario = :nombreUsuario"),
+    @NamedQuery(name = "ProcesoCalificacion.findByCasoPersonaIdCaso", query = "SELECT p FROM ProcesoCalificacion p WHERE p.casoPersonaIdCaso = :casoPersonaIdCaso"),
+    @NamedQuery(name = "ProcesoCalificacion.findByFechaCreacion", query = "SELECT p FROM ProcesoCalificacion p WHERE p.fechaCreacion = :fechaCreacion"),
+    @NamedQuery(name = "ProcesoCalificacion.findByFechaActualizada", query = "SELECT p FROM ProcesoCalificacion p WHERE p.fechaActualizada = :fechaActualizada")})
 public class ProcesoCalificacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,19 +50,31 @@ public class ProcesoCalificacion implements Serializable {
     @Size(max = 400)
     @Column(name = "comentario")
     private String comentario;
+    @Size(max = 50)
+    @Column(name = "nombreArchivo")
+    private String nombreArchivo;
     @Size(max = 250)
-    @Column(name = "archivo")
-    private String archivo;
+    @Column(name = "rutaArchivo")
+    private String rutaArchivo;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "usuario_cedula")
     private String usuarioCedula;
+    @Size(max = 45)
+    @Column(name = "nombre_usuario")
+    private String nombreUsuario;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 15)
     @Column(name = "caso_persona_id_caso")
     private String casoPersonaIdCaso;
+    @Size(max = 45)
+    @Column(name = "fecha_creacion")
+    private String fechaCreacion;
+    @Size(max = 45)
+    @Column(name = "fecha_actualizada")
+    private String fechaActualizada;
 
     public ProcesoCalificacion() {
     }
@@ -72,6 +88,33 @@ public class ProcesoCalificacion implements Serializable {
         this.usuarioCedula = usuarioCedula;
         this.casoPersonaIdCaso = casoPersonaIdCaso;
     }
+
+    public ProcesoCalificacion(Integer codigo, String proceso, String comentario, String nombreArchivo, String rutaArchivo, String usuarioCedula, String nombreUsuario, String casoPersonaIdCaso, String fechaCreacion, String fechaActualizada) {
+        this.codigo = codigo;
+        this.proceso = proceso;
+        this.comentario = comentario;
+        this.nombreArchivo = nombreArchivo;
+        this.rutaArchivo = rutaArchivo;
+        this.usuarioCedula = usuarioCedula;
+        this.nombreUsuario = nombreUsuario;
+        this.casoPersonaIdCaso = casoPersonaIdCaso;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaActualizada = fechaActualizada;
+    }
+
+    public ProcesoCalificacion(String proceso, String comentario, String nombreArchivo, String rutaArchivo, String usuarioCedula, String nombreUsuario, String casoPersonaIdCaso, String fechaCreacion, String fechaActualizada) {
+        this.proceso = proceso;
+        this.comentario = comentario;
+        this.nombreArchivo = nombreArchivo;
+        this.rutaArchivo = rutaArchivo;
+        this.usuarioCedula = usuarioCedula;
+        this.nombreUsuario = nombreUsuario;
+        this.casoPersonaIdCaso = casoPersonaIdCaso;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaActualizada = fechaActualizada;
+    }
+    
+    
 
     public Integer getCodigo() {
         return codigo;
@@ -97,12 +140,20 @@ public class ProcesoCalificacion implements Serializable {
         this.comentario = comentario;
     }
 
-    public String getArchivo() {
-        return archivo;
+    public String getNombreArchivo() {
+        return nombreArchivo;
     }
 
-    public void setArchivo(String archivo) {
-        this.archivo = archivo;
+    public void setNombreArchivo(String nombreArchivo) {
+        this.nombreArchivo = nombreArchivo;
+    }
+
+    public String getRutaArchivo() {
+        return rutaArchivo;
+    }
+
+    public void setRutaArchivo(String rutaArchivo) {
+        this.rutaArchivo = rutaArchivo;
     }
 
     public String getUsuarioCedula() {
@@ -113,12 +164,36 @@ public class ProcesoCalificacion implements Serializable {
         this.usuarioCedula = usuarioCedula;
     }
 
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
     public String getCasoPersonaIdCaso() {
         return casoPersonaIdCaso;
     }
 
     public void setCasoPersonaIdCaso(String casoPersonaIdCaso) {
         this.casoPersonaIdCaso = casoPersonaIdCaso;
+    }
+
+    public String getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(String fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public String getFechaActualizada() {
+        return fechaActualizada;
+    }
+
+    public void setFechaActualizada(String fechaActualizada) {
+        this.fechaActualizada = fechaActualizada;
     }
 
     @Override

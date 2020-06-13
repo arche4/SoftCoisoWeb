@@ -13,7 +13,6 @@ import com.softcoisoweb.util.JPAFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -60,7 +59,7 @@ public class MedicamentosServlet extends HttpServlet {
                 String modMed = eliminarMedicamento(btnEliminar);
                 out.print(modMed);
             }
-            cargarDatos(request, response);
+            cargarDatos(request);
         }
     }
 
@@ -86,17 +85,15 @@ public class MedicamentosServlet extends HttpServlet {
         return respuesta;
     }
 
-    private void cargarDatos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void cargarDatos(HttpServletRequest request) throws ServletException, IOException {
         HttpSession session = request.getSession();
         MedicamentosJpaController medicamentoJpa = new MedicamentosJpaController(JPAFactory.getFACTORY());
-        RequestDispatcher rd = null;
         try {
             List<Medicamentos> listMedicamento = medicamentoJpa.findMedicamentosEntities();
             session.setAttribute("listMedicamento", listMedicamento);
         } catch (Exception e) {
             System.out.println("Error cargando datos de los medicamentos. El error es:" + e);
         }
-        rd.forward(request, response);
     }
 
     private String consultarMedicamento(String codigoMedicamento) {
