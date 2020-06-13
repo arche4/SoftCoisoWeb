@@ -31,7 +31,6 @@
     <class>com.softcoisoweb.model.TerminosCondiciones</class>
     <class>com.softcoisoweb.model.CambioEstadoHistorico</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <shared-cache-mode>ALL</shared-cache-mode>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://coiso.org:3306/coiso_BDpdn?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>
       <property name="javax.persistence.jdbc.user" value="coiso_BDAdmon20"/>
