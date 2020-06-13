@@ -55,10 +55,9 @@ public class ServletLogin extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        RequestDispatcher rd = null;
+        RequestDispatcher rd;
         String cedula = request.getParameter("usuario");
         String clave = request.getParameter("clave");
-        HttpSession misession = (HttpSession) request.getSession();
 
         EpsJpaController eps = new EpsJpaController(JPAFactory.getFACTORY());
         ArlJpaController arl = new ArlJpaController(JPAFactory.getFACTORY());
@@ -71,12 +70,9 @@ public class ServletLogin extends HttpServlet {
         MedicamentosJpaController medicamentoJpa = new MedicamentosJpaController(JPAFactory.getFACTORY());
 
         try {
-            if (misession.equals(true)) {
-                rd = request.getRequestDispatcher("index.jsp");
-            }
             UsuarioJpaController ujc = new UsuarioJpaController(JPAFactory.getFACTORY());
             Usuario usuario = ujc.buscarUsuario(cedula, clave);
-            String Mensaje = "";
+            String Mensaje;
             if (usuario == null) {
                 Mensaje = "Email o Clave no validos";
                 session.setAttribute("MENSAJE", Mensaje);
