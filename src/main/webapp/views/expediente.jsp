@@ -7,7 +7,7 @@
 <html lang="en">
 
     <head>
-        <meta charset="utf-8">
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="Dashboard">
@@ -147,6 +147,7 @@
                                         Expediente - ${sessionScope.Expediente.getIdCaso()}
                                     </h4>
                                 </header>
+                                <input class="form-control " id="usuarioLogeado" type="hidden" name="usuarioLogeado" value="${sessionScope.USUARIO.cedula}">
                                 <div class="panel-body ">
                                     <div class="mail-header row">
                                         <div class="col-md-4">
@@ -374,7 +375,6 @@
                                                                         <h5 class="text-primary"><a href="chat_room.html">${proceso.getProceso()}</a></h5>
                                                                         <div class="pull-right hidden-phone">
                                                                             <button type="button" id ="btnConsultarProceso" name="btnConsultarProceso"  value="${proceso.getCodigo()}" class="btn btn-primary btn-xs fa fa-pencil"></button>
-                                                                            <button type="button" id="btnEliminarProceso" name="btnEliminarProceso" value="${proceso.getCodigo()}" class="btn btn-danger btn-xs fa fa-trash-o"></button>
                                                                         </div>
                                                                         <p>${proceso.getComentario()}</p>
                                                                         <p><span class="text-muted">Creado por :</span> ${proceso.getNombreUsuario()} | <span class="text-muted">Fecha Creada :</span> ${proceso.getFechaCreacion()} | <span class="text-muted">Ultima Actualización :</span> ${proceso.getFechaActualizada()}</p>
@@ -664,7 +664,8 @@
                                 <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="modificarProceso()">
                                     Guardar
                                 </button>
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-danger" onclick="validarEliminarProceso()"">Eliminar</button>
+                                <button type="button" class="btn btn-theme" data-dismiss="modal">Cerrar</button>
                             </div>
                         </form>
                     </div>
@@ -951,6 +952,32 @@
                             </div>
                             <div class="modal-footer">
                                 <button  type="submit" class="btn btn-success" id="btnModificar" onclick="eliminarArchivo()">
+                                    Si
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                            </div>                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modValidarProceso" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <!-- Modal content-->
+                    <div class="modal-content" id="modales-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Confirmar Cambios</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-row">
+                                <div class="col-md-12">
+                                    <form method="post" name="modeliminar" id="modeliminar" action="">
+                                        <div class="modal-body" id="modeliminar">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success" id="btnModificar" onclick="eliminarProceso()">
                                     Si
                                 </button>
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>

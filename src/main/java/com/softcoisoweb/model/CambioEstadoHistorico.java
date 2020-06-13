@@ -66,6 +66,17 @@ public class CambioEstadoHistorico implements Serializable {
         this.idCambioEstado = idCambioEstado;
     }
 
+    public CambioEstadoHistorico(String casoid, String cedulaUsuario, String nombreUsuario, String comentario, String estadoCaso, String fechaCambio) {
+        this.casoid = casoid;
+        this.cedulaUsuario = cedulaUsuario;
+        this.nombreUsuario = nombreUsuario;
+        this.comentario = comentario;
+        this.estadoCaso = estadoCaso;
+        this.fechaCambio = fechaCambio;
+    }
+    
+    
+
     public Integer getIdCambioEstado() {
         return idCambioEstado;
     }

@@ -27,6 +27,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ReclamacionServlet", urlPatterns = {"/ReclamacionServlet"})
 public class ReclamacionServlet extends HttpServlet {
 
+    private final static Logger LOGGER = Logger.getLogger("LogsErrores");
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,6 +45,7 @@ public class ReclamacionServlet extends HttpServlet {
         String btnModificar = request.getParameter("btnModificarReclamacion");
         String btnConsultar = request.getParameter("btnConsultarReclamacion");
         String btnEliminar = request.getParameter("btnEliminarReclamacion");
+        String btnEliminarArchivo = request.getParameter("btnEliminarArchivo");
 
         try ( PrintWriter out = response.getWriter()) {
             if (btnCrear != null && btnCrear.equals("ok")) {
@@ -60,6 +63,10 @@ public class ReclamacionServlet extends HttpServlet {
             if (btnEliminar != null) {
                 String eliminar = eliminar(btnEliminar);
                 out.print(eliminar);
+            }
+            if (btnEliminarArchivo != null) {
+                String deleteArchivo = eliminarArchivo(btnEliminarArchivo);
+                out.print(deleteArchivo);
             }
         }
     }
@@ -149,6 +156,28 @@ public class ReclamacionServlet extends HttpServlet {
             resultado = "Error";
         }
         return resultado;
+    }
+
+    private String eliminarArchivo(String codigoReclamacion) {
+        String respuesta;
+        ProcesoReclamacionJpaController reclamacionJpa = new ProcesoReclamacionJpaController(JPAFactory.getFACTORY());
+        AccionesExpediente accionesExpediente = new AccionesExpediente();
+        String acciones = "Se Eliminar el archivo de la calificación";
+        try {
+
+            String fechaActual = accionesExpediente.getFecha();
+            ProcesoReclamacion getReclamacion = reclamacionJpa.findProcesoReclamacion(Integer.parseInt(codigoReclamacion));
+
+            ProcesoReclamacion eliminarArchivo = new ProcesoReclamacion(Integer.parseInt(codigoReclamacion), getReclamacion.getComentarios(), getReclamacion.getNombreArchivo(),
+                    getReclamacion.getRutaArchivos(), getReclamacion.getFechaCreacion(), getReclamacion.getUsuarioCedula(), getReclamacion.getNombreUsuario(), getReclamacion.getFechaCreacion(), fechaActual);
+            reclamacionJpa.edit(eliminarArchivo);
+            accionesExpediente.guardarAccionesExpediente(getReclamacion.getCasoPersonaIdCaso(), getReclamacion.getUsuarioCedula(), acciones + getReclamacion.getCodigo());
+            respuesta = "Exitoso";
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Se presento un error eliminando un archivo al proceso de reclamacion:  {0} El error es: {1}", new Object[]{codigoReclamacion, e});
+            respuesta = "Error";
+        }
+        return respuesta;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

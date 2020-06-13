@@ -186,6 +186,7 @@ $(document).ready(function () {
         $('#modvalidar').html(cadena);
         $('#modValidarArhivoProceso').modal('show');
     });
+
     $("body").on("click", "#btnConsultarProceso", function () {
         $(".loader").fadeIn("slow");
         var btnConsultarProceso = $(this).val();
@@ -541,7 +542,7 @@ function modificarProceso() {
         if (elmErr && elmErr.length > 0) {
             return false;
         } else {
-            $('#agregarProcesoCalificacion').modal('hide');
+            $('#modificarProcesoCalificacion').modal('hide');
             $(".loader").fadeIn("slow");
             var btnModificarProceso = 'ok';
             var codigoProceso = $('#codigoProceso').val();
@@ -589,11 +590,18 @@ function validarProcesoCalificacion() {
     $('#modValidarProcesoCalificacion').modal('show');
 
 }
-
+function validarEliminarProceso() {
+    var cadena = ' <div class="form-row">'
+            + '<h5> ¿ Esta seguro que quieres eliminar el proceso ?</h3>'
+            + ' </div>';
+    $('#modeliminar').html(cadena);
+    $('#modificarProcesoCalificacion').modal('hide');
+    $('#modValidarProceso').modal('show');
+}
 function eliminarProceso() {
-    $('#agregarProcesoCalificacion').modal('hide');
+    $('#modValidarProceso').modal('hide');
     $(".loader").fadeIn("slow");
-    var btnEliminarProceso = $('#proceso').val();
+    var btnEliminarProceso = $('#codigoProceso').val();
     $.ajax({
         async: false,
         type: "POST",
@@ -604,7 +612,7 @@ function eliminarProceso() {
             $(".loader").fadeOut("slow");
             if (data === "Exitoso") {
                 var cadena = ' <div class="form-row">'
-                        + '<h5>Sus cambios fueron guardados con ex\u00EDto.</h3>'
+                        + '<h5>El proceso fue eliminado con ex\u00EDto.</h3>'
                         + ' </div>';
                 $('#modInfexito').html(cadena);
                 $('#modalInfexito').modal('show');

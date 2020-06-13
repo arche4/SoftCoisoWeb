@@ -4,11 +4,8 @@ import com.softcoisoweb.servicio.rest.restCargarArchivo;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
@@ -63,7 +60,7 @@ public class CargaArchivoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         final String baseTempPath = System.getProperty("java.io.tmpdir");
         restCargarArchivo cargarArchivo = new restCargarArchivo();
-        String name = null;
+        String name;
         String resultado = null;
         if (ServletFileUpload.isMultipartContent(request)) {
             try {
@@ -84,7 +81,7 @@ public class CargaArchivoServlet extends HttpServlet {
                     }
                 }
             } catch (Exception e) {
-                LOGGER.log(Level.SEVERE, "SError cargando el archivo, El error es:  {0}", new Object[]{e});
+                LOGGER.log(Level.SEVERE, "Error cargando el archivo, El error es:  {0}", new Object[]{e});
                 resultado = "Error";
             }
 

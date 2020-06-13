@@ -134,8 +134,7 @@ public class CalificacionJpaController implements Serializable {
             em.close();
         }
     }
-    
-    
+
     public List<Calificacion> calificacionExpediente(String codigoCaso) {
         EntityManager em = null;
         List<Calificacion> listCalificacionExpediente = null;
@@ -152,5 +151,5 @@ public class CalificacionJpaController implements Serializable {
         }
         return listCalificacionExpediente;
     }
-    
+
 }

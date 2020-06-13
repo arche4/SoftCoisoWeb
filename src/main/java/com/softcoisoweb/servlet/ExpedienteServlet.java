@@ -7,6 +7,7 @@ package com.softcoisoweb.servlet;
 
 import com.softcoisoweb.clase.AccionesExpediente;
 import com.softcoisoweb.controller.CalificacionJpaController;
+import com.softcoisoweb.controller.CambioEstadoHistoricoJpaController;
 import com.softcoisoweb.controller.CasoArchivoJpaController;
 import com.softcoisoweb.controller.CasoComentarioJpaController;
 import com.softcoisoweb.controller.CasoPersonaJpaController;
@@ -22,6 +23,7 @@ import com.softcoisoweb.controller.TipoCasoJpaController;
 import com.softcoisoweb.controller.UsuarioJpaController;
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.model.Calificacion;
+import com.softcoisoweb.model.CambioEstadoHistorico;
 import com.softcoisoweb.model.CasoArchivo;
 import com.softcoisoweb.model.CasoComentario;
 import com.softcoisoweb.model.CasoPersona;
@@ -58,6 +60,8 @@ import javax.servlet.http.HttpSession;
  * @author manue
  */
 public class ExpedienteServlet extends HttpServlet {
+
+    private final static Logger LOGGER = Logger.getLogger("LogsErrores");
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -175,8 +179,11 @@ public class ExpedienteServlet extends HttpServlet {
             session.setAttribute("listMedicamentosCasos", listMedicamentosCasos);
             session.setAttribute("ListSeguimiento", listSeguimiento);
             session.setAttribute("listCalificacion", listCalificacion);
+            LOGGER.log(Level.SEVERE, "Prueba logger imprimir logs: {0}", new Object[]{listCalificacion});
 
         } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Error buscando el expediente  del caso, el error es: {0}", new Object[]{e});
+
             System.err.println("Error buscando el expediente  del caso, el error es: " + e);
         }
         if (!cargar.equals("Cargar")) {
@@ -246,6 +253,7 @@ public class ExpedienteServlet extends HttpServlet {
         CasoComentarioJpaController comentarioJpa = new CasoComentarioJpaController(JPAFactory.getFACTORY());
         CasoArchivoJpaController archivoJpa = new CasoArchivoJpaController(JPAFactory.getFACTORY());
         UsuarioJpaController usuarioJpa = new UsuarioJpaController(JPAFactory.getFACTORY());
+        CambioEstadoHistoricoJpaController estadoHistoricoJpa = new CambioEstadoHistoricoJpaController(JPAFactory.getFACTORY());
         String fecha, fecha_Actual;
         CasoComentario comentarioC;
         CasoArchivo archivo;
@@ -271,11 +279,14 @@ public class ExpedienteServlet extends HttpServlet {
                         comentarioJpa.create(comentarioC);
                     }
                     if (!rutaArchivo.equals("")) {
-                        archivo = new CasoArchivo(casoId, usuarioCedula, usuarioCedula, nombreArchivo, rutaArchivo, fecha_Actual);
+                        archivo = new CasoArchivo(casoId, usuarioCedula, nombreUsuario, nombreArchivo, rutaArchivo, fecha_Actual);
                         archivoJpa.create(archivo);
                     }
+                    CambioEstadoHistorico historico = new CambioEstadoHistorico(casoId, usuarioCedula, nombreUsuario, comentario, codigoEstado, fecha_Actual);
+                    estadoHistoricoJpa.create(historico);
                     String accion = "Se cambia el caso del expediente ";
                     String seguimiento = gestionCaso(casoId, usuarioCedula, fecha_Actual, codigoEstado, accion, nombreUsuario);
+
                     if (seguimiento.equals("Exitoso")) {
                         resultado = "0";
                     } else {
@@ -368,7 +379,6 @@ public class ExpedienteServlet extends HttpServlet {
 
     private String consultarArchivo(HttpServletRequest request, String idArchivo) {
         String resultado = null;
-        HttpSession session = request.getSession();
         CasoArchivoJpaController archivoJpa = new CasoArchivoJpaController(JPAFactory.getFACTORY());
         try {
             CasoArchivo archivo = archivoJpa.findCasoArchivo(Integer.parseInt(idArchivo));
