@@ -22,7 +22,7 @@ public class Conexion {
     final static private String HOST = "coiso.org";
     final static private String PORT = "3306";
     final static private String DATABASE = "coiso_BDpdn";
-    final static private String DRIVER = "com.mysql.jdbc.Driver";
+    final static private String DRIVER = "com.mysql.cj.jdbc.Driver";
     final static private String URL = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?useSSL=false";
 
      public Connection conectarMySQL() throws SQLException {
