@@ -84,7 +84,7 @@ public class procesoCalificacionServlet extends HttpServlet {
                 out.print(crear);
             }
             if (btnConsultarCalificacion != null) {
-                String datos = consultarCalificacion(btnConsultar);
+                String datos = consultarCalificacion(btnConsultarCalificacion);
                 out.print(datos);
             }
             if (btnModificarCalificacion != null && btnModificarCalificacion.equals("ok")) {
@@ -92,7 +92,7 @@ public class procesoCalificacionServlet extends HttpServlet {
                 out.print(modificar);
             }
             if (btnEliminarCalificacion != null) {
-                String deleteArchivo = eliminarCalificacion(btnEliminarArchivo);
+                String deleteArchivo = eliminarCalificacion(btnEliminarCalificacion);
                 out.print(deleteArchivo);
             }
         }
@@ -230,11 +230,10 @@ public class procesoCalificacionServlet extends HttpServlet {
         String respuesta;
         AccionesExpediente accionesExpediente = new AccionesExpediente();
         CalificacionJpaController calificacionJpa = new CalificacionJpaController(JPAFactory.getFACTORY());
-        UsuarioJpaController usuarioJpa = new UsuarioJpaController(JPAFactory.getFACTORY());
 
-        String casoId = request.getParameter("casoIdCalificacion");
-        String cedulaUsuario = request.getParameter("cedulaUsuario");
-        String diagnostico = request.getParameter("DiagnosticoProceso");
+        String casoId = request.getParameter("casoId");
+        String usuario = request.getParameter("usuario");
+        String diagnostico = request.getParameter("diagnostico");
         String porcentaje = request.getParameter("porcentaje");
         String comentario = request.getParameter("comentario");
         String nombreArchivo = request.getParameter("nombreArchivoProceso");
@@ -243,11 +242,11 @@ public class procesoCalificacionServlet extends HttpServlet {
 
         try {
             String fechaActual = accionesExpediente.getFecha();
-            String nombreUsuario = accionesExpediente.getUsuarioSession(cedulaUsuario);
+            String nombreUsuario = accionesExpediente.getUsuarioSession(usuario);
 
-            Calificacion calificacion = new Calificacion(diagnostico, porcentaje, comentario, nombreArchivo, rutaArchivo, cedulaUsuario, nombreUsuario, casoId, fechaActual, fechaActual);
+            Calificacion calificacion = new Calificacion(diagnostico, porcentaje, comentario, nombreArchivo, rutaArchivo, usuario, nombreUsuario, casoId, fechaActual, fechaActual);
             calificacionJpa.create(calificacion);
-            accionesExpediente.guardarAccionesExpediente(casoId, cedulaUsuario, accion);
+            accionesExpediente.guardarAccionesExpediente(casoId, usuario, accion);
             respuesta = "Exitoso";
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Se presento un error creando la calificación del expediente :  {0} El error es: {1}", new Object[]{casoId, e});
@@ -262,8 +261,7 @@ public class procesoCalificacionServlet extends HttpServlet {
         try {
             Calificacion getCalificacion = calificacionJpa.findCalificacion(Integer.parseInt(codigo));
             respuesta = getCalificacion.getCodigo() + "#" + getCalificacion.getDiagnostico() + "#" + getCalificacion.getPorcentaje()
-                    + "#" + getCalificacion.getComentario() + "#" + getCalificacion.getArchivoNombre() + "#" + getCalificacion.getArchivoNombre()
-                    + "#" + getCalificacion.getUsuarioNombre() + "#" + getCalificacion.getFechaCalificacion() + "#" + getCalificacion.getFehcaActualizada();
+                    + "#" + getCalificacion.getComentario();
         } catch (NumberFormatException e) {
             LOGGER.log(Level.SEVERE, "Se presento un error consultando la calificación, el error es :  {0}", new Object[]{e});
         }
@@ -276,12 +274,12 @@ public class procesoCalificacionServlet extends HttpServlet {
         AccionesExpediente accionesExpediente = new AccionesExpediente();
         CalificacionJpaController calificacionJpa = new CalificacionJpaController(JPAFactory.getFACTORY());
         String codigo = request.getParameter("codigoCalificacion");
-        String cedulaUsuario = request.getParameter("cedulaUsuario");
-        String diagnostico = request.getParameter("DiagnosticoProceso");
+        String cedulaUsuario = request.getParameter("usuario");
+        String diagnostico = request.getParameter("DiagnosticoCalificacion");
         String porcentaje = request.getParameter("porcentaje");
         String comentario = request.getParameter("comentario");
-        String nombreArchivo = request.getParameter("nombreArchivoProceso");
-        String rutaArchivo = request.getParameter("rutaArchivoProceso");
+        String nombreArchivo = request.getParameter("nombreArchivo");
+        String rutaArchivo = request.getParameter("rutaArchivo");
 
         try {
             String fechaActual = accionesExpediente.getFecha();

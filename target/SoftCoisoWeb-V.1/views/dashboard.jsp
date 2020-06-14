@@ -105,7 +105,7 @@
                                 <li class="sub-menu">
                                     <a href="javascript:;">
                                         <i class="fa fa-desktop"></i>
-                                        <span>Modulos Administrativos</span>
+                                        <span>Módulos Administrativos</span>
                                     </a>
                                     <ul class="sub">
                                         <li><a href="${pageContext.servletContext.contextPath}/views/usuario.jsp">Usuarios</a></li>
@@ -114,6 +114,9 @@
                                         <li><a href="${pageContext.servletContext.contextPath}/views/estadoCaso.jsp">Estados de caso</a></li>
                                         <li><a href="${pageContext.servletContext.contextPath}/views/tipoContrato.jsp">Tipos de Contratos</a></li>
                                         <li><a href="${pageContext.servletContext.contextPath}/views/grupoSindicales.jsp">Grupos Sindicales</a></li>
+                                        <li><a href="${pageContext.servletContext.contextPath}/views/eps.jsp">Listado Eps</a></li>
+                                        <li><a href="${pageContext.servletContext.contextPath}/views/arl.jsp">Listado Arl</a></li>
+                                        <li><a href="${pageContext.servletContext.contextPath}/views/afp.jsp">Listado Afp</a></li>
                                     </ul>
                                 </li>
                             </c:when>

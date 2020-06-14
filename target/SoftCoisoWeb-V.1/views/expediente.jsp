@@ -147,7 +147,10 @@
                                         Expediente - ${sessionScope.Expediente.getIdCaso()}
                                     </h4>
                                 </header>
+
                                 <input class="form-control " id="usuarioLogeado" type="hidden" name="usuarioLogeado" value="${sessionScope.USUARIO.cedula}">
+                                <input class="form-control " id="expedienteId" type="hidden" name="expedienteId" value="${sessionScope.FlujoCaso.getCasoPersonaIdCaso()}">
+
                                 <div class="panel-body ">
                                     <div class="mail-header row">
                                         <div class="col-md-4">
@@ -383,16 +386,31 @@
                                                                     </div>
                                                                 </c:forEach>
                                                             </div>
+                                                            <c:forEach var="calificacion" items="${sessionScope.listCalificacion}" varStatus="myIndex"> 
+                                                                <div class="room-desk">
+                                                                    <c:if test="${!empty calificacion.getDiagnostico()}">
+                                                                        <div class="room-box">
+                                                                            <h5 class="text-primary"><a href="chat_room.html">Diagnostico</a></h5>
+                                                                            <p>${calificacion.getDiagnostico()}</p>
+                                                                            <p><span class="text-muted">Creado por :</span> ${calificacion.getUsuarioNombre()} | <span class="text-muted">Fecha Creada :</span> ${calificacion.getFechaCalificacion()} | <span class="text-muted">Ultima Actualización :</span> ${calificacion.getFehcaActualizada()}</p>
+                                                                        </div>
+                                                                    </c:if>
+                                                                    <c:if test="${!empty calificacion.getComentario()}">
+                                                                        <div class="room-box">
+                                                                            <h5 class="text-primary"><a href="chat_room.html">Comentario</a></h5>
+                                                                            <p>${calificacion.getComentario()}</p>
+                                                                            <p><span class="text-muted">Creado por :</span> ${calificacion.getUsuarioNombre()} | <span class="text-muted">Fecha Creada :</span> ${calificacion.getFechaCalificacion()} | <span class="text-muted">Ultima Actualización :</span> ${calificacion.getFehcaActualizada()}</p>
+                                                                        </div>
+                                                                    </c:if>
+                                                                </div>
+                                                            </c:forEach>
                                                         </aside>
                                                         <aside class="right-side">
                                                             <div class="invite-row">
                                                                 <h4 class="pull-left">Calificación</h4>
-                                                                <c:if test="${!empty sessionScope.listCalificacion}">
-                                                                    <button  id ="editCalificacion"  name="editCalificacion"  class="btn btn-theme04 pull-righ" value="${sessionScope.listCalificacion.getCodigo()}">
-                                                                        Editar Calificacion</button>
-                                                                    </c:if>
-                                                                    <c:if test="${empty sessionScope.listCalificacion}">
-                                                                    <a href="#" class="btn btn-theme04 pull-right">+ calificacion</a>
+
+                                                                <c:if test="${empty sessionScope.listCalificacion}">
+                                                                    <button class="btn btn-theme04 pull-right" data-toggle="modal" data-target="#agregarCalificacion" type="button">+ calificacion</button>
                                                                 </c:if>
                                                             </div>
                                                             <center>
@@ -404,22 +422,50 @@
                                                                     <div class="icn-main-container">
                                                                         <span class="icn-container">${calificacion.getPorcentaje()}%</span>
                                                                     </div>
-                                                                    <p>${calificacion.getComentario()}.</p>
-
                                                                     <ul class="pricing">
-                                                                        <li>1 Domain</li>
-                                                                        <li>2 Sub Domains</li>
-                                                                        <li>3 MySQL DBs</li>
-                                                                        <li>2 Emails</li>
-                                                                        <li>WordPress Installation</li>
-                                                                        <li>24/7 Support</li>
+                                                                        <li>Creada: ${calificacion.getFechaCalificacion()}</li>
+                                                                        <li>Ultima vez: ${calificacion.getFehcaActualizada()}</li>
+                                                                        <li>Creado por: ${calificacion.getUsuarioNombre()}</li>
                                                                     </ul>
+                                                                    <c:if test="${!empty sessionScope.listCalificacion}">
+                                                                        <button  id ="btnConsultarCalificacion"  name="btnConsultarCalificacion"  class="btn btn-theme04 pull-righ" value="${calificacion.getCodigo()}">
+                                                                            Editar Calificacion</button>
+                                                                        </c:if>
+                                                                    </c:forEach>
+                                                                <br>
+                                                                <c:forEach var="calificacion" items="${sessionScope.listCalificacion}" varStatus="myIndex">
+                                                                    <c:if test="${!empty calificacion.getArchivoRuta()}">
+                                                                        <div class="form-row">
+                                                                            <div class="col-sm-4 col-md-3">
+                                                                                <div class="file-preview-thumbnails clearfix">
+                                                                                    <div class="file-preview-frame krajee-default  kv-preview-thumb" id="archivo" data-fileindex="0" data-fileid="4289183_${calificacion.getArchivoNombre()}" data-template="pdf" title="${calificacion.getArchivoNombre()}" >
+                                                                                        <div class="kv-file-content">
+                                                                                            <embed class="kv-preview-data file-preview-pdf" src="${calificacion.getArchivoRuta()}" type="application/pdf" style="width:100%;height:160px;position:relative;">
+                                                                                        </div><div class="file-thumbnail-footer">
+                                                                                            <div class="file-footer-caption" title="${calificacion.getArchivoNombre()}">
+                                                                                                <div class="file-caption-info">${calificacion.getArchivoNombre()}</div>
+                                                                                            </div>
+                                                                                            <div class="file-actions">
+                                                                                                <div class="file-footer-buttons">
+                                                                                                    <button type="button" id ="verArchivo" name="verArchivo"  value="${calificacion.getArchivoRuta()}" ><i class="glyphicon glyphicon-zoom-in"></i></button>
+                                                                                                    <button type="button" id ="btnEliminarArchivoCalificacion" name="btnEliminarArchivoProceso"  value="${calificacion.getCodigo()}" ><i class="glyphicon glyphicon-remove"></i></button>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </c:if>
                                                                 </c:forEach>
                                                             </center>
                                                         </aside>
                                                     </div>
+
+
                                                     <h4 class="pull-left">Archivos</h4>
                                                     <div class="room-desk">
+
                                                         <c:forEach var="proceso" items="${sessionScope.listProceso}" varStatus="myIndex">
                                                             <c:if test="${!empty proceso.getNombreArchivo()}">
                                                                 <div class="form-row">
@@ -588,6 +634,96 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="agregarCalificacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Agregar Calificación</h4>
+                        </div>
+                        <div class="alert alert-success" id="Exitoso" style="display:none;">
+                            <strong>¡Bien hecho!</strong>Se guardo a cargado correctamente el archivo.
+                        </div>
+                        <form id="calificacion" data-toggle="validator">
+                            <br>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="control-label">Porcentaje de Calificacion</label>
+                                    <input type="number" class="form-control" id="porcentaje" name="porcentaje" placeholder="Porcentaje de Calificacion" required>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Diagnostico </label>
+                                <textarea class="form-control " id="diagnosticoCali" name="diagnosticoCali" placeholder="Diagnostico..." required></textarea>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Quieres agregar algun comentario ? </label>
+                                <textarea class="form-control " id="comentarioCali" name="comentarioCali" placeholder="Comentar..."></textarea>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <button type="button" class="btn btn-theme" data-toggle="modal" data-target="#cargarArchivos">
+                                    Cargar Archivos
+                                </button>
+                            </div>
+                            <input class="form-control " id="nombreArchivo" type="hidden" name="nombreArchivo">
+                            <input class="form-control " id="rutaArchivo" type="hidden" name="rutaArchivo">
+                            <br><br><br><br><br><br><br><br><br><br><br><br>
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="crearCalificacion()">
+                                    Guardar
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modificarCalificacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Editar Calificación</h4>
+                        </div>
+                        <div class="alert alert-success" id="Exitoso" style="display:none;">
+                            <strong>¡Bien hecho!</strong>Se guardo a cargado correctamente el archivo.
+                        </div>
+                        <form id="calificacionMod" data-toggle="validator">
+                            <br>
+                            <input class="form-control " id="codigoCalificacion" type="hidden" name="codigoCalificacion" >
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="control-label">Porcentaje de Calificacion</label>
+                                    <input type="number" class="form-control" id="porcentajeMod" name="porcentajeMod" placeholder="Porcentaje de Calificacion" required>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Diagnostico </label>
+                                <textarea class="form-control " id="diagnosticoCaliMod" name="diagnosticoCaliMod" placeholder="Diagnostico..." required></textarea>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Quieres agregar algun comentario ? </label>
+                                <textarea class="form-control " id="comentarioCaliMod" name="comentarioCaliMod" placeholder="Comentar..."></textarea>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <button type="button" class="btn btn-theme" data-toggle="modal" data-target="#cargarArchivos">
+                                    Cargar Archivos
+                                </button>
+                            </div>
+                            <input class="form-control " id="nombreArchivo" type="hidden" name="nombreArchivo">
+                            <input class="form-control " id="rutaArchivo" type="hidden" name="rutaArchivo">
+                            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="modificarCalificacion()">
+                                    Guardar
+                                </button>
+                                <button type="button" class="btn btn-danger" onclick="validarCalifEli()"">Eliminar</button>
+                                <button type="button" class="btn btn-theme" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <div class="modal fade" id="agregarProcesoCalificacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -624,7 +760,7 @@
                                 <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="guardarProceso()">
                                     Guardar
                                 </button>
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-theme" data-dismiss="modal">Cerrar</button>
                             </div>
                         </form>
                     </div>
@@ -1032,6 +1168,33 @@
                             </div>
                             <div class="modal-footer">
                                 <button  type="submit" class="btn btn-success" id="btnModificar" onclick="cambiarEstado()">
+                                    Si
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                            </div>                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modalValidarCalificacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+
+                    <!-- Modal content-->
+                    <div class="modal-content" id="modales-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Confirmar Cambios</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-row">
+                                <div class="col-md-12">
+                                    <form method="post" name="modCali" id="modCali" action="">
+                                        <div class="modal-body" id="modCali">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success" id="btnModificar" onclick="eliminarCalificacion()">
                                     Si
                                 </button>
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>

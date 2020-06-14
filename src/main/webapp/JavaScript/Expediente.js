@@ -216,6 +216,36 @@ $(document).ready(function () {
         });
     });
 
+    $("body").on("click", "#btnConsultarCalificacion", function () {
+        $(".loader").fadeIn("slow");
+        var btnConsultarCalificacion = $(this).val();
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: "/procesoCalificacionServlet",
+            data: 'btnConsultarCalificacion=' + btnConsultarCalificacion,
+            success: function (data) {
+                event.preventDefault();
+                $(".loader").fadeOut("slow");
+                var respuesta = $.trim(data);
+                if (respuesta !== "" && respuesta !== null) {
+                    respuesta = respuesta.split("#");
+                    $("#codigoCalificacion").val(respuesta[0]);
+                    $("#diagnosticoCaliMod").val(respuesta[1]);
+                    $("#porcentajeMod").val(respuesta[2]);
+                    $("#comentarioCaliMod").val(respuesta[3]);
+                    $('#modificarCalificacion').modal('show');
+                } else {
+                    var cadena = '<div class="form-row">'
+                            + '<h5>Lo sentimos, se ha presentado un problema consultado los datos .</h3>'
+                            + ' </div>';
+                    $('#modInferror').html(cadena);
+                    $('#modalInfError').modal('show');
+                }
+            }
+        });
+    });
+
 });
 
 function myFunctionReload() {
@@ -655,4 +685,138 @@ function eliminarArchivo() {
         }
     });
 
+}
+
+function crearCalificacion() {
+    var elmForm = $("#calificacion");
+    if (elmForm) {
+        elmForm.validator('validate');
+        var elmErr = elmForm.find('.has-error');
+        if (elmErr && elmErr.length > 0) {
+            return false;
+        } else {
+            $('#agregarCalificacion').modal('hide');
+            $(".loader").fadeIn("slow");
+            var btnCrearCalificacion = 'ok';
+            var casoId = $('#expedienteId').val();
+            var usuario = $('#usuarioLogeado').val();
+            var diagnostico = $('#diagnosticoCali').val();
+            var porcentaje = $('#porcentaje').val();
+            var comentario = $('#comentarioCali').val();
+            var nombreArchivo = $('#nombreArchivo').val();
+            var rutaArchivo = $('#rutaArchivo').val();
+
+            $.ajax({
+                async: false,
+                type: "POST",
+                url: "/procesoCalificacionServlet",
+                data: 'btnCrearCalificacion=' + btnCrearCalificacion + '&casoId=' + casoId + '&usuario=' + usuario
+                        + '&diagnostico=' + diagnostico + '&porcentaje=' + porcentaje
+                        + '&comentario=' + comentario + '&nombreArchivo=' + nombreArchivo + '&rutaArchivo=' + rutaArchivo,
+                success: function (data) {
+                    event.preventDefault();
+                    $(".loader").fadeOut("slow");
+                    if (data === "Exitoso") {
+                        var cadena = ' <div class="form-row">'
+                                + '<h5>La calificacion fue guardada  con ex\u00EDto.</h3>'
+                                + ' </div>';
+                        $('#modInfexito').html(cadena);
+                        $('#modalInfexito').modal('show');
+                    } else {
+                        var cadena = '<div class="form-row">'
+                                + '<h5>Lo sentimos, se ha presentado un problema guardando los datos .</h3>'
+                                + ' </div>';
+                        $('#modInferror').html(cadena);
+                        $('#modalInfError').modal('show');
+                    }
+                }
+            });
+        }
+    }
+}
+
+function modificarCalificacion() {
+    var elmForm = $("#calificacionMod");
+    if (elmForm) {
+        elmForm.validator('validate');
+        var elmErr = elmForm.find('.has-error');
+        if (elmErr && elmErr.length > 0) {
+            return false;
+        } else {
+            $('#modificarCalificacion').modal('hide');
+            $(".loader").fadeIn("slow");
+            var btnModificarCalificacion = 'ok';
+            var usuario = $('#usuarioLogeado').val();
+            var DiagnosticoCalificacion = $('#diagnosticoCaliMod').val();
+            var porcentaje = $('#porcentajeMod').val();
+            var comentario = $('#comentarioCaliMod').val();
+            var nombreArchivo = $('#nombreArchivo').val();
+            var rutaArchivo = $('#rutaArchivo').val();
+            var codigoCalificacion = $('#codigoCalificacion').val();
+
+            $.ajax({
+                async: false,
+                type: "POST",
+                url: "/procesoCalificacionServlet",
+                data: 'btnModificarCalificacion=' + btnModificarCalificacion + '&usuario=' + usuario
+                        + '&DiagnosticoCalificacion=' + DiagnosticoCalificacion + '&porcentaje=' + porcentaje
+                        + '&comentario=' + comentario + '&nombreArchivo=' + nombreArchivo + '&rutaArchivo=' + rutaArchivo
+                        + '&codigoCalificacion=' + codigoCalificacion,
+                success: function (data) {
+                    event.preventDefault();
+                    $(".loader").fadeOut("slow");
+                    if (data === "Exitoso") {
+                        var cadena = ' <div class="form-row">'
+                                + '<h5>La calificacion fue guardada  con ex\u00EDto.</h3>'
+                                + ' </div>';
+                        $('#modInfexito').html(cadena);
+                        $('#modalInfexito').modal('show');
+                    } else {
+                        var cadena = '<div class="form-row">'
+                                + '<h5>Lo sentimos, se ha presentado un problema guardando los datos .</h3>'
+                                + ' </div>';
+                        $('#modInferror').html(cadena);
+                        $('#modalInfError').modal('show');
+                    }
+                }
+            });
+        }
+    }
+}
+
+function validarCalifEli() {
+    var cadena = ' <div class="form-row">'
+            + '<h5> ¿ Esta seguro que quieres eliminar la calificacion ?</h3>'
+            + ' </div>';
+    $('#modCali').html(cadena);
+    $('#modificarCalificacion').modal('hide');
+    $('#modalValidarCalificacion').modal('show');
+}
+function eliminarCalificacion() {
+    $('#modalValidarCalificacion').modal('hide');
+    $(".loader").fadeIn("slow");
+    var btnEliminarCalificacion = $('#codigoCalificacion').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/procesoCalificacionServlet",
+        data: 'btnEliminarCalificacion=' + btnEliminarCalificacion,
+        success: function (data) {
+            event.preventDefault();
+            $(".loader").fadeOut("slow");
+            if (data === "Exitoso") {
+                var cadena = ' <div class="form-row">'
+                        + '<h5>La calificacion fue eliminada con ex\u00EDto.</h3>'
+                        + ' </div>';
+                $('#modInfexito').html(cadena);
+                $('#modalInfexito').modal('show');
+            } else {
+                var cadena = '<div class="form-row">'
+                        + '<h5>Lo sentimos, se ha presentado un problema eliminando los datos .</h3>'
+                        + ' </div>';
+                $('#modInferror').html(cadena);
+                $('#modalInfError').modal('show');
+            }
+        }
+    });
 }
