@@ -13,7 +13,7 @@ import javax.persistence.Persistence;
  */
 public class JPAFactory {
      private static final EntityManagerFactory FACTORY;
-    private static final String UP = "com.co.softcoisoweb_SoftCoisoWeb-V.1.war";
+    private static final String UP = "com.co.softcoisoweb_SoftCoisoWeb_war_V.1PU";
     
     static {        
         FACTORY = Persistence.createEntityManagerFactory(UP);

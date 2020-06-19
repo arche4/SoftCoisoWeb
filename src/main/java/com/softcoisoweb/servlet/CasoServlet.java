@@ -21,6 +21,8 @@ import com.softcoisoweb.model.TipoCaso;
 import com.softcoisoweb.util.JPAFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.sql.Time;
 import java.text.ParseException;
 import java.util.Calendar;
@@ -42,6 +44,12 @@ import javax.servlet.http.HttpSession;
 public class CasoServlet extends HttpServlet {
 
     private final static Logger LOGGER = Logger.getLogger("LogsErrores");
+    private final Random rand;
+
+    public CasoServlet() throws NoSuchAlgorithmException {
+        super();
+        this.rand = SecureRandom.getInstanceStrong();
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -100,8 +108,8 @@ public class CasoServlet extends HttpServlet {
             FlujoCaso flujo = flujoJpa.findFlujoCaso(idCaso);
             EstadoCaso estado = estadoJpa.findEstadoCaso(flujo.getEstadoCasoCodigoEstado());
             session.setAttribute("Casos", listCasos);
-            PersonaJpaController Personajpa = new PersonaJpaController(JPAFactory.getFACTORY());
-            Persona persona = Personajpa.findPersona(cedula);
+            PersonaJpaController personajpa = new PersonaJpaController(JPAFactory.getFACTORY());
+            Persona persona = personajpa.findPersona(cedula);
             String nombrePersona = persona.getNombrePersona() + " " + persona.getApellidoPersona();
             session.setAttribute("PersonaNombre", nombrePersona);
             session.setAttribute("cedulaPersona", cedula);
@@ -124,7 +132,7 @@ public class CasoServlet extends HttpServlet {
         PersonaServlet persona = new PersonaServlet();
         String cedulaPersona = request.getParameter("cedulaPersona");
         String cedulaUsuario = request.getParameter("cedulaUsuario");
-        String Tipo = request.getParameter("Tipo");
+        String tipo = request.getParameter("Tipo");
         String fechaAfectacion = request.getParameter("fechaAfectacion");
         String parteAfectada = request.getParameter("parteAfectada");
         String tiempoIncapacidad = request.getParameter("tiempoInca");
@@ -139,12 +147,11 @@ public class CasoServlet extends HttpServlet {
             if (buscarCodigo == null) {
                 codigo = codigoCaso + 1;
             } else {
-                Random r = new Random();
-                int valorDado = r.nextInt(10) + 1;
+                int valorDado = this.rand.nextInt(10)+1;
                 codigo = codigoCaso + valorDado;
             }
             CasoPersona caso = new CasoPersona(String.valueOf(codigo), fechaAfectacion, parteAfectada, tiempoIncapacidad,
-                    cedulaUsuario, cedulaUsuario, cedulaPersona, Tipo, descripcionCaso);
+                    cedulaUsuario, cedulaUsuario, cedulaPersona, tipo, descripcionCaso);
             casoJpa.create(caso);
             String gestionCaso = gestionCaso("Crear", String.valueOf(codigo), cedulaUsuario, "", "");
             String casoAsociado = persona.agregarCaso(cedulaPersona);
@@ -209,31 +216,31 @@ public class CasoServlet extends HttpServlet {
 
     public String modificarCaso(HttpServletRequest request, HttpServletResponse response, String expediente) {
         String respuesta;
-        String IdCaso = request.getParameter("IdCaso");
+        String idCaso = request.getParameter("IdCaso");
         String tipoCaso = request.getParameter("tipoCaso");
         String casoFechaAfectacion = request.getParameter("casoFechaAfectacion");
         String casoParteAfectada = request.getParameter("casoParteAfectada");
         String casoTimpoInca = request.getParameter("casoTimpoInca");
         String casoDescripcion = request.getParameter("casoDescripcion");
         String casoCedulaPersona = request.getParameter("casoCedulaPersona");
-        String CreadoPor = request.getParameter("CreadoPor");
-        String Asignado = request.getParameter("Asignado");
+        String creadoPor = request.getParameter("CreadoPor");
+        String asignado = request.getParameter("Asignado");
         String cedulaUsuario = request.getParameter("cedulaUsuario");
         try {
             CasoPersonaJpaController casoJpa = new CasoPersonaJpaController(JPAFactory.getFACTORY());
             FlujoCasoJpaController flujoJpa = new FlujoCasoJpaController(JPAFactory.getFACTORY());
 
-            CasoPersona caso = new CasoPersona(IdCaso, casoFechaAfectacion, casoParteAfectada, casoTimpoInca,
-                    CreadoPor, Asignado, casoCedulaPersona, tipoCaso, casoDescripcion);
+            CasoPersona caso = new CasoPersona(idCaso, casoFechaAfectacion, casoParteAfectada, casoTimpoInca,
+                    creadoPor, asignado, casoCedulaPersona, tipoCaso, casoDescripcion);
             casoJpa.edit(caso);
 
-            FlujoCaso flujo = flujoJpa.findFlujoCaso(IdCaso);
-            String gestionCaso = gestionCaso("Actualizar", IdCaso, cedulaUsuario, flujo.getEstadoCasoCodigoEstado(), flujo.getFechaCreacion());
+            FlujoCaso flujo = flujoJpa.findFlujoCaso(idCaso);
+            String gestionCaso = gestionCaso("Actualizar", idCaso, cedulaUsuario, flujo.getEstadoCasoCodigoEstado(), flujo.getFechaCreacion());
             if (gestionCaso.equals("Exitoso")) {
                 respuesta = "Exitoso";
                 if (expediente.equals("Expediente")) {
                     ExpedienteServlet cargarExpediente = new ExpedienteServlet();
-                    cargarExpediente.buscarExpediente(request, response, IdCaso, "Cargar");
+                    cargarExpediente.buscarExpediente(request, response, idCaso, "Cargar");
                 } else {
                     obtenerCaso(request, response, casoCedulaPersona, "Cargar");
                 }
@@ -242,33 +249,13 @@ public class CasoServlet extends HttpServlet {
                 respuesta = "Error";
             }
         } catch (Exception e) {
-            System.out.println("Error modificando el caso : " + IdCaso + " El error es" + e);
+            System.out.println("Error modificando el caso : " + idCaso + " El error es" + e);
             respuesta = "Error";
         }
 
         return respuesta;
     }
 
-    private String obtenerFechaActual() {
-        final Calendar capturar_fecha = Calendar.getInstance();
-        return Integer.toString(capturar_fecha.get(Calendar.YEAR)) + agregarCerosIzquierda(Integer.toString((capturar_fecha.get(Calendar.MONTH)) + 1)) + agregarCerosIzquierda(Integer.toString(capturar_fecha.get(Calendar.DATE)));
-    }
-
-    private String agregarCerosIzquierda(final String diames) {
-        final StringBuffer retorno = new StringBuffer();
-        if (Integer.parseInt(diames) < 10) {
-            final String add = "0" + diames;
-            retorno.append(add);
-        } else {
-            retorno.append(diames);
-        }
-        return retorno.toString();
-    }
-
-    private String obtenerHoraActual() {
-        final Time sqlTime = new Time(new java.util.Date().getTime());
-        return sqlTime.toString();
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

@@ -5,6 +5,7 @@
  */
 package com.softcoisoweb.conexion;
 
+import com.softcoisoweb.util.Gestor;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -17,23 +18,26 @@ import java.util.logging.Logger;
  */
 public class Conexion {
 
-    final static private String USER = "coiso_BDAdmon20";
-    final static private String PASS = "Coiso2020";
-    final static private String HOST = "coiso.org";
-    final static private String PORT = "3306";
-    final static private String DATABASE = "coiso_BDpdn";
+    private final Gestor doc = new Gestor();
+    final private String USER = doc.leerProperties("USER");
+    final private String PASS = doc.leerProperties("PASS");
+    final private String HOST = doc.leerProperties("HOST");
+    final private String PORT = doc.leerProperties("PORT");
+    final private String DATABASE = doc.leerProperties("DATABASE");
     final static private String DRIVER = "com.mysql.cj.jdbc.Driver";
-    final static private String URL = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?useSSL=false";
+    final private String URL = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?useSSL=false";
+    private final static Logger LOGGER = Logger.getLogger("LogsErrores");
 
-     public Connection conectarMySQL() throws SQLException {
+    public Connection conectarMySQL() throws SQLException {
         Connection CONMYSQL = null;
 
         try {
             Class.forName(DRIVER);
             CONMYSQL = DriverManager.getConnection(URL, USER, PASS);
-        } catch (ClassNotFoundException  e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error conectandose a la base de datos, El error es:  {0}", new Object[]{e});
         }
         return CONMYSQL;
     }
+
 }

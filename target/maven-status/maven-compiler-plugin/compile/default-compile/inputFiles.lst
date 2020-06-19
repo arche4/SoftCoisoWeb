@@ -7,7 +7,6 @@ C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\s
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\EpsServlet.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\CasoArchivoJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\CasoComentarioJpaController.java
-C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\util\GeneracionLogsErrores.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\PersonaDireccionJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\model\TipoCaso.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\ArlServlet.java
@@ -71,6 +70,7 @@ C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\s
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\ExpedienteServlet.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\perfilServlet.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\CargaArchivoServlet.java
+C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\util\Gestor.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\EpsJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\CerrarSesionServlet.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\GraficasServlet.java

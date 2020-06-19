@@ -820,3 +820,48 @@ function eliminarCalificacion() {
         }
     });
 }
+
+function crearReclamacion() {
+    var elmForm = $("#reclamacion");
+    if (elmForm) {
+        elmForm.validator('validate');
+        var elmErr = elmForm.find('.has-error');
+        if (elmErr && elmErr.length > 0) {
+            return false;
+        } else {
+            $('#agregarReclamacion').modal('hide');
+            $(".loader").fadeIn("slow");
+            var btnCrearReclamacion = 'ok';
+            var casoId = $('#expedienteId').val();
+            var usuario = $('#usuarioLogeado').val();
+            var comentario = $('#comentarioReclamacion').val();
+            var nombreArchivo = $('#nombreArchivo').val();
+            var rutaArchivo = $('#rutaArchivo').val();
+
+            $.ajax({
+                async: false,
+                type: "POST",
+                url: "/ReclamacionServlet",
+                data: 'btnCrearReclamacion=' + btnCrearReclamacion + '&casoId=' + casoId + '&usuario=' + usuario
+                        + '&comentario=' + comentario + '&nombreArchivo=' + nombreArchivo + '&rutaArchivo=' + rutaArchivo,
+                success: function (data) {
+                    event.preventDefault();
+                    $(".loader").fadeOut("slow");
+                    if (data === "Exitoso") {
+                        var cadena = ' <div class="form-row">'
+                                + '<h5>La calificacion fue guardada  con ex\u00EDto.</h3>'
+                                + ' </div>';
+                        $('#modInfexito').html(cadena);
+                        $('#modalInfexito').modal('show');
+                    } else {
+                        var cadena = '<div class="form-row">'
+                                + '<h5>Lo sentimos, se ha presentado un problema guardando los datos .</h3>'
+                                + ' </div>';
+                        $('#modInferror').html(cadena);
+                        $('#modalInfError').modal('show');
+                    }
+                }
+            });
+        }
+    }
+}

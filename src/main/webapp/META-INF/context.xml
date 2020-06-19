@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context antiJARLocking="true" path=""/>
+<Context antiJARLocking="true" path="">
+  <Resource auth="Container" driverClassName="com.mysql.cj.jdbc.Driver" maxActive="20" maxIdle="10" maxWait="-1" name="pruebas" password="root" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3308/coisobdpruebas" username="root"/>
+</Context>

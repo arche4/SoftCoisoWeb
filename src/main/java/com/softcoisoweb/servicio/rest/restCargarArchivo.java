@@ -18,6 +18,8 @@ import java.net.MalformedURLException;
 import javax.net.ssl.HttpsURLConnection;
 import java.net.URL;
 import java.util.Base64;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,6 +28,8 @@ import org.json.JSONObject;
  * @author manue
  */
 public class restCargarArchivo {
+
+    private final static Logger LOGGER = Logger.getLogger("LogsErrores");
 
     @SuppressWarnings("empty-statement")
     public String cargarArchivo(File fileName, int folder) throws MalformedURLException, IOException {
@@ -47,27 +51,27 @@ public class restCargarArchivo {
             connection.setRequestProperty("Authorization", "Basic " + token);
 
             OutputStream outputStream = connection.getOutputStream();
-            BufferedWriter conn_out_writer = new BufferedWriter(new OutputStreamWriter(outputStream));
+            BufferedWriter connOutWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
             try {
-                conn_out_writer.write("\r\n--" + boundary + "\r\n");
-                conn_out_writer.write("Content-Disposition: form-data; "
+                connOutWriter.write("\r\n--" + boundary + "\r\n");
+                connOutWriter.write("Content-Disposition: form-data; "
                         + "name=\"file\"; " + "filename=\"" + fileName.getName() + "\"" + "\r\n\r\n");
-                conn_out_writer.flush();
-                try ( FileInputStream file_stream = new FileInputStream((File) fileName)) {
-                    int read_bytes;
+                connOutWriter.flush();
+                try ( FileInputStream fileStream = new FileInputStream((File) fileName)) {
+                    int readBytes;
                     int numero = 0;
                     byte[] buffer = new byte[1024];
-                    while ((read_bytes = file_stream.read(buffer)) != -1) {
-                        outputStream.write(buffer, numero, read_bytes);
+                    while ((readBytes = fileStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, numero, readBytes);
                     }
                     outputStream.flush();
-                    conn_out_writer.write("\r\n--" + boundary + "--\r\n");
-                    conn_out_writer.flush();
-                    conn_out_writer.close();
+                    connOutWriter.write("\r\n--" + boundary + "--\r\n");
+                    connOutWriter.flush();
+                    connOutWriter.close();
                     outputStream.close();
                 }
             } catch (IOException e) {
-                System.err.println("Error consumiento el servicio de la carga de archivos, el error es: " + e);
+                LOGGER.log(Level.SEVERE, "Error consumiento el servicio de la carga de archivos, el error ess:  {0}", new Object[]{e});
             }
 
             int status = connection.getResponseCode();
@@ -87,7 +91,7 @@ public class restCargarArchivo {
                 retorno.append("Error");
             }
         } catch (IOException e) {
-            System.err.println("Error consumiento el servicio de la carga de archivos, el error es: " + e);
+            LOGGER.log(Level.SEVERE, "Error consumiento el servicio de la carga de archivos, el error ess:  {0}", new Object[]{e});
 
         }
 
@@ -97,7 +101,8 @@ public class restCargarArchivo {
 
     public String obtenerRuta(final String respuesta) {
         final StringBuilder respondo = new StringBuilder();
-        String fileName, ruta;
+        String fileName;
+        String ruta;
         JSONObject object = new JSONObject(respuesta);
         if (respuesta.length() > 0 && !respuesta.contains("EXCEPTION")) {
             try {
@@ -105,7 +110,8 @@ public class restCargarArchivo {
                 ruta = object.getString("fileDownloadUri");
                 respondo.append("Exitoso").append(",").append(fileName).append(",").append(ruta);
             } catch (JSONException e) {
-                System.err.println("Error obteniendo la ruta del archivo, el error es: " + e);
+              LOGGER.log(Level.SEVERE, "Error obteniendo la ruta del archivo, el error e:  {0}", new Object[]{e});
+
             }
         }
         return respondo.toString();

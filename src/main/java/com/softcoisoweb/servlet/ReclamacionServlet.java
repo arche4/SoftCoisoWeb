@@ -75,16 +75,16 @@ public class ReclamacionServlet extends HttpServlet {
         String respuesta;
         AccionesExpediente accionesExpediente = new AccionesExpediente();
         ProcesoReclamacionJpaController reclamacionJpa = new ProcesoReclamacionJpaController(JPAFactory.getFACTORY());
-        String comentarioReclamacion = request.getParameter("comentarioReclamacion");
-        String nombreArchivoReclamacion = request.getParameter("nombreArchivoReclamacion");
-        String rutaArchivoReclamacion = request.getParameter("rutaArchivoReclamacion");
-        String casoid = request.getParameter("casoIdReclamacion");
-        String usuario = request.getParameter("usuarioReclamacion");
+        String comentarioReclamacion = request.getParameter("comentario");
+        String nombreArchivo = request.getParameter("nombreArchivo");
+        String rutaArchivo = request.getParameter("rutaArchivo");
+        String casoid = request.getParameter("casoId");
+        String usuario = request.getParameter("usuario");
         String accion = "Se agregar un proceso de reclamación al expediente";
         try {
             String nombreUsuario = accionesExpediente.getUsuarioSession(usuario);
             String fechaActual = accionesExpediente.getFecha();
-            ProcesoReclamacion reclamacionCreate = new ProcesoReclamacion(comentarioReclamacion, nombreArchivoReclamacion, rutaArchivoReclamacion,
+            ProcesoReclamacion reclamacionCreate = new ProcesoReclamacion(comentarioReclamacion, nombreArchivo, rutaArchivo,
                     casoid, usuario, nombreUsuario, fechaActual, fechaActual);
             reclamacionJpa.create(reclamacionCreate);
             accionesExpediente.guardarAccionesExpediente(casoid, usuario, accion);

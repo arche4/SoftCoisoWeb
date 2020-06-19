@@ -501,37 +501,49 @@
                                             <div class="row">
                                                 <div class="room-desk">
                                                     <h4 class="pull-left">Reclamacion </h4>
-                                                    <button class="pull-right btn btn-theme02" data-toggle="modal" data-target="#agregarProcesoCalificacion" type="button">+ Agregar Proceso de Calificacion</button>
+                                                    <button class="pull-right btn btn-theme02" data-toggle="modal" data-target="#agregarReclamacion" type="button">+ Agregar Reclamación</button>
                                                     <div class="mt"></div>
-                                                    <div class="row content-panel mt mb">
-                                                        <div class="col-md-6">
-                                                            <h2 contenteditable="true">Dashio is a fully responsive admin dashboard template built with Bootstrap 3.1.1 Framework</h2>
-                                                            <h3 contenteditable="true">Following the Equator, Complete</h3>
-                                                            <h5 contenteditable="true">Mark Twain (Samuel Clemens)</h5>
+                                                    <c:forEach var="reclamacion" items="${sessionScope.listReclamacion}" varStatus="myIndex">
+                                                        <div class="mt"></div>
+                                                        <div class="row content-panel mt mb">
+                                                            <div class="col-md-8">
+                                                                <div class="pull-right hidden-phone">
+                                                                    <button type="button" id ="btnConsultarProceso" name="btnConsultarProceso"  value="${proceso.getCodigo()}" class="btn btn-primary btn-xs fa fa-pencil"></button>
+                                                                </div>
+                                                                <h5 contenteditable="true">Crado por: ${reclamacion.getNombreUsuario()}</h5>
+                                                                <h5 contenteditable="true">Creada: ${reclamacion.getFechaCreacion()}</h5>
+                                                                <h5 contenteditable="true">Ultima vez ${reclamacion.getFechaActualizacion()}</h5>
+
+                                                                <p contenteditable="true" class="mt">${reclamacion.getComentarios()}</p>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <c:if test="${!empty reclamacion.getNombreArchivo()}">
+                                                                    <div class="form-row">
+                                                                        <div class="col-sm-4 col-md-3">
+                                                                            <div class="file-preview-thumbnails clearfix">
+                                                                                <div class="file-preview-frame krajee-default  kv-preview-thumb" id="archivo" data-fileindex="0" data-fileid="4289183_${reclamacion.getNombreArchivo()}" data-template="pdf" title="${reclamacion.getNombreArchivo()}" >
+                                                                                    <div class="kv-file-content">
+                                                                                        <embed class="kv-preview-data file-preview-pdf" src="${reclamacion.getRutaArchivos()}" type="application/pdf" style="width:100%;height:160px;position:relative;">
+                                                                                    </div><div class="file-thumbnail-footer">
+                                                                                        <div class="file-footer-caption" title="${reclamacion.getNombreArchivo()}">
+                                                                                            <div class="file-caption-info">${reclamacion.getNombreArchivo()}</div>
+                                                                                        </div>
+                                                                                        <div class="file-actions">
+                                                                                            <div class="file-footer-buttons">
+                                                                                                <button type="button" id ="verArchivo" name="verArchivo"  value="${reclamacion.getRutaArchivos()}" ><i class="glyphicon glyphicon-zoom-in"></i></button>
+                                                                                                <button type="button" id ="btnEliminarArchivoCalificacion" name="btnEliminarArchivoProceso"  value="${reclamacion.getCodigo()}" ><i class="glyphicon glyphicon-remove"></i></button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </c:if>
+                                                            </div>
                                                         </div>
-                                                        <div class="col-md-6">
-                                                            <p contenteditable="true" class="mt">Later, when we reached the city, and glanced down the chief avenue, smouldering in its crushed-strawberry tint, those splendid effects were repeated; for every balcony, and every fanciful bird-cage of a snuggery countersunk in the house-fronts,
-                                                                and all the long lines of roofs were crowded with people, and each crowd was an explosion of brilliant color.</p>
-                                                            <p contenteditable="true">For color, and picturesqueness, and novelty, and outlandishness, and sustained interest and fascination, it was the most satisfying show I had ever seen, and I suppose I shall not have the privilege of looking upon its like again.</p>
-                                                            <p contenteditable="true">In the first place God made idiots. This was for practice. Then He made School Boards. --Pudd'nhead Wilson's New Calendar.</p>
-                                                            <p contenteditable="true">"I pray please to give me some action (work) for I am very poor boy I have no one to help me even so father for it so it seemed in thy good sight, you give the Telegraph Office, and another work what is your wish I am very poor boy, this understand
-                                                                what is your wish you my father I am your son this understand what is your wish.</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mt"></div>
-                                                    <div class="row content-panel mt mb">
-                                                        <div class="col-md-6">
-                                                            <h3 contenteditable="true">The Count of Monte Cristo</h3>
-                                                            <h4 contenteditable="true">Alexander Dumas, Pere</h4>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <p contenteditable="true" class="mt">"What, still keeping up this silly jest? My dear fellow, it is perfectly ridiculous--stupid! You had better tell me at once that you intend starving me to death."</p>
-                                                            <p contenteditable="true">"And what am I to pay with, brute?" said Danglars, enraged. "Do you suppose I carry 100,000 francs in my pocket?"</p>
-                                                            <p contenteditable="true">"Your excellency has 5,050,000 francs in your pocket; that will be fifty fowls at 100,000 francs apiece, and half a fowl for the 50,000."</p>
-                                                            <p contenteditable="true">Danglars shuddered. The bandage fell from his eyes, and he understood the joke, which he did not think quite so stupid as he had done just before. "Come," he said, "if I pay you the 100,000 francs, will you be satisfied, and allow me to eat
-                                                                at my ease?"</p>
-                                                        </div>
-                                                    </div>
+                                                        <div class="mt"></div>
+                                                    </c:forEach>
                                                 </div>
                                             </div>
                                         </div>
@@ -631,6 +643,76 @@
                         <div class="modal-body">
                             <embed id="pdf" src="" type="application/pdf" width="100%" height="600px" />
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="agregarReclamacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Agregar Reclamacion</h4>
+                        </div>
+                        <div class="alert alert-success" id="Exitoso" style="display:none;">
+                            <strong>¡Bien hecho!</strong>Se guardo a cargado correctamente el archivo.
+                        </div>
+                        <form id="reclamacion" data-toggle="validator">
+                            <br>
+
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Comentario  </label>
+                                <textarea class="form-control " rows="10" cols="50" id="comentarioReclamacion" name="comentarioReclamacion" placeholder="Comentar..."></textarea>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <button type="button" class="btn btn-theme" data-toggle="modal" data-target="#cargarArchivos">
+                                    Cargar Archivos
+                                </button>
+                            </div>
+                            <input class="form-control " id="nombreArchivo" type="hidden" name="nombreArchivo">
+                            <input class="form-control " id="rutaArchivo" type="hidden" name="rutaArchivo">
+                            <br><br><br><br><br><br><br><br><br><br><br><br>
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="crearReclamacion()">
+                                    Guardar
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modificarReclamacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Agregar Reclamacion</h4>
+                        </div>
+                        <div class="alert alert-success" id="Exitoso" style="display:none;">
+                            <strong>¡Bien hecho!</strong>Se guardo a cargado correctamente el archivo.
+                        </div>
+                        <form id="reclamacionMod" data-toggle="validator">
+                            <br>
+
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Comentario  </label>
+                                <textarea class="form-control " rows="10" cols="50" id="comentarioReclamacionMod" name="comentarioReclamacion" placeholder="Comentar..."></textarea>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <button type="button" class="btn btn-theme" data-toggle="modal" data-target="#cargarArchivos">
+                                    Cargar Archivos
+                                </button>
+                            </div>
+                            <input class="form-control " id="nombreArchivo" type="hidden" name="nombreArchivo">
+                            <input class="form-control " id="rutaArchivo" type="hidden" name="rutaArchivo">
+                            <br><br><br><br><br><br><br><br><br><br><br><br>
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="crearReclamacion()">
+                                    Guardar
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
