@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     <display-name>CargaArchivoServlet</display-name>
+     <filter>
+        <filter-name>FilterSecurity</filter-name>
+        <filter-class>com.softcoisoweb.servlet.FilterSecurity</filter-class>
+    </filter>
+    <filter-mapping> 
+        <filter-name>FilterSecurity</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+        </jsp-property-group>
+    </jsp-config>
     <servlet>
         <servlet-name>ServletLogin</servlet-name>
         <servlet-class>com.softcoisoweb.servlet.ServletLogin</servlet-class>
@@ -69,7 +83,7 @@
         <servlet-name>MedicamentosCasoServlet</servlet-name>
         <servlet-class>com.softcoisoweb.servlet.MedicamentosCasoServlet</servlet-class>
     </servlet>
-     <servlet>
+    <servlet>
         <servlet-name>DiagnosticoServlet</servlet-name>
         <servlet-class>com.softcoisoweb.servlet.DiagnosticoServlet</servlet-class>
     </servlet>
@@ -113,7 +127,7 @@
         <servlet-name>TipoCasoServlet</servlet-name>
         <url-pattern>/TipoCasoServlet</url-pattern>
     </servlet-mapping> 
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>EstadoCasoServlet</servlet-name>
         <url-pattern>/EstadoCasoServlet</url-pattern>
     </servlet-mapping> 
@@ -133,7 +147,7 @@
         <servlet-name>ReclamacionServlet</servlet-name>
         <url-pattern>/ReclamacionServlet</url-pattern>
     </servlet-mapping> 
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>MedicamentosCasoServlet</servlet-name>
         <url-pattern>/MedicamentosCasoServlet</url-pattern>
     </servlet-mapping> 

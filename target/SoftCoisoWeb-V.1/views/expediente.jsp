@@ -1,4 +1,5 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:if test="${empty user}">
     <jsp:forward page="${pageContext.servletContext.contextPath}/index.jsp"/>
@@ -7,24 +8,21 @@
 <html lang="en">
 
     <head>
-        <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
-        <meta name="author" content="Dashboard">
-        <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina"/>
         <title>SofCoiso-Expediente</title>
 
         <!-- Favicons -->
-        <link href="${pageContext.servletContext.contextPath}/img/favicon.png" rel="icon">
+        <link href="${pageContext.servletContext.contextPath}/img/favicon.png" rel="icon"/>
         <!-- Bootstrap core CSS -->
-        <link href="${pageContext.servletContext.contextPath}/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="${pageContext.servletContext.contextPath}/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
         <script src="${pageContext.servletContext.contextPath}/lib/jquery/jquery.min.js"></script>
 
         <!--external css-->
         <link href="${pageContext.servletContext.contextPath}/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
         <!-- Custom styles for this template -->
-        <link href="${pageContext.servletContext.contextPath}/css/style.css" rel="stylesheet">
-        <link href="${pageContext.servletContext.contextPath}/css/style-responsive.css" rel="stylesheet">
+        <link href="${pageContext.servletContext.contextPath}/css/style.css" rel="stylesheet"/>
+        <link href="${pageContext.servletContext.contextPath}/css/style-responsive.css" rel="stylesheet"/>
 
         <link href="${pageContext.servletContext.contextPath}/css/general.css" rel="stylesheet" type="text/css"/>
         <link href="${pageContext.servletContext.contextPath}/Loading.css" rel="stylesheet" type="text/css"/>
@@ -35,12 +33,7 @@
         <link href="${pageContext.servletContext.contextPath}/lib/advanced-datatable/css/demo_table.css" rel="stylesheet" />
         <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/lib/advanced-datatable/css/DT_bootstrap.css" />
         <script type="text/javascript" language="javascript" src="${pageContext.servletContext.contextPath}/lib/advanced-datatable/js/jquery.dataTables.js"></script>
-        <!-- =======================================================
-          Template Name: Dashio
-          Template URL: https://templatemag.com/dashio-bootstrap-admin-template/
-          Author: TemplateMag.com
-          License: https://templatemag.com/license/
-        ======================================================= -->
+
     </head>
 
     <body>
@@ -255,10 +248,10 @@
                                             <a data-toggle="tab" href="#reclamacion">Reclamación</a>
                                         </li>
                                         <li>
-                                            <a data-toggle="tab" href="#medicacion">Medicacion</a>
+                                            <a data-toggle="tab" href="#medicacion">Medicación</a>
                                         </li>
                                         <li>
-                                            <a data-toggle="tab" href="#diagnostico">Diagnostico</a>
+                                            <a data-toggle="tab" href="#diagnostico">Diagnóstico</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -508,12 +501,103 @@
                                                         <div class="row content-panel mt mb">
                                                             <div class="col-md-8">
                                                                 <div class="pull-right hidden-phone">
-                                                                    <button type="button" id ="btnConsultarProceso" name="btnConsultarProceso"  value="${proceso.getCodigo()}" class="btn btn-primary btn-xs fa fa-pencil"></button>
+                                                                    <button type="button" id ="btnConsultarReclamacion" name="btnConsultarReclamacion"  value="${reclamacion.getCodigo()}" class="btn btn-primary btn-xs fa fa-pencil"></button>
                                                                 </div>
-                                                                <h5 contenteditable="true">Crado por: ${reclamacion.getNombreUsuario()}</h5>
-                                                                <h5 contenteditable="true">Creada: ${reclamacion.getFechaCreacion()}</h5>
-                                                                <h5 contenteditable="true">Ultima vez ${reclamacion.getFechaActualizacion()}</h5>
-
+                                                                <p><span class="text-muted">Creado por :</span> ${reclamacion.getNombreUsuario()} | <span class="text-muted">Fecha Creada :</span> ${reclamacion.getFechaCreacion()} | <span class="text-muted">Ultima Actualización :</span> ${reclamacion.getFechaActualizacion()}</p>
+                                                                <p contenteditable="true" class="mt">${reclamacion.getComentarios()}</p>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <c:if test="${!empty reclamacion.getNombreArchivo()}">
+                                                                    <div class="form-row">
+                                                                        <div class="col-sm-4 col-md-3">
+                                                                            <div class="file-preview-thumbnails clearfix">
+                                                                                <div class="file-preview-frame krajee-default  kv-preview-thumb" id="archivo" data-fileindex="0" data-fileid="4289183_${reclamacion.getNombreArchivo()}" data-template="pdf" title="${reclamacion.getNombreArchivo()}" >
+                                                                                    <div class="kv-file-content">
+                                                                                        <embed class="kv-preview-data file-preview-pdf" src="${reclamacion.getRutaArchivos()}" type="application/pdf" style="width:100%;height:160px;position:relative;">
+                                                                                    </div><div class="file-thumbnail-footer">
+                                                                                        <div class="file-footer-caption" title="${reclamacion.getNombreArchivo()}">
+                                                                                            <div class="file-caption-info">${reclamacion.getNombreArchivo()}</div>
+                                                                                        </div>
+                                                                                        <div class="file-actions">
+                                                                                            <div class="file-footer-buttons">
+                                                                                                <button type="button" id ="verArchivo" name="verArchivo"  value="${reclamacion.getRutaArchivos()}" ><i class="glyphicon glyphicon-zoom-in"></i></button>
+                                                                                                <button type="button" id ="btnEliminarArchivo" name="btnEliminarArchivo"  value="${reclamacion.getCodigo()}" ><i class="glyphicon glyphicon-remove"></i></button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </c:if>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mt"></div>
+                                                    </c:forEach>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="medicacion" class="tab-pane">
+                                            <div class="row">
+                                                <div class="room-desk">
+                                                    <h4 class="pull-left">Medicamentos </h4>
+                                                    <button class="pull-right btn btn-theme02" data-toggle="modal" data-target="#agregarMedicamento" type="button">+ Agregar Medicamento</button>
+                                                    <div class="mt"></div>
+                                                    <c:forEach var="medicamento" items="${sessionScope.listMedicamentosCasos}" varStatus="myIndex">
+                                                        <div class="mt"></div>
+                                                        <div class="row content-panel mt mb">
+                                                            <div class="col-md-8">
+                                                                <div class="pull-right hidden-phone">
+                                                                    <button type="button" id ="btnConsultarReclamacion" name="btnConsultarReclamacion"  value="${reclamacion.getCodigo()}" class="btn btn-primary btn-xs fa fa-pencil"></button>
+                                                                </div>
+                                                                <p><span class="text-muted">Creado por :</span> ${medicamento.getNombrePersona()} | <span class="text-muted">Fecha Creada :</span> ${medicamento.getFechaMedicamento()} | <span class="text-muted">Ultima Actualización :</span> ${medicamento.getFechaActualizacion()}</p>
+                                                                <p contenteditable="true" class="mt">${reclamacion.getComentarios()}</p>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <c:if test="${!empty medicamento.getNombreArchivo()}">
+                                                                    <div class="form-row">
+                                                                        <div class="col-sm-4 col-md-3">
+                                                                            <div class="file-preview-thumbnails clearfix">
+                                                                                <div class="file-preview-frame krajee-default  kv-preview-thumb" id="archivo" data-fileindex="0" data-fileid="4289183_${medicamento.getNombreArchivo()}" data-template="pdf" title="${medicamento.getNombreArchivo()}" >
+                                                                                    <div class="kv-file-content">
+                                                                                        <embed class="kv-preview-data file-preview-pdf" src="${medicamento.getRutaArchivo()}" type="application/pdf" style="width:100%;height:160px;position:relative;">
+                                                                                    </div><div class="file-thumbnail-footer">
+                                                                                        <div class="file-footer-caption" title="${medicamento.getNombreArchivo()}">
+                                                                                            <div class="file-caption-info">${medicamento.getNombreArchivo()}</div>
+                                                                                        </div>
+                                                                                        <div class="file-actions">
+                                                                                            <div class="file-footer-buttons">
+                                                                                                <button type="button" id ="verArchivo" name="verArchivo"  value="${medicamento.getRutaArchivo()}" ><i class="glyphicon glyphicon-zoom-in"></i></button>
+                                                                                                <button type="button" id ="btnEliminarArchivoCalificacion" name="btnEliminarArchivoProceso"  value="${medicamento.getCodigoMedicamento()}" ><i class="glyphicon glyphicon-remove"></i></button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </c:if>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mt"></div>
+                                                    </c:forEach>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="diagnostico" class="tab-pane">
+                                            <div class="row">
+                                                <div class="room-desk">
+                                                    <h4 class="pull-left">Reclamacion </h4>
+                                                    <button class="pull-right btn btn-theme02" data-toggle="modal" data-target="#agregarReclamacion" type="button">+ Agregar Reclamación</button>
+                                                    <div class="mt"></div>
+                                                    <c:forEach var="reclamacion" items="${sessionScope.listReclamacion}" varStatus="myIndex">
+                                                        <div class="mt"></div>
+                                                        <div class="row content-panel mt mb">
+                                                            <div class="col-md-8">
+                                                                <div class="pull-right hidden-phone">
+                                                                    <button type="button" id ="btnConsultarReclamacion" name="btnConsultarReclamacion"  value="${reclamacion.getCodigo()}" class="btn btn-primary btn-xs fa fa-pencil"></button>
+                                                                </div>
+                                                                <p><span class="text-muted">Creado por :</span> ${reclamacion.getNombreUsuario()} | <span class="text-muted">Fecha Creada :</span> ${reclamacion.getFechaCreacion()} | <span class="text-muted">Ultima Actualización :</span> ${reclamacion.getFechaActualizacion()}</p>
                                                                 <p contenteditable="true" class="mt">${reclamacion.getComentarios()}</p>
                                                             </div>
                                                             <div class="col-md-4">
@@ -544,80 +628,6 @@
                                                         </div>
                                                         <div class="mt"></div>
                                                     </c:forEach>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="medicacion" class="tab-pane">
-                                            <div class="row">
-                                                <div class="col-md-12 detailed">
-                                                    <h4>Medicacion</h4>
-                                                    <div class="mt"></div>
-                                                    <div class="row content-panel mt mb">
-                                                        <div class="col-md-6">
-                                                            <h2 contenteditable="true">Dashio is a fully responsive admin dashboard template built with Bootstrap 3.1.1 Framework</h2>
-                                                            <h3 contenteditable="true">Following the Equator, Complete</h3>
-                                                            <h5 contenteditable="true">Mark Twain (Samuel Clemens)</h5>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <p contenteditable="true" class="mt">Later, when we reached the city, and glanced down the chief avenue, smouldering in its crushed-strawberry tint, those splendid effects were repeated; for every balcony, and every fanciful bird-cage of a snuggery countersunk in the house-fronts,
-                                                                and all the long lines of roofs were crowded with people, and each crowd was an explosion of brilliant color.</p>
-                                                            <p contenteditable="true">For color, and picturesqueness, and novelty, and outlandishness, and sustained interest and fascination, it was the most satisfying show I had ever seen, and I suppose I shall not have the privilege of looking upon its like again.</p>
-                                                            <p contenteditable="true">In the first place God made idiots. This was for practice. Then He made School Boards. --Pudd'nhead Wilson's New Calendar.</p>
-                                                            <p contenteditable="true">"I pray please to give me some action (work) for I am very poor boy I have no one to help me even so father for it so it seemed in thy good sight, you give the Telegraph Office, and another work what is your wish I am very poor boy, this understand
-                                                                what is your wish you my father I am your son this understand what is your wish.</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mt"></div>
-                                                    <div class="row content-panel mt mb">
-                                                        <div class="col-md-6">
-                                                            <h3 contenteditable="true">The Count of Monte Cristo</h3>
-                                                            <h4 contenteditable="true">Alexander Dumas, Pere</h4>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <p contenteditable="true" class="mt">"What, still keeping up this silly jest? My dear fellow, it is perfectly ridiculous--stupid! You had better tell me at once that you intend starving me to death."</p>
-                                                            <p contenteditable="true">"And what am I to pay with, brute?" said Danglars, enraged. "Do you suppose I carry 100,000 francs in my pocket?"</p>
-                                                            <p contenteditable="true">"Your excellency has 5,050,000 francs in your pocket; that will be fifty fowls at 100,000 francs apiece, and half a fowl for the 50,000."</p>
-                                                            <p contenteditable="true">Danglars shuddered. The bandage fell from his eyes, and he understood the joke, which he did not think quite so stupid as he had done just before. "Come," he said, "if I pay you the 100,000 francs, will you be satisfied, and allow me to eat
-                                                                at my ease?"</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="diagnostico" class="tab-pane">
-                                            <div class="row">
-                                                <div class="col-md-12 detailed">
-                                                    <h4>Diagnostico</h4>
-                                                    <div class="mt"></div>
-                                                    <div class="row content-panel mt mb">
-                                                        <div class="col-md-6">
-                                                            <h2 contenteditable="true">Dashio is a fully responsive admin dashboard template built with Bootstrap 3.1.1 Framework</h2>
-                                                            <h3 contenteditable="true">Following the Equator, Complete</h3>
-                                                            <h5 contenteditable="true">Mark Twain (Samuel Clemens)</h5>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <p contenteditable="true" class="mt">Later, when we reached the city, and glanced down the chief avenue, smouldering in its crushed-strawberry tint, those splendid effects were repeated; for every balcony, and every fanciful bird-cage of a snuggery countersunk in the house-fronts,
-                                                                and all the long lines of roofs were crowded with people, and each crowd was an explosion of brilliant color.</p>
-                                                            <p contenteditable="true">For color, and picturesqueness, and novelty, and outlandishness, and sustained interest and fascination, it was the most satisfying show I had ever seen, and I suppose I shall not have the privilege of looking upon its like again.</p>
-                                                            <p contenteditable="true">In the first place God made idiots. This was for practice. Then He made School Boards. --Pudd'nhead Wilson's New Calendar.</p>
-                                                            <p contenteditable="true">"I pray please to give me some action (work) for I am very poor boy I have no one to help me even so father for it so it seemed in thy good sight, you give the Telegraph Office, and another work what is your wish I am very poor boy, this understand
-                                                                what is your wish you my father I am your son this understand what is your wish.</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mt"></div>
-                                                    <div class="row content-panel mt mb">
-                                                        <div class="col-md-6">
-                                                            <h3 contenteditable="true">The Count of Monte Cristo</h3>
-                                                            <h4 contenteditable="true">Alexander Dumas, Pere</h4>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <p contenteditable="true" class="mt">"What, still keeping up this silly jest? My dear fellow, it is perfectly ridiculous--stupid! You had better tell me at once that you intend starving me to death."</p>
-                                                            <p contenteditable="true">"And what am I to pay with, brute?" said Danglars, enraged. "Do you suppose I carry 100,000 francs in my pocket?"</p>
-                                                            <p contenteditable="true">"Your excellency has 5,050,000 francs in your pocket; that will be fifty fowls at 100,000 francs apiece, and half a fowl for the 50,000."</p>
-                                                            <p contenteditable="true">Danglars shuddered. The bandage fell from his eyes, and he understood the joke, which he did not think quite so stupid as he had done just before. "Come," he said, "if I pay you the 100,000 francs, will you be satisfied, and allow me to eat
-                                                                at my ease?"</p>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -661,7 +671,7 @@
 
                             <div class="form-group col-md-12">
                                 <label class="control-label">Comentario  </label>
-                                <textarea class="form-control " rows="10" cols="50" id="comentarioReclamacion" name="comentarioReclamacion" placeholder="Comentar..."></textarea>
+                                <textarea class="form-control " rows="10" cols="50" id="comentarioReclamacion" name="comentarioReclamacion" placeholder="Comentar..." required></textarea>
                             </div>
                             <div class="form-group col-md-6">
                                 <button type="button" class="btn btn-theme" data-toggle="modal" data-target="#cargarArchivos">
@@ -686,17 +696,18 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">Agregar Reclamacion</h4>
+                            <h4 class="modal-title" id="myModalLabel">Agregar Reclamación</h4>
                         </div>
                         <div class="alert alert-success" id="Exitoso" style="display:none;">
                             <strong>¡Bien hecho!</strong>Se guardo a cargado correctamente el archivo.
                         </div>
-                        <form id="reclamacionMod" data-toggle="validator">
+                        <form id="reclamacionMod" data-toggle="validator" accept-charset="character_set">
                             <br>
+                            <input class="form-control " id="codigoReclamacion" type="hidden" name="codigoReclamacion">
 
                             <div class="form-group col-md-12">
                                 <label class="control-label">Comentario  </label>
-                                <textarea class="form-control " rows="10" cols="50" id="comentarioReclamacionMod" name="comentarioReclamacion" placeholder="Comentar..."></textarea>
+                                <textarea class="form-control " rows="10" cols="50" id="comentarioReclamacionMod" name="comentarioReclamacionMod" placeholder="Comentar..." required></textarea>
                             </div>
                             <div class="form-group col-md-6">
                                 <button type="button" class="btn btn-theme" data-toggle="modal" data-target="#cargarArchivos">
@@ -707,15 +718,17 @@
                             <input class="form-control " id="rutaArchivo" type="hidden" name="rutaArchivo">
                             <br><br><br><br><br><br><br><br><br><br><br><br>
                             <div class="modal-footer">
-                                <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="crearReclamacion()">
+                                <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="modificarReclamacion()">
                                     Guardar
                                 </button>
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-danger" onclick="validarEliReclamacion()"">Eliminar</button>
+                                <button type="button" class="btn btn-theme" data-dismiss="modal">Cerrar</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
+
             <div class="modal fade" id="agregarCalificacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -1152,6 +1165,32 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="modValidarArchivoReclamacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <!-- Modal content-->
+                    <div class="modal-content" id="modales-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Confirmar Cambios</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-row">
+                                <div class="col-md-12">
+                                    <form method="post" name="modvalidar" id="modvalidar" action="">
+                                        <div class="modal-body" id="modvalidar">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success" id="btnModificar" onclick="eliminarArchivoReclamacion()">
+                                    Si
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                            </div>                           
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="modal fade" id="modValidarArhivoProceso" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <!-- Modal content-->
@@ -1258,6 +1297,33 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="modValiReclamacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+
+                    <!-- Modal content-->
+                    <div class="modal-content" id="modales-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Confirmar Cambios</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-row">
+                                <div class="col-md-12">
+                                    <form method="post" name="modrecla" id="modrecla" action="">
+                                        <div class="modal-body" id="modrecla">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success" id="btnModificar" onclick="eliminarReclamacion()">
+                                    Si
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                            </div>                           
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="modal fade" id="modalValidarCalificacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
 
@@ -1350,7 +1416,7 @@
         <!-- js placed at the end of the document so the pages load faster -->
         <script type="text/javascript" src="${pageContext.servletContext.contextPath}/lib/advanced-datatable/js/DT_bootstrap.js"></script>
         <script src="${pageContext.servletContext.contextPath}/lib/bootstrap/js/validator.min.js" type="text/javascript"></script>
-        <script src="${pageContext.servletContext.contextPath}/JavaScript/Expediente.js" type="text/javascript"></script>
+        <script src="${pageContext.servletContext.contextPath}/JavaScript/Expediente.js" type="text/javascript" charset="UTF-8"></script>
         <script src="${pageContext.servletContext.contextPath}/lib/bootstrap-fileinput-master/js/locales/es.js" type="text/javascript"></script>
         <script src="${pageContext.servletContext.contextPath}/lib/bootstrap/js/bootstrap.min.js"></script>
         <script class="include" type="text/javascript" src="${pageContext.servletContext.contextPath}/lib/jquery.dcjqaccordion.2.7.js"></script>

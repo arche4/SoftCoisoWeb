@@ -246,7 +246,46 @@ $(document).ready(function () {
         });
     });
 
+    $("body").on("click", "#btnConsultarReclamacion", function () {
+        $(".loader").fadeIn("slow");
+        var btnConsultarReclamacion = $(this).val();
+        $.ajax({
+            async: false,
+            type: "POST",
+            encoding: "UTF-8",
+            url: "/ReclamacionServlet",
+            data: 'btnConsultarReclamacion=' + btnConsultarReclamacion,
+            success: function (data) {
+                event.preventDefault();
+                $(".loader").fadeOut("slow");
+                var respuesta = $.trim(data);
+                if (respuesta !== "" && respuesta !== null) {
+                    respuesta = respuesta.split("#");
+                    $("#codigoReclamacion").val(respuesta[0]);
+                    $("#comentarioReclamacionMod").val(respuesta[1]);
+                    $('#modificarReclamacion').modal('show');
+                } else {
+                    var cadena = '<div class="form-row">'
+                            + '<h5>Lo sentimos, se ha presentado un problema consultado los datos .</h3>'
+                            + ' </div>';
+                    $('#modInferror').html(cadena);
+                    $('#modalInfError').modal('show');
+                }
+            }
+        });
+    });
+    
+     $("body").on("click", "#btnEliminarArchivo", function () {
+        var cadena = ' <div class="form-row">'
+                + '<h5> ¿ Esta seguro que quieres eliminar el archivo ?</h3>'
+                + ' </div>';
+        $('#modvalidar').html(cadena);
+        $('#modValidarArchivoReclamacion').modal('show');
+    });
+
+
 });
+
 
 function myFunctionReload() {
     location.reload();
@@ -864,4 +903,118 @@ function crearReclamacion() {
             });
         }
     }
+}
+function modificarReclamacion() {
+    var elmForm = $("#reclamacionMod");
+    if (elmForm) {
+        elmForm.validator('validate');
+        var elmErr = elmForm.find('.has-error');
+        if (elmErr && elmErr.length > 0) {
+            return false;
+        } else {
+            $('#modificarReclamacion').modal('hide');
+            $(".loader").fadeIn("slow");
+            var btnModificarReclamacion = 'ok';
+            var codigo = $('#codigoReclamacion').val();
+            var casoId = $('#expedienteId').val();
+            var usuario = $('#usuarioLogeado').val();
+            var comentario = $('#comentarioReclamacionMod').val();
+            var nombreArchivo = $('#nombreArchivo').val();
+            var rutaArchivo = $('#rutaArchivo').val();
+
+            $.ajax({
+                async: false,
+                type: "POST",
+                url: "/ReclamacionServlet",
+                data: 'btnModificarReclamacion=' + btnModificarReclamacion + '&casoId=' + casoId + '&usuario=' + usuario
+                        + '&comentario=' + comentario + '&nombreArchivo=' + nombreArchivo + '&rutaArchivo=' + rutaArchivo
+                        + '&codigo=' + codigo,
+                success: function (data) {
+                    event.preventDefault();
+                    $(".loader").fadeOut("slow");
+                    if (data === "Exitoso") {
+                        var cadena = ' <div class="form-row">'
+                                + '<h5>La reclamacion fue guardada  con ex\u00EDto.</h3>'
+                                + ' </div>';
+                        $('#modInfexito').html(cadena);
+                        $('#modalInfexito').modal('show');
+                    } else {
+                        var cadena = '<div class="form-row">'
+                                + '<h5>Lo sentimos, se ha presentado un problema guardando los datos .</h3>'
+                                + ' </div>';
+                        $('#modInferror').html(cadena);
+                        $('#modalInfError').modal('show');
+                    }
+                }
+            });
+        }
+    }
+}
+
+function validarEliReclamacion() {
+    var cadena = ' <div class="form-row">'
+            + '<h5> ¿ Esta seguro que quieres eliminar la reclamacion ?</h3>'
+            + ' </div>';
+    $('#modrecla').html(cadena);
+    $('#modificarReclamacion').modal('hide');
+    $('#modValiReclamacion').modal('show');
+}
+
+function eliminarReclamacion() {
+    $('#modValiReclamacion').modal('hide');
+    $(".loader").fadeIn("slow");
+    var btnEliminarReclamacion = $('#codigoReclamacion').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/ReclamacionServlet",
+        data: 'btnEliminarReclamacion=' + btnEliminarReclamacion,
+        success: function (data) {
+            event.preventDefault();
+            $(".loader").fadeOut("slow");
+            if (data === "Exitoso") {
+                var cadena = ' <div class="form-row">'
+                        + '<h5>La Reclamacion fue eliminada con ex\u00EDto.</h3>'
+                        + ' </div>';
+                $('#modInfexito').html(cadena);
+                $('#modalInfexito').modal('show');
+            } else {
+                var cadena = '<div class="form-row">'
+                        + '<h5>Lo sentimos, se ha presentado un problema eliminando los datos .</h3>'
+                        + ' </div>';
+                $('#modInferror').html(cadena);
+                $('#modalInfError').modal('show');
+            }
+        }
+    });
+}
+
+function eliminarArchivoReclamacion() {
+    $('#modValidarArchivoReclamacion').modal('hide');
+    $(".loader").fadeIn("slow");
+    var btnEliminarArchivo = $('#btnEliminarArchivo').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/ReclamacionServlet",
+        data: 'btnEliminarArchivo=' + btnEliminarArchivo,
+        success: function (data) {
+            event.preventDefault();
+            $(".loader").fadeOut("slow");
+            if (data === "Exitoso") {
+                var cadena = ' <div class="form-row">'
+                        + '<h5>El archivo fue eliminado con ex\u00EDto.</h3>'
+                        + ' </div>';
+                $('#modInfexito').html(cadena);
+                $('#modalInfexito').modal('show');
+            } else {
+                var cadena = '<div class="form-row">'
+                        + '<h5>Lo sentimos, se ha presentado un problema eliminando el archivo .</h3>'
+                        + ' </div>';
+                $('#modInferror').html(cadena);
+                $('#modalInfError').modal('show');
+            }
+        }
+    });
+
 }

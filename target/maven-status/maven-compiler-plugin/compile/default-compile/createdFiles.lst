@@ -23,6 +23,7 @@ com\softcoisoweb\conexion\Conexion.class
 com\softcoisoweb\model\Medicamentos.class
 com\softcoisoweb\model\Usuario_.class
 com\softcoisoweb\model\CasoArchivo.class
+com\softcoisoweb\servlet\FilterSecurity.class
 com\softcoisoweb\controller\MedicamentosCasoJpaController.class
 com\softcoisoweb\model\TerminosCondiciones_.class
 com\softcoisoweb\model\ProcesoReclamacion.class
