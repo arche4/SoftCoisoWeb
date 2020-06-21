@@ -276,6 +276,39 @@ $(document).ready(function () {
         });
     });
 
+    $("body").on("click", "#btnConsultarMedicamento", function () {
+        $(".loader").fadeIn("slow");
+        var btnConsultarMedicamento = $(this).val();
+        $.ajax({
+            async: false,
+            type: "POST",
+            encoding: "UTF-8",
+            url: "/MedicamentosCasoServlet",
+            data: 'btnConsultarMedicamento=' + btnConsultarMedicamento,
+            success: function (data) {
+                event.preventDefault();
+                $(".loader").fadeOut("slow");
+                var respuesta = $.trim(data);
+                if (respuesta !== "" && respuesta !== null) {
+                    respuesta = respuesta.split("#");
+                    $("#idMedicamento").val(respuesta[0]);
+                    $("#fechaMedicamentoMod").val(respuesta[1]);
+                    $("#codigoMedicamentoMod").val(respuesta[2]);
+                    $("#dosificacionMod").val(respuesta[3]);
+                    $("#cantidadMod").val(respuesta[4]);
+                    $("#comentarioMedicamentoMod").val(respuesta[5]);
+                    $('#modificarMedicamento').modal('show');
+                } else {
+                    var cadena = '<div class="form-row">'
+                            + '<h5>Lo sentimos, se ha presentado un problema consultado los datos .</h3>'
+                            + ' </div>';
+                    $('#modInferror').html(cadena);
+                    $('#modalInfError').modal('show');
+                }
+            }
+        });
+    });
+
     $("body").on("click", "#btnEliminarArchivo", function () {
         var cadena = ' <div class="form-row">'
                 + '<h5> ¿ Esta seguro que quieres eliminar el archivo ?</h3>'
@@ -284,6 +317,13 @@ $(document).ready(function () {
         $('#modValidarArchivoReclamacion').modal('show');
     });
 
+    $("body").on("click", "#eliminarArchivoMedi", function () {
+        var cadena = ' <div class="form-row">'
+                + '<h5> ¿ Esta seguro que quieres eliminar el archivo ?</h3>'
+                + ' </div>';
+        $('#modvalidar').html(cadena);
+        $('#modValidarArhivoMedicamento').modal('show');
+    });
 
 });
 
@@ -1037,16 +1077,18 @@ function crearMedicamento() {
             var comentario = $('#comentarioMedicamento').val();
             var nombreArchivo = $('#nombreArchivo').val();
             var rutaArchivo = $('#rutaArchivo').val();
-            var codigoMedicamento = $('#medicamento').val();
+            var codigoMedicamento = $('#codigoMedicamento').val();
             var dosificacion = $('#dosificacion').val();
             var cantidad = $('#cantidad').val();
+            var fechaMedicamento = $('#fechaMedicamento').val();
             $.ajax({
                 async: false,
                 type: "POST",
                 url: "/MedicamentosCasoServlet",
                 data: 'btnCrearMedicamento=' + btnCrearMedicamento + '&casoId=' + casoId + '&usuario=' + usuario
                         + '&comentario=' + comentario + '&nombreArchivo=' + nombreArchivo + '&rutaArchivo=' + rutaArchivo
-                        + '&codigoMedicamento=' + codigoMedicamento + '&dosificacion=' + dosificacion + '&cantidad=' + cantidad,
+                        + '&codigoMedicamento=' + codigoMedicamento + '&dosificacion=' + dosificacion + '&cantidad=' + cantidad
+                        + '&fechaMedicamento=' + fechaMedicamento,
                 success: function (data) {
                     event.preventDefault();
                     $(".loader").fadeOut("slow");
@@ -1077,18 +1119,19 @@ function modificarMedicamento() {
         if (elmErr && elmErr.length > 0) {
             return false;
         } else {
-            $('#agregarMedicamento').modal('hide');
+            $('#modificarMedicamento').modal('hide');
             $(".loader").fadeIn("slow");
             var btnModificarMedicamento = 'ok';
             var casoId = $('#expedienteId').val();
             var usuario = $('#usuarioLogeado').val();
-            var comentario = $('#comentarioMedicamento').val();
+            var comentario = $('#comentarioMedicamentoMod').val();
             var nombreArchivo = $('#nombreArchivo').val();
             var rutaArchivo = $('#rutaArchivo').val();
-            var codigoMedicamento = $('#medicamento').val();
-            var dosificacion = $('#dosificacion').val();
-            var cantidad = $('#cantidad').val();
+            var codigoMedicamento = $('#codigoMedicamentoMod').val();
+            var dosificacion = $('#dosificacionMod').val();
+            var cantidad = $('#cantidadMod').val();
             var idMedicamento = $('#idMedicamento').val();
+            var fechaMedicamentoMod = $('#fechaMedicamentoMod').val();
             $.ajax({
                 async: false,
                 type: "POST",
@@ -1096,7 +1139,7 @@ function modificarMedicamento() {
                 data: 'btnModificarMedicamento=' + btnModificarMedicamento + '&casoId=' + casoId + '&usuario=' + usuario
                         + '&comentario=' + comentario + '&nombreArchivo=' + nombreArchivo + '&rutaArchivo=' + rutaArchivo
                         + '&codigoMedicamento=' + codigoMedicamento + '&dosificacion=' + dosificacion + '&cantidad=' + cantidad
-                        + '&idMedicamento=' + idMedicamento,
+                        + '&idMedicamento=' + idMedicamento + '&fechaMedicamentoMod=' + fechaMedicamentoMod,
                 success: function (data) {
                     event.preventDefault();
                     $(".loader").fadeOut("slow");
@@ -1119,23 +1162,23 @@ function modificarMedicamento() {
     }
 }
 
-function validarEliMedi() {
+function validarMedicamento() {
     var cadena = ' <div class="form-row">'
             + '<h5> ¿ Esta seguro que quieres eliminar el medicamento ?</h3>'
             + ' </div>';
-    $('#modrecla').html(cadena);
+    $('#modVali').html(cadena);
     $('#modificarMedicamento').modal('hide');
     $('#modValiMedicamento').modal('show');
 }
 
 function eliminarMedicamento() {
-    $('#modValiReclamacion').modal('hide');
+    $('#modValiMedicamento').modal('hide');
     $(".loader").fadeIn("slow");
-    var btnEliminarReclamacion = $('#codigoReclamacion').val();
+    var btnEliminarReclamacion = $('#idMedicamento').val();
     $.ajax({
         async: false,
         type: "POST",
-        url: "/ReclamacionServlet",
+        url: "/MedicamentosCasoServlet",
         data: 'btnEliminarReclamacion=' + btnEliminarReclamacion,
         success: function (data) {
             event.preventDefault();
@@ -1157,14 +1200,14 @@ function eliminarMedicamento() {
     });
 }
 
-function eliminarArchivoReclamacion() {
-    $('#modValidarArchivoReclamacion').modal('hide');
+function eliminarArchivoMedicamento() {
+    $('#modValidarArhivoMedicamento').modal('hide');
     $(".loader").fadeIn("slow");
-    var btnEliminarArchivo = $('#btnEliminarArchivo').val();
+    var btnEliminarArchivo = $('#eliminarArchivoMedi').val();
     $.ajax({
         async: false,
         type: "POST",
-        url: "/ReclamacionServlet",
+        url: "/MedicamentosCasoServlet",
         data: 'btnEliminarArchivo=' + btnEliminarArchivo,
         success: function (data) {
             event.preventDefault();

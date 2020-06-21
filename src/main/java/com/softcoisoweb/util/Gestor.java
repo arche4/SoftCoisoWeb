@@ -24,7 +24,7 @@ public class Gestor {
         final Properties prop = new Properties();
         InputStream input_stream = null;
         try {
-            input_stream = this.getClass().getResource("conexion.properties").openStream();
+            input_stream = Gestor.class.getResource("conexion.properties").openStream();
             prop.load(input_stream);
 
         } catch (IOException ex) {

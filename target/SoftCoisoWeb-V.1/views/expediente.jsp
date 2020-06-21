@@ -549,10 +549,19 @@
                                                         <div class="row content-panel mt mb">
                                                             <div class="col-md-8">
                                                                 <div class="pull-right hidden-phone">
-                                                                    <button type="button" id ="btnConsultarReclamacion" name="btnConsultarReclamacion"  value="${reclamacion.getCodigo()}" class="btn btn-primary btn-xs fa fa-pencil"></button>
+                                                                    <button type="button" id ="btnConsultarMedicamento" name="btnConsultarMedicamento"  value="${medicamento.getCodigoMedicamento()}" class="btn btn-primary btn-xs fa fa-pencil"></button>
                                                                 </div>
+                                                                <c:forEach var="codigoMedicamento" items="${sessionScope.listMedicamento}">
+                                                                    <c:choose>
+                                                                        <c:when test="${medicamento.getMedicamentosCodigoMedicamento() == codigoMedicamento.getCodigoMedicamento()}">
+                                                                            <h4 contenteditable="true">Medicamento: ${codigoMedicamento.getNombreMedicamento()}</h4>
+                                                                        </c:when>
+                                                                    </c:choose> 
+                                                                </c:forEach>
+                                                                <h5 contenteditable="true">Dosificación: ${medicamento.getDosificacion()}</h5>
+                                                                <h5 contenteditable="true">Cantidad ${medicamento.getCantidad()}</h5>
+                                                                <p contenteditable="true" class="mt">Comentario: ${medicamento.getComentario()}</p>
                                                                 <p><span class="text-muted">Creado por :</span> ${medicamento.getNombrePersona()} | <span class="text-muted">Fecha Creada :</span> ${medicamento.getFechaMedicamento()} | <span class="text-muted">Ultima Actualización :</span> ${medicamento.getFechaActualizacion()}</p>
-                                                                <p contenteditable="true" class="mt">${reclamacion.getComentarios()}</p>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <c:if test="${!empty medicamento.getNombreArchivo()}">
@@ -569,7 +578,7 @@
                                                                                         <div class="file-actions">
                                                                                             <div class="file-footer-buttons">
                                                                                                 <button type="button" id ="verArchivo" name="verArchivo"  value="${medicamento.getRutaArchivo()}" ><i class="glyphicon glyphicon-zoom-in"></i></button>
-                                                                                                <button type="button" id ="btnEliminarArchivoCalificacion" name="btnEliminarArchivoProceso"  value="${medicamento.getCodigoMedicamento()}" ><i class="glyphicon glyphicon-remove"></i></button>
+                                                                                                <button type="button" id ="eliminarArchivoMedi" name="eliminarArchivoMedi"  value="${medicamento.getCodigoMedicamento()}" ><i class="glyphicon glyphicon-remove"></i></button>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -657,6 +666,48 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="agregarDiagnostico"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Agregar Diagnostico</h4>
+                        </div>
+                        <div class="alert alert-success" id="Exitoso" style="display:none;">
+                            <strong>¡Bien hecho!</strong>Se guardo a cargado correctamente el archivo.
+                        </div>
+                        <form id="medicamento" data-toggle="validator">
+                            <br>
+                            <div class="form-group col-md-6">
+                                <label class="control-label">Fecha  Medicamento</label>
+                                <input type="date" class="form-control" id="fechaMedicamento" name="fechaMedicamento" placeholder="MM/DD/YYY" id="example-month-input">
+                            </div> 
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Comentario  </label>
+                                <textarea class="form-control " rows="10" cols="50" id="comentarioMedicamento" name="comentarioMedicamento" placeholder="Comentar..."></textarea>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Comentario  </label>
+                                <textarea class="form-control " rows="10" cols="50" id="comentarioMedicamento" name="comentarioMedicamento" placeholder="Comentar..."></textarea>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <button type="button" class="btn btn-theme" data-toggle="modal" data-target="#cargarArchivos">
+                                    Cargar Archivos
+                                </button>
+                            </div>
+                            <input class="form-control " id="nombreArchivo" type="hidden" name="nombreArchivo">
+                            <input class="form-control " id="rutaArchivo" type="hidden" name="rutaArchivo">
+                            <br><br><br><br><br><br><br><br><br><br><br><br>><br><br><br>
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success" id="btnCrear" onclick="crearMedicamento()">
+                                    Guardar
+                                </button>
+                                <button type="button" class="btn btn-theme" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <div class="modal fade" id="agregarMedicamento"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -675,10 +726,10 @@
                             </div> 
                             <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    <select class="js-example-basic-single" name="medicamento" id="medicamento" required>
+                                    <select class="js-example-basic-single" name="codigoMedicamento" id="codigoMedicamento" required>
                                         <option value="">Buscar Medicamento</option>
-                                        <c:forEach var="medicamento" items="${sessionScope.listMedicamento}">
-                                            <option value="${medicamento.getCodigoMedicamento()}"><c:out value="${medicamento.getCodigoMedicamento()}"/> - <c:out value="${medicamento.getNombreMedicamento()}"/>  </option>
+                                        <c:forEach var="codigoMedicamento" items="${sessionScope.listMedicamento}">
+                                            <option value="${codigoMedicamento.getCodigoMedicamento()}"><c:out value="${codigoMedicamento.getCodigoMedicamento()}"/> - <c:out value="${codigoMedicamento.getNombreMedicamento()}"/>  </option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -707,6 +758,67 @@
                             <br><br><br><br><br><br><br><br><br><br><br><br>><br><br><br>
                             <div class="modal-footer">
                                 <button  type="submit" class="btn btn-success" id="btnCrear" onclick="crearMedicamento()">
+                                    Guardar
+                                </button>
+                                <button type="button" class="btn btn-theme" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modificarMedicamento"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Medicamento</h4>
+                        </div>
+                        <div class="alert alert-success" id="Exitoso" style="display:none;">
+                            <strong>¡Bien hecho!</strong>Se guardo a cargado correctamente el archivo.
+                        </div>
+                        <form id="medicamentoMod" data-toggle="validator">
+                            <br>
+                            <input class="form-control " id="idMedicamento" type="hidden" name="idMedicamento">
+                            <div class="form-group col-md-6">
+                                <label class="control-label">Fecha  Medicamento</label>
+                                <input type="date" class="form-control" id="fechaMedicamentoMod" name="fechaMedicamentoMod" placeholder="MM/DD/YYY" id="example-month-input">
+                            </div> 
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <select class="js-example-basic-single" name="codigoMedicamentoMod" id="codigoMedicamentoMod" required>
+                                        <c:forEach var="codigoMedicamentoMod" items="${sessionScope.listMedicamento}">
+                                            <option value="${codigoMedicamentoMod.getCodigoMedicamento()}"><c:out value="${codigoMedicamentoMod.getCodigoMedicamento()}"/> - <c:out value="${codigoMedicamentoMod.getNombreMedicamento()}"/>  </option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="control-label">Dosificación</label>
+                                    <input type="text" class="form-control" id="dosificacionMod" name="dosificacionMod"  placeholder="Dosificación" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="control-label">Cantidad</label>
+                                    <input type="text" class="form-control" id="cantidadMod" name="cantidadMod"  placeholder="Cantidad" required>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Comentario  </label>
+                                <textarea class="form-control " rows="10" cols="50" id="comentarioMedicamentoMod" name="comentarioMedicamentoMod" placeholder="Comentar..."></textarea>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <button type="button" class="btn btn-theme" data-toggle="modal" data-target="#cargarArchivos">
+                                    Cargar Archivos
+                                </button>
+                            </div>
+                            <input class="form-control " id="nombreArchivo" type="hidden" name="nombreArchivo">
+                            <input class="form-control " id="rutaArchivo" type="hidden" name="rutaArchivo">
+                            <br><br><br><br><br><br><br><br><br><br><br><br>><br><br><br>
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success" id="btnCrear" onclick="modificarMedicamento()">
+                                    Guardar
+                                </button>
+                                <button  type="submit" class="btn btn-danger" id="btnEliminar" onclick="validarMedicamento()">
                                     Guardar
                                 </button>
                                 <button type="button" class="btn btn-theme" data-dismiss="modal">Cerrar</button>
@@ -1250,6 +1362,32 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="modValidarArhivoMedicamento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <!-- Modal content-->
+                    <div class="modal-content" id="modales-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Confirmar Cambios</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-row">
+                                <div class="col-md-12">
+                                    <form method="post" name="modvalidar" id="modvalidar" action="">
+                                        <div class="modal-body" id="modvalidar">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success" id="btnModificar" onclick="eliminarArchivoMedicamento()">
+                                    Si
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                            </div>                           
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="modal fade" id="modValidarArhivoProceso" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <!-- Modal content-->
@@ -1348,6 +1486,33 @@
                             </div>
                             <div class="modal-footer">
                                 <button  type="submit" class="btn btn-success" id="btnModificar" onclick="cambiarEstado()">
+                                    Si
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                            </div>                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modValiMedicamento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+
+                    <!-- Modal content-->
+                    <div class="modal-content" id="modales-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Confirmar Cambios</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-row">
+                                <div class="col-md-12">
+                                    <form method="post" name="modVali" id="modVali" action="">
+                                        <div class="modal-body" id="modVali">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success" id="btnModificar" onclick="eliminarMedicamento()">
                                     Si
                                 </button>
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
