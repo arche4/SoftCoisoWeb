@@ -20,12 +20,10 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -33,7 +31,7 @@ import javax.servlet.http.HttpSession;
  */
 public class CalendarServlet extends HttpServlet {
 
-    private final static Logger LOGGER = Logger.getLogger("LogsErrores");
+    private static final  Logger LOGGER = Logger.getLogger("LogsErrores");
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,8 +40,7 @@ public class CalendarServlet extends HttpServlet {
      * @param response servlet response
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        HttpSession session = request.getSession();
-        RequestDispatcher rd = null;
+        
         PrintWriter out = response.getWriter();
 
         String btnCrearCita = request.getParameter("btnCrearCita");
@@ -52,15 +49,15 @@ public class CalendarServlet extends HttpServlet {
 
         try {
             if (btnCrearCita != null && btnCrearCita.equals("si")) {
-                String guardar = guardatos(request, response);
+                String guardar = guardatos(request);
                 out.print(guardar);
             }
             if (btnModificarCita != null && btnModificarCita.equals("ok")) {
-                String modificar = modificarCita(request, response);
+                String modificar = modificarCita(request);
                 out.print(modificar);
             }
             if (btnEliminarCita != null && btnEliminarCita.equals("ok")) {
-                String eliminar = eliminarCita(request, response);
+                String eliminar = eliminarCita(request);
                 out.print(eliminar);
             }
         } finally {
@@ -69,9 +66,8 @@ public class CalendarServlet extends HttpServlet {
 
     }
 
-    public String guardatos(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String guardatos(HttpServletRequest request) throws IOException {
         String respuesta = null;
-        RequestDispatcher rd = null;
         CitasJpaController jpaCita = new CitasJpaController(JPAFactory.getFACTORY());
         PersonaJpaController personaJpa = new PersonaJpaController(JPAFactory.getFACTORY());
         String personaC = request.getParameter("persona");
@@ -132,17 +128,17 @@ public class CalendarServlet extends HttpServlet {
         return respuesta;
     }
 
-    public String modificarCita(HttpServletRequest request, HttpServletResponse response) {
+    public String modificarCita(HttpServletRequest request) {
         String respuesta;
         CitasJpaController jpaCita = new CitasJpaController(JPAFactory.getFACTORY());
         String codigoCita = request.getParameter("codigoCita");
         String anoCita = request.getParameter("anoCita");
         String mesCita = request.getParameter("mesCita");
         String diaCita = request.getParameter("diaCita");
-        String CitaIniHora = request.getParameter("CitaIniHora");
-        String CitaFinHora = request.getParameter("CitaFinHora");
-        String Citatitulo = request.getParameter("Citatitulo");
-        String Citacomentario = request.getParameter("Citacomentario");
+        String citaIniHora = request.getParameter("CitaIniHora");
+        String citaFinHora = request.getParameter("CitaFinHora");
+        String citatitulo = request.getParameter("Citatitulo");
+        String citacomentario = request.getParameter("Citacomentario");
         String citaCedula = request.getParameter("citaCedula");
         String correoPersona = request.getParameter("Citaemail");
         String nombrePersona = request.getParameter("citaNom");
@@ -152,8 +148,8 @@ public class CalendarServlet extends HttpServlet {
 
         try {
             Citas cita = new Citas(Integer.parseInt(codigoCita), Integer.parseInt(anoCita),
-                    Integer.parseInt(mesCita), Integer.parseInt(diaCita), CitaIniHora, CitaFinHora, Citatitulo,
-                    Citacomentario, citaCedula, correoPersona, nombrePersona, emailUsuarioCita, cedulaUsuarioCita, "Modificada");
+                    Integer.parseInt(mesCita), Integer.parseInt(diaCita), citaIniHora, citaFinHora, citatitulo,
+                    citacomentario, citaCedula, correoPersona, nombrePersona, emailUsuarioCita, cedulaUsuarioCita, "Modificada");
             jpaCita.edit(cita);
 
             Calendar fecha = Calendar.getInstance();
@@ -167,9 +163,9 @@ public class CalendarServlet extends HttpServlet {
             Date fechaDate2 = formateador.parse(fechaCita);
             if (fechaDate1.before(fechaDate2)) {
                 if (enviarCorreo != null && enviarCorreo.equals("Si")) {
-                    String asuntoCorreo = "Modificacion: " + Citatitulo;
+                    String asuntoCorreo = "Modificacion: " + citatitulo;
                     String descripcion = "Se realizo una modificación en la citación";
-                    enviarCorreo(anoCita, mesCita, diaCita, CitaIniHora, CitaFinHora, asuntoCorreo, descripcion, Citacomentario, correoPersona, emailUsuarioCita);
+                    enviarCorreo(anoCita, mesCita, diaCita, citaIniHora, citaFinHora, asuntoCorreo, descripcion, citacomentario, correoPersona, emailUsuarioCita);
                 }
             }
             respuesta = "Exitoso";
@@ -181,7 +177,7 @@ public class CalendarServlet extends HttpServlet {
         return respuesta;
     }
 
-    public String eliminarCita(HttpServletRequest request, HttpServletResponse response) {
+    public String eliminarCita(HttpServletRequest request) {
         String resultado;
         CitasJpaController jpaCita = new CitasJpaController(JPAFactory.getFACTORY());
         String codigoCita = request.getParameter("codigoCita");

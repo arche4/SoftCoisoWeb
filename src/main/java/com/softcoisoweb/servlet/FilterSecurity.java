@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.softcoisoweb.servlet;
 
 import java.io.IOException;
@@ -28,6 +23,7 @@ public class FilterSecurity implements Filter{
         res.addHeader("X-Content-Type-Options", "nosniff");
         res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         res.setHeader("Pragma", "no-cache");
+        request.setCharacterEncoding("UTF-8");
         chain.doFilter(request, response);
         addSameSiteCookieAttribute((HttpServletResponse) res);
     }
