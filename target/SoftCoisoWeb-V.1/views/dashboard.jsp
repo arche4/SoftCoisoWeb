@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:if test="${empty user}">
     <jsp:forward page="${pageContext.servletContext.contextPath}/index.jsp"/>
@@ -5,7 +6,7 @@
 <html lang="en">
 
     <head>
-        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="Dashboard">
@@ -105,7 +106,7 @@
                                 <li class="sub-menu">
                                     <a href="javascript:;">
                                         <i class="fa fa-desktop"></i>
-                                        <span>Módulos Administrativos</span>
+                                        <span>Mï¿½dulos Administrativos</span>
                                     </a>
                                     <ul class="sub">
                                         <li><a href="${pageContext.servletContext.contextPath}/views/usuario.jsp">Usuarios</a></li>
@@ -260,7 +261,7 @@
                                 <div class="col-md-4 mb">
                                     <div class="weather pn">
                                         <i class="fa fa-cloud fa-4x"></i>
-                                        <h2>11º C</h2>
+                                        <h2>11ï¿½ C</h2>
                                         <h4>BUDAPEST</h4>
                                     </div>
                                 </div>

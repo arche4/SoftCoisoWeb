@@ -33,7 +33,8 @@
         <link href="${pageContext.servletContext.contextPath}/lib/advanced-datatable/css/demo_table.css" rel="stylesheet" />
         <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/lib/advanced-datatable/css/DT_bootstrap.css" />
         <script type="text/javascript" language="javascript" src="${pageContext.servletContext.contextPath}/lib/advanced-datatable/js/jquery.dataTables.js"></script>
-
+        <link href="${pageContext.servletContext.contextPath}/lib/Search/select2.min.css" rel="stylesheet" type="text/css"/>
+        <script src="${pageContext.servletContext.contextPath}/lib/Search/select2.min.js" type="text/javascript"></script>
     </head>
 
     <body>
@@ -653,6 +654,64 @@
                         <div class="modal-body">
                             <embed id="pdf" src="" type="application/pdf" width="100%" height="600px" />
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="agregarMedicamento"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Agregar Medicamento</h4>
+                        </div>
+                        <div class="alert alert-success" id="Exitoso" style="display:none;">
+                            <strong>¡Bien hecho!</strong>Se guardo a cargado correctamente el archivo.
+                        </div>
+                        <form id="medicamento" data-toggle="validator">
+                            <br>
+                            <div class="form-group col-md-6">
+                                <label class="control-label">Fecha  Medicamento</label>
+                                <input type="date" class="form-control" id="fechaMedicamento" name="fechaMedicamento" placeholder="MM/DD/YYY" id="example-month-input">
+                            </div> 
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <select class="js-example-basic-single" name="medicamento" id="medicamento" required>
+                                        <option value="">Buscar Medicamento</option>
+                                        <c:forEach var="medicamento" items="${sessionScope.listMedicamento}">
+                                            <option value="${medicamento.getCodigoMedicamento()}"><c:out value="${medicamento.getCodigoMedicamento()}"/> - <c:out value="${medicamento.getNombreMedicamento()}"/>  </option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="control-label">Dosificación</label>
+                                    <input type="text" class="form-control" id="dosificacion" name="dosificacion"  placeholder="Dosificación" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="control-label">Cantidad</label>
+                                    <input type="text" class="form-control" id="cantidad" name="cantidad"  placeholder="Cantidad" required>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Comentario  </label>
+                                <textarea class="form-control " rows="10" cols="50" id="comentarioMedicamento" name="comentarioMedicamento" placeholder="Comentar..."></textarea>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <button type="button" class="btn btn-theme" data-toggle="modal" data-target="#cargarArchivos">
+                                    Cargar Archivos
+                                </button>
+                            </div>
+                            <input class="form-control " id="nombreArchivo" type="hidden" name="nombreArchivo">
+                            <input class="form-control " id="rutaArchivo" type="hidden" name="rutaArchivo">
+                            <br><br><br><br><br><br><br><br><br><br><br><br>><br><br><br>
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success" id="btnCrear" onclick="crearMedicamento()">
+                                    Guardar
+                                </button>
+                                <button type="button" class="btn btn-theme" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

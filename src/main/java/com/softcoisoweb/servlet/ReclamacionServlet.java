@@ -90,7 +90,7 @@ public class ReclamacionServlet extends HttpServlet {
             accionesExpediente.guardarAccionesExpediente(casoid, usuario, accion);
             respuesta = "Exitoso";
         } catch (Exception e) {
-            System.err.println("Se presento un error creando la reclamacion, El Error es: " + e);
+            LOGGER.log(Level.SEVERE, "Se presento un error creando la reclamacion:  El error es: {0}", new Object[]{e});
             respuesta = "Error";
         }
         return respuesta;
@@ -103,7 +103,7 @@ public class ReclamacionServlet extends HttpServlet {
             ProcesoReclamacion getReclamacion = reclamacionJpa.findProcesoReclamacion(Integer.parseInt(codigoReclamacion));
             respuesta = getReclamacion.getCodigo() + "#" + getReclamacion.getComentarios();
         } catch (NumberFormatException e) {
-            System.out.println("Error consultando al proceso: " + codigoReclamacion + "El error es:" + e);
+            LOGGER.log(Level.SEVERE, "Error consultando la reclamacion:  {0} El error es: {1}", new Object[]{codigoReclamacion, e});
         }
 
         return respuesta;
@@ -136,7 +136,7 @@ public class ReclamacionServlet extends HttpServlet {
             accionesExpediente.guardarAccionesExpediente(casoId, usuario, accion);
             respuesta = "Exitoso";
         } catch (NumberFormatException e) {
-            System.err.println("Se presento un error creando el proceso de calificacion: " + codigo + " El Error es: " + e);
+            LOGGER.log(Level.SEVERE, "Error modificando la reclamacion:  {0} El error es: {1}", new Object[]{codigo, e});
             respuesta = "Error";
         }
 
@@ -151,7 +151,7 @@ public class ReclamacionServlet extends HttpServlet {
             reclamacionJpa.destroy(Integer.parseInt(codigoReclamacion));
             resultado = "Exitoso";
         } catch (NonexistentEntityException | NumberFormatException e) {
-            System.err.println("Se presento un error eliminando el proceso de calificacion: " + codigoReclamacion + " El Error es: " + e);
+            LOGGER.log(Level.SEVERE, "Error eliminando la reclamacion:  {0} El error es: {1}", new Object[]{codigoReclamacion, e});
             resultado = "Error";
         }
         return resultado;

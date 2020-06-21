@@ -3,6 +3,7 @@ $(window).load(function () {
 });
 
 $(document).ready(function () {
+    $('.js-example-basic-single').select2();
 
     $('#table_id').dataTable();
 
@@ -274,8 +275,8 @@ $(document).ready(function () {
             }
         });
     });
-    
-     $("body").on("click", "#btnEliminarArchivo", function () {
+
+    $("body").on("click", "#btnEliminarArchivo", function () {
         var cadena = ' <div class="form-row">'
                 + '<h5> ¿ Esta seguro que quieres eliminar el archivo ?</h3>'
                 + ' </div>';
@@ -860,6 +861,7 @@ function eliminarCalificacion() {
     });
 }
 
+//MODULO DE RECLAMACION
 function crearReclamacion() {
     var elmForm = $("#reclamacion");
     if (elmForm) {
@@ -961,6 +963,172 @@ function validarEliReclamacion() {
 }
 
 function eliminarReclamacion() {
+    $('#modValiReclamacion').modal('hide');
+    $(".loader").fadeIn("slow");
+    var btnEliminarReclamacion = $('#codigoReclamacion').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/ReclamacionServlet",
+        data: 'btnEliminarReclamacion=' + btnEliminarReclamacion,
+        success: function (data) {
+            event.preventDefault();
+            $(".loader").fadeOut("slow");
+            if (data === "Exitoso") {
+                var cadena = ' <div class="form-row">'
+                        + '<h5>La Reclamacion fue eliminada con ex\u00EDto.</h3>'
+                        + ' </div>';
+                $('#modInfexito').html(cadena);
+                $('#modalInfexito').modal('show');
+            } else {
+                var cadena = '<div class="form-row">'
+                        + '<h5>Lo sentimos, se ha presentado un problema eliminando los datos .</h3>'
+                        + ' </div>';
+                $('#modInferror').html(cadena);
+                $('#modalInfError').modal('show');
+            }
+        }
+    });
+}
+
+function eliminarArchivoReclamacion() {
+    $('#modValidarArchivoReclamacion').modal('hide');
+    $(".loader").fadeIn("slow");
+    var btnEliminarArchivo = $('#btnEliminarArchivo').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/ReclamacionServlet",
+        data: 'btnEliminarArchivo=' + btnEliminarArchivo,
+        success: function (data) {
+            event.preventDefault();
+            $(".loader").fadeOut("slow");
+            if (data === "Exitoso") {
+                var cadena = ' <div class="form-row">'
+                        + '<h5>El archivo fue eliminado con ex\u00EDto.</h3>'
+                        + ' </div>';
+                $('#modInfexito').html(cadena);
+                $('#modalInfexito').modal('show');
+            } else {
+                var cadena = '<div class="form-row">'
+                        + '<h5>Lo sentimos, se ha presentado un problema eliminando el archivo .</h3>'
+                        + ' </div>';
+                $('#modInferror').html(cadena);
+                $('#modalInfError').modal('show');
+            }
+        }
+    });
+
+}
+//MODULO DE MEDICAMENTO
+function crearMedicamento() {
+    var elmForm = $("#medicamento");
+    if (elmForm) {
+        elmForm.validator('validate');
+        var elmErr = elmForm.find('.has-error');
+        if (elmErr && elmErr.length > 0) {
+            return false;
+        } else {
+            $('#agregarMedicamento').modal('hide');
+            $(".loader").fadeIn("slow");
+            var btnCrearMedicamento = 'ok';
+            var casoId = $('#expedienteId').val();
+            var usuario = $('#usuarioLogeado').val();
+            var comentario = $('#comentarioMedicamento').val();
+            var nombreArchivo = $('#nombreArchivo').val();
+            var rutaArchivo = $('#rutaArchivo').val();
+            var codigoMedicamento = $('#medicamento').val();
+            var dosificacion = $('#dosificacion').val();
+            var cantidad = $('#cantidad').val();
+            $.ajax({
+                async: false,
+                type: "POST",
+                url: "/MedicamentosCasoServlet",
+                data: 'btnCrearMedicamento=' + btnCrearMedicamento + '&casoId=' + casoId + '&usuario=' + usuario
+                        + '&comentario=' + comentario + '&nombreArchivo=' + nombreArchivo + '&rutaArchivo=' + rutaArchivo
+                        + '&codigoMedicamento=' + codigoMedicamento + '&dosificacion=' + dosificacion + '&cantidad=' + cantidad,
+                success: function (data) {
+                    event.preventDefault();
+                    $(".loader").fadeOut("slow");
+                    if (data === "Exitoso") {
+                        var cadena = ' <div class="form-row">'
+                                + '<h5>La calificacion fue guardada  con ex\u00EDto.</h3>'
+                                + ' </div>';
+                        $('#modInfexito').html(cadena);
+                        $('#modalInfexito').modal('show');
+                    } else {
+                        var cadena = '<div class="form-row">'
+                                + '<h5>Lo sentimos, se ha presentado un problema guardando los datos .</h3>'
+                                + ' </div>';
+                        $('#modInferror').html(cadena);
+                        $('#modalInfError').modal('show');
+                    }
+                }
+            });
+        }
+    }
+}
+
+function modificarMedicamento() {
+    var elmForm = $("#medicamentoMod");
+    if (elmForm) {
+        elmForm.validator('validate');
+        var elmErr = elmForm.find('.has-error');
+        if (elmErr && elmErr.length > 0) {
+            return false;
+        } else {
+            $('#agregarMedicamento').modal('hide');
+            $(".loader").fadeIn("slow");
+            var btnModificarMedicamento = 'ok';
+            var casoId = $('#expedienteId').val();
+            var usuario = $('#usuarioLogeado').val();
+            var comentario = $('#comentarioMedicamento').val();
+            var nombreArchivo = $('#nombreArchivo').val();
+            var rutaArchivo = $('#rutaArchivo').val();
+            var codigoMedicamento = $('#medicamento').val();
+            var dosificacion = $('#dosificacion').val();
+            var cantidad = $('#cantidad').val();
+            var idMedicamento = $('#idMedicamento').val();
+            $.ajax({
+                async: false,
+                type: "POST",
+                url: "/MedicamentosCasoServlet",
+                data: 'btnModificarMedicamento=' + btnModificarMedicamento + '&casoId=' + casoId + '&usuario=' + usuario
+                        + '&comentario=' + comentario + '&nombreArchivo=' + nombreArchivo + '&rutaArchivo=' + rutaArchivo
+                        + '&codigoMedicamento=' + codigoMedicamento + '&dosificacion=' + dosificacion + '&cantidad=' + cantidad
+                        + '&idMedicamento=' + idMedicamento,
+                success: function (data) {
+                    event.preventDefault();
+                    $(".loader").fadeOut("slow");
+                    if (data === "Exitoso") {
+                        var cadena = ' <div class="form-row">'
+                                + '<h5>El medicamento fue guardado  con ex\u00EDto.</h3>'
+                                + ' </div>';
+                        $('#modInfexito').html(cadena);
+                        $('#modalInfexito').modal('show');
+                    } else {
+                        var cadena = '<div class="form-row">'
+                                + '<h5>Lo sentimos, se ha presentado un problema guardando los datos .</h3>'
+                                + ' </div>';
+                        $('#modInferror').html(cadena);
+                        $('#modalInfError').modal('show');
+                    }
+                }
+            });
+        }
+    }
+}
+
+function validarEliMedi() {
+    var cadena = ' <div class="form-row">'
+            + '<h5> ¿ Esta seguro que quieres eliminar el medicamento ?</h3>'
+            + ' </div>';
+    $('#modrecla').html(cadena);
+    $('#modificarMedicamento').modal('hide');
+    $('#modValiMedicamento').modal('show');
+}
+
+function eliminarMedicamento() {
     $('#modValiReclamacion').modal('hide');
     $(".loader").fadeIn("slow");
     var btnEliminarReclamacion = $('#codigoReclamacion').val();
