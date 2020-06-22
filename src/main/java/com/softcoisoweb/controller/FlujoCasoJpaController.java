@@ -147,7 +147,7 @@ public class FlujoCasoJpaController implements Serializable {
     public void actualizarFlujoCaso(String casoId, String fechaActulización, String estado, String usuarioCedula) throws NonexistentEntityException {
         EntityManager em = null;
         try {
-            String Query = "UPDATE coiso_BDpdn.flujo_caso set fecha_actualizacion = '" + fechaActulización + "',"
+            String Query = "UPDATE flujo_caso set fecha_actualizacion = '" + fechaActulización + "',"
                     + " usuario_cedula = '" + usuarioCedula + "',  estado_caso_codigo_estado = '" + estado + "' WHERE caso_persona_id_caso = '" + casoId + "'";
             em = getEntityManager();
             em.getTransaction().begin();

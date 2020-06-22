@@ -91,6 +91,10 @@
         <servlet-name>ArchivoServlet</servlet-name>
         <servlet-class>com.softcoisoweb.servlet.ArchivoServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DashboardServlet</servlet-name>
+        <servlet-class>com.softcoisoweb.servlet.DashboardServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CerrarSesionServlet</servlet-name>
         <url-pattern>/CerrarSesionServlet</url-pattern>
@@ -162,6 +166,10 @@
     <servlet-mapping>
         <servlet-name>ArchivoServlet</servlet-name>
         <url-pattern>/ArchivoServlet</url-pattern>
+    </servlet-mapping> 
+    <servlet-mapping>
+        <servlet-name>DashboardServlet</servlet-name>
+        <url-pattern>/DashboardServlet</url-pattern>
     </servlet-mapping> 
     <session-config>
         <session-timeout>

@@ -98,6 +98,7 @@ com\softcoisoweb\controller\ProcesoReclamacionJpaController.class
 com\softcoisoweb\model\Afp_.class
 com\softcoisoweb\model\Medicamentos_.class
 com\softcoisoweb\controller\MedicamentosJpaController.class
+com\softcoisoweb\servlet\DashboardServlet.class
 com\softcoisoweb\model\Formacion_.class
 com\softcoisoweb\servlet\DiagnosticoServlet.class
 com\softcoisoweb\model\CasoPersona_.class

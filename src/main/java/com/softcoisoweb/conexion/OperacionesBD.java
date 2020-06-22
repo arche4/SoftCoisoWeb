@@ -133,4 +133,82 @@ public class OperacionesBD {
         }
         return resp;
     }
+
+    public JSONArray graficaEstado() {
+        JSONArray resp = new JSONArray();
+        Connection conn = null;
+        try {
+            Conexion objConn = new Conexion();
+            conn = objConn.conectarMySQL();
+            try ( PreparedStatement pstmt = conn.prepareStatement("select ec.nombre_estado as estado, "
+                    + "COUNT(fc.caso_persona_id_caso) as cantidad "
+                    + "from estado_caso ec "
+                    + "inner join flujo_caso fc "
+                    + "on ec.codigo_estado = fc.estado_caso_codigo_estado "
+                    + "GROUP BY ec.nombre_estado");) {
+                ResultSet result = pstmt.executeQuery();
+                while (result.next()) {
+                    JSONObject data = new JSONObject();
+                    String Estado = result.getString(1);
+                    String Cantidad = result.getString(2);
+                    data.put("Estado", Estado);
+                    data.put("Cantidad", Cantidad);
+                    resp.put(data);
+                }
+            } catch (Exception e) {
+                LOGGER.log(Level.SEVERE, "Se presento un error consultado la grafica de estados:   El error es: {0}", new Object[]{e});
+
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Se presento un error consultado la grafica de estados:   El error es: {0}", new Object[]{e});
+
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("com.softcoisoweb.conexion.OperacionesBD.cargarDatos(): ERROR" + e);
+            }
+        }
+        return resp;
+    }
+
+    public JSONArray graficaGenero() {
+        JSONArray resp = new JSONArray();
+        Connection conn = null;
+        try {
+            Conexion objConn = new Conexion();
+            conn = objConn.conectarMySQL();
+            try ( PreparedStatement pstmt = conn.prepareStatement("select p.genero as genero, "
+                    + "COUNT(p.cedula) as cantidad "
+                    + "from persona p "
+                    + "GROUP BY p.genero");) {
+                ResultSet result = pstmt.executeQuery();
+                while (result.next()) {
+                    JSONObject data = new JSONObject();
+                    String Genero = result.getString(1);
+                    String Cantidad = result.getString(2);
+                    data.put("Genero", Genero);
+                    data.put("Cantidad", Cantidad);
+                    resp.put(data);
+                }
+            } catch (Exception e) {
+                LOGGER.log(Level.SEVERE, "Se presento un error consultado la grafica de generos:   El error es: {0}", new Object[]{e});
+
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Se presento un error consultado la grafica de generos:   El error es: {0}", new Object[]{e});
+
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("com.softcoisoweb.conexion.OperacionesBD.cargarDatos(): ERROR" + e);
+            }
+        }
+        return resp;
+    }
 }
