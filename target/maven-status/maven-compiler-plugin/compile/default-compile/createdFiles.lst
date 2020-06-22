@@ -48,6 +48,7 @@ com\softcoisoweb\servlet\ArlServlet.class
 com\softcoisoweb\controller\exceptions\PreexistingEntityException.class
 com\softcoisoweb\servicio\rest\restCargarArchivo.class
 com\softcoisoweb\model\EstadoCaso.class
+com\softcoisoweb\servlet\ArchivoServlet.class
 com\softcoisoweb\model\CambioEstadoHistorico_.class
 com\softcoisoweb\model\Citas_.class
 com\softcoisoweb\servlet\CargarDatosCalendarServlet.class

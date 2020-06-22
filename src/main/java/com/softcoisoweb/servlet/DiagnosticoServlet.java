@@ -12,6 +12,8 @@ import com.softcoisoweb.model.Diagnostico;
 import com.softcoisoweb.util.JPAFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,6 +27,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "DiagnosticoServlet", urlPatterns = {"/DiagnosticoServlet"})
 public class DiagnosticoServlet extends HttpServlet {
 
+    private final static Logger LOGGER = Logger.getLogger("LogsErrores");
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -35,12 +39,13 @@ public class DiagnosticoServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, Exception {
 
         String btnCrear = request.getParameter("btnCrearDiagnostico");
         String btnModificar = request.getParameter("btnModificarDiagnostico");
         String btnConsultar = request.getParameter("btnConsultarDiagnostico");
         String btnEliminar = request.getParameter("btnEliminarDiagnostico");
+        String btnEliminarArchivo = request.getParameter("btnEliminarArchivo");
 
         try ( PrintWriter out = response.getWriter()) {
             if (btnCrear != null && btnCrear.equals("ok")) {
@@ -59,6 +64,10 @@ public class DiagnosticoServlet extends HttpServlet {
                 String eliminar = eliminar(btnEliminar);
                 out.print(eliminar);
             }
+            if (btnEliminarArchivo != null) {
+                String deleteArchivo = eliminarArchivo(btnEliminarArchivo);
+                out.print(deleteArchivo);
+            }
         }
     }
 
@@ -68,11 +77,11 @@ public class DiagnosticoServlet extends HttpServlet {
         AccionesExpediente accionesExpediente = new AccionesExpediente();
         String diagnostico = request.getParameter("diagnostico");
         String fechaDiagnostico = request.getParameter("fechaDiagnostico");
-        String comentario = request.getParameter("comentarioDiagnostico");
-        String casoid = request.getParameter("idCasoDiagnostico");
-        String usuario = request.getParameter("usuarioDiagnostico");
-        String nombreArchivoDiagnostico = request.getParameter("nombreArchivoDiagnostico");
-        String rutaArchivoDiagnostico = request.getParameter("rutaArchivoDiagnostico");
+        String comentario = request.getParameter("comentario");
+        String casoid = request.getParameter("casoId");
+        String usuario = request.getParameter("usuario");
+        String nombreArchivo = request.getParameter("nombreArchivo");
+        String rutaArchivo = request.getParameter("rutaArchivo");
         String accion = "Se agregar un diagnostico al expediente";
 
         try {
@@ -80,13 +89,13 @@ public class DiagnosticoServlet extends HttpServlet {
             String fechaActual = accionesExpediente.getFecha();
             String nombreUsuario = accionesExpediente.getUsuarioSession(usuario);
             Diagnostico diagnosticoCreate = new Diagnostico(diagnostico, fechaDiagnostico, comentario,
-                    casoid, usuario, nombreUsuario, nombreArchivoDiagnostico, rutaArchivoDiagnostico, fechaActual);
+                    casoid, usuario, nombreUsuario, nombreArchivo, rutaArchivo, fechaActual);
             diagnosticoJpa.create(diagnosticoCreate);
             accionesExpediente.guardarAccionesExpediente(casoid, usuario, accion);
 
             respuesta = "Exitoso";
         } catch (Exception e) {
-            System.err.println("Se presento un error creando el diagnostico al expediente," + casoid + " El Error es: " + e);
+            LOGGER.log(Level.SEVERE, "Se presento un error creando el diagnostico al expediente:  {0} El error es: {1}", new Object[]{casoid, e});
             respuesta = "Error";
         }
         return respuesta;
@@ -98,28 +107,25 @@ public class DiagnosticoServlet extends HttpServlet {
         try {
             Diagnostico diagnostico = diagnosticoJpa.findDiagnostico(Integer.parseInt(codigo));
 
-            respuesta = diagnostico.getCodigoDiagnostico()
-                    + "#" + diagnostico.getDiagnostico()
-                    + "#" + diagnostico.getFechaDiagnostico()
-                    + "#" + diagnostico.getComentario() + "#" + diagnostico.getIdCaso() + "#" + diagnostico.getUsuarioCedula()
-                    + "#" + diagnostico.getNombreArchivo() + "#" + diagnostico.getRutaArchivo() + "#" + diagnostico.getFechaCreacion();
+            respuesta = diagnostico.getCodigoDiagnostico() + "#" + diagnostico.getDiagnostico() + "#" + diagnostico.getFechaDiagnostico()
+                    + "#" + diagnostico.getComentario();
         } catch (NumberFormatException e) {
-            System.out.println("Error consultando el diagnostico: " + codigo + "El error es:" + e);
+            LOGGER.log(Level.SEVERE, "Error consultando el diagnostico:  El error es: {0}", new Object[]{e});
         }
         return respuesta;
     }
 
-    private String modificar(HttpServletRequest request) {
+    private String modificar(HttpServletRequest request) throws Exception {
         String respuesta;
         DiagnosticoJpaController diagnosticoJpa = new DiagnosticoJpaController(JPAFactory.getFACTORY());
         AccionesExpediente accionesExpediente = new AccionesExpediente();
         String codigo = request.getParameter("codigo");
         String diagnostico = request.getParameter("diagnostico");
-        String comentario = request.getParameter("comentarioDiagnostico");
-        String casoId = request.getParameter("idCasoDiagnostico");
-        String usuario = request.getParameter("usuarioDiagnostico");
-        String nombreArchivo = request.getParameter("nombreArchivoDiagnostico");
-        String rutaArchivo = request.getParameter("rutaArchivoDiagnostico");
+        String comentario = request.getParameter("comentario");
+        String casoId = request.getParameter("casoId");
+        String usuario = request.getParameter("usuario");
+        String nombreArchivo = request.getParameter("nombreArchivo");
+        String rutaArchivo = request.getParameter("rutaArchivo");
         String accion = "Se modifica el diagnostico al expediente";
         try {
 
@@ -137,12 +143,12 @@ public class DiagnosticoServlet extends HttpServlet {
                         casoId, usuario, nombreUsuario, getDiagnostico.getNombreArchivo(), getDiagnostico.getRutaArchivo(), fechaActual);
             }
 
-            diagnosticoJpa.create(diagnosticoCreate);
+            diagnosticoJpa.edit(diagnosticoCreate);
             accionesExpediente.guardarAccionesExpediente(casoId, usuario, accion);
 
             respuesta = "Exitoso";
         } catch (NumberFormatException e) {
-            System.err.println("Se presento un error modificando el diagnostico al expediente: " + casoId + " El Error es: " + e);
+            LOGGER.log(Level.SEVERE, "Se presento un error modificando el diagnostico al expediente:  {0} El error es: {1}", new Object[]{casoId, e});
             respuesta = "Error";
         }
 
@@ -157,10 +163,32 @@ public class DiagnosticoServlet extends HttpServlet {
             diagnosticoJpa.destroy(Integer.parseInt(codigoDiagnostico));
             resultado = "Exitoso";
         } catch (NonexistentEntityException | NumberFormatException e) {
-            System.err.println("Se presento un error eliminando el diagnostico al expediente: " + codigoDiagnostico + " El Error es: " + e);
+            LOGGER.log(Level.SEVERE, "Se presento un error eliminando el diagnostico al expediente:  {0} El error es: {1}", new Object[]{codigoDiagnostico, e});
             resultado = "Error";
         }
         return resultado;
+    }
+
+    private String eliminarArchivo(String codigo) {
+        String respuesta;
+        DiagnosticoJpaController diagnosticoJpa = new DiagnosticoJpaController(JPAFactory.getFACTORY());
+        AccionesExpediente accionesExpediente = new AccionesExpediente();
+        String acciones = "Se Eliminar el archivo de la medicacion";
+        try {
+
+            String fechaActual = accionesExpediente.getFecha();
+            Diagnostico getDiagnostico = diagnosticoJpa.findDiagnostico(Integer.parseInt(codigo));
+
+            Diagnostico eliminarArchivo = new Diagnostico(Integer.parseInt(codigo), getDiagnostico.getDiagnostico(), getDiagnostico.getFechaDiagnostico(),
+                    getDiagnostico.getComentario(), getDiagnostico.getIdCaso(), getDiagnostico.getUsuarioCedula(), getDiagnostico.getNombreUsuario(), "", "", fechaActual);
+            diagnosticoJpa.edit(eliminarArchivo);
+            accionesExpediente.guardarAccionesExpediente(getDiagnostico.getIdCaso(), getDiagnostico.getUsuarioCedula(), acciones + codigo);
+            respuesta = "Exitoso";
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Se presento un error eliminando un archivo al proceso de reclamacion:  {0} El error es: {1}", new Object[]{codigo, e});
+            respuesta = "Error";
+        }
+        return respuesta;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -175,7 +203,11 @@ public class DiagnosticoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(DiagnosticoServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -189,7 +221,11 @@ public class DiagnosticoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(DiagnosticoServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

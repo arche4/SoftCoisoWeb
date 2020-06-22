@@ -133,16 +133,16 @@ public class MedicamentosCasoServlet extends HttpServlet {
         String accion = "Se modificar el medicamento al expediente " + idMedicamento;
 
         try {
-            MedicamentosCaso getMedicamento = medicamentoJpa.findMedicamentosCaso(Integer.parseInt(codigoMedicamento));
+            MedicamentosCaso getMedicamento = medicamentoJpa.findMedicamentosCaso(Integer.parseInt(idMedicamento));
             String fechaActual = accionesExpediente.getFecha();
             String nombreUsuario = accionesExpediente.getUsuarioSession(usuario);
 
             if (!rutaArchivo.equals("")) {
-                medicamentoUpdate = new MedicamentosCaso(Integer.parseInt(idMedicamento), getMedicamento.getCasoPersonaIdCaso(), fechaMedicamento, codigoMedicamento,
+                medicamentoUpdate = new MedicamentosCaso(Integer.parseInt(idMedicamento), casoId, fechaMedicamento, codigoMedicamento,
                         dosificacion, cantidadMedicamento, comentario, usuario, nombreUsuario, nombreArchivo,
                         rutaArchivo, fechaActual);
             } else {
-                medicamentoUpdate = new MedicamentosCaso(Integer.parseInt(idMedicamento), getMedicamento.getCasoPersonaIdCaso(), getMedicamento.getFechaMedicamento(), codigoMedicamento,
+                medicamentoUpdate = new MedicamentosCaso(Integer.parseInt(idMedicamento), casoId, fechaMedicamento, codigoMedicamento,
                         dosificacion, cantidadMedicamento, comentario, usuario, nombreUsuario, getMedicamento.getNombreArchivo(),
                         getMedicamento.getRutaArchivo(), fechaActual);
             }

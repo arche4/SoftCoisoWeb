@@ -12,6 +12,7 @@ import com.softcoisoweb.controller.CasoArchivoJpaController;
 import com.softcoisoweb.controller.CasoComentarioJpaController;
 import com.softcoisoweb.controller.CasoPersonaJpaController;
 import com.softcoisoweb.controller.CitasJpaController;
+import com.softcoisoweb.controller.DiagnosticoJpaController;
 import com.softcoisoweb.controller.EstadoCasoJpaController;
 import com.softcoisoweb.controller.FlujoCasoJpaController;
 import com.softcoisoweb.controller.MedicamentosCasoJpaController;
@@ -28,6 +29,7 @@ import com.softcoisoweb.model.CasoArchivo;
 import com.softcoisoweb.model.CasoComentario;
 import com.softcoisoweb.model.CasoPersona;
 import com.softcoisoweb.model.Citas;
+import com.softcoisoweb.model.Diagnostico;
 import com.softcoisoweb.model.EstadoCaso;
 import com.softcoisoweb.model.FlujoCaso;
 import com.softcoisoweb.model.MedicamentosCaso;
@@ -136,6 +138,7 @@ public class ExpedienteServlet extends HttpServlet {
         ProcesoReclamacionJpaController reclamacionJpa = new ProcesoReclamacionJpaController(JPAFactory.getFACTORY());
         MedicamentosCasoJpaController medicamentoJpa = new MedicamentosCasoJpaController(JPAFactory.getFACTORY());
         CalificacionJpaController calificacionJpa = new CalificacionJpaController(JPAFactory.getFACTORY());
+        DiagnosticoJpaController diagnosticoJpa = new DiagnosticoJpaController(JPAFactory.getFACTORY());
 
         CasoPersona caso = casojpa.findCasoPersona(codigoCaso);
         HttpSession session = request.getSession();
@@ -150,6 +153,7 @@ public class ExpedienteServlet extends HttpServlet {
             List<MedicamentosCaso> listMedicamentosCasos = medicamentoJpa.medicamentoXexpediente(codigoCaso);
             List<SeguimientoCaso> listSeguimiento = seguimientoJpa.seguimientoExpediente(codigoCaso);
             List<Calificacion> listCalificacion = calificacionJpa.calificacionExpediente(codigoCaso);
+            List<Diagnostico> listDiagnostico = diagnosticoJpa.diagnosticoExpediente(codigoCaso);
 
             TipoCaso tipoCaso = tipoCasoJpa.findTipoCaso(caso.getTipoCasoCodigoTipoCaso());
             FlujoCaso flujo = flujoJpa.findFlujoCaso(codigoCaso);
@@ -179,6 +183,7 @@ public class ExpedienteServlet extends HttpServlet {
             session.setAttribute("listMedicamentosCasos", listMedicamentosCasos);
             session.setAttribute("ListSeguimiento", listSeguimiento);
             session.setAttribute("listCalificacion", listCalificacion);
+            session.setAttribute("listDiagnostico", listDiagnostico);
             LOGGER.log(Level.SEVERE, "Prueba logger imprimir logs: {0}", new Object[]{listCalificacion});
 
         } catch (Exception e) {
