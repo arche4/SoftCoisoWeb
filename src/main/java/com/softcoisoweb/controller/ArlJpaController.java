@@ -8,6 +8,7 @@ package com.softcoisoweb.controller;
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.controller.exceptions.PreexistingEntityException;
 import com.softcoisoweb.model.Arl;
+import com.softcoisoweb.model.Persona;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -139,6 +140,23 @@ public class ArlJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    
+     public List<Persona> arlXpersona(String codigo) {
+        EntityManager em = null;
+        List<Persona> arlXpersona = null;
+        try {
+            String QuerySelect = "select * from persona where arl_codigo_arl = '" + codigo + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            arlXpersona = em.createNativeQuery(QuerySelect, Persona.class).getResultList();
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return arlXpersona;
     }
     
 }

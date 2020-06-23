@@ -27,8 +27,8 @@ public class EnviarCorreo {
 
     public String enviarCorreo(String correos, String asunto, StringBuilder cuerpo) throws MessagingException {
         Properties propiedad = new Properties();
-        final String correoEnvia = "coiso2008@gmail.com";
-        final String contraseña = "coiso2015";
+        final String correoEnvia = "lymapre@gmail.com";
+        final String contraseña = "37957987398";
         propiedad.put("mail.smtp.host", "smtp.google.com");
         propiedad.put("mail.smtp.port", "587");
         propiedad.put("mail.smtp.auth", "true");

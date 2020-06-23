@@ -99,6 +99,18 @@
         <servlet-name>FormacionServlet</servlet-name>
         <servlet-class>com.softcoisoweb.servlet.FormacionServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EpsServlet</servlet-name>
+        <servlet-class>com.softcoisoweb.servlet.EpsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ArlServlet</servlet-name>
+        <servlet-class>com.softcoisoweb.servlet.ArlServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AfpServlet</servlet-name>
+        <servlet-class>com.softcoisoweb.servlet.AfpServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CerrarSesionServlet</servlet-name>
         <url-pattern>/CerrarSesionServlet</url-pattern>
@@ -179,6 +191,18 @@
         <servlet-name>FormacionServlet</servlet-name>
         <url-pattern>/FormacionServlet</url-pattern>
     </servlet-mapping> 
+     <servlet-mapping>
+        <servlet-name>EpsServlet</servlet-name>
+        <url-pattern>/EpsServlet</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>ArlServlet</servlet-name>
+        <url-pattern>/ArlServlet</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>AfpServlet</servlet-name>
+        <url-pattern>/AfpServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             50
