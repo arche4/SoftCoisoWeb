@@ -490,7 +490,7 @@
                                         <div id="reclamacion" class="tab-pane">
                                             <div class="row">
                                                 <div class="room-desk">
-                                                    <h4 class="pull-left">Reclamacion </h4>
+                                                    <h4 class="pull-left">Reclamación </h4>
                                                     <button class="pull-right btn btn-theme02" data-toggle="modal" data-target="#agregarReclamacion" type="button">+ Agregar Reclamación</button>
                                                     <div class="mt"></div>
                                                     <c:forEach var="reclamacion" items="${sessionScope.listReclamacion}" varStatus="myIndex">

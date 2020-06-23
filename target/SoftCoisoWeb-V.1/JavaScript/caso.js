@@ -7,7 +7,7 @@ $(document).ready(function () {
     $("body").on("click", "#btnEliminarCaso", function () {
         var casoId = $(this).val();
         var cadena = ' <div class="form-row">'
-                + '<h5> ¿ Esta seguro que quieres eliminar la persona ? </h5>'
+                + '<h5> Esta seguro que quieres eliminar el caso ? </h5>'
                 + '<h5>Tenga en cuenta, mientras el caso tenga asociado medicamentos, diagnostico, reclamacion, proceso de calificacion, no puede ser eliminado</h3>'
                 + ' </div>';
         $("#casoEliminar").val(casoId);
@@ -162,21 +162,21 @@ function eliminarCaso() {
                 $('#modalInfexito').modal('show');
             } else if (data === "1") {
                 var cadena = '<div class="form-row">'
-                        + '<h5>El caso no se puede eliminar, porque tiene  proceso de calificación asociado.</h5>'
+                        + '<h5>El caso no se puede eliminar, porque tiene  proceso de calificacion asociado.</h5>'
                         + '<h5>Elimine los procesos asociados, para eliminar el caso.</h5>'
                         + ' </div>';
                 $('#modInferror').html(cadena);
                 $('#modalInfError').modal('show');
             } else if (data === "2") {
                 var cadena = '<div class="form-row">'
-                        + '<h5>El caso no se puede eliminar, porque tiene una calificación asociada.</h5>'
+                        + '<h5>El caso no se puede eliminar, porque tiene una calificacion asociada.</h5>'
                         + '<h5>Elimine la calificación, para eliminar el caso.</h5>'
                         + ' </div>';
                 $('#modInferror').html(cadena);
                 $('#modalInfError').modal('show');
             } else if (data === "3") {
                 var cadena = '<div class="form-row">'
-                        + '<h5>El caso no se puede eliminar, porque tiene procesos de reclamación asociados.</h5>'
+                        + '<h5>El caso no se puede eliminar, porque tiene procesos de reclamacion asociados.</h5>'
                         + '<h5>Elimine las reclamaciones, para eliminar el caso.</h5>'
                         + ' </div>';
                 $('#modInferror').html(cadena);

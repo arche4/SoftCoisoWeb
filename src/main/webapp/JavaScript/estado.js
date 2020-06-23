@@ -102,7 +102,7 @@ function validar() {
 
 function validarEliminar() {
     var cadena = ' <div class="form-row">'
-            + '<h5> ¿ Esta seguro que quieres eliminar el tipo de caso? </h3>'
+            + '<h5> ¿ Esta seguro que quieres eliminar el estado? </h3>'
             + ' </div>';
     $('#InfoEliminar').html(cadena);
     $('#modalEliminar').modal('show');
