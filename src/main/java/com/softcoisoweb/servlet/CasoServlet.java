@@ -12,10 +12,16 @@ import com.softcoisoweb.controller.FlujoCasoJpaController;
 import com.softcoisoweb.controller.PersonaJpaController;
 import com.softcoisoweb.controller.SeguimientoCasoJpaController;
 import com.softcoisoweb.controller.TipoCasoJpaController;
+import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
+import com.softcoisoweb.model.Calificacion;
 import com.softcoisoweb.model.CasoPersona;
+import com.softcoisoweb.model.Diagnostico;
 import com.softcoisoweb.model.EstadoCaso;
 import com.softcoisoweb.model.FlujoCaso;
+import com.softcoisoweb.model.Medicamentos;
 import com.softcoisoweb.model.Persona;
+import com.softcoisoweb.model.ProcesoCalificacion;
+import com.softcoisoweb.model.ProcesoReclamacion;
 import com.softcoisoweb.model.SeguimientoCaso;
 import com.softcoisoweb.model.TipoCaso;
 import com.softcoisoweb.util.JPAFactory;
@@ -23,9 +29,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.sql.Time;
 import java.text.ParseException;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
@@ -68,6 +72,7 @@ public class CasoServlet extends HttpServlet {
         String selectConsulta = request.getParameter("selectConsulta");
         String btnModificarCaso = request.getParameter("btnModificarCaso");
         String btnModificarCasoExp = request.getParameter("btnModificarCasoExp");
+        String btnEliminarCaso = request.getParameter("btnEliminarCaso");
 
         try ( PrintWriter out = response.getWriter()) {
             if (btnCrearCaso != null && btnCrearCaso.equals("ok")) {
@@ -89,6 +94,10 @@ public class CasoServlet extends HttpServlet {
             if (btnModificarCasoExp != null && btnModificarCasoExp.equals("ok")) {
                 String modificar = modificarCaso(request, response, "Expediente");
                 out.print(modificar);
+            }
+            if (btnEliminarCaso != null) {
+                String eliminarCaso = eliminarCaso(btnEliminarCaso);
+                out.print(eliminarCaso);
             }
         }
     }
@@ -121,6 +130,7 @@ public class CasoServlet extends HttpServlet {
 
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error obteniendo datos  del caso:  {0} El error es: {1}", new Object[]{idCaso, e});
+            rd = request.getRequestDispatcher("views/persona.jsp");
         }
         if (rd != null) {
             rd.forward(request, response);
@@ -143,11 +153,9 @@ public class CasoServlet extends HttpServlet {
             CasoPersonaJpaController casoJpa = new CasoPersonaJpaController(JPAFactory.getFACTORY());
             CasoPersona buscarCodigo = casoJpa.findCasoPersona(cedulaPersona);
             Integer codigoCaso = Integer.parseInt(cedulaPersona);
-            int codigo;
-            if (buscarCodigo == null) {
-                codigo = codigoCaso + 1;
-            } else {
-                int valorDado = this.rand.nextInt(10)+1;
+            int codigo = Integer.parseInt(cedulaPersona);
+            if (buscarCodigo != null) {
+                int valorDado = this.rand.nextInt(10) + 1;
                 codigo = codigoCaso + valorDado;
             }
             CasoPersona caso = new CasoPersona(String.valueOf(codigo), fechaAfectacion, parteAfectada, tiempoIncapacidad,
@@ -249,13 +257,55 @@ public class CasoServlet extends HttpServlet {
                 respuesta = "Error";
             }
         } catch (Exception e) {
-            System.out.println("Error modificando el caso : " + idCaso + " El error es" + e);
+            LOGGER.log(Level.SEVERE, "Error modificando el caso:  {0} El error es: {1}", new Object[]{idCaso, e});
             respuesta = "Error";
         }
 
         return respuesta;
     }
 
+    private String eliminarCaso(String casoId) {
+        String resultado;
+        CasoPersonaJpaController casoJpa = new CasoPersonaJpaController(JPAFactory.getFACTORY());
+        FlujoCasoJpaController flujoJpa = new FlujoCasoJpaController(JPAFactory.getFACTORY());
+        PersonaJpaController Personajpa = new PersonaJpaController(JPAFactory.getFACTORY());
+        try {
+            List<ProcesoCalificacion> casoXproceso = casoJpa.casoXproceso(casoId);
+            List<Calificacion> casoXcalificacion = casoJpa.casoXcalificacion(casoId);
+            List<ProcesoReclamacion> casoXreclamacion = casoJpa.casoXreclamacion(casoId);
+            List<Medicamentos> casoXmedicamentos = casoJpa.casoXmedicamentos(casoId);
+            List<Diagnostico> casoXdiagnostico = casoJpa.casoXdiagnostico(casoId);
+            if (!casoXproceso.isEmpty()) {
+                resultado = "1";
+            } else if (!casoXcalificacion.isEmpty()) {
+                resultado = "2";
+            } else if (!casoXreclamacion.isEmpty()) {
+                resultado = "3";
+            } else if (!casoXmedicamentos.isEmpty()) {
+                resultado = "4";
+            } else if (!casoXdiagnostico.isEmpty()) {
+                resultado = "5";
+            } else {
+                CasoPersona caso = casoJpa.findCasoPersona(casoId);
+
+                casoJpa.destroy(casoId);
+                flujoJpa.destroy(casoId);
+                casoJpa.eliminarArchivos(casoId);
+                casoJpa.eliminarComentarios(casoId);
+                casoJpa.eliminarHistoricoEstado(casoId);
+                casoJpa.eliminarSeguimiento(casoId);
+                List<CasoPersona> personaXcaso = Personajpa.personaXcaso(caso.getPersonaCedula());
+                if (personaXcaso.isEmpty()) {
+                    casoJpa.cambiarCasoAsociado(caso.getPersonaCedula());
+                }
+                resultado = "0";
+            }
+        } catch (NonexistentEntityException e) {
+            LOGGER.log(Level.SEVERE, "Error eliminando el caso:  {0} El error es: {1}", new Object[]{casoId, e});
+            resultado = "6";
+        }
+        return resultado;
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

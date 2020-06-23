@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context antiJARLocking="true" path="">
   <Resource auth="Container" driverClassName="com.mysql.cj.jdbc.Driver" maxActive="20" maxIdle="10" maxWait="-1" name="pruebas" password="root" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3308/coisobdpruebas" username="root"/>
+  <Resource auth="Container" driverClassName="com.mysql.cj.jdbc.Driver" maxActive="20" maxIdle="10" maxWait="-1" name="desarrollo" password="C01s0.c0m" type="javax.sql.DataSource" url="jdbc:mysql://190.8.176.153:3306/coiso_PRODMDLLO" username="coiso_dllo"/>
 </Context>

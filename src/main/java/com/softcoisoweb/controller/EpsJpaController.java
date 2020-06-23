@@ -8,6 +8,7 @@ package com.softcoisoweb.controller;
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.controller.exceptions.PreexistingEntityException;
 import com.softcoisoweb.model.Eps;
+import com.softcoisoweb.model.Persona;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -139,6 +140,23 @@ public class EpsJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    
+     public List<Persona> epsXpersona(String codigo) {
+        EntityManager em = null;
+        List<Persona> epsXpersona = null;
+        try {
+            String QuerySelect = "select * from persona where eps_codigo_eps = '" + codigo + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            epsXpersona = em.createNativeQuery(QuerySelect, Persona.class).getResultList();
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return epsXpersona;
     }
     
 }

@@ -7,6 +7,7 @@ package com.softcoisoweb.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,8 +24,10 @@ public class Gestor {
         String propiedad;
         final Properties prop = new Properties();
         InputStream input_stream = null;
-        try {
-            input_stream = this.getClass().getResource("conexion.properties").openStream();
+        try { 
+            System.out.println(getClass().getResource("/conexion.properties"));
+            System.out.println(this.getClass().getResourceAsStream("/conexion.properties"));
+            input_stream = getClass().getResource("conexion.properties").openStream();
             prop.load(input_stream);
 
         } catch (IOException ex) {

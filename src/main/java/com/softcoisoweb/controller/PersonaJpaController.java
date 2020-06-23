@@ -7,6 +7,7 @@ package com.softcoisoweb.controller;
 
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.controller.exceptions.PreexistingEntityException;
+import com.softcoisoweb.model.CasoPersona;
 import com.softcoisoweb.model.Persona;
 import java.io.Serializable;
 import java.util.List;
@@ -163,6 +164,40 @@ public class PersonaJpaController implements Serializable {
      public void refreshJPACache() {
         EntityManager em = getEntityManager();
         em.clear();
+    }
+     
+    public List<CasoPersona> personaXcaso(String cedula) {
+        EntityManager em = null;
+        List<CasoPersona> listCasoXpersona= null;
+        try {
+            String QuerySelect = "select * from caso_persona where persona_cedula = '" + cedula + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            listCasoXpersona = em.createNativeQuery(QuerySelect, CasoPersona.class).getResultList();
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return listCasoXpersona;
+    }
+    
+     public List<Persona> ordenLlegada(String fecha) {
+        EntityManager em = null;
+        List<Persona> listOrdenLLegada= null;
+        try {
+            String QuerySelect = "select * FROM persona p where p.fecha_clinica  = '" + fecha + "' ORDER BY p.orden_llegada";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            listOrdenLLegada = em.createNativeQuery(QuerySelect, Persona.class).getResultList();
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return listOrdenLLegada;
     }
 
 }

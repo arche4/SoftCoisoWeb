@@ -147,7 +147,7 @@ public class MedicamentosJpaController implements Serializable {
         EntityManager em = null;
         List<MedicamentosCaso> listMedxCaso = null;
         try {
-            String QuerySelect = "select * from medicamentos_caso where codigo_medicamento = '" + codigoMed + "'";
+            String QuerySelect = "select * from medicamentos_caso where medicamentos_codigo_medicamento = '" + codigoMed + "'";
             em = getEntityManager();
             em.getTransaction().begin();
             listMedxCaso = em.createNativeQuery(QuerySelect, MedicamentosCaso.class).getResultList();

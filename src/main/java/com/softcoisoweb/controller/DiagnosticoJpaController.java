@@ -134,5 +134,20 @@ public class DiagnosticoJpaController implements Serializable {
             em.close();
         }
     }
-    
+    public List<Diagnostico> diagnosticoExpediente (String codigoCaso) {
+        EntityManager em = null;
+        List<Diagnostico> listDiagnosticoExpediente = null;
+        try {
+            String QuerySelect = "select * from diagnostico where id_caso  =  '" + codigoCaso + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            listDiagnosticoExpediente = em.createNativeQuery(QuerySelect, Diagnostico.class).getResultList();
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return listDiagnosticoExpediente;
+    }
 }

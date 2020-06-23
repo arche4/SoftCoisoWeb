@@ -8,8 +8,10 @@ package com.softcoisoweb.controller;
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.controller.exceptions.PreexistingEntityException;
 import com.softcoisoweb.model.Afp;
+import com.softcoisoweb.model.Persona;
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CacheStoreMode;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
@@ -109,6 +111,7 @@ public class AfpJpaController implements Serializable {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             cq.select(cq.from(Afp.class));
             Query q = em.createQuery(cq);
+            q.setHint("javax.persistence.cache.storeMode", CacheStoreMode.REFRESH);
             if (!all) {
                 q.setMaxResults(maxResults);
                 q.setFirstResult(firstResult);
@@ -141,4 +144,20 @@ public class AfpJpaController implements Serializable {
         }
     }
     
+    public List<Persona> afpXpersona(String codigo) {
+        EntityManager em = null;
+        List<Persona> afpXpersona = null;
+        try {
+            String QuerySelect = "select * from persona where afp_codigo_afp = '" + codigo + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            afpXpersona = em.createNativeQuery(QuerySelect, Persona.class).getResultList();
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return afpXpersona;
+    }
 }

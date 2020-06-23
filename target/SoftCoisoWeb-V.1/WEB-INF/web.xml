@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     <display-name>CargaArchivoServlet</display-name>
-     <filter>
+    <filter>
         <filter-name>FilterSecurity</filter-name>
         <filter-class>com.softcoisoweb.servlet.FilterSecurity</filter-class>
     </filter>
@@ -87,6 +87,34 @@
         <servlet-name>DiagnosticoServlet</servlet-name>
         <servlet-class>com.softcoisoweb.servlet.DiagnosticoServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ArchivoServlet</servlet-name>
+        <servlet-class>com.softcoisoweb.servlet.ArchivoServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DashboardServlet</servlet-name>
+        <servlet-class>com.softcoisoweb.servlet.DashboardServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FormacionServlet</servlet-name>
+        <servlet-class>com.softcoisoweb.servlet.FormacionServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EpsServlet</servlet-name>
+        <servlet-class>com.softcoisoweb.servlet.EpsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ArlServlet</servlet-name>
+        <servlet-class>com.softcoisoweb.servlet.ArlServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AfpServlet</servlet-name>
+        <servlet-class>com.softcoisoweb.servlet.AfpServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>perfilServlet</servlet-name>
+        <servlet-class>com.softcoisoweb.servlet.perfilServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CerrarSesionServlet</servlet-name>
         <url-pattern>/CerrarSesionServlet</url-pattern>
@@ -155,6 +183,34 @@
         <servlet-name>DiagnosticoServlet</servlet-name>
         <url-pattern>/DiagnosticoServlet</url-pattern>
     </servlet-mapping> 
+    <servlet-mapping>
+        <servlet-name>ArchivoServlet</servlet-name>
+        <url-pattern>/ArchivoServlet</url-pattern>
+    </servlet-mapping> 
+    <servlet-mapping>
+        <servlet-name>DashboardServlet</servlet-name>
+        <url-pattern>/DashboardServlet</url-pattern>
+    </servlet-mapping> 
+    <servlet-mapping>
+        <servlet-name>FormacionServlet</servlet-name>
+        <url-pattern>/FormacionServlet</url-pattern>
+    </servlet-mapping> 
+    <servlet-mapping>
+        <servlet-name>EpsServlet</servlet-name>
+        <url-pattern>/EpsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ArlServlet</servlet-name>
+        <url-pattern>/ArlServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AfpServlet</servlet-name>
+        <url-pattern>/AfpServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>perfilServlet</servlet-name>
+        <url-pattern>/perfilServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             50

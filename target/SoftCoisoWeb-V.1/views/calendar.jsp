@@ -76,13 +76,12 @@
                         </li>
                         <li class="sub-menu">
                             <a class="active" href="javascript:;">
-                                <i class="fa fa-desktop"></i>
+                                <i class="fa fa-calendar"></i>
                                 <span>Agendamiento</span>
                             </a>
                             <ul class="sub">
                                 <li class="active"><a href="${pageContext.servletContext.contextPath}/views/calendar.jsp">Citas</a></li>
-                                <li><a href="${pageContext.servletContext.contextPath}/views/formacion.jsp">Formaciones</a></li>
-                                <li><a href="panels.html">Planeacion</a></li>
+                                <li ><a  href="${pageContext.servletContext.contextPath}/views/formacion.jsp">Formaciones</a></li>
                             </ul>
                         </li>
                         <li class="sub-menu">
@@ -92,21 +91,18 @@
                             </a>
                         </li>
                         <li class="sub-menu">
-                            <a href="javascript:;">
+                            <a href="${pageContext.servletContext.contextPath}/views/reportes.jsp">
                                 <i class="fa fa-print"></i>
                                 <span>Reportes del Sistema</span>
                             </a>
-                            <ul class="sub">
-                                <li><a href="${pageContext.servletContext.contextPath}/views/usuario.jsp">Reporte</a></li>
-                                <li><a href="usuario.jsp">Reporte Medicamentos</a></li>
-                            </ul>
                         </li>
+
                         <c:choose>
                             <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">
                                 <li class="sub-menu">
                                     <a href="javascript:;">
                                         <i class="fa fa-desktop"></i>
-                                        <span>Modulos Administrativos</span>
+                                        <span>Módulos Administrativos</span>
                                     </a>
                                     <ul class="sub">
                                         <li><a href="${pageContext.servletContext.contextPath}/views/usuario.jsp">Usuarios</a></li>
@@ -115,11 +111,13 @@
                                         <li><a href="${pageContext.servletContext.contextPath}/views/estadoCaso.jsp">Estados de caso</a></li>
                                         <li><a href="${pageContext.servletContext.contextPath}/views/tipoContrato.jsp">Tipos de Contratos</a></li>
                                         <li><a href="${pageContext.servletContext.contextPath}/views/grupoSindicales.jsp">Grupos Sindicales</a></li>
+                                        <li><a href="${pageContext.servletContext.contextPath}/views/eps.jsp">Listado Eps</a></li>
+                                        <li><a href="${pageContext.servletContext.contextPath}/views/arl.jsp">Listado Arl</a></li>
+                                        <li><a href="${pageContext.servletContext.contextPath}/views/afp.jsp">Listado Afp</a></li>
                                     </ul>
                                 </li>
                             </c:when>
                         </c:choose>
-
                     </ul>
                     <!-- sidebar menu end-->
                 </div>
@@ -197,7 +195,7 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
                                         <select class="js-example-basic-single" name="persona" id="persona" required>
-                                             <option value="">Buscar Persona                                                                                                                                                   </option>
+                                            <option value="">Buscar Persona                                                                                                                                                   </option>
                                             <c:forEach var="persona" items="${sessionScope.Persona}">
                                                 <option value="${persona.getCedula()}"><c:out value="${persona.getCedula()}"/> - <c:out value="${persona.getNombrePersona()}"/>  <c:out value="${persona.getApellidoPersona()}"/></option>
                                             </c:forEach>
@@ -364,7 +362,7 @@
             </section>
         </section>
         <div class="loader"></div>
-        
+
         <script src="${pageContext.servletContext.contextPath}/lib/fullcalendar/packages/core/locales-all.js" type="text/javascript"></script>
         <script src="${pageContext.servletContext.contextPath}/JavaScript/calendario.js" type="text/javascript"></script>
         <script class="include" type="text/javascript" src="${pageContext.servletContext.contextPath}/lib/jquery.dcjqaccordion.2.7.js"></script>

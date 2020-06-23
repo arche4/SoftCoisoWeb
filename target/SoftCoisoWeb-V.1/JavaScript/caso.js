@@ -4,6 +4,17 @@ $(window).load(function () {
 $(document).ready(function () {
     $('#table_id').dataTable();
 
+    $("body").on("click", "#btnEliminarCaso", function () {
+        var casoId = $(this).val();
+        var cadena = ' <div class="form-row">'
+                + '<h5> Esta seguro que quieres eliminar el caso ? </h5>'
+                + '<h5>Tenga en cuenta, mientras el caso tenga asociado medicamentos, diagnostico, reclamacion, proceso de calificacion, no puede ser eliminado</h3>'
+                + ' </div>';
+        $("#casoEliminar").val(casoId);
+        $('#modvalidar').html(cadena);
+        $('#valiEliminarCaso').modal('show');
+    });
+
     $("body").on("click", "#selectConsulta", function () {
         var selectConsulta = $(this).val();
         $(".loader").fadeIn("slow");
@@ -111,10 +122,10 @@ function modificarCaso() {
         url: "/CasoServlet",
         data: 'btnModificarCaso=' + btnModificarCaso + '&IdCaso=' + IdCaso + '&tipoCaso=' + tipoCaso + '&casoFechaAfectacion=' + casoFechaAfectacion +
                 '&casoParteAfectada=' + casoParteAfectada + '&casoTimpoInca=' + casoTimpoInca + '&casoDescripcion=' + casoDescripcion +
-                '&casoCedulaPersona=' + casoCedulaPersona+'&CreadoPor=' + CreadoPor+'&Asignado=' + Asignado+'&cedulaUsuario=' + cedulaUsuario,
+                '&casoCedulaPersona=' + casoCedulaPersona + '&CreadoPor=' + CreadoPor + '&Asignado=' + Asignado + '&cedulaUsuario=' + cedulaUsuario,
         success: function (data) {
             event.preventDefault();
-             $(".loader").fadeOut("slow");
+            $(".loader").fadeOut("slow");
             if (data === "Exitoso") {
                 var cadena = ' <div class="form-row">'
                         + '<h5>Sus cambios fueron guardados con ex\u00EDto.</h3>'
@@ -129,4 +140,68 @@ function modificarCaso() {
                 $('#modalInfError').modal('show');
             }
         }});
+}
+
+function eliminarCaso() {
+    $('#valiEliminarCaso').modal('hide');
+    $(".loader").fadeIn("slow");
+    var btnEliminarCaso = $('#casoEliminar').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/CasoServlet",
+        data: 'btnEliminarCaso=' + btnEliminarCaso,
+        success: function (data) {
+            event.preventDefault();
+            $(".loader").fadeOut("slow");
+            if (data === "0") {
+                var cadena = ' <div class="form-row">'
+                        + '<h5>El caso fue eliminado con ex\u00EDto.</h3>'
+                        + '</div>';
+                $('#modInfexito').html(cadena);
+                $('#modalInfexito').modal('show');
+            } else if (data === "1") {
+                var cadena = '<div class="form-row">'
+                        + '<h5>El caso no se puede eliminar, porque tiene  proceso de calificacion asociado.</h5>'
+                        + '<h5>Elimine los procesos asociados, para eliminar el caso.</h5>'
+                        + ' </div>';
+                $('#modInferror').html(cadena);
+                $('#modalInfError').modal('show');
+            } else if (data === "2") {
+                var cadena = '<div class="form-row">'
+                        + '<h5>El caso no se puede eliminar, porque tiene una calificacion asociada.</h5>'
+                        + '<h5>Elimine la calificación, para eliminar el caso.</h5>'
+                        + ' </div>';
+                $('#modInferror').html(cadena);
+                $('#modalInfError').modal('show');
+            } else if (data === "3") {
+                var cadena = '<div class="form-row">'
+                        + '<h5>El caso no se puede eliminar, porque tiene procesos de reclamacion asociados.</h5>'
+                        + '<h5>Elimine las reclamaciones, para eliminar el caso.</h5>'
+                        + ' </div>';
+                $('#modInferror').html(cadena);
+                $('#modalInfError').modal('show');
+            } else if (data === "4") {
+                var cadena = '<div class="form-row">'
+                        + '<h5>El caso no se puede eliminar, porque tiene medicamentos asociados.</h5>'
+                        + '<h5>Elimine los medicamentos, para eliminar el caso.</h5>'
+                        + ' </div>';
+                $('#modInferror').html(cadena);
+                $('#modalInfError').modal('show');
+            } else if (data === "5") {
+                var cadena = '<div class="form-row">'
+                        + '<h5>El caso no se puede eliminar, porque tiene diagnosticos asociados.</h5>'
+                        + '<h5>Elimine los diagnosticos, para eliminar el caso.</h5>'
+                        + ' </div>';
+                $('#modInferror').html(cadena);
+                $('#modalInfError').modal('show');
+            } else if (data === "6") {
+                var cadena = '<div class="form-row">'
+                        + '<h5>Lo sentimos, se ha presentado un problema eliminando los datos .</h3>'
+                        + ' </div>';
+                $('#modInferror').html(cadena);
+                $('#modalInfError').modal('show');
+            }
+        }
+    });
 }

@@ -93,8 +93,7 @@
                             </a>
                             <ul class="sub">
                                 <li><a href="${pageContext.servletContext.contextPath}/views/calendar.jsp">Citas</a></li>
-                                <li><a href="${pageContext.servletContext.contextPath}/views/calendar.jsp">Formaciones</a></li>
-                                <li><a href="panels.html">Planeacion</a></li>
+                                <li><a href="${pageContext.servletContext.contextPath}/views/formacion.jsp">Formaciones</a></li>
                             </ul>
                         </li>
                         <li class="sub-menu">
@@ -104,14 +103,10 @@
                             </a>
                         </li>
                         <li class="sub-menu">
-                            <a href="javascript:;">
+                            <a href="${pageContext.servletContext.contextPath}/views/reportes.jsp">
                                 <i class="fa fa-print"></i>
                                 <span>Reportes del Sistema</span>
                             </a>
-                            <ul class="sub">
-                                <li><a href="${pageContext.servletContext.contextPath}/views/usuario.jsp">Reporte</a></li>
-                                <li><a href="usuario.jsp">Reporte Medicamentos</a></li>
-                            </ul>
                         </li>
                         <c:choose>
                             <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">
@@ -127,6 +122,10 @@
                                         <li><a href="${pageContext.servletContext.contextPath}/views/estadoCaso.jsp">Estados de caso</a></li>
                                         <li><a href="${pageContext.servletContext.contextPath}/views/tipoContrato.jsp">Tipos de Contratos</a></li>
                                         <li><a href="${pageContext.servletContext.contextPath}/views/grupoSindicales.jsp">Grupos Sindicales</a></li>
+                                        <li><a href="${pageContext.servletContext.contextPath}/views/eps.jsp">Listado Eps</a></li>
+                                        <li><a href="${pageContext.servletContext.contextPath}/views/arl.jsp">Listado Arl</a></li>
+                                        <li><a href="${pageContext.servletContext.contextPath}/views/afp.jsp">Listado Afp</a></li>
+
                                     </ul>
                                 </li>
                             </c:when>
@@ -481,6 +480,7 @@
                                             <th scope="col">Nombre</th>
                                             <th scope="col">Fecha Clinica</th>
                                             <th scope="col">Caso</th>
+                                            <th scope="col">Eliminar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -497,6 +497,11 @@
                                                                 Crear Caso
                                                             </button>
                                                         </td>
+                                                        <td>
+                                                            <button  class="btn btn-link" id ="btnEliminarPersona"  name="btnEliminarPersona" value="${persona.getCedula()}">
+                                                                <i class="fa fa-remove"></i>
+                                                            </button>
+                                                        </td>
                                                     </tr>
                                                 </c:when> 
                                                 <c:otherwise>
@@ -510,6 +515,11 @@
                                                             <form  method="post" action="${pageContext.servletContext.contextPath}/CasoServlet">
                                                                 <button name="verCasos" value="${persona.getCedula()}" type="submit" class="btn btn-link">Ver detalles</button>
                                                             </form> 
+                                                        </td>
+                                                        <td>
+                                                            <button  class="btn btn-link" id ="btnEliminarPersona"  name="btnEliminarPersona" value="${persona.getCedula()}">
+                                                                <i class="fa fa-remove"></i>
+                                                            </button>
                                                         </td>
                                                     </tr>
                                                 </c:otherwise>
@@ -579,6 +589,33 @@
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="valiEliminarPersona" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <!-- Modal content-->
+                    <div class="modal-content" id="modales-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Confirmar Cambios</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-row">
+                                <div class="col-md-12">
+                                    <form method="post" name="modvalidar" id="modvalidar" action="">
+                                        <div class="modal-body" id="modvalidar">
+                                        </div>
+                                    </form>
+                                    <input class="form-control " id="cedulaEliminar" type="hidden" name="cedulaEliminar">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success" id="btnModificar" onclick="eliminarPersona()">
+                                    Si
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                            </div>                           
+                        </div>
                     </div>
                 </div>
             </div>

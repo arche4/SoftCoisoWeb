@@ -19,11 +19,17 @@ import java.util.logging.Logger;
 public class Conexion {
 
     private final Gestor doc = new Gestor();
-    final private String USER = doc.leerProperties("USER");
-    final private String PASS = doc.leerProperties("PASS");
-    final private String HOST = doc.leerProperties("HOST");
-    final private String PORT = doc.leerProperties("PORT");
-    final private String DATABASE = doc.leerProperties("DATABASE");
+//    final private String USER = doc.leerProperties("USER");
+//    final private String PASS = doc.leerProperties("PASS");
+//    final private String HOST = doc.leerProperties("HOST");
+//    final private String PORT = doc.leerProperties("PORT");
+//    final private String DATABASE = doc.leerProperties("DATABASE");
+    
+    final private String USER = "coiso_dllo";
+    final private String PASS = "C01s0.c0m";
+    final private String HOST = "190.8.176.153";
+    final private String PORT = "3306";
+    final private String DATABASE = "coiso_PRODMDLLO";
     final static private String DRIVER = "com.mysql.cj.jdbc.Driver";
     final private String URL = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?useSSL=false";
     private final static Logger LOGGER = Logger.getLogger("LogsErrores");
