@@ -155,7 +155,7 @@
                                                 <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required>
                                             </div>
                                         </div>
-                                        <br><br><br><br><br><br><br><br><br><br>
+                                        <br><br><br><br>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">cerrar</button>
                                             <button type="button" class="btn btn-primary" onclick="guardar()">Guardar</button>
@@ -210,7 +210,7 @@
                                                 <input type="text" class="form-control" id="nombreMod" name="nombreMod" placeholder="Nombre" required>
                                             </div>
                                         </div>
-                                        <br><br><br><br><br><br><br><br><br><br>
+                                        <br><br><br><br>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">cerrar</button>
                                             <button type="button" class="btn btn-primary" onclick="validar()">Guardar</button>

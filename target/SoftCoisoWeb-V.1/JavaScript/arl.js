@@ -99,7 +99,7 @@ function validar() {
 
 function validarEliminar() {
     var cadena = ' <div class="form-row">'
-            + '<h5> ¿ Esta seguro que quieres eliminar la EPS? </h3>'
+            + '<h5> ¿ Esta seguro que quieres eliminar la ARL? </h3>'
             + ' </div>';
     $('#InfoEliminar').html(cadena);
     $('#modalEliminar').modal('show');
@@ -147,7 +147,7 @@ function eliminar() {
             $(".loader").fadeOut("slow");
             if (data === "0") {
                 var cadena = ' <div class="form-row">'
-                        + '<h5>La ARL fue eliminadA con ex\u00EDto.</h3>'
+                        + '<h5>La ARL fue eliminada con ex\u00EDto.</h3>'
                         + '</div>';
                 $('#modInfexito').html(cadena);
                 $('#modalInfexito').modal('show');

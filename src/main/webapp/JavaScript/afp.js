@@ -99,7 +99,7 @@ function validar() {
 
 function validarEliminar() {
     var cadena = ' <div class="form-row">'
-            + '<h5> ¿ Esta seguro que quieres eliminar la EPS? </h3>'
+            + '<h5> ¿ Esta seguro que quieres eliminar la AFP? </h3>'
             + ' </div>';
     $('#InfoEliminar').html(cadena);
     $('#modalEliminar').modal('show');
