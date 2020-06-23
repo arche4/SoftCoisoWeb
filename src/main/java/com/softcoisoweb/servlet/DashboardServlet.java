@@ -41,15 +41,30 @@ public class DashboardServlet extends HttpServlet {
 
         String graficaEstado = request.getParameter("graficaEstado");
         String graficaGenero = request.getParameter("graficaGenero");
+        String graficaArl = request.getParameter("graficaArl");
+        String graficaEps = request.getParameter("graficaEps");
+        String graficaAfp = request.getParameter("graficaAfp");
 
         try ( PrintWriter out = response.getWriter()) {
             if (graficaEstado != null && graficaEstado.equals("ok")) {
                 JSONArray grafica = consltarGraficaEstado();
                 out.print(grafica);
             }
-            
+
             if (graficaGenero != null && graficaGenero.equals("ok")) {
                 JSONArray grafica = consultarGraficaGenero();
+                out.print(grafica);
+            }
+            if (graficaArl != null && graficaArl.equals("ok")) {
+                JSONArray grafica = consultarGraficaArl();
+                out.print(grafica);
+            }
+            if (graficaEps != null && graficaEps.equals("ok")) {
+                JSONArray grafica = consultarGraficaEps();
+                out.print(grafica);
+            }
+            if (graficaAfp != null && graficaAfp.equals("ok")) {
+                JSONArray grafica = consultarGraficaAfp();
                 out.print(grafica);
             }
         }
@@ -66,7 +81,7 @@ public class DashboardServlet extends HttpServlet {
         return respuesta;
     }
 
-     private JSONArray consultarGraficaGenero() {
+    private JSONArray consultarGraficaGenero() {
         JSONArray respuesta = new JSONArray();
         try {
             OperacionesBD ops = new OperacionesBD();
@@ -77,6 +92,39 @@ public class DashboardServlet extends HttpServlet {
         return respuesta;
 
     }
+
+    private JSONArray consultarGraficaArl() {
+        JSONArray respuesta = new JSONArray();
+        try {
+            OperacionesBD ops = new OperacionesBD();
+            respuesta = ops.grafiaArl();
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Se presento un error consultando los datos de la grafica de genero:   El error es: {0}", new Object[]{e});
+        }
+        return respuesta;
+    }
+    
+    private JSONArray consultarGraficaEps() {
+        JSONArray respuesta = new JSONArray();
+        try {
+            OperacionesBD ops = new OperacionesBD();
+            respuesta = ops.grafiaEps();
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Se presento un error consultando los datos de la grafica de genero:   El error es: {0}", new Object[]{e});
+        }
+        return respuesta;
+    }
+    private JSONArray consultarGraficaAfp() {
+        JSONArray respuesta = new JSONArray();
+        try {
+            OperacionesBD ops = new OperacionesBD();
+            respuesta = ops.grafiaAfp();
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Se presento un error consultando los datos de la grafica de genero:   El error es: {0}", new Object[]{e});
+        }
+        return respuesta;
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

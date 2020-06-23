@@ -2,6 +2,7 @@ C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\s
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\servicio\rest\restCargarArchivo.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\model\Arl.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\MedicamentosCasoServlet.java
+C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\clase\ExcelCreateReport.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\model\ProcesoReclamacion.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\ProcesoCalificacionJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\EpsServlet.java
@@ -21,8 +22,10 @@ C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\s
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\FlujoCasoJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\ActividadesServlet.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\FormacionServlet.java
+C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\clase\reportePersona.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\procesoCalificacionServlet.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\exceptions\IllegalOrphanException.java
+C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\ReportesServlet.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\UsuarioServlet.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\model\Usuario.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\model\Afp.java
@@ -76,6 +79,7 @@ C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\s
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\EpsJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\CerrarSesionServlet.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\GraficasServlet.java
+C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\DashboardServlet.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\exceptions\PreexistingEntityException.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\FormacionJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\TerminosCondicionesJpaController.java

@@ -76,6 +76,7 @@ com\softcoisoweb\model\Eps.class
 com\softcoisoweb\model\FlujoCaso_.class
 com\softcoisoweb\controller\SeguimientoCasoJpaController.class
 com\softcoisoweb\controller\CambioEstadoHistoricoJpaController.class
+com\softcoisoweb\clase\reportePersona.class
 com\softcoisoweb\servlet\CalendarServlet.class
 com\softcoisoweb\servlet\CargaArchivoServlet.class
 com\softcoisoweb\controller\EpsJpaController.class
@@ -85,6 +86,7 @@ com\softcoisoweb\model\Actividades_.class
 com\softcoisoweb\controller\EstadoCasoJpaController.class
 com\softcoisoweb\servlet\PersonaServlet.class
 com\softcoisoweb\model\CasoPersona.class
+com\softcoisoweb\clase\ExcelCreateReport.class
 com\softcoisoweb\model\Persona.class
 com\softcoisoweb\controller\FlujoCasoJpaController.class
 com\softcoisoweb\clase\Expediente.class
@@ -107,6 +109,7 @@ com\softcoisoweb\clase\EnviarCorreo.class
 com\softcoisoweb\util\Gestor.class
 com\softcoisoweb\model\CasoArchivo_.class
 com\softcoisoweb\controller\exceptions\NonexistentEntityException.class
+com\softcoisoweb\servlet\ReportesServlet.class
 com\softcoisoweb\servlet\perfilServlet.class
 com\softcoisoweb\controller\PersonaJpaController.class
 com\softcoisoweb\servlet\EstadoCasoServlet.class

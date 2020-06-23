@@ -91,21 +91,18 @@
                             </a>
                         </li>
                         <li class="sub-menu">
-                            <a href="javascript:;">
+                            <a href="${pageContext.servletContext.contextPath}/views/reportes.jsp">
                                 <i class="fa fa-print"></i>
                                 <span>Reportes del Sistema</span>
                             </a>
-                            <ul class="sub">
-                                <li><a href="${pageContext.servletContext.contextPath}/views/usuario.jsp">Reporte</a></li>
-                                <li><a href="usuario.jsp">Reporte Medicamentos</a></li>
-                            </ul>
                         </li>
+
                         <c:choose>
                             <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">
                                 <li class="sub-menu">
                                     <a href="javascript:;">
                                         <i class="fa fa-desktop"></i>
-                                        <span>M�dulos Administrativos</span>
+                                        <span>Módulos Administrativos</span>
                                     </a>
                                     <ul class="sub">
                                         <li><a href="${pageContext.servletContext.contextPath}/views/usuario.jsp">Usuarios</a></li>
@@ -132,11 +129,12 @@
             <!--main content start-->
             <section id="main-content">
                 <section class="wrapper">
+                    <h3><i class="fa fa-angle-right"></i> Dashboard</h3>
                     <div class="tab-pane" id="chartjs">
                         <div class="row mt">
                             <div class="col-lg-6">
                                 <div class="content-panel">
-                                    <h4><i class="fa fa-angle-right"></i> Doughnut</h4>
+                                    <h4><i class="fa fa-angle-right"></i> Cantidad de Genero</h4>
                                     <div class="panel-body text-center">
                                         <canvas id="graficoGenero" height="300" width="400"></canvas>
                                     </div>
@@ -151,9 +149,43 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row mt">
+                            <div class="col-lg-6">
+                                <div class="content-panel">
+                                    <h4><i class="fa fa-angle-right"></i> Arl</h4>
+                                    <div class="panel-body text-center">
+                                        <canvas id="graficaArl" height="300" width="400"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="content-panel">
+                                    <h4><i class="fa fa-angle-right"></i>Eps</h4>
+                                    <div class="panel-body text-center">
+                                        <canvas id="graficaEps" height="300" width="400"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt">
+                            <div class="col-lg-6">
+                                <div class="content-panel">
+                                    <h4><i class="fa fa-angle-right"></i> Afp</h4>
+                                    <div class="panel-body text-center">
+                                        <canvas id="graficaAfp" height="300" width="400"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="content-panel">
+                                    <h4><i class="fa fa-angle-right"></i>Eps</h4>
+                                    <div class="panel-body text-center">
+                                        <canvas id="" height="300" width="400"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                   
-
                 </section>
             </section>
             <!--main content end-->
@@ -173,7 +205,7 @@
             </footer>
             <!--footer end-->
         </section>
-
+        <div class="loader"></div>
         <!-- js placed at the end of the document so the pages load faster -->
         <script src="${pageContext.servletContext.contextPath}/JavaScript/dashboard.js" type="text/javascript"></script>
 

@@ -5,6 +5,8 @@
  */
 package com.softcoisoweb.conexion;
 
+import com.softcoisoweb.clase.ExcelCreateReport;
+import com.softcoisoweb.clase.reportePersona;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -12,7 +14,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.JSONArray;
@@ -26,6 +30,87 @@ public class OperacionesBD {
 
     public String scheme = "citas";
     private final static Logger LOGGER = Logger.getLogger("LogsErrores");
+
+    public String getConsultas(String Reporte, String fecha_ini, String fecha_fin, String path) throws SQLException {
+        String data = "";
+
+        if (Reporte.equals("Personas")) {
+            data = reportePersonas(fecha_ini, fecha_fin, Reporte, path);
+        }
+
+        return data;
+    }
+
+    public String reportePersonas(String fecha_ini, String fecha_fin, String tCons, String path) throws SQLException {
+
+        //Conexion Base de Datos
+        Connection conn = null;
+        ResultSet rs = null;
+        String data = "";
+
+        try {
+            Conexion objConn = new Conexion();
+            conn = objConn.conectarMySQL();
+            //Variables Locales
+            reportePersona mihtmlTabla = new reportePersona();
+            List<reportePersona> datosReport = new ArrayList<>(); //Variable donde se guarda la consulta
+            try ( PreparedStatement stmt = conn.prepareStatement(reportePersona.sql)) {
+                stmt.setString(1, fecha_ini.trim());
+                stmt.setString(2, fecha_fin.trim());
+                rs = stmt.executeQuery();
+
+                while (rs.next()) {
+                    reportePersona thisObjRepo = new reportePersona();
+                    thisObjRepo.setCedula(rs.getInt(1));
+                    thisObjRepo.setNombre(rs.getString(2));
+                    thisObjRepo.setGenero(rs.getString(3));
+                    thisObjRepo.setFechaNacimiento(rs.getString(4));
+                    thisObjRepo.setEdad(rs.getString(5));
+                    thisObjRepo.setEmpresa(rs.getString(6));
+                    thisObjRepo.setAntiguedadEmpresa(rs.getString(7));
+                    thisObjRepo.setCargo(rs.getString(8));
+                    thisObjRepo.setFechaClinica(rs.getString(9));
+                    thisObjRepo.setTelefono(rs.getString(10));
+                    thisObjRepo.setCorreo(rs.getString(11));
+                    thisObjRepo.setEps(rs.getString(12));
+                    thisObjRepo.setArl(rs.getString(13));
+                    thisObjRepo.setAfp(rs.getString(14));
+                    thisObjRepo.setContrato(rs.getString(15));
+                    thisObjRepo.setOrganizacion(rs.getString(16));
+                    thisObjRepo.setMunicipio(rs.getString(17));
+                    thisObjRepo.setBarrio(rs.getString(18));
+                    thisObjRepo.setDirrecion(rs.getString(19));
+                    datosReport.add(thisObjRepo);
+                }
+
+                //Generar Reporte Excel
+                ExcelCreateReport excelReport = new ExcelCreateReport("Reporte", path + tCons + ".xls");
+                excelReport.createPersona(datosReport);
+
+                //Generar vista HTML 
+                mihtmlTabla.setBodyTable(datosReport);
+                data = mihtmlTabla.getTableHtml();
+            } catch (Exception e) {
+                LOGGER.log(Level.SEVERE, "Error Obteniendo los datos para el reporte de personas, El error es:  {0}", new Object[]{e});
+
+            }
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error Obteniendo los datos para el reporte de personas, El error es:  {0}", new Object[]{e});
+
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+
+            } catch (SQLException e) {
+                LOGGER.log(Level.SEVERE, "Error Obteniendo los datos para el reporte de personas, El error es:  {0}", new Object[]{e});
+            }
+        }
+
+        return data;
+    }
 
     public JSONArray cargarDatos(final int anoIni, final int mesIni, final int anoMed,
             final int mesMed, final int anoFin, final int mesFin) throws IOException {
@@ -199,6 +284,126 @@ public class OperacionesBD {
             }
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Se presento un error consultado la grafica de generos:   El error es: {0}", new Object[]{e});
+
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("com.softcoisoweb.conexion.OperacionesBD.cargarDatos(): ERROR" + e);
+            }
+        }
+        return resp;
+    }
+
+    public JSONArray grafiaArl() {
+        JSONArray resp = new JSONArray();
+        Connection conn = null;
+        try {
+            Conexion objConn = new Conexion();
+            conn = objConn.conectarMySQL();
+            try ( PreparedStatement pstmt = conn.prepareStatement("select a.nombre_arl, "
+                    + "COUNT(p.arl_codigo_arl) as cantidad "
+                    + "from arl a "
+                    + "inner join persona p "
+                    + "on a.codigo_arl = p.arl_codigo_arl "
+                    + "GROUP BY a.nombre_arl");) {
+                ResultSet result = pstmt.executeQuery();
+                while (result.next()) {
+                    JSONObject data = new JSONObject();
+                    String arl = result.getString(1);
+                    String Cantidad = result.getString(2);
+                    data.put("Arl", arl);
+                    data.put("Cantidad", Cantidad);
+                    resp.put(data);
+                }
+            } catch (Exception e) {
+                LOGGER.log(Level.SEVERE, "Se presento un error consultado la grafica de arl:   El error es: {0}", new Object[]{e});
+
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Se presento un error consultado la grafica de arl:   El error es: {0}", new Object[]{e});
+
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("com.softcoisoweb.conexion.OperacionesBD.cargarDatos(): ERROR" + e);
+            }
+        }
+        return resp;
+    }
+
+    public JSONArray grafiaEps() {
+        JSONArray resp = new JSONArray();
+        Connection conn = null;
+        try {
+            Conexion objConn = new Conexion();
+            conn = objConn.conectarMySQL();
+            try ( PreparedStatement pstmt = conn.prepareStatement("select e.nombre_eps, "
+                    + "COUNT(p.eps_codigo_eps) as cantidad "
+                    + "from eps e "
+                    + "inner join persona p "
+                    + "on e.codigo_eps = p.eps_codigo_eps "
+                    + "GROUP BY e.nombre_eps");) {
+                ResultSet result = pstmt.executeQuery();
+                while (result.next()) {
+                    JSONObject data = new JSONObject();
+                    String Eps = result.getString(1);
+                    String Cantidad = result.getString(2);
+                    data.put("Eps", Eps);
+                    data.put("Cantidad", Cantidad);
+                    resp.put(data);
+                }
+            } catch (Exception e) {
+                LOGGER.log(Level.SEVERE, "Se presento un error consultado la grafica de arl:   El error es: {0}", new Object[]{e});
+
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Se presento un error consultado la grafica de arl:   El error es: {0}", new Object[]{e});
+
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("com.softcoisoweb.conexion.OperacionesBD.cargarDatos(): ERROR" + e);
+            }
+        }
+        return resp;
+    }
+
+    public JSONArray grafiaAfp() {
+        JSONArray resp = new JSONArray();
+        Connection conn = null;
+        try {
+            Conexion objConn = new Conexion();
+            conn = objConn.conectarMySQL();
+            try ( PreparedStatement pstmt = conn.prepareStatement("select af.nombre_afp, "
+                    + "COUNT(p.afp_codigo_afp) as cantidad "
+                    + "from afp af "
+                    + "inner join persona p "
+                    + "on af.codigo_afp = p.afp_codigo_afp "
+                    + "GROUP BY af.nombre_afp");) {
+                ResultSet result = pstmt.executeQuery();
+                while (result.next()) {
+                    JSONObject data = new JSONObject();
+                    String afp = result.getString(1);
+                    String Cantidad = result.getString(2);
+                    data.put("Afp", afp);
+                    data.put("Cantidad", Cantidad);
+                    resp.put(data);
+                }
+            } catch (Exception e) {
+                LOGGER.log(Level.SEVERE, "Se presento un error consultado la grafica de arl:   El error es: {0}", new Object[]{e});
+
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Se presento un error consultado la grafica de arl:   El error es: {0}", new Object[]{e});
 
         } finally {
             try {
