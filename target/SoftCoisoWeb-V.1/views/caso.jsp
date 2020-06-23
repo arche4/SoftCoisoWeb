@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:if test="${empty user}">
     <jsp:forward page="${pageContext.servletContext.contextPath}/index.jsp"/>
@@ -7,7 +7,7 @@
 <html lang="en">
 
     <head>
-        <meta charset="utf-8">
+       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="Dashboard">
@@ -15,7 +15,7 @@
         <title>SofCoiso-Personas</title>
 
         <!-- Favicons -->
-       <link href="${pageContext.servletContext.contextPath}/img/favicon.png" rel="icon">
+        <link href="${pageContext.servletContext.contextPath}/img/favicon.png" rel="icon">
         <!-- Bootstrap core CSS -->
         <link href="${pageContext.servletContext.contextPath}/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <script src="${pageContext.servletContext.contextPath}/lib/jquery/jquery.min.js"></script>
@@ -85,8 +85,7 @@
                             </a>
                             <ul class="sub">
                                 <li><a href="${pageContext.servletContext.contextPath}/views/calendar.jsp">Citas</a></li>
-                                <li><a href="${pageContext.servletContext.contextPath}/views/calendar.jsp">Formaciones</a></li>
-                                <li><a href="panels.html">Planeacion</a></li>
+                                <li><a href="${pageContext.servletContext.contextPath}/views/formacion.jsp">Formaciones</a></li>
                             </ul>
                         </li>
                         <li class="sub-menu">
@@ -96,14 +95,10 @@
                             </a>
                         </li>
                         <li class="sub-menu">
-                            <a href="javascript:;">
+                            <a href="${pageContext.servletContext.contextPath}/views/reportes.jsp">
                                 <i class="fa fa-print"></i>
                                 <span>Reportes del Sistema</span>
                             </a>
-                            <ul class="sub">
-                                <li><a href="${pageContext.servletContext.contextPath}/views/usuario.jsp">Reporte</a></li>
-                                <li><a href="usuario.jsp">Reporte Medicamentos</a></li>
-                            </ul>
                         </li>
                         <c:choose>
                             <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">
@@ -119,6 +114,9 @@
                                         <li><a href="${pageContext.servletContext.contextPath}/views/estadoCaso.jsp">Estados de caso</a></li>
                                         <li><a href="${pageContext.servletContext.contextPath}/views/tipoContrato.jsp">Tipos de Contratos</a></li>
                                         <li><a href="${pageContext.servletContext.contextPath}/views/grupoSindicales.jsp">Grupos Sindicales</a></li>
+                                        <li><a href="${pageContext.servletContext.contextPath}/views/eps.jsp">Listado Eps</a></li>
+                                        <li><a href="${pageContext.servletContext.contextPath}/views/arl.jsp">Listado Arl</a></li>
+                                        <li><a href="${pageContext.servletContext.contextPath}/views/afp.jsp">Listado Afp</a></li>
                                     </ul>
                                 </li>
                             </c:when>
@@ -155,6 +153,7 @@
                                             <th scope="col">Tipo</th>
                                             <th scope="col">Estado</th>
                                             <th scope="col">Ver</th>
+                                            <th scope="col">Eliminar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -169,6 +168,11 @@
                                                 <td> <form  method="post" action="${pageContext.servletContext.contextPath}/ExpedienteServlet">
                                                         <button name="verExpediente" id="verExpediente" value="${caso.getIdCaso()}" type="submit" class="btn btn-link">Ver Expediente</button>
                                                     </form>
+                                                </td>
+                                                <td>
+                                                    <button  class="btn btn-link" id ="btnEliminarCaso"  name="btnEliminarCaso" value="${caso.getIdCaso()}">
+                                                        <i class="fa fa-remove"></i>
+                                                    </button>
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -218,11 +222,11 @@
                                 <label class="control-label">Descripcion del Caso</label>
                                 <textarea class="form-control " rows="10" cols="50" id="descripcionCaso" name="descripcionCaso" required></textarea>
                             </div>
-                            <input class="form-control " id="cedulaPersona" type="hidden" name="cedulaPersona">
+                            <input class="form-control " id="cedulaPersona" type="hidden" name="cedulaPersona" value="${sessionScope.cedulaPersona}">
                             <input class="form-control " id="cedulaUsuario" type="hidden" name="cedulaUsuario" value="${sessionScope.USUARIO.cedula}">
                             <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
                             <div class="modal-footer">
-                                <button  type="submit" class="btn btn-success" id="btnCrearCita">
+                                <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="guardarCaso()">
                                     Crear
                                 </button>
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
@@ -273,7 +277,7 @@
                             <input class="form-control " id="CreadoPor" type="hidden" name="CreadoPor">
                             <input class="form-control " id="Asignado" type="hidden" name="Asignado">
                             <input class="form-control " id="cedulaUsuario" type="hidden" name="cedulaUsuario" value="${sessionScope.USUARIO.cedula}">
-                            
+
                             <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
                             <div class="modal-footer">
                                 <button  type="submit" class="btn btn-success" id="btnCrearCita" onclick="validar()">
@@ -303,6 +307,33 @@
                             <div class="modal-footer">
                                 <hr width="0%">
                                 <button type="button" id="Guardar" class="btn btn-primary" onclick="myFunctionReload()">Ok</button>
+                            </div>                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="valiEliminarCaso" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <!-- Modal content-->
+                    <div class="modal-content" id="modales-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Confirmar Cambios</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-row">
+                                <div class="col-md-12">
+                                    <form method="post" name="modvalidar" id="modvalidar" action="">
+                                        <div class="modal-body" id="modvalidar">
+                                        </div>
+                                    </form>
+                                    <input class="form-control " id="casoEliminar" type="hidden" name="casoEliminar">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn btn-success" id="btnModificar" onclick="eliminarCaso()">
+                                    Si
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
                             </div>                           
                         </div>
                     </div>

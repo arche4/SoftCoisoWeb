@@ -90,8 +90,7 @@
                             </a>
                             <ul class="sub">
                                 <li><a href="${pageContext.servletContext.contextPath}/views/calendar.jsp">Citas</a></li>
-                                <li><a href="${pageContext.servletContext.contextPath}/views/calendar.jsp">Formaciones</a></li>
-                                <li><a href="panels.html">Planeacion</a></li>
+                                <li><a href="${pageContext.servletContext.contextPath}/views/formacion.jsp">Formaciones</a></li>
                             </ul>
                         </li>
                         <li class="sub-menu">
@@ -101,14 +100,10 @@
                             </a>
                         </li>
                         <li class="sub-menu">
-                            <a href="javascript:;">
+                            <a href="${pageContext.servletContext.contextPath}/views/reportes.jsp">
                                 <i class="fa fa-print"></i>
                                 <span>Reportes del Sistema</span>
                             </a>
-                            <ul class="sub">
-                                <li><a href="${pageContext.servletContext.contextPath}/views/usuario.jsp">Reporte</a></li>
-                                <li><a href="usuario.jsp">Reporte Medicamentos</a></li>
-                            </ul>
                         </li>
                         <li class="sub-menu">
                             <a  class="active" href="javascript:;">
@@ -122,6 +117,9 @@
                                 <li><a href="${pageContext.servletContext.contextPath}/views/estadoCaso.jsp">Estados de caso</a></li>
                                 <li><a href="${pageContext.servletContext.contextPath}/views/tipoContrato.jsp">Tipos de Contratos</a></li>
                                 <li><a href="${pageContext.servletContext.contextPath}/views/grupoSindicales.jsp">Grupos Sindicales</a></li>
+                                <li><a href="${pageContext.servletContext.contextPath}/views/eps.jsp">Listado Eps</a></li>
+                                <li><a href="${pageContext.servletContext.contextPath}/views/arl.jsp">Listado Arl</a></li>
+                                <li><a href="${pageContext.servletContext.contextPath}/views/afp.jsp">Listado Afp</a></li>
                             </ul>
                         </li>
 

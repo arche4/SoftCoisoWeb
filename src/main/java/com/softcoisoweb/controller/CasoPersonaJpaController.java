@@ -7,7 +7,12 @@ package com.softcoisoweb.controller;
 
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.controller.exceptions.PreexistingEntityException;
+import com.softcoisoweb.model.Calificacion;
 import com.softcoisoweb.model.CasoPersona;
+import com.softcoisoweb.model.Diagnostico;
+import com.softcoisoweb.model.Medicamentos;
+import com.softcoisoweb.model.ProcesoCalificacion;
+import com.softcoisoweb.model.ProcesoReclamacion;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CacheStoreMode;
@@ -172,6 +177,176 @@ public class CasoPersonaJpaController implements Serializable {
             em.getTransaction().commit();
         } catch (Exception e) {
              throw new NonexistentEntityException("Se presento inconvenientes al  cambiar el responsable del caso " + casoId + ", El eror es: ", e);
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+    
+    public List<ProcesoCalificacion> casoXproceso(String casoId) {
+        EntityManager em = null;
+        List<ProcesoCalificacion> listCasoxProceso= null;
+        try {
+            String QuerySelect = "select * from proceso_calificacion where caso_persona_id_Caso = '" + casoId + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            listCasoxProceso = em.createNativeQuery(QuerySelect, ProcesoCalificacion.class).getResultList();
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return listCasoxProceso;
+    }
+    
+    public List<Calificacion> casoXcalificacion(String casoId) {
+        EntityManager em = null;
+        List<Calificacion> listCasoxCalificacion= null;
+        try {
+            String QuerySelect = "select * from calificacion where caso_persona_id_Caso = '" + casoId + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            listCasoxCalificacion = em.createNativeQuery(QuerySelect, Calificacion.class).getResultList();
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return listCasoxCalificacion;
+    }
+    
+    public List<ProcesoReclamacion> casoXreclamacion(String casoId) {
+        EntityManager em = null;
+        List<ProcesoReclamacion> listCasoxReclamacion= null;
+        try {
+            String QuerySelect = "select * from proceso_reclamacion where caso_persona_id_caso = '" + casoId + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            listCasoxReclamacion = em.createNativeQuery(QuerySelect, ProcesoReclamacion.class).getResultList();
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return listCasoxReclamacion;
+    }
+    
+    public List<Medicamentos> casoXmedicamentos(String casoId) {
+        EntityManager em = null;
+        List<Medicamentos> listCasoxMedicamento= null;
+        try {
+            String QuerySelect = "select * from medicamentos_caso where caso_persona_id_Caso = '" + casoId + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            listCasoxMedicamento = em.createNativeQuery(QuerySelect, Medicamentos.class).getResultList();
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return listCasoxMedicamento;
+    }
+    
+    public List<Diagnostico> casoXdiagnostico(String casoId) {
+        EntityManager em = null;
+        List<Diagnostico> listCasoxDiagnostico= null;
+        try {
+            String QuerySelect = "select * from diagnostico where id_caso  = '" + casoId + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            listCasoxDiagnostico = em.createNativeQuery(QuerySelect, Diagnostico.class).getResultList();
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return listCasoxDiagnostico;
+    }
+    
+    public void eliminarSeguimiento(String casoId) throws NonexistentEntityException {
+        EntityManager em = null;
+        try {
+            String Query = "DELETE FROM seguimiento_caso where codigo_caso = '" + casoId + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.createNativeQuery(Query).executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+             throw new NonexistentEntityException("Se presento inconvenientes al eliminar el seguimiento del  caso " + casoId + ", El eror es: ", e);
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+    
+    public void eliminarComentarios(String casoId) throws NonexistentEntityException {
+        EntityManager em = null;
+        try {
+            String Query = "DELETE FROM caso_comentario where codigo_caso = '" + casoId + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.createNativeQuery(Query).executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+             throw new NonexistentEntityException("Se presento inconvenientes al eliminar comentarios al caso " + casoId + ", El eror es: ", e);
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+    
+    public void eliminarArchivos(String casoId) throws NonexistentEntityException {
+        EntityManager em = null;
+        try {
+            String Query = "DELETE FROM caso_archivo where codigo_caso = '" + casoId + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.createNativeQuery(Query).executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+             throw new NonexistentEntityException("Se presento inconvenientes al eliminar archivos al caso" + casoId + ", El eror es: ", e);
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+    
+    public void eliminarHistoricoEstado(String casoId) throws NonexistentEntityException {
+        EntityManager em = null;
+        try {
+            String Query = "DELETE FROM cambio_estado_historico where casoid = '" + casoId + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.createNativeQuery(Query).executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+             throw new NonexistentEntityException("Se presento inconvenientes al eliminar archivos al caso" + casoId + ", El eror es: ", e);
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+    
+    public void cambiarCasoAsociado(String id) throws NonexistentEntityException {
+        EntityManager em = null;
+        try {
+            String Query = "UPDATE persona SET caso_asociado = 'No' WHERE cedula = '" + id + "'";
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.createNativeQuery(Query).executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+             throw new NonexistentEntityException("Se presento inconvenientes al actualizar  el caso asociado con la cedula " + id + "El eror es: ", e);
         } finally {
             if (em != null) {
                 em.close();

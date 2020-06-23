@@ -76,6 +76,21 @@ public class AccionesExpediente {
         return fechaResultado;
 
     }
+    
+    public String fechaActual(){
+         String fecha = null;
+           try {
+            String fechaActual = obtenerFechaActual();
+            SimpleDateFormat formatterFecha = new SimpleDateFormat("yyyyMMdd");
+            SimpleDateFormat formatterFecha2 = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = formatterFecha.parse(fechaActual);
+            fecha = formatterFecha2.format(date);
+        } catch (ParseException e) {
+            LOGGER.log(Level.SEVERE, "Error obteniendo la fechaa actual, El error es:  {0}", new Object[]{e});
+
+        }
+        return fecha;
+    }
 
     private String obtenerFechaActual() {
         final Calendar capturarFecha = Calendar.getInstance();

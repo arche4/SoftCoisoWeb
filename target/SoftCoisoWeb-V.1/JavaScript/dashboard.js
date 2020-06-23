@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    $('#table_id').dataTable();
+    
     $(".loader").fadeOut("slow");
     var graficaEstado = 'ok';
     var graficaGenero = 'ok';

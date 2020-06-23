@@ -90,7 +90,7 @@
                                 <span>Persona</span>
                             </a>
                         </li>
-                        <li class="sub-menu">
+                        <li class="active" class="sub-menu">
                             <a class="active" href="${pageContext.servletContext.contextPath}/views/reportes.jsp">
                                 <i class="fa fa-print"></i>
                                 <span>Reportes del Sistema</span>
@@ -132,7 +132,7 @@
                         <div class="row mt">
                             <div class="col-lg-12">
                                 <div class="content-panel">
-                                    <h4><i class="fa fa-angle-right"></i> Doughnut</h4>
+                                    <h4><i class="fa fa-angle-right"></i> Filtros</h4>
                                     <div class="panel-body">
                                         <div class="orm-group col-md-6">
                                             <label>Tipo de consulta</label>
@@ -169,7 +169,7 @@
                         <div class="row mt">
                             <div class="col-lg-12">
                                 <div class="content-panel">
-                                    <h4><i class="fa fa-angle-right"></i> Radar</h4>
+                                    <h4><i class="fa fa-angle-right"></i> Tabla de resultados</h4>
                                     <div class="panel-body">
                                         <div class="box box-primary">
                                             <div class="box-body">

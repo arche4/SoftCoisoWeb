@@ -111,6 +111,10 @@
         <servlet-name>AfpServlet</servlet-name>
         <servlet-class>com.softcoisoweb.servlet.AfpServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>perfilServlet</servlet-name>
+        <servlet-class>com.softcoisoweb.servlet.perfilServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CerrarSesionServlet</servlet-name>
         <url-pattern>/CerrarSesionServlet</url-pattern>
@@ -191,17 +195,21 @@
         <servlet-name>FormacionServlet</servlet-name>
         <url-pattern>/FormacionServlet</url-pattern>
     </servlet-mapping> 
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>EpsServlet</servlet-name>
         <url-pattern>/EpsServlet</url-pattern>
     </servlet-mapping>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ArlServlet</servlet-name>
         <url-pattern>/ArlServlet</url-pattern>
     </servlet-mapping>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>AfpServlet</servlet-name>
         <url-pattern>/AfpServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>perfilServlet</servlet-name>
+        <url-pattern>/perfilServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

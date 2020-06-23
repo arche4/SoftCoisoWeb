@@ -5,9 +5,14 @@
  */
 package com.softcoisoweb.servlet;
 
+import com.softcoisoweb.clase.AccionesExpediente;
 import com.softcoisoweb.conexion.OperacionesBD;
+import com.softcoisoweb.controller.PersonaJpaController;
+import com.softcoisoweb.model.Persona;
+import com.softcoisoweb.util.JPAFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -15,6 +20,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 
 /**
@@ -67,6 +73,7 @@ public class DashboardServlet extends HttpServlet {
                 JSONArray grafica = consultarGraficaAfp();
                 out.print(grafica);
             }
+            ordenLlegada(request);
         }
     }
 
@@ -103,7 +110,7 @@ public class DashboardServlet extends HttpServlet {
         }
         return respuesta;
     }
-    
+
     private JSONArray consultarGraficaEps() {
         JSONArray respuesta = new JSONArray();
         try {
@@ -114,6 +121,7 @@ public class DashboardServlet extends HttpServlet {
         }
         return respuesta;
     }
+
     private JSONArray consultarGraficaAfp() {
         JSONArray respuesta = new JSONArray();
         try {
@@ -123,6 +131,18 @@ public class DashboardServlet extends HttpServlet {
             LOGGER.log(Level.SEVERE, "Se presento un error consultando los datos de la grafica de genero:   El error es: {0}", new Object[]{e});
         }
         return respuesta;
+    }
+
+    private void ordenLlegada(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        AccionesExpediente accionesExpediente = new AccionesExpediente();
+        PersonaJpaController PersonJpa = new PersonaJpaController(JPAFactory.getFACTORY());
+        try {
+            String fechaActual = accionesExpediente.fechaActual();
+            List<Persona> listOrdenLLegada = PersonJpa.ordenLlegada(fechaActual);
+            session.setAttribute("listOrdenLLegada", listOrdenLLegada);
+        } catch (Exception e) {
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

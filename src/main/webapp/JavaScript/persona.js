@@ -1,4 +1,15 @@
 $(document).ready(function () {
+
+    $("body").on("click", "#btnEliminarPersona", function () {
+        var cedula = $(this).val();
+        var cadena = ' <div class="form-row">'
+                + '<h5> ¿ Esta seguro que quieres eliminar la persona ? tenga en cuenta que validaremos si se puede eliminar</h3>'
+                + ' </div>';
+        $("#cedulaEliminar").val(cedula);
+        $('#modvalidar').html(cadena);
+        $('#valiEliminarPersona').modal('show');
+    });
+
     $('#table_id').dataTable();
     var btnFinish = $('<button></button>').text('Finalizar').addClass('btn btn-theme').on('click', function () {
         if (!$(this).hasClass('disabled')) {
@@ -16,7 +27,7 @@ $(document).ready(function () {
                 } else {
                     event.preventDefault();
                     $('#personaModal').modal('hide');
-                     $(".loader").fadeIn("slow");
+                    $(".loader").fadeIn("slow");
                     var btnCrearPersona = 'ok';
                     var cedula = $('#cedula').val();
                     var nombrePersona = $('#nombrePersona').val();
@@ -89,7 +100,7 @@ $(document).ready(function () {
                 } else {
                     event.preventDefault();
                     $('#verPersona').modal('hide');
-                     $(".loader").fadeIn("slow");
+                    $(".loader").fadeIn("slow");
                     var btnModificar = 'ok';
                     var cedulaPersona = $('#cedulaPersona').val();
                     var PersonaNombre = $('#PersonaNombre').val();
@@ -126,7 +137,7 @@ $(document).ready(function () {
                                 + '&PersonCargo=' + PersonCargo + '&personExperiencia=' + personExperiencia + '&personFechaClinica=' + personFechaClinica + '&personRecomendado=' + personRecomendado
                                 + '&casoAsociado=' + casoAsociado,
                         success: function (data) {
-                           $(".loader").fadeOut("slow");
+                            $(".loader").fadeOut("slow");
                             if (data === "Exitoso") {
                                 var cadena = ' <div class="form-row">'
                                         + '<h5>Sus cambios fueron guardados con ex\u00EDto.</h3>'
@@ -231,14 +242,14 @@ $(document).ready(function () {
         $("#cedulaPersona").val(casoCrear);
         $('#crearCaso').modal('show');
     });
-    
+
 });
 $(window).load(function () {
     $(".loader").fadeOut("slow");
 });
 $("body").on("click", "#selectConsulta", function () {
     var selectConsulta = $(this).val();
-   $(".loader").fadeIn("slow");
+    $(".loader").fadeIn("slow");
     $.ajax({
         async: false,
         type: "GET",
@@ -285,6 +296,7 @@ $("body").on("click", "#selectConsulta", function () {
         }
     });
 
+
 });
 function cerrarModal() {
     $('#modalDatosIncorrectos').modal('hide');
@@ -308,7 +320,7 @@ function guardarCaso() {
         if (elmErr && elmErr.length > 0) {
             return false;
         } else {
-             $(".loader").fadeIn("slow");
+            $(".loader").fadeIn("slow");
             event.preventDefault();
             $('#crearCaso').modal('hide');
             var btnCrearCaso = 'ok';
@@ -346,4 +358,40 @@ function guardarCaso() {
                 }});
         }
     }
+}
+
+function eliminarPersona() {
+    $('#valiEliminarPersona').modal('hide');
+    $(".loader").fadeIn("slow");
+    var btnEliminar = $('#cedulaEliminar').val();
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/PersonaServlet",
+        data: 'btnEliminar=' + btnEliminar,
+        success: function (data) {
+            event.preventDefault();
+            $(".loader").fadeOut("slow");
+            if (data === "0") {
+                var cadena = ' <div class="form-row">'
+                        + '<h5>La Persona fue eliminada con ex\u00EDto.</h3>'
+                        + '</div>';
+                $('#modInfexito').html(cadena);
+                $('#modalInfexito').modal('show');
+            } else if (data === "1") {
+                var cadena = '<div class="form-row">'
+                        + '<h5>La Persona no se puede eliminar, porque tiene casos asociados.</h5>'
+                        + '<h5>Elimine los casos asociados, para eliminar la persona.</h5>'
+                        + ' </div>';
+                $('#modInferror').html(cadena);
+                $('#modalInfError').modal('show');
+            } else if (data === "2") {
+                var cadena = '<div class="form-row">'
+                        + '<h5>Lo sentimos, se ha presentado un problema eliminando los datos .</h3>'
+                        + ' </div>';
+                $('#modInferror').html(cadena);
+                $('#modalInfError').modal('show');
+            }
+        }
+    });
 }

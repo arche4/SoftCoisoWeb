@@ -16,7 +16,11 @@
         <link href="${pageContext.servletContext.contextPath}/img/favicon.png" rel="icon"/>
         <!-- Bootstrap core CSS -->
         <link href="${pageContext.servletContext.contextPath}/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-        <script crossorigin="anonymous" integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>    
+        <script src="${pageContext.servletContext.contextPath}/lib/jquery/jquery.min.js"></script>
+        
+        <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/lib/advanced-datatable/css/DT_bootstrap.css" />
+        <link href="${pageContext.servletContext.contextPath}/lib/advanced-datatable/css/demo_table.css" rel="stylesheet" />
+        <script type="text/javascript" language="javascript" src="${pageContext.servletContext.contextPath}/lib/advanced-datatable/js/jquery.dataTables.js"></script>
 
 
         <!--external css-->
@@ -179,7 +183,27 @@
                                 <div class="content-panel">
                                     <h4><i class="fa fa-angle-right"></i>Orden de Llegada</h4>
                                     <div class="panel-body text-center">
-                                        <canvas id="" height="300" width="400"></canvas>
+                                        <table id="table_id" class="display" cellspacing="0" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Cedula</th>
+                                                    <th scope="col">Nombre</th>
+                                                    <th scope="col">Apellido</th>
+                                                    <th scope="col">Hora llegada</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach var="persona" items="${sessionScope.listOrdenLLegada}" varStatus="myIndex">
+                                                    <tr>
+                                                        <td><c:out value="${persona.getCedula()}"/></td>
+                                                        <td><c:out value="${persona.getNombrePersona()}"/></td>
+                                                        <td><c:out value="${persona.getApellidoPersona()}"/></td>
+                                                        <td><c:out value="${persona.getOrdenLlegada()}"/></td>
+                                                        
+                                                    </tr>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>

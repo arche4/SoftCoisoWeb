@@ -133,325 +133,103 @@
                     <div class="row mt">
                         <div class="col-lg-12">
                             <div class="row content-panel">
-                                <div class="col-md-4 profile-text mt mb centered">
-                                    <div class="right-divider hidden-sm hidden-xs">
-                                        <h4>1922</h4>
-                                        <h6>FOLLOWERS</h6>
-                                        <h4>290</h4>
-                                        <h6>FOLLOWING</h6>
-                                        <h4>$ 13,980</h4>
-                                        <h6>MONTHLY EARNINGS</h6>
-                                    </div>
-                                </div>
                                 <!-- /col-md-4 -->
                                 <div class="col-md-4 profile-text">
-                                    <h3>Sam Soffes</h3>
-                                    <h6>Main Administrator</h6>
-                                    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.</p>
-                                    <br>
-                                    <p><button class="btn btn-theme"><i class="fa fa-envelope"></i> Send Message</button></p>
-                                </div>
-                                <!-- /col-md-4 -->
-                                <div class="col-md-4 centered">
+                                    <h3>${sessionScope.USUARIO.nombreUsuario} ${sessionScope.USUARIO.apellidoUsuario}</h3>
+                                    <h6> ${sessionScope.USUARIO.rol}</h6>
                                     <div class="profile-pic">
-                                        <p><img src="img/ui-sam.jpg" class="img-circle"></p>
-                                        <p>
-                                            <button class="btn btn-theme"><i class="fa fa-check"></i> Follow</button>
-                                            <button class="btn btn-theme02">Add</button>
-                                        </p>
+                                        <p><img src="${pageContext.servletContext.contextPath}/img/icono-user.png" class="img-circle"></p>
                                     </div>
                                 </div>
-                                <!-- /col-md-4 -->
-                            </div>
-                            <!-- /row -->
-                        </div>
-                        <!-- /col-lg-12 -->
-                        <div class="col-lg-12 mt">
-                            <div class="row content-panel">
-                                <div class="panel-heading">
-                                    <ul class="nav nav-tabs nav-justified">
-                                        <li class="active">
-                                            <a data-toggle="tab" href="#overview">Overview</a>
-                                        </li>
-                                        <li>
-                                            <a data-toggle="tab" href="#contact" class="contact-map">Contact</a>
-                                        </li>
-                                        <li>
-                                            <a data-toggle="tab" href="#edit">Edit Profile</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <!-- /panel-heading -->
-                                <div class="panel-body">
-                                    <div class="tab-content">
-                                        <div id="overview" class="tab-pane active">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <textarea rows="3" class="form-control" placeholder="Whats on your mind?"></textarea>
-                                                    <div class="grey-style">
-                                                        <div class="pull-left">
-                                                            <button class="btn btn-sm btn-theme"><i class="fa fa-camera"></i></button>
-                                                            <button class="btn btn-sm btn-theme"><i class="fa fa-map-marker"></i></button>
-                                                        </div>
-                                                        <div class="pull-right">
-                                                            <button class="btn btn-sm btn-theme03">POST</button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="detailed mt">
-                                                        <h4>Recent Activity</h4>
-                                                        <div class="recent-activity">
-                                                            <div class="activity-icon bg-theme"><i class="fa fa-check"></i></div>
-                                                            <div class="activity-panel">
-                                                                <h5>1 HOUR AGO</h5>
-                                                                <p>Purchased: Dashio Admin Panel & Front-end theme.</p>
-                                                            </div>
-                                                            <div class="activity-icon bg-theme02"><i class="fa fa-trophy"></i></div>
-                                                            <div class="activity-panel">
-                                                                <h5>5 HOURS AGO</h5>
-                                                                <p>Task Completed. Resolved issue with Disk Space.</p>
-                                                            </div>
-                                                            <div class="activity-icon bg-theme04"><i class="fa fa-rocket"></i></div>
-                                                            <div class="activity-panel">
-                                                                <h5>3 DAYS AGO</h5>
-                                                                <p>Launched a new product: Flat Pack Heritage.</p>
-                                                            </div>
-                                                        </div>
-                                                        <!-- /recent-activity -->
-                                                    </div>
-                                                    <!-- /detailed -->
+                                <div class="col-md-8 profile-text mt mb">
+                                    <div class="right-divider hidden-sm hidden-xs">
+                                        <form id="usuario" data-toggle="validator">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <label class="control-label">Cedula</label>
+                                                    <input type="number" class="form-control" id="usuarioCedula" name="usuarioCedula" value="${sessionScope.USUARIO.cedula}"  readonly >
                                                 </div>
-                                                <!-- /col-md-6 -->
-                                                <div class="col-md-6 detailed">
-                                                    <h4>User Stats</h4>
-                                                    <div class="row centered mt mb">
-                                                        <div class="col-sm-4">
-                                                            <h1><i class="fa fa-money"></i></h1>
-                                                            <h3>$22,980</h3>
-                                                            <h6>LIFETIME EARNINGS</h6>
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <h1><i class="fa fa-trophy"></i></h1>
-                                                            <h3>37</h3>
-                                                            <h6>COMPLETED TASKS</h6>
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <h1><i class="fa fa-shopping-cart"></i></h1>
-                                                            <h3>1980</h3>
-                                                            <h6>ITEMS SOLD</h6>
-                                                        </div>
-                                                    </div>
-                                                    <!-- /row -->
-                                                    <h4>My Friends</h4>
-                                                    <div class="row centered mb">
-                                                        <ul class="my-friends">
-                                                            <li>
-                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-01.jpg"></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-02.jpg"></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-03.jpg"></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-04.jpg"></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-05.jpg"></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-06.jpg"></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-07.jpg"></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-08.jpg"></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-09.jpg"></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-10.jpg"></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="friends-pic"><img class="img-circle" width="35" height="35" src="img/friends/fr-11.jpg"></div>
-                                                            </li>
-                                                        </ul>
-                                                        <div class="row mt">
-                                                            <div class="col-md-4 col-md-offset-4">
-                                                                <h6><a href="#">VIEW ALL</a></h6>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- /row -->
-                                                    <h4>Pending Tasks</h4>
-                                                    <div class="row centered">
-                                                        <div class="col-md-8 col-md-offset-2">
-                                                            <h5>Dashboard Update (40%)</h5>
-                                                            <div class="progress">
-                                                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                                                    <span class="sr-only">40% Complete (success)</span>
-                                                                </div>
-                                                            </div>
-                                                            <h5>Unanswered Messages (80%)</h5>
-                                                            <div class="progress">
-                                                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                                                                    <span class="sr-only">80% Complete (success)</span>
-                                                                </div>
-                                                            </div>
-                                                            <h5>Product Review (60%)</h5>
-                                                            <div class="progress">
-                                                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                                                    <span class="sr-only">60% Complete (success)</span>
-                                                                </div>
-                                                            </div>
-                                                            <h5>Friend Requests (90%)</h5>
-                                                            <div class="progress">
-                                                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 90%">
-                                                                    <span class="sr-only">90% Complete (success)</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- /col-md-8 -->
-                                                    </div>
-                                                    <!-- /row -->
+                                                <div class="form-group col-md-6">
+                                                    <label class="control-label">Nombre</label>
+                                                    <input type="text" class="form-control" id="usuarioNombre" name="usuarioNombre" value="${sessionScope.USUARIO.nombreUsuario}" required>
                                                 </div>
-                                                <!-- /col-md-6 -->
                                             </div>
-                                            <!-- /OVERVIEW -->
-                                        </div>
-                                        <!-- /tab-pane -->
-                                        <div id="contact" class="tab-pane">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div id="map"></div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <label class="control-label">Apellido</label>
+                                                    <input type="text" class="form-control" id="usuarioApellido" name="usuarioApellido"  value="${sessionScope.USUARIO.apellidoUsuario}" required>
                                                 </div>
-                                                <!-- /col-md-6 -->
-                                                <div class="col-md-6 detailed">
-                                                    <h4>Location</h4>
-                                                    <div class="col-md-8 col-md-offset-2 mt">
-                                                        <p>
-                                                            Postal Address<br/> PO BOX 12988, Sutter Ave<br/> Brownsville, New York.
-                                                        </p>
-                                                        <br>
-                                                        <p>
-                                                            Headquarters<br/> 844 Sutter Ave,<br/> 9003, New York.
-                                                        </p>
-                                                    </div>
-                                                    <h4>Contacts</h4>
-                                                    <div class="col-md-8 col-md-offset-2 mt">
-                                                        <p>
-                                                            Phone: +33 4898-4303<br/> Cell: 48 4389-4393<br/>
-                                                        </p>
-                                                        <br>
-                                                        <p>
-                                                            Email: hello@dashiotheme.com<br/> Skype: UseDashio<br/> Website: http://Alvarez.is
-                                                        </p>
-                                                    </div>
+                                                <div class="form-group col-md-6">
+                                                    <label class="control-label">Email</label>
+                                                    <input class="form-control " id="usuarioEmail" type="email" name="usuarioEmail" value="${sessionScope.USUARIO.correo}" required>
                                                 </div>
-                                                <!-- /col-md-6 -->
                                             </div>
-                                            <!-- /row -->
-                                        </div>
-                                        <!-- /tab-pane -->
-                                        <div id="edit" class="tab-pane">
-                                            <div class="row">
-                                                <div class="col-lg-8 col-lg-offset-2 detailed">
-                                                    <h4 class="mb">Personal Information</h4>
-                                                    <form role="form" class="form-horizontal">
-                                                        <div class="form-group">
-                                                            <label class="col-lg-2 control-label"> Avatar</label>
-                                                            <div class="col-lg-6">
-                                                                <input type="file" id="exampleInputFile" class="file-pos">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Company</label>
-                                                            <div class="col-lg-6">
-                                                                <input type="text" placeholder=" " id="c-name" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Lives In</label>
-                                                            <div class="col-lg-6">
-                                                                <input type="text" placeholder=" " id="lives-in" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Country</label>
-                                                            <div class="col-lg-6">
-                                                                <input type="text" placeholder=" " id="country" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Description</label>
-                                                            <div class="col-lg-10">
-                                                                <textarea rows="10" cols="30" class="form-control" id="" name=""></textarea>
-                                                            </div>
-                                                        </div>
-                                                    </form>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <label class="control-label">Nueva Contraseña</label>
+                                                    <input type="password" class="form-control" id="nuevaContraseña" name="nuevaContraseña"  placeholder="xxxx">
                                                 </div>
-                                                <div class="col-lg-8 col-lg-offset-2 detailed mt">
-                                                    <h4 class="mb">Contact Information</h4>
-                                                    <form role="form" class="form-horizontal">
-                                                        <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Address 1</label>
-                                                            <div class="col-lg-6">
-                                                                <input type="text" placeholder=" " id="addr1" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Address 2</label>
-                                                            <div class="col-lg-6">
-                                                                <input type="text" placeholder=" " id="addr2" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Phone</label>
-                                                            <div class="col-lg-6">
-                                                                <input type="text" placeholder=" " id="phone" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Cell</label>
-                                                            <div class="col-lg-6">
-                                                                <input type="text" placeholder=" " id="cell" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Email</label>
-                                                            <div class="col-lg-6">
-                                                                <input type="text" placeholder=" " id="email" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Skype</label>
-                                                            <div class="col-lg-6">
-                                                                <input type="text" placeholder=" " id="skype" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <div class="col-lg-offset-2 col-lg-10">
-                                                                <button class="btn btn-theme" type="submit">Save</button>
-                                                                <button class="btn btn-theme04" type="button">Cancel</button>
-                                                            </div>
-                                                        </div>
-                                                    </form>
+                                                <div class="form-group col-md-6">
+                                                    <label class="control-label">Validar Contraseña</label>
+                                                    <input class="form-control " id="validaContraseña" type="password" name="validaContraseña" placeholder="xxxx">
                                                 </div>
-                                                <!-- /col-lg-8 -->
                                             </div>
-                                            <!-- /row -->
-                                        </div>
-                                        <!-- /tab-pane -->
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary" onclick="modificarUsuario()">Guardar Cambios</button>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <!-- /tab-content -->
                                 </div>
-                                <!-- /panel-body -->
                             </div>
-                            <!-- /col-lg-12 -->
                         </div>
+
                         <!-- /row -->
+                    </div>
+                    <div class="modal" id="modalInfexito" abindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content" id="modales-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Operación Exitosa</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="modal-row">
+                                        <div class="col-md-12">
+                                            <form>
+                                                <div class="modal-body" id="modInfexito">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <hr width="0%">
+                                        <button type="button" id="Guardar" class="btn btn-primary" onclick="myFunctionReload()">Ok</button>
+                                    </div>                           
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal" id="modalInfError" abindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content" id="modales-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Operación Erronea</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="modal-row">
+                                        <div class="col-md-12">
+                                            <form method="post" name="personaEdit" id="persona" action="">
+                                                <div class="modal-body" id="modInferror">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <hr width="0%">
+                                        <button type="button" id="Guardar" class="btn btn-primary" onclick="myFunctionReload()">Ok</button>
+                                    </div>                           
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!-- /container -->
                 </section>
@@ -482,38 +260,16 @@
             <!--footer end-->
         </section>
         <!-- js placed at the end of the document so the pages load faster -->
-        <script src="lib/jquery/jquery.min.js"></script>
-        <script src="lib/bootstrap/js/bootstrap.min.js"></script>
-        <script class="include" type="text/javascript" src="lib/jquery.dcjqaccordion.2.7.js"></script>
-        <script src="lib/jquery.scrollTo.min.js"></script>
-        <script src="lib/jquery.nicescroll.js" type="text/javascript"></script>
+        <script src="${pageContext.servletContext.contextPath}/JavaScript/perfil.js" type="text/javascript"></script>
+        <script src="${pageContext.servletContext.contextPath}/lib/jquery/jquery.min.js"></script>
+        <script src="${pageContext.servletContext.contextPath}/lib/bootstrap/js/bootstrap.min.js"></script>
+        <script class="include" type="text/javascript" src="${pageContext.servletContext.contextPath}/lib/jquery.dcjqaccordion.2.7.js"></script>
+        <script src="${pageContext.servletContext.contextPath}/lib/jquery.scrollTo.min.js"></script>
+        <script src="${pageContext.servletContext.contextPath}/lib/jquery.nicescroll.js" type="text/javascript"></script>
         <!--common script for all pages-->
-        <script src="lib/common-scripts.js"></script>
-        <!--script for this page-->
-        <!-- MAP SCRIPT - ALL CONFIGURATION IS PLACED HERE - VIEW OUR DOCUMENTATION FOR FURTHER INFORMATION -->
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASm3CwaK9qtcZEWYa-iQwHaGi3gcosAJc&sensor=false"></script>
-        <script>
-            $('.contact-map').click(function () {
+        <script src="${pageContext.servletContext.contextPath}/lib/common-scripts.js"></script>
 
-                //google map in tab click initialize
-                function initialize() {
-                    var myLatlng = new google.maps.LatLng(40.6700, -73.9400);
-                    var mapOptions = {
-                        zoom: 11,
-                        scrollwheel: false,
-                        center: myLatlng,
-                        mapTypeId: google.maps.MapTypeId.ROADMAP
-                    }
-                    var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-                    var marker = new google.maps.Marker({
-                        position: myLatlng,
-                        map: map,
-                        title: 'Dashio Admin Theme!'
-                    });
-                }
-                google.maps.event.addDomListener(window, 'click', initialize);
-            });
-        </script>
+
     </body>
 
 </html>

@@ -9,12 +9,15 @@ import com.softcoisoweb.clase.AccionesExpediente;
 import com.softcoisoweb.controller.PersonaDireccionJpaController;
 import com.softcoisoweb.controller.PersonaJpaController;
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
+import com.softcoisoweb.model.CasoPersona;
 import com.softcoisoweb.model.Persona;
 import com.softcoisoweb.model.PersonaDireccion;
 import com.softcoisoweb.util.JPAFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -27,6 +30,8 @@ import javax.servlet.http.HttpSession;
  * @author manue
  */
 public class PersonaServlet extends HttpServlet {
+
+    private final static Logger LOGGER = Logger.getLogger("LogsErrores");
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -57,8 +62,8 @@ public class PersonaServlet extends HttpServlet {
                 String modificarPersona = modificarPersona(request, response);
                 out.print(modificarPersona);
             }
-            if (btnEliminar != null && btnEliminar.equals("ok")) {
-                String eliminarPersona = eliminarPersona(request);
+            if (btnEliminar != null) {
+                String eliminarPersona = eliminarPersona(btnEliminar);
                 out.print(eliminarPersona);
             }
             cargarDatos(request, response);
@@ -107,7 +112,7 @@ public class PersonaServlet extends HttpServlet {
             PersonDireccionJpa.create(direccion);
             resultado = "Exitoso";
         } catch (Exception e) {
-            System.out.println("Error creando una persona, el error es: " + e);
+            LOGGER.log(Level.SEVERE, "Error creando una persona, el error es  {0}", new Object[]{e});
             resultado = "Error";
         }
 
@@ -142,7 +147,7 @@ public class PersonaServlet extends HttpServlet {
                     + "," + persona.getAntiguedadEmpresa() + "," + persona.getFechaClinica() + "," + persona.getRecomendado() + "," + persona.getCasoAsociado();
 
         } catch (Exception e) {
-            System.out.println("Error consultando una persona: " + e);
+            LOGGER.log(Level.SEVERE, "Error consultando una persona, el error es  {0}", new Object[]{e});
         }
 
         return respuesta;
@@ -180,7 +185,7 @@ public class PersonaServlet extends HttpServlet {
             PersonaDireccionJpaController PersonDireccionJpa = new PersonaDireccionJpaController(JPAFactory.getFACTORY());
 
             Persona getPersona = Personajpa.findPersona(cedula);
-            
+
             Persona persona = new Persona(cedula, nombrePersona, apellidos, genero, cumpleanos, edad, anosExperiencia, cargo,
                     FechaClinica, telefono, correo, recomendado, casoAsociado, codigoAfp, codigoArl, codigoEps, codigoContrato, codigoSindicato,
                     empresa, empresaUsuaria, sectorEconomico, getPersona.getOrdenLlegada());
@@ -190,24 +195,30 @@ public class PersonaServlet extends HttpServlet {
 
             resultado = "Exitoso";
         } catch (Exception e) {
-            System.out.println("Error actualizando datos de una persona: " + e);
+            LOGGER.log(Level.SEVERE, "Error actualizando datos de una persona, el error es  {0}", new Object[]{e});
             resultado = "Error";
         }
         return resultado;
 
     }
 
-    private String eliminarPersona(HttpServletRequest request) {
+    private String eliminarPersona(String cedula) {
         String resultado;
+        PersonaJpaController Personajpa = new PersonaJpaController(JPAFactory.getFACTORY());
+        PersonaDireccionJpaController PersonDireccionJpa = new PersonaDireccionJpaController(JPAFactory.getFACTORY());
         try {
-            PersonaJpaController Personajpa = new PersonaJpaController(JPAFactory.getFACTORY());
-            PersonaDireccionJpaController PersonDireccionJpa = new PersonaDireccionJpaController(JPAFactory.getFACTORY());
-            String cedula = request.getParameter("cedula");
-            Personajpa.destroy(cedula);
-            resultado = "Existoso";
+
+            List<CasoPersona> personaXcaso = Personajpa.personaXcaso(cedula);
+            if (!personaXcaso.isEmpty()) {
+                resultado = "1";
+            } else {
+                Personajpa.destroy(cedula);
+                PersonDireccionJpa.destroy(cedula);
+                resultado = "0";
+            }
         } catch (NonexistentEntityException e) {
-            System.out.println("Error eliminando datos de una persona: " + e);
-            resultado = "Error";
+            LOGGER.log(Level.SEVERE, "Error eliminando datos de una persona, el error es  {0}", new Object[]{e});
+            resultado = "2";
         }
         return resultado;
     }
@@ -219,7 +230,7 @@ public class PersonaServlet extends HttpServlet {
             Personajpa.cambiarCasoAsociado(cedula);
             respuesta = "Exitoso";
         } catch (NonexistentEntityException e) {
-            System.out.println("Error actualizando el caso asociado: " + e);
+            LOGGER.log(Level.SEVERE, "Error actualizando el caso asociado, el error es  {0}", new Object[]{e});
             respuesta = "Error";
         }
         return respuesta;
