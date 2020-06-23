@@ -5,6 +5,7 @@
  */
 package com.softcoisoweb.servlet;
 
+import com.softcoisoweb.clase.AccionesExpediente;
 import com.softcoisoweb.controller.PersonaDireccionJpaController;
 import com.softcoisoweb.controller.PersonaJpaController;
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
@@ -68,6 +69,7 @@ public class PersonaServlet extends HttpServlet {
 
     private String crearPersona(HttpServletRequest request, HttpServletResponse response) {
         String resultado;
+        AccionesExpediente accionesExpediente = new AccionesExpediente();
         PersonaJpaController PersonJpa = new PersonaJpaController(JPAFactory.getFACTORY());
         PersonaDireccionJpaController PersonDireccionJpa = new PersonaDireccionJpaController(JPAFactory.getFACTORY());
         String cedula = request.getParameter("cedula");
@@ -94,10 +96,11 @@ public class PersonaServlet extends HttpServlet {
         String FechaClinica = request.getParameter("FechaClinica");
         String recomendado = request.getParameter("recomendado");
         try {
+            String fechaActual = accionesExpediente.getFecha();
 
             Persona persona = new Persona(cedula, nombrePersona, apellidos, genero, cumpleanos, edad, anosExperiencia, cargo,
                     FechaClinica, telefono, correo, recomendado, "No", codigoAfp, codigoArl, codigoEps, codigoContrato, codigoSindicato,
-                    empresa, empresaUsuaria, sectorEconomico);
+                    empresa, empresaUsuaria, sectorEconomico, fechaActual);
             PersonJpa.create(persona);
 
             PersonaDireccion direccion = new PersonaDireccion(cedula, municipio, barrio, personaDireccion);
@@ -176,9 +179,11 @@ public class PersonaServlet extends HttpServlet {
             PersonaJpaController Personajpa = new PersonaJpaController(JPAFactory.getFACTORY());
             PersonaDireccionJpaController PersonDireccionJpa = new PersonaDireccionJpaController(JPAFactory.getFACTORY());
 
+            Persona getPersona = Personajpa.findPersona(cedula);
+            
             Persona persona = new Persona(cedula, nombrePersona, apellidos, genero, cumpleanos, edad, anosExperiencia, cargo,
                     FechaClinica, telefono, correo, recomendado, casoAsociado, codigoAfp, codigoArl, codigoEps, codigoContrato, codigoSindicato,
-                    empresa, empresaUsuaria, sectorEconomico);
+                    empresa, empresaUsuaria, sectorEconomico, getPersona.getOrdenLlegada());
             Personajpa.edit(persona);
             PersonaDireccion direccion = new PersonaDireccion(cedula, municipio, barrio, personaDireccion);
             PersonDireccionJpa.edit(direccion);

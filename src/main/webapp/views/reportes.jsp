@@ -11,7 +11,7 @@
         <meta name="description" content="">
         <meta name="author" content="Dashboard">
         <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
-        <title>Sofcoiso-Dashboard</title>
+        <title>Sofcoiso-Reportes</title>
         <!-- Favicons -->
         <link href="${pageContext.servletContext.contextPath}/img/favicon.png" rel="icon"/>
         <!-- Bootstrap core CSS -->
@@ -69,7 +69,7 @@
                         <p class="centered"><a href="${pageContext.servletContext.contextPath}/views/perfil.jsp"><img src="${pageContext.servletContext.contextPath}/img/icono-user.png" class="img-circle" width="80"></a></p>
                         <h5 class="centered">${sessionScope.USUARIO.nombreUsuario} ${sessionScope.USUARIO.apellidoUsuario}</h5>
                         <li class="mt">
-                            <a class="active" href="${pageContext.servletContext.contextPath}/views/dashboard.jsp">
+                            <a  href="${pageContext.servletContext.contextPath}/views/dashboard.jsp">
                                 <i class="fa fa-dashboard"></i>
                                 <span>Dashboard</span>
                             </a>
@@ -81,8 +81,7 @@
                             </a>
                             <ul class="sub">
                                 <li><a href="${pageContext.servletContext.contextPath}/views/calendar.jsp">Citas</a></li>
-                                <li><a href="${pageContext.servletContext.contextPath}/views/calendar.jsp">Formaciones</a></li>
-                                <li><a href="panels.html">Planeacion</a></li>
+                                <li><a href="${pageContext.servletContext.contextPath}/views/planeacion.jsp">Planeacion</a></li>
                             </ul>
                         </li>
                         <li class="sub-menu">
@@ -92,14 +91,10 @@
                             </a>
                         </li>
                         <li class="sub-menu">
-                            <a href="javascript:;">
+                            <a class="active" href="${pageContext.servletContext.contextPath}/views/reportes.jsp">
                                 <i class="fa fa-print"></i>
                                 <span>Reportes del Sistema</span>
                             </a>
-                            <ul class="sub">
-                                <li><a href="${pageContext.servletContext.contextPath}/views/usuario.jsp">Reporte</a></li>
-                                <li><a href="usuario.jsp">Reporte Medicamentos</a></li>
-                            </ul>
                         </li>
                         <c:choose>
                             <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">

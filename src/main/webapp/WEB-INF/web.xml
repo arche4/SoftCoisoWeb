@@ -95,6 +95,10 @@
         <servlet-name>DashboardServlet</servlet-name>
         <servlet-class>com.softcoisoweb.servlet.DashboardServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FormacionServlet</servlet-name>
+        <servlet-class>com.softcoisoweb.servlet.FormacionServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CerrarSesionServlet</servlet-name>
         <url-pattern>/CerrarSesionServlet</url-pattern>
@@ -170,6 +174,10 @@
     <servlet-mapping>
         <servlet-name>DashboardServlet</servlet-name>
         <url-pattern>/DashboardServlet</url-pattern>
+    </servlet-mapping> 
+    <servlet-mapping>
+        <servlet-name>FormacionServlet</servlet-name>
+        <url-pattern>/FormacionServlet</url-pattern>
     </servlet-mapping> 
     <session-config>
         <session-timeout>

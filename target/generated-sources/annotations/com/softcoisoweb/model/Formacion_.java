@@ -4,14 +4,14 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2020-06-22T18:51:52")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2020-06-22T23:01:36")
 @StaticMetamodel(Formacion.class)
 public class Formacion_ { 
 
     public static volatile SingularAttribute<Formacion, String> descripcion;
+    public static volatile SingularAttribute<Formacion, String> rutaArchivo;
     public static volatile SingularAttribute<Formacion, String> estado;
     public static volatile SingularAttribute<Formacion, Integer> ano;
-    public static volatile SingularAttribute<Formacion, String> archivo;
     public static volatile SingularAttribute<Formacion, Integer> idFormacion;
     public static volatile SingularAttribute<Formacion, String> tipoFormacion;
     public static volatile SingularAttribute<Formacion, String> titulo;
@@ -22,6 +22,7 @@ public class Formacion_ {
     public static volatile SingularAttribute<Formacion, String> horaFin;
     public static volatile SingularAttribute<Formacion, String> usuarioCedula;
     public static volatile SingularAttribute<Formacion, String> tema;
+    public static volatile SingularAttribute<Formacion, String> archivoNombre;
     public static volatile SingularAttribute<Formacion, Integer> mes;
     public static volatile SingularAttribute<Formacion, Integer> dia;
 

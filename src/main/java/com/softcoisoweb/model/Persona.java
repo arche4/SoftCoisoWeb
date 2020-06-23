@@ -1,5 +1,3 @@
-
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,7 +7,6 @@ package com.softcoisoweb.model;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
-import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -25,7 +22,6 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "persona")
-@Cacheable(false)
 @NamedQueries({
     @NamedQuery(name = "Persona.findAll", query = "SELECT p FROM Persona p"),
     @NamedQuery(name = "Persona.findByCedula", query = "SELECT p FROM Persona p WHERE p.cedula = :cedula"),
@@ -48,7 +44,8 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Persona.findByOrganizacionSindicalCodigoOrganizacion", query = "SELECT p FROM Persona p WHERE p.organizacionSindicalCodigoOrganizacion = :organizacionSindicalCodigoOrganizacion"),
     @NamedQuery(name = "Persona.findByNombreEmpresa", query = "SELECT p FROM Persona p WHERE p.nombreEmpresa = :nombreEmpresa"),
     @NamedQuery(name = "Persona.findBySectorEconomico", query = "SELECT p FROM Persona p WHERE p.sectorEconomico = :sectorEconomico"),
-    @NamedQuery(name = "Persona.findByEmpresaUsuaria", query = "SELECT p FROM Persona p WHERE p.empresaUsuaria = :empresaUsuaria")})
+    @NamedQuery(name = "Persona.findByEmpresaUsuaria", query = "SELECT p FROM Persona p WHERE p.empresaUsuaria = :empresaUsuaria"),
+    @NamedQuery(name = "Persona.findByOrdenLlegada", query = "SELECT p FROM Persona p WHERE p.ordenLlegada = :ordenLlegada")})
 public class Persona implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -60,39 +57,39 @@ public class Persona implements Serializable {
     private String cedula;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 40)
     @Column(name = "nombre_persona")
     private String nombrePersona;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 30)
+    @Size(min = 1, max = 50)
     @Column(name = "apellido_persona")
     private String apellidoPersona;
-    @Size(max = 10)
+    @Size(max = 15)
     @Column(name = "genero")
     private String genero;
     @Size(max = 30)
     @Column(name = "fecha_nacimiento")
     private String fechaNacimiento;
-    @Size(max = 50)
+    @Size(max = 10)
     @Column(name = "edad")
     private String edad;
-    @Size(max = 10)
+    @Size(max = 50)
     @Column(name = "antiguedad_empresa")
     private String antiguedadEmpresa;
-    @Size(max = 20)
+    @Size(max = 50)
     @Column(name = "cargo")
     private String cargo;
-    @Size(max = 20)
+    @Size(max = 10)
     @Column(name = "fecha_clinica")
     private String fechaClinica;
-    @Size(max = 15)
+    @Size(max = 50)
     @Column(name = "telefono")
     private String telefono;
-    @Size(max = 20)
+    @Size(max = 50)
     @Column(name = "correo")
     private String correo;
-    @Size(max = 30)
+    @Size(max = 50)
     @Column(name = "recomendado")
     private String recomendado;
     @Basic(optional = false)
@@ -134,6 +131,9 @@ public class Persona implements Serializable {
     @Size(max = 55)
     @Column(name = "empresa_usuaria")
     private String empresaUsuaria;
+    @Size(max = 25)
+    @Column(name = "orden_llegada")
+    private String ordenLlegada;
 
     public Persona() {
     }
@@ -154,11 +154,7 @@ public class Persona implements Serializable {
         this.organizacionSindicalCodigoOrganizacion = organizacionSindicalCodigoOrganizacion;
     }
 
-    public Persona(String cedula, String nombrePersona, String apellidoPersona, String genero, String fechaNacimiento,
-            String edad, String antiguedadEmpresa, String cargo, String fechaClinica, String telefono, String correo,
-            String recomendado, String casoAsociado, String afpCodigoAfp, String arlCodigoArl, String epsCodigoEps,
-            String tipoContratoCodigoTipoContrato, String organizacionSindicalCodigoOrganizacion, String nombreEmpresa,
-            String sectorEconomico, String empresaUsuaria) {
+    public Persona(String cedula, String nombrePersona, String apellidoPersona, String genero, String fechaNacimiento, String edad, String antiguedadEmpresa, String cargo, String fechaClinica, String telefono, String correo, String recomendado, String casoAsociado, String afpCodigoAfp, String arlCodigoArl, String epsCodigoEps, String tipoContratoCodigoTipoContrato, String organizacionSindicalCodigoOrganizacion, String nombreEmpresa, String sectorEconomico, String empresaUsuaria, String ordenLlegada) {
         this.cedula = cedula;
         this.nombrePersona = nombrePersona;
         this.apellidoPersona = apellidoPersona;
@@ -180,7 +176,10 @@ public class Persona implements Serializable {
         this.nombreEmpresa = nombreEmpresa;
         this.sectorEconomico = sectorEconomico;
         this.empresaUsuaria = empresaUsuaria;
+        this.ordenLlegada = ordenLlegada;
     }
+    
+    
 
     public String getCedula() {
         return cedula;
@@ -350,6 +349,14 @@ public class Persona implements Serializable {
         this.empresaUsuaria = empresaUsuaria;
     }
 
+    public String getOrdenLlegada() {
+        return ordenLlegada;
+    }
+
+    public void setOrdenLlegada(String ordenLlegada) {
+        this.ordenLlegada = ordenLlegada;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -374,5 +381,5 @@ public class Persona implements Serializable {
     public String toString() {
         return "com.softcoisoweb.model.Persona[ cedula=" + cedula + " ]";
     }
-
+    
 }

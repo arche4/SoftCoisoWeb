@@ -37,7 +37,8 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Formacion.findByDescripcion", query = "SELECT f FROM Formacion f WHERE f.descripcion = :descripcion"),
     @NamedQuery(name = "Formacion.findByNombreFormador", query = "SELECT f FROM Formacion f WHERE f.nombreFormador = :nombreFormador"),
     @NamedQuery(name = "Formacion.findByTema", query = "SELECT f FROM Formacion f WHERE f.tema = :tema"),
-    @NamedQuery(name = "Formacion.findByArchivo", query = "SELECT f FROM Formacion f WHERE f.archivo = :archivo"),
+    @NamedQuery(name = "Formacion.findByArchivoNombre", query = "SELECT f FROM Formacion f WHERE f.archivoNombre = :archivoNombre"),
+    @NamedQuery(name = "Formacion.findByRutaArchivo", query = "SELECT f FROM Formacion f WHERE f.rutaArchivo = :rutaArchivo"),
     @NamedQuery(name = "Formacion.findByCorreoFormador", query = "SELECT f FROM Formacion f WHERE f.correoFormador = :correoFormador"),
     @NamedQuery(name = "Formacion.findByNumeroAsistente", query = "SELECT f FROM Formacion f WHERE f.numeroAsistente = :numeroAsistente"),
     @NamedQuery(name = "Formacion.findByUsuarioCedula", query = "SELECT f FROM Formacion f WHERE f.usuarioCedula = :usuarioCedula"),
@@ -87,9 +88,12 @@ public class Formacion implements Serializable {
     @Size(max = 100)
     @Column(name = "tema")
     private String tema;
+    @Size(max = 100)
+    @Column(name = "archivo_nombre")
+    private String archivoNombre;
     @Size(max = 250)
-    @Column(name = "archivo")
-    private String archivo;
+    @Column(name = "ruta_archivo")
+    private String rutaArchivo;
     @Size(max = 50)
     @Column(name = "correo_formador")
     private String correoFormador;
@@ -125,6 +129,49 @@ public class Formacion implements Serializable {
         this.estado = estado;
     }
 
+    public Formacion(Integer idFormacion, String tipoFormacion, int ano, int mes, int dia, String horaInicio, String horaFin, String titulo, String descripcion, String nombreFormador, String tema, String archivoNombre, String rutaArchivo, String correoFormador, String numeroAsistente, String usuarioCedula, String estado) {
+        this.idFormacion = idFormacion;
+        this.tipoFormacion = tipoFormacion;
+        this.ano = ano;
+        this.mes = mes;
+        this.dia = dia;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.nombreFormador = nombreFormador;
+        this.tema = tema;
+        this.archivoNombre = archivoNombre;
+        this.rutaArchivo = rutaArchivo;
+        this.correoFormador = correoFormador;
+        this.numeroAsistente = numeroAsistente;
+        this.usuarioCedula = usuarioCedula;
+        this.estado = estado;
+    }
+    
+
+    public Formacion(String tipoFormacion, int ano, int mes, int dia, String horaInicio, String horaFin, String titulo, 
+            String descripcion, String nombreFormador, String tema, String archivoNombre, String rutaArchivo, 
+            String correoFormador, String numeroAsistente, String usuarioCedula, String estado) {
+        this.tipoFormacion = tipoFormacion;
+        this.ano = ano;
+        this.mes = mes;
+        this.dia = dia;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.nombreFormador = nombreFormador;
+        this.tema = tema;
+        this.archivoNombre = archivoNombre;
+        this.rutaArchivo = rutaArchivo;
+        this.correoFormador = correoFormador;
+        this.numeroAsistente = numeroAsistente;
+        this.usuarioCedula = usuarioCedula;
+        this.estado = estado;
+    }
+
+    
     public Integer getIdFormacion() {
         return idFormacion;
     }
@@ -213,12 +260,20 @@ public class Formacion implements Serializable {
         this.tema = tema;
     }
 
-    public String getArchivo() {
-        return archivo;
+    public String getArchivoNombre() {
+        return archivoNombre;
     }
 
-    public void setArchivo(String archivo) {
-        this.archivo = archivo;
+    public void setArchivoNombre(String archivoNombre) {
+        this.archivoNombre = archivoNombre;
+    }
+
+    public String getRutaArchivo() {
+        return rutaArchivo;
+    }
+
+    public void setRutaArchivo(String rutaArchivo) {
+        this.rutaArchivo = rutaArchivo;
     }
 
     public String getCorreoFormador() {

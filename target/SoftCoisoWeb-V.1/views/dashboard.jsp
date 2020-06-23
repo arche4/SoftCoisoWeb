@@ -80,8 +80,7 @@
                             </a>
                             <ul class="sub">
                                 <li><a href="${pageContext.servletContext.contextPath}/views/calendar.jsp">Citas</a></li>
-                                <li><a href="${pageContext.servletContext.contextPath}/views/calendar.jsp">Formaciones</a></li>
-                                <li><a href="panels.html">Planeacion</a></li>
+                                <li><a href="${pageContext.servletContext.contextPath}/views/formacion.jsp">Formaciones</a></li>
                             </ul>
                         </li>
                         <li class="sub-menu">
@@ -178,7 +177,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="content-panel">
-                                    <h4><i class="fa fa-angle-right"></i>Eps</h4>
+                                    <h4><i class="fa fa-angle-right"></i>Orden de Llegada</h4>
                                     <div class="panel-body text-center">
                                         <canvas id="" height="300" width="400"></canvas>
                                     </div>
