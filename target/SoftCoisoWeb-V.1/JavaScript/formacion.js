@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             $.ajax({
                 type: "GET",
-                url: "/FormacionServlet",
+                url: "/SoftCoisoWeb-V.1/FormacionServlet",
                 data: '&btnConsultarFormacion=' + codigo,
                 success: function (data) {
                     var respuesta = $.trim(data);
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
         },
-        events: '/FormacionServlet'
+        events: '/SoftCoisoWeb-V.1/FormacionServlet'
     });
     calendar.render();
     $('#submitButton').on('click', function (e) {
@@ -145,7 +145,7 @@ $(document).ready(function () {
 
     $("#uploadBtn").on("click", function () {
         $(".loader").fadeIn("slow");
-        var url = "/CargaArchivoServlet";
+        var url = "/SoftCoisoWeb-V.1/CargaArchivoServlet";
         var form = $("#sampleUploadFrm")[0];
         var data = new FormData(form);
         $.ajax({
@@ -218,7 +218,7 @@ function guardar() {
         $.ajax({
             async: false,
             type: "POST",
-            url: "/FormacionServlet",
+            url: "/SoftCoisoWeb-V.1/FormacionServlet",
             data: 'tipoFormacion=' + tipoFormacion + '&iniHora=' + iniHora + '&finHora=' + finHora + '&correoFormador=' + correoFormador +
                     '&emailUsuario=' + emailUsuario + '&usuario=' + usuario + '&titulo=' + titulo + '&descripcion=' + descripcion +
                     '&btnCrearFormacion=' + btnCrearFormacion + '&ano=' + ano + '&mes=' + mes + '&dia=' + dia + '&tema=' + tema + '&nAsistentes=' + nAsistentes
@@ -284,7 +284,7 @@ function modificarFormacion() {
         $.ajax({
             async: false,
             type: "POST",
-            url: "/FormacionServlet",
+            url: "/SoftCoisoWeb-V.1/FormacionServlet",
             data: 'tipoFormacion=' + tipoFormacion + '&IniHora=' + IniHora + '&FinHora=' + FinHora + '&correoFormador=' + correoFormador +
                     '&emailUsuario=' + emailUsuario + '&usuario=' + usuario + '&titulo=' + titulo + '&descripcion=' + descripcion +
                     '&btnModificarFormacion=' + btnModificarFormacion + '&tema=' + tema + '&nAsistentes=' + nAsistentes
@@ -336,7 +336,7 @@ function Eliminar() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/FormacionServlet",
+        url: "/SoftCoisoWeb-V.1/FormacionServlet",
         data: 'btnEliminarFormacion=' + btnEliminarFormacion + '&codigoFormacion=' + codigoFormacion,
         success: function (data) {
             event.preventDefault();
@@ -367,7 +367,7 @@ function eliminarArchivo() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/FormacionServlet",
+        url: "/SoftCoisoWeb-V.1/FormacionServlet",
         data: 'btnEliminarArchivo=' + btnEliminarArchivo,
         success: function (data) {
             event.preventDefault();

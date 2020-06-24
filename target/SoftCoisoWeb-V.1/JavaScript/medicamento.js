@@ -12,7 +12,7 @@ $(document).ready(function () {
         $.ajax({
             async: false,
             type: "GET",
-            url: "/MedicamentosServlet",
+            url: "/SoftCoisoWeb-V.1/MedicamentosServlet",
             data: 'consultarMedicamento=' + consultarMedicamento,
             success: function (data) {
                 $(".loader").fadeOut("slow");
@@ -56,7 +56,7 @@ function guardar() {
             $.ajax({
                 async: false,
                 type: "POST",
-                url: "/MedicamentosServlet",
+                url: "/SoftCoisoWeb-V.1/MedicamentosServlet",
                 data: 'btnCrearMedicamento=' + btnCrearMedicamento + '&codigoMedicamento=' + codigoMedicamento + '&nombreMedicamento=' + nombreMedicamento
                         + '&descripcionMedicamento=' + descripcionMedicamento,
                 success: function (data) {
@@ -121,7 +121,7 @@ function modificarMedicamento() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/MedicamentosServlet",
+        url: "/SoftCoisoWeb-V.1/MedicamentosServlet",
         data: 'btnModificar=' + btnModificar + '&codigoMedicamento=' + codigoMedicamento + '&nombreMedicamento=' + nombreMedicamento
                 + '&descripcionMedicamento=' + descripcionMedicamento,
         success: function (data) {
@@ -148,7 +148,7 @@ function eliminarMedicamento() {
     $.ajax({
         async: false,
         type: "GET",
-        url: "/MedicamentosServlet",
+        url: "/SoftCoisoWeb-V.1/MedicamentosServlet",
         data: 'btnEliminar=' + btnEliminar,
         success: function (data) {
             $(".loader").fadeOut("slow");

@@ -28,7 +28,7 @@ $(document).ready(function () {
         fecha_f = ($('#rangTime').val()).substring(19, 41);
         $.when($.ajax({
             type: "POST",
-            url: "/ReportesServlet",
+            url: "/SoftCoisoWeb-V.1/ReportesServlet",
             data: 'tCons=' + tCons + '&fecha_i=' + fecha_i + '&fecha_f=' + fecha_f + '&btnReporte=' + btnReporte,
             success: function (data) {
                 console.log(data);

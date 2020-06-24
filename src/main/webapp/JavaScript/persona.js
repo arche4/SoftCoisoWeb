@@ -55,7 +55,7 @@ $(document).ready(function () {
                     $.ajax({
                         async: false,
                         type: "POST",
-                        url: "/PersonaServlet",
+                        url: "/SoftCoisoWeb-V.1/PersonaServlet",
                         data: 'btnCrearPersona=' + btnCrearPersona + '&cedula=' + cedula + '&nombrePersona=' + nombrePersona + '&apellidos=' + apellidos + '&genero=' + genero +
                                 '&edad=' + edad + '&cumpleanos=' + cumpleanos + '&municipio=' + municipio + '&barrio=' + barrio + '&direccion=' + direccion
                                 + '&telefono=' + telefono + '&correo=' + correo + '&eps=' + eps + '&arl=' + arl + '&afp=' + afp + '&contrato=' + contrato
@@ -129,7 +129,7 @@ $(document).ready(function () {
                     $.ajax({
                         async: false,
                         type: "POST",
-                        url: "/PersonaServlet",
+                        url: "/SoftCoisoWeb-V.1/PersonaServlet",
                         data: 'btnModificar=' + btnModificar + '&cedulaPersona=' + cedulaPersona + '&PersonaNombre=' + PersonaNombre + '&personaApellido=' + personaApellido + '&personaGenero=' + personaGenero +
                                 '&personaEdad=' + personaEdad + '&personaCumple=' + personaCumple + '&personaMunicipio=' + personaMunicipio + '&personaBarrio=' + personaBarrio + '&personaDir=' + personaDir
                                 + '&personaTel=' + personaTel + '&personaEmail=' + personaEmail + '&personEps=' + personEps + '&arlPerson=' + arlPerson + '&personAfp=' + personAfp + '&personContrato=' + personContrato
@@ -253,7 +253,7 @@ $("body").on("click", "#selectConsulta", function () {
     $.ajax({
         async: false,
         type: "GET",
-        url: "/PersonaServlet",
+        url: "/SoftCoisoWeb-V.1/PersonaServlet",
         data: 'selectConsulta=' + selectConsulta,
         success: function (data) {
             $(".loader").fadeOut("slow");
@@ -305,7 +305,7 @@ function myFunctionReload() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/PersonaServlet",
+        url: "/SoftCoisoWeb-V.1/PersonaServlet",
         success: function (data) {
             location.reload();
         }
@@ -334,7 +334,7 @@ function guardarCaso() {
             $.ajax({
                 async: false,
                 type: "POST",
-                url: "/CasoServlet",
+                url: "/SoftCoisoWeb-V.1/CasoServlet",
                 data: 'btnCrearCaso=' + btnCrearCaso + '&cedulaPersona=' + cedulaPersona + '&cedulaUsuario=' + cedulaUsuario + '&Tipo=' + Tipo +
                         '&fechaAfectacion=' + fechaAfectacion + '&parteAfectada=' + parteAfectada + '&tiempoInca=' + tiempoInca +
                         '&descripcionCaso=' + descripcionCaso,
@@ -367,7 +367,7 @@ function eliminarPersona() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/PersonaServlet",
+        url: "/SoftCoisoWeb-V.1/PersonaServlet",
         data: 'btnEliminar=' + btnEliminar,
         success: function (data) {
             event.preventDefault();
