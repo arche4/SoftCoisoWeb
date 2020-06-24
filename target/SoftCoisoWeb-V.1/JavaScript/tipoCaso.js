@@ -10,7 +10,7 @@ $(document).ready(function () {
         $.ajax({
             async: false,
             type: "GET",
-            url: "/TipoCasoServlet",
+            url: "/SoftCoisoWeb-V.1/TipoCasoServlet",
             data: 'consultarTipoCaso=' + consultarTipoCaso,
             success: function (data) {
                 $(".loader").fadeOut("slow");
@@ -54,7 +54,7 @@ function guardar() {
             $.ajax({
                 async: false,
                 type: "POST",
-                url: "/TipoCasoServlet",
+                url: "/SoftCoisoWeb-V.1/TipoCasoServlet",
                 data: 'btnCrearTipoCaso=' + btnCrearTipoCaso + '&codigoTipoCaso=' + codigoTipoCaso + '&nombreTipoCaso=' + nombreTipoCaso
                         + '&descripcionTipoCaso=' + descripcionTipoCaso,
                 success: function (data) {
@@ -119,7 +119,7 @@ function modificarTipo() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/TipoCasoServlet",
+        url: "/SoftCoisoWeb-V.1/TipoCasoServlet",
         data: 'btnModificar=' + btnModificar + '&codigoTipoCaso=' + codigoTipoCaso + '&nombreTipoCaso=' + nombreTipoCaso
                 + '&descripcionTipoCaso=' + descripcionTipoCaso,
         success: function (data) {
@@ -146,7 +146,7 @@ function eliminarTipo() {
     $.ajax({
         async: false,
         type: "GET",
-        url: "/TipoCasoServlet",
+        url: "/SoftCoisoWeb-V.1/TipoCasoServlet",
         data: 'btnEliminar=' + btnEliminar,
         success: function (data) {
             $(".loader").fadeOut("slow");

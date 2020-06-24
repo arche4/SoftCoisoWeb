@@ -10,7 +10,7 @@ $(document).ready(function () {
         $.ajax({
             async: false,
             type: "GET",
-            url: "/GrupoSindicatoServlet",
+            url: "/SoftCoisoWeb-V.1/GrupoSindicatoServlet",
             data: 'btnConsultar=' + btnConsultar,
             success: function (data) {
                 $(".loader").fadeOut("slow");
@@ -52,7 +52,7 @@ function guardar() {
             $.ajax({
                 async: false,
                 type: "POST",
-                url: "/GrupoSindicatoServlet",
+                url: "/SoftCoisoWeb-V.1/GrupoSindicatoServlet",
                 data: 'btnCrear=' + btnCrear + '&codigoSindicato=' + codigoSindicato + '&nombreSindicato=' + nombreSindicato,
                 success: function (data) {
                     $(".loader").fadeOut("slow");
@@ -115,7 +115,7 @@ function modificar() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/GrupoSindicatoServlet",
+        url: "/SoftCoisoWeb-V.1/GrupoSindicatoServlet",
         data: 'btnModificar=' + btnModificar + '&codigoSindicato=' + codigoSindicato + '&nombreSindicato=' + nombreSindicato,
         success: function (data) {
             $(".loader").fadeOut("slow");
@@ -141,7 +141,7 @@ function eliminar() {
     $.ajax({
         async: false,
         type: "GET",
-        url: "/GrupoSindicatoServlet",
+        url: "/SoftCoisoWeb-V.1/GrupoSindicatoServlet",
         data: 'btnEliminar=' + btnEliminar,
         success: function (data) {
             $(".loader").fadeOut("slow");

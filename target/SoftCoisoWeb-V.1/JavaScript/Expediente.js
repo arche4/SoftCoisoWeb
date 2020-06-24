@@ -16,7 +16,7 @@ $(document).ready(function () {
 
     $("#uploadBtn").on("click", function () {
         $(".loader").fadeIn("slow");
-        var url = "/CargaArchivoServlet";
+        var url = "/SoftCoisoWeb-V.1/CargaArchivoServlet";
         var form = $("#sampleUploadFrm")[0];
         var data = new FormData(form);
         $.ajax({
@@ -64,7 +64,7 @@ $(document).ready(function () {
         $.ajax({
             async: false,
             type: "POST",
-            url: "/ExpedienteServlet",
+            url: "/SoftCoisoWeb-V.1/ExpedienteServlet",
             data: 'btnConsultarCometario=' + btnConsultarCometario,
             success: function (data) {
                 event.preventDefault();
@@ -91,7 +91,7 @@ $(document).ready(function () {
         $.ajax({
             async: false,
             type: "POST",
-            url: "/ExpedienteServlet",
+            url: "/SoftCoisoWeb-V.1/ExpedienteServlet",
             data: 'btnConsultarCometario=' + btnConsultarCometario,
             success: function (data) {
                 event.preventDefault();
@@ -119,7 +119,7 @@ $(document).ready(function () {
         $.ajax({
             async: false,
             type: "GET",
-            url: "/CasoServlet",
+            url: "/SoftCoisoWeb-V.1/CasoServlet",
             data: 'selectConsulta=' + editCaso,
             success: function (data) {
                 $(".loader").fadeOut("slow");
@@ -152,7 +152,7 @@ $(document).ready(function () {
         $.ajax({
             async: false,
             type: "GET",
-            url: "/ExpedienteServlet",
+            url: "/SoftCoisoWeb-V.1/ExpedienteServlet",
             data: 'btnConsultarArchivo=' + btnConsultarArchivo,
             success: function (data) {
                 $(".loader").fadeOut("slow");
@@ -195,7 +195,7 @@ $(document).ready(function () {
         $.ajax({
             async: false,
             type: "POST",
-            url: "/procesoCalificacionServlet",
+            url: "/SoftCoisoWeb-V.1/procesoCalificacionServlet",
             data: 'btnConsultarProceso=' + btnConsultarProceso,
             success: function (data) {
                 event.preventDefault();
@@ -224,7 +224,7 @@ $(document).ready(function () {
         $.ajax({
             async: false,
             type: "POST",
-            url: "/procesoCalificacionServlet",
+            url: "/SoftCoisoWeb-V.1/procesoCalificacionServlet",
             data: 'btnConsultarCalificacion=' + btnConsultarCalificacion,
             success: function (data) {
                 event.preventDefault();
@@ -255,7 +255,7 @@ $(document).ready(function () {
             async: false,
             type: "POST",
             encoding: "UTF-8",
-            url: "/ReclamacionServlet",
+            url: "/SoftCoisoWeb-V.1/ReclamacionServlet",
             data: 'btnConsultarReclamacion=' + btnConsultarReclamacion,
             success: function (data) {
                 event.preventDefault();
@@ -284,7 +284,7 @@ $(document).ready(function () {
             async: false,
             type: "POST",
             encoding: "UTF-8",
-            url: "/MedicamentosCasoServlet",
+            url: "/SoftCoisoWeb-V.1/MedicamentosCasoServlet",
             data: 'btnConsultarMedicamento=' + btnConsultarMedicamento,
             success: function (data) {
                 event.preventDefault();
@@ -317,7 +317,7 @@ $(document).ready(function () {
             async: false,
             type: "POST",
             encoding: "UTF-8",
-            url: "/DiagnosticoServlet",
+            url: "/SoftCoisoWeb-V.1/DiagnosticoServlet",
             data: 'btnConsultarDiagnostico=' + btnConsultarDiagnostico,
             success: function (data) {
                 event.preventDefault();
@@ -421,7 +421,7 @@ function cambiarEstado() {
             $.ajax({
                 async: false,
                 type: "POST",
-                url: "/ExpedienteServlet",
+                url: "/SoftCoisoWeb-V.1/ExpedienteServlet",
                 data: 'btnCambiarEstado=' + btnCambiarEstado + '&codigoEstado=' + codigoEstado
                         + '&comentarioEstado=' + comentarioEstado + '&casoid=' + casoid + '&cedulaUsuario=' + cedulaUsuario
                         + '&rutaArchivo=' + rutaArchivo + '&nombreArchivo=' + nombreArchivo,
@@ -470,7 +470,7 @@ function modificarCaso() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/CasoServlet",
+        url: "/SoftCoisoWeb-V.1/CasoServlet",
         data: 'btnModificarCasoExp=' + btnModificarCasoExp + '&IdCaso=' + IdCaso + '&tipoCaso=' + tipoCaso + '&casoFechaAfectacion=' + casoFechaAfectacion +
                 '&casoParteAfectada=' + casoParteAfectada + '&casoTimpoInca=' + casoTimpoInca + '&casoDescripcion=' + casoDescripcion +
                 '&casoCedulaPersona=' + casoCedulaPersona + '&CreadoPor=' + CreadoPor + '&Asignado=' + Asignado + '&cedulaUsuario=' + cedulaUsuario,
@@ -502,7 +502,7 @@ function comentar() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/ExpedienteServlet",
+        url: "/SoftCoisoWeb-V.1/ExpedienteServlet",
         data: 'btnComentar=' + btnComentar + '&casoComentario=' + casoComentario + '&comentarioUsuario=' + comentarioUsuario
                 + '&comentarioExpediente=' + comentarioExpediente,
         success: function (data) {
@@ -543,7 +543,7 @@ function comentarioModificar() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/ExpedienteServlet",
+        url: "/SoftCoisoWeb-V.1/ExpedienteServlet",
         data: 'btnModificarComentario=' + btnModificarComentario + '&comentario=' + comentario + '&codigoCaso=' + codigoCaso
                 + '&codigoComentario=' + codigoComentario + '&usuario=' + usuario,
         success: function (data) {
@@ -573,7 +573,7 @@ function eliminarComentario() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/ExpedienteServlet",
+        url: "/SoftCoisoWeb-V.1/ExpedienteServlet",
         data: 'btnEliminarComentario=' + btnEliminarComentario,
         success: function (data) {
             event.preventDefault();
@@ -614,7 +614,7 @@ function asignarUsuario() {
             $.ajax({
                 async: false,
                 type: "POST",
-                url: "/ExpedienteServlet",
+                url: "/SoftCoisoWeb-V.1/ExpedienteServlet",
                 data: 'btnAsginarUsuario=' + btnAsginarUsuario + '&usuarioRespo=' + usuarioRespo + '&comentarioAsig=' + comentarioAsig
                         + '&casoUsuer=' + casoUsuer + '&usuarioGestor=' + usuarioGestor,
                 success: function (data) {
@@ -667,7 +667,7 @@ function guardarProceso() {
             $.ajax({
                 async: false,
                 type: "POST",
-                url: "/procesoCalificacionServlet",
+                url: "/SoftCoisoWeb-V.1/procesoCalificacionServlet",
                 data: 'btnCrearProceso=' + btnCrearProceso + '&proceso=' + proceso + '&comentarioProceso=' + comentarioProceso
                         + '&nombreArchivoProceso=' + nombreArchivoProceso + '&rutaArchivoProceso=' + rutaArchivoProceso
                         + '&usuarioProceso=' + usuarioProceso + '&casoIdProceso=' + casoIdProceso,
@@ -713,7 +713,7 @@ function modificarProceso() {
             $.ajax({
                 async: false,
                 type: "POST",
-                url: "/procesoCalificacionServlet",
+                url: "/SoftCoisoWeb-V.1/procesoCalificacionServlet",
                 data: 'btnModificarProceso=' + btnModificarProceso + '&codigoProceso=' + codigoProceso + '&proceso=' + proceso
                         + '&comentarioProceso=' + comentarioProceso + '&usuarioProceso=' + usuarioProceso + '&nombreArchivoProceso='
                         + nombreArchivoProceso + '&rutaArchivoProceso=' + rutaArchivoProceso,
@@ -764,7 +764,7 @@ function eliminarProceso() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/procesoCalificacionServlet",
+        url: "/SoftCoisoWeb-V.1/procesoCalificacionServlet",
         data: 'btnEliminarProceso=' + btnEliminarProceso,
         success: function (data) {
             event.preventDefault();
@@ -793,7 +793,7 @@ function eliminarArchivo() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/procesoCalificacionServlet",
+        url: "/SoftCoisoWeb-V.1/procesoCalificacionServlet",
         data: 'btnEliminarArchivo=' + btnEliminarArchivo,
         success: function (data) {
             event.preventDefault();
@@ -838,7 +838,7 @@ function crearCalificacion() {
             $.ajax({
                 async: false,
                 type: "POST",
-                url: "/procesoCalificacionServlet",
+                url: "/SoftCoisoWeb-V.1/procesoCalificacionServlet",
                 data: 'btnCrearCalificacion=' + btnCrearCalificacion + '&casoId=' + casoId + '&usuario=' + usuario
                         + '&diagnostico=' + diagnostico + '&porcentaje=' + porcentaje
                         + '&comentario=' + comentario + '&nombreArchivo=' + nombreArchivo + '&rutaArchivo=' + rutaArchivo,
@@ -886,7 +886,7 @@ function modificarCalificacion() {
             $.ajax({
                 async: false,
                 type: "POST",
-                url: "/procesoCalificacionServlet",
+                url: "/SoftCoisoWeb-V.1/procesoCalificacionServlet",
                 data: 'btnModificarCalificacion=' + btnModificarCalificacion + '&usuario=' + usuario
                         + '&DiagnosticoCalificacion=' + DiagnosticoCalificacion + '&porcentaje=' + porcentaje
                         + '&comentario=' + comentario + '&nombreArchivo=' + nombreArchivo + '&rutaArchivo=' + rutaArchivo
@@ -928,7 +928,7 @@ function eliminarCalificacion() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/procesoCalificacionServlet",
+        url: "/SoftCoisoWeb-V.1/procesoCalificacionServlet",
         data: 'btnEliminarCalificacion=' + btnEliminarCalificacion,
         success: function (data) {
             event.preventDefault();
@@ -971,7 +971,7 @@ function crearReclamacion() {
             $.ajax({
                 async: false,
                 type: "POST",
-                url: "/ReclamacionServlet",
+                url: "/SoftCoisoWeb-V.1/ReclamacionServlet",
                 data: 'btnCrearReclamacion=' + btnCrearReclamacion + '&casoId=' + casoId + '&usuario=' + usuario
                         + '&comentario=' + comentario + '&nombreArchivo=' + nombreArchivo + '&rutaArchivo=' + rutaArchivo,
                 success: function (data) {
@@ -1016,7 +1016,7 @@ function modificarReclamacion() {
             $.ajax({
                 async: false,
                 type: "POST",
-                url: "/ReclamacionServlet",
+                url: "/SoftCoisoWeb-V.1/ReclamacionServlet",
                 data: 'btnModificarReclamacion=' + btnModificarReclamacion + '&casoId=' + casoId + '&usuario=' + usuario
                         + '&comentario=' + comentario + '&nombreArchivo=' + nombreArchivo + '&rutaArchivo=' + rutaArchivo
                         + '&codigo=' + codigo,
@@ -1058,7 +1058,7 @@ function eliminarReclamacion() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/ReclamacionServlet",
+        url: "/SoftCoisoWeb-V.1/ReclamacionServlet",
         data: 'btnEliminarReclamacion=' + btnEliminarReclamacion,
         success: function (data) {
             event.preventDefault();
@@ -1087,7 +1087,7 @@ function eliminarArchivoReclamacion() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/ReclamacionServlet",
+        url: "/SoftCoisoWeb-V.1/ReclamacionServlet",
         data: 'btnEliminarArchivo=' + btnEliminarArchivo,
         success: function (data) {
             event.preventDefault();
@@ -1133,7 +1133,7 @@ function crearMedicamento() {
             $.ajax({
                 async: false,
                 type: "POST",
-                url: "/MedicamentosCasoServlet",
+                url: "/SoftCoisoWeb-V.1/MedicamentosCasoServlet",
                 data: 'btnCrearMedicamento=' + btnCrearMedicamento + '&casoId=' + casoId + '&usuario=' + usuario
                         + '&comentario=' + comentario + '&nombreArchivo=' + nombreArchivo + '&rutaArchivo=' + rutaArchivo
                         + '&codigoMedicamento=' + codigoMedicamento + '&dosificacion=' + dosificacion + '&cantidad=' + cantidad
@@ -1184,7 +1184,7 @@ function modificarMedicamento() {
             $.ajax({
                 async: false,
                 type: "POST",
-                url: "/MedicamentosCasoServlet",
+                url: "/SoftCoisoWeb-V.1/MedicamentosCasoServlet",
                 data: 'btnModificarMedicamento=' + btnModificarMedicamento + '&casoId=' + casoId + '&usuario=' + usuario
                         + '&comentario=' + comentario + '&nombreArchivo=' + nombreArchivo + '&rutaArchivo=' + rutaArchivo
                         + '&codigoMedicamento=' + codigoMedicamento + '&dosificacion=' + dosificacion + '&cantidad=' + cantidad
@@ -1227,7 +1227,7 @@ function eliminarMedicamento() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/MedicamentosCasoServlet",
+        url: "/SoftCoisoWeb-V.1/MedicamentosCasoServlet",
         data: 'btnEliminarMedicamento=' + btnEliminarMedicamento,
         success: function (data) {
             event.preventDefault();
@@ -1256,7 +1256,7 @@ function eliminarArchivoMedicamento() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/MedicamentosCasoServlet",
+        url: "/SoftCoisoWeb-V.1/MedicamentosCasoServlet",
         data: 'btnEliminarArchivo=' + btnEliminarArchivo,
         success: function (data) {
             event.preventDefault();
@@ -1300,7 +1300,7 @@ function crearDiagnostico() {
             $.ajax({
                 async: false,
                 type: "POST",
-                url: "/DiagnosticoServlet",
+                url: "/SoftCoisoWeb-V.1/DiagnosticoServlet",
                 data: 'btnCrearDiagnostico=' + btnCrearDiagnostico + '&casoId=' + casoId + '&usuario=' + usuario
                         + '&comentario=' + comentario + '&nombreArchivo=' + nombreArchivo + '&rutaArchivo=' + rutaArchivo
                         + '&diagnostico=' + diagnostico + '&fechaDiagnostico=' + fechaDiagnostico,
@@ -1348,7 +1348,7 @@ function modificarDiagnostico() {
             $.ajax({
                 async: false,
                 type: "POST",
-                url: "/DiagnosticoServlet",
+                url: "/SoftCoisoWeb-V.1/DiagnosticoServlet",
                 data: 'btnModificarDiagnostico=' + btnModificarDiagnostico + '&casoId=' + casoId + '&usuario=' + usuario
                         + '&comentario=' + comentario + '&nombreArchivo=' + nombreArchivo + '&rutaArchivo=' + rutaArchivo
                         + '&codigo=' + codigo + '&diagnostico=' + diagnostico + '&fechaDiagnostico=' + fechaDiagnostico,
@@ -1390,7 +1390,7 @@ function eliminarDiagnostico() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/DiagnosticoServlet",
+        url: "/SoftCoisoWeb-V.1/DiagnosticoServlet",
         data: 'btnEliminarDiagnostico=' + btnEliminarDiagnostico,
         success: function (data) {
             event.preventDefault();
@@ -1419,7 +1419,7 @@ function eliminarArchivoDiagnostico() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/DiagnosticoServlet",
+        url: "/SoftCoisoWeb-V.1/DiagnosticoServlet",
         data: 'btnEliminarArchivo=' + btnEliminarArchivo,
         success: function (data) {
             event.preventDefault();
@@ -1453,7 +1453,7 @@ function cargarArchivoSolo() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/ArchivoServlet",
+        url: "/SoftCoisoWeb-V.1/ArchivoServlet",
         data: 'btnCargarArchivo=' + btnCargarArchivo + '&casoId=' + casoId + '&usuario=' + usuario
                 +'&nombreArchivo=' + nombreArchivo + '&rutaArchivo=' + rutaArchivo,
         success: function (data) {
@@ -1482,7 +1482,7 @@ function eliminarArchivoExpediente() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/ArchivoServlet",
+        url: "/SoftCoisoWeb-V.1/ArchivoServlet",
         data: 'btnEliminarArchivo=' + btnEliminarArchivo,
         success: function (data) {
             event.preventDefault();
