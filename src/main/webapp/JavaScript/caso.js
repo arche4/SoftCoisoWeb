@@ -21,7 +21,7 @@ $(document).ready(function () {
         $.ajax({
             async: false,
             type: "GET",
-            url: "/SoftCoisoWeb-V.1/CasoServlet",
+            url: "/SoftCoisoWeb/CasoServlet",
             data: 'selectConsulta=' + selectConsulta,
             success: function (data) {
                 $(".loader").fadeOut("slow");
@@ -68,7 +68,7 @@ function guardarCaso() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/SoftCoisoWeb-V.1/CasoServlet",
+        url: "/SoftCoisoWeb/CasoServlet",
         data: 'btnCrearCaso=' + btnCrearCaso + '&cedulaPersona=' + cedulaPersona + '&cedulaUsuario=' + cedulaUsuario + '&Tipo=' + Tipo +
                 '&fechaAfectacion=' + fechaAfectacion + '&parteAfectada=' + parteAfectada + '&tiempoInca=' + tiempoInca +
                 '&descripcionCaso=' + descripcionCaso,
@@ -119,7 +119,7 @@ function modificarCaso() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/SoftCoisoWeb-V.1/CasoServlet",
+        url: "/SoftCoisoWeb/CasoServlet",
         data: 'btnModificarCaso=' + btnModificarCaso + '&IdCaso=' + IdCaso + '&tipoCaso=' + tipoCaso + '&casoFechaAfectacion=' + casoFechaAfectacion +
                 '&casoParteAfectada=' + casoParteAfectada + '&casoTimpoInca=' + casoTimpoInca + '&casoDescripcion=' + casoDescripcion +
                 '&casoCedulaPersona=' + casoCedulaPersona + '&CreadoPor=' + CreadoPor + '&Asignado=' + Asignado + '&cedulaUsuario=' + cedulaUsuario,
@@ -149,7 +149,7 @@ function eliminarCaso() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/SoftCoisoWeb-V.1/CasoServlet",
+        url: "/SoftCoisoWeb/CasoServlet",
         data: 'btnEliminarCaso=' + btnEliminarCaso,
         success: function (data) {
             event.preventDefault();

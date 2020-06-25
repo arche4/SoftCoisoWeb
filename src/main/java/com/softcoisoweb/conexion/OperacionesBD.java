@@ -7,6 +7,7 @@ package com.softcoisoweb.conexion;
 
 import com.softcoisoweb.clase.ExcelCreateReport;
 import com.softcoisoweb.clase.reportePersona;
+import com.softcoisoweb.util.Gestor;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -17,8 +18,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -30,7 +29,7 @@ public class OperacionesBD {
 
     public String scheme = "citas";
     public String formacion = "formacion";
-    private final static Logger LOGGER = Logger.getLogger("LogsErrores");
+    private final Gestor doc = new Gestor();
 
     public String getConsultas(String Reporte, String fecha_ini, String fecha_fin, String path) throws SQLException {
         String data = "";
@@ -45,7 +44,7 @@ public class OperacionesBD {
     public String reportePersonas(String fecha_ini, String fecha_fin, String tCons, String path) throws SQLException {
 
         //Conexion Base de Datos
-        Connection conn = null;
+        Connection conn;
         ResultSet rs = null;
         String data = "";
 
@@ -92,13 +91,11 @@ public class OperacionesBD {
                 mihtmlTabla.setBodyTable(datosReport);
                 data = mihtmlTabla.getTableHtml();
             } catch (Exception e) {
-                LOGGER.log(Level.SEVERE, "Error Obteniendo los datos para el reporte de personas, El error es:  {0}", new Object[]{e});
-
+                doc.imprimirLog(doc.obtenerHoraActual() + "-Error Obteniendo los datos para el reporte de personas, El error es: " + e);
             }
 
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Error Obteniendo los datos para el reporte de personas, El error es:  {0}", new Object[]{e});
-
+            doc.imprimirLog(doc.obtenerHoraActual() + "-Error Obteniendo los datos para el reporte de personas, El error es: " + e);
         } finally {
             try {
                 if (rs != null) {
@@ -106,7 +103,7 @@ public class OperacionesBD {
                 }
 
             } catch (SQLException e) {
-                LOGGER.log(Level.SEVERE, "Error Obteniendo los datos para el reporte de personas, El error es:  {0}", new Object[]{e});
+                doc.imprimirLog(doc.obtenerHoraActual() + "-Error Obteniendo los datos para el reporte de personas, El error es: " + e);
             }
         }
 
@@ -198,10 +195,10 @@ public class OperacionesBD {
                 }
                 System.out.println(resp);
             } catch (SQLException e) {
-                LOGGER.log(Level.SEVERE, "Error Obteniendo los datos de las citas, El error es:  {0}", new Object[]{e});
+                doc.imprimirLog(doc.obtenerHoraActual() + "-Error Obteniendo los datos de las citas, El error es: " + e);
             }
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Error Obteniendo los datos de las citas, El error es:  {0}", new Object[]{e});
+            doc.imprimirLog(doc.obtenerHoraActual() + "-Error Obteniendo los datos de las citas, El error es: " + e);
         } finally {
             try {
                 if (stmt != null) {
@@ -214,7 +211,7 @@ public class OperacionesBD {
                     br.close();
                 }
             } catch (SQLException e) {
-                System.out.println("com.softcoisoweb.conexion.OperacionesBD.cargarDatos(): ERROR" + e);
+                doc.imprimirLog(doc.obtenerHoraActual() + "-Error Obteniendo los datos de las citas, El error es: " + e);
             }
         }
         return resp;
@@ -305,10 +302,10 @@ public class OperacionesBD {
                 }
                 System.out.println(resp);
             } catch (SQLException e) {
-                LOGGER.log(Level.SEVERE, "Error Obteniendo los datos de las formaciones, El error es:  {0}", new Object[]{e});
+                doc.imprimirLog(doc.obtenerHoraActual() + "-Error Obteniendo los datos de las formaciones, El error es: " + e);
             }
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Error Obteniendo los datos de las formaciones, El error es:  {0}", new Object[]{e});
+            doc.imprimirLog(doc.obtenerHoraActual() + "-Error Obteniendo los datos de las formaciones, El error es: " + e);
         } finally {
             try {
                 if (stmt != null) {
@@ -321,12 +318,12 @@ public class OperacionesBD {
                     br.close();
                 }
             } catch (SQLException e) {
-                System.out.println("com.softcoisoweb.conexion.OperacionesBD.cargarDatos(): ERROR" + e);
+                doc.imprimirLog(doc.obtenerHoraActual() + "-Error Obteniendo los datos de las formaciones, El error es: " + e);
             }
         }
         return resp;
     }
-    
+
     public JSONArray graficaEstado() {
         JSONArray resp = new JSONArray();
         Connection conn = null;
@@ -349,11 +346,10 @@ public class OperacionesBD {
                     resp.put(data);
                 }
             } catch (Exception e) {
-                LOGGER.log(Level.SEVERE, "Se presento un error consultado la grafica de estados:   El error es: {0}", new Object[]{e});
-
+                doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error consultado la grafica de estados, El error es: " + e);
             }
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Se presento un error consultado la grafica de estados:   El error es: {0}", new Object[]{e});
+            doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error consultado la grafica de estados, El error es: " + e);
 
         } finally {
             try {
@@ -361,7 +357,7 @@ public class OperacionesBD {
                     conn.close();
                 }
             } catch (SQLException e) {
-                System.out.println("com.softcoisoweb.conexion.OperacionesBD.cargarDatos(): ERROR" + e);
+                doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error consultado la grafica de estados, El error es: " + e);
             }
         }
         return resp;
@@ -387,11 +383,11 @@ public class OperacionesBD {
                     resp.put(data);
                 }
             } catch (Exception e) {
-                LOGGER.log(Level.SEVERE, "Se presento un error consultado la grafica de generos:   El error es: {0}", new Object[]{e});
+                doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error consultado la grafica de generos, El error es: " + e);
 
             }
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Se presento un error consultado la grafica de generos:   El error es: {0}", new Object[]{e});
+            doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error consultado la grafica de generos, El error es: " + e);
 
         } finally {
             try {
@@ -399,7 +395,7 @@ public class OperacionesBD {
                     conn.close();
                 }
             } catch (SQLException e) {
-                System.out.println("com.softcoisoweb.conexion.OperacionesBD.cargarDatos(): ERROR" + e);
+                doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error consultado la grafica de generos, El error es: " + e);
             }
         }
         return resp;
@@ -427,11 +423,10 @@ public class OperacionesBD {
                     resp.put(data);
                 }
             } catch (Exception e) {
-                LOGGER.log(Level.SEVERE, "Se presento un error consultado la grafica de arl:   El error es: {0}", new Object[]{e});
-
+                doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error consultado la grafica de arl, El error es: " + e);
             }
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Se presento un error consultado la grafica de arl:   El error es: {0}", new Object[]{e});
+            doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error consultado la grafica de arl, El error es: " + e);
 
         } finally {
             try {
@@ -439,7 +434,7 @@ public class OperacionesBD {
                     conn.close();
                 }
             } catch (SQLException e) {
-                System.out.println("com.softcoisoweb.conexion.OperacionesBD.cargarDatos(): ERROR" + e);
+                doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error consultado la grafica de arl, El error es: " + e);
             }
         }
         return resp;
@@ -467,19 +462,17 @@ public class OperacionesBD {
                     resp.put(data);
                 }
             } catch (Exception e) {
-                LOGGER.log(Level.SEVERE, "Se presento un error consultado la grafica de arl:   El error es: {0}", new Object[]{e});
-
+                doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error consultado la grafica de Eps, El error es: " + e);
             }
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Se presento un error consultado la grafica de arl:   El error es: {0}", new Object[]{e});
-
+            doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error consultado la grafica de Eps, El error es: " + e);
         } finally {
             try {
                 if (conn != null) {
                     conn.close();
                 }
             } catch (SQLException e) {
-                System.out.println("com.softcoisoweb.conexion.OperacionesBD.cargarDatos(): ERROR" + e);
+                doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error consultado la grafica de Eps, El error es: " + e);
             }
         }
         return resp;
@@ -507,11 +500,11 @@ public class OperacionesBD {
                     resp.put(data);
                 }
             } catch (Exception e) {
-                LOGGER.log(Level.SEVERE, "Se presento un error consultado la grafica de arl:   El error es: {0}", new Object[]{e});
+                doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error consultado la grafica de Afp, El error es: " + e);
 
             }
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Se presento un error consultado la grafica de arl:   El error es: {0}", new Object[]{e});
+            doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error consultado la grafica de Afp, El error es: " + e);
 
         } finally {
             try {
@@ -519,7 +512,7 @@ public class OperacionesBD {
                     conn.close();
                 }
             } catch (SQLException e) {
-                System.out.println("com.softcoisoweb.conexion.OperacionesBD.cargarDatos(): ERROR" + e);
+                doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error consultado la grafica de Afp, El error es: " + e);
             }
         }
         return resp;

@@ -145,7 +145,7 @@ $(document).ready(function () {
 
     $("#uploadBtn").on("click", function () {
         $(".loader").fadeIn("slow");
-        var url = "/SoftCoisoWeb-V.1/CargaArchivoServlet";
+        var url = "/SoftCoisoWeb-V.1/CargarArchivoFormacionServlet";
         var form = $("#sampleUploadFrm")[0];
         var data = new FormData(form);
         $.ajax({

@@ -115,6 +115,10 @@
         <servlet-name>perfilServlet</servlet-name>
         <servlet-class>com.softcoisoweb.servlet.perfilServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CargarArchivoFormacionServlet</servlet-name>
+        <servlet-class>com.softcoisoweb.servlet.CargarArchivoFormacionServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CerrarSesionServlet</servlet-name>
         <url-pattern>/CerrarSesionServlet</url-pattern>
@@ -210,6 +214,10 @@
     <servlet-mapping>
         <servlet-name>perfilServlet</servlet-name>
         <url-pattern>/perfilServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CargarArchivoFormacionServlet</servlet-name>
+        <url-pattern>/CargarArchivoFormacionServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

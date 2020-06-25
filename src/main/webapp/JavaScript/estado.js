@@ -10,7 +10,7 @@ $(document).ready(function () {
         $.ajax({
             async: false,
             type: "GET",
-            url: "/SoftCoisoWeb-V.1/EstadoCasoServlet",
+            url: "/SoftCoisoWeb/EstadoCasoServlet",
             data: 'btnConsultar=' + btnConsultar,
             success: function (data) {
                 $(".loader").fadeOut("slow");
@@ -54,7 +54,7 @@ function guardar() {
             $.ajax({
                 async: false,
                 type: "POST",
-                url: "/SoftCoisoWeb-V.1/EstadoCasoServlet",
+                url: "/SoftCoisoWeb/EstadoCasoServlet",
                 data: 'btnCrear=' + btnCrear + '&codigoEstado=' + codigoEstado + '&nombreEstado=' + nombreEstado
                         + '&descripcionEstado=' + descripcionEstado,
                 success: function (data) {
@@ -119,7 +119,7 @@ function modificar() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/SoftCoisoWeb-V.1/EstadoCasoServlet",
+        url: "/SoftCoisoWeb/EstadoCasoServlet",
         data: 'btnModificar=' + btnModificar + '&codigoEstado=' + codigoEstado + '&nombreEstado=' + nombreEstado
                 + '&descripcionEstado=' + descripcionEstado,
         success: function (data) {
@@ -146,7 +146,7 @@ function eliminar() {
     $.ajax({
         async: false,
         type: "GET",
-        url: "/SoftCoisoWeb-V.1/EstadoCasoServlet",
+        url: "/SoftCoisoWeb/EstadoCasoServlet",
         data: 'btnEliminar=' + btnEliminar,
         success: function (data) {
             $(".loader").fadeOut("slow");

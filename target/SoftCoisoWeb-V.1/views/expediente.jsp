@@ -582,6 +582,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
+
                                                                 </c:if>
                                                             </div>
                                                         </div>
@@ -714,7 +715,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">Agregar Diagnostico</h4>
+                            <h4 class="modal-title" id="myModalLabel"> Diagnostico</h4>
                         </div>
                         <div class="alert alert-success" id="Exitoso" style="display:none;">
                             <strong>¡Bien hecho!</strong>Se guardo a cargado correctamente el archivo.
@@ -858,7 +859,7 @@
                             </div>
                             <input class="form-control " id="nombreArchivo" type="hidden" name="nombreArchivo">
                             <input class="form-control " id="rutaArchivo" type="hidden" name="rutaArchivo">
-                            <br><br><br><br><br><br><br><br><br><br><br><br>><br><br><br>
+                            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
                             <div class="modal-footer">
                                 <button  type="submit" class="btn btn-success" id="btnCrear" onclick="modificarMedicamento()">
                                     Guardar

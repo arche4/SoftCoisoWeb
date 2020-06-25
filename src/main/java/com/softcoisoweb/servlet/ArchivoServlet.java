@@ -9,11 +9,10 @@ import com.softcoisoweb.clase.AccionesExpediente;
 import com.softcoisoweb.controller.CasoArchivoJpaController;
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.model.CasoArchivo;
+import com.softcoisoweb.util.Gestor;
 import com.softcoisoweb.util.JPAFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ArchivoServlet", urlPatterns = {"/ArchivoServlet"})
 public class ArchivoServlet extends HttpServlet {
 
-    private final static Logger LOGGER = Logger.getLogger("LogsErrores");
+    private final Gestor doc = new Gestor();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -74,7 +73,8 @@ public class ArchivoServlet extends HttpServlet {
             archivoJpa.create(archivo);
             respuesta = "Exitoso";
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Se presento un error agregando un archivo al expediente:  El error es: {0}", new Object[]{e});
+            doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error agregando un archivo al expediente, El error es: " + e);
+
             respuesta = "Error";
         }
         return respuesta;
@@ -87,7 +87,7 @@ public class ArchivoServlet extends HttpServlet {
             archivoJpa.destroy(Integer.parseInt(codigoArchivo));
             respuesta = "Exitoso";
         } catch (NonexistentEntityException | NumberFormatException e) {
-            LOGGER.log(Level.SEVERE, "Se presento un error creando el medicamento al expediente:  El error es: {0}", new Object[]{e});
+            doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error eliminando el archivo al expediente, El error es: " + e);
             respuesta = "Error";
         }
         return respuesta;

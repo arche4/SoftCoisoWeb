@@ -9,8 +9,6 @@ import com.softcoisoweb.util.Gestor;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -19,20 +17,13 @@ import java.util.logging.Logger;
 public class Conexion {
 
     private final Gestor doc = new Gestor();
-//    final private String USER = doc.leerProperties("USER");
-//    final private String PASS = doc.leerProperties("PASS");
-//    final private String HOST = doc.leerProperties("HOST");
-//    final private String PORT = doc.leerProperties("PORT");
-//    final private String DATABASE = doc.leerProperties("DATABASE");
-    
-    final private String USER = "coiso_dllo";
-    final private String PASS = "C01s0.c0m";
-    final private String HOST = "190.8.176.153";
-    final private String PORT = "3306";
-    final private String DATABASE = "coiso_PRODMDLLO";
+    final private String USER = doc.leerProperties("USER");
+    final private String PASS = doc.leerProperties("PASS");
+    final private String HOST = doc.leerProperties("HOST");
+    final private String PORT = doc.leerProperties("PORT");
+    final private String DATABASE = doc.leerProperties("DATABASE");
     final static private String DRIVER = "com.mysql.cj.jdbc.Driver";
     final private String URL = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?useSSL=false";
-    private final static Logger LOGGER = Logger.getLogger("LogsErrores");
 
     public Connection conectarMySQL() throws SQLException {
         Connection CONMYSQL = null;
@@ -41,7 +32,7 @@ public class Conexion {
             Class.forName(DRIVER);
             CONMYSQL = DriverManager.getConnection(URL, USER, PASS);
         } catch (ClassNotFoundException e) {
-            LOGGER.log(Level.SEVERE, "Error conectandose a la base de datos, El error es:  {0}", new Object[]{e});
+            doc.imprimirLog(doc.obtenerHoraActual() + "Error conectandose a la base de datos, El error es: " + e);
         }
         return CONMYSQL;
     }

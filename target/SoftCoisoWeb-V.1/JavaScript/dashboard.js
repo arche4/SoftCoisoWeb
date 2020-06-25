@@ -9,7 +9,7 @@ $(document).ready(function () {
     var graficaAfp = 'ok';
 
     $.ajax({
-        url: "/SoftCoisoWeb-V.1/DashboardServlet",
+        url: "/SoftCoisoWeb/DashboardServlet",
         dataType: 'json',
         contentType: "application/json; charset=utf-8",
         method: "GET",
@@ -62,7 +62,7 @@ $(document).ready(function () {
     });
 
     $.ajax({
-        url: "/SoftCoisoWeb-V.1/DashboardServlet",
+        url: "/SoftCoisoWeb/DashboardServlet",
         dataType: 'json',
         contentType: "application/json; charset=utf-8",
         method: "GET",
@@ -113,7 +113,7 @@ $(document).ready(function () {
     });
 
     $.ajax({
-        url: "/SoftCoisoWeb-V.1/DashboardServlet",
+        url: "/SoftCoisoWeb/DashboardServlet",
         dataType: 'json',
         contentType: "application/json; charset=utf-8",
         method: "GET",
@@ -163,7 +163,7 @@ $(document).ready(function () {
     });
 
     $.ajax({
-        url: "/SoftCoisoWeb-V.1/DashboardServlet",
+        url: "/SoftCoisoWeb/DashboardServlet",
         dataType: 'json',
         contentType: "application/json; charset=utf-8",
         method: "GET",
@@ -213,7 +213,7 @@ $(document).ready(function () {
     });
 
     $.ajax({
-        url: "/SoftCoisoWeb-V.1/DashboardServlet",
+        url: "/SoftCoisoWeb/DashboardServlet",
         dataType: 'json',
         contentType: "application/json; charset=utf-8",
         method: "GET",

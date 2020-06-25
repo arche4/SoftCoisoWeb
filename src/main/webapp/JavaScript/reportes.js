@@ -11,7 +11,7 @@ $(document).ready(function () {
     });
 
     $("#btnDescargar").click(function () {
-       window.location = 'http://127.0.0.1:8887//SoftCoisoWeb-V.1Personas.xls';
+       window.location = 'http://127.0.0.1:8887//Reportes//SoftCoisoWeb-V.1Personas.xls';
     });
 
     //EL BOTON CONSULTAR EJECUTA  
@@ -28,7 +28,7 @@ $(document).ready(function () {
         fecha_f = ($('#rangTime').val()).substring(19, 41);
         $.when($.ajax({
             type: "POST",
-            url: "/SoftCoisoWeb-V.1/ReportesServlet",
+            url: "/SoftCoisoWeb/ReportesServlet",
             data: 'tCons=' + tCons + '&fecha_i=' + fecha_i + '&fecha_f=' + fecha_f + '&btnReporte=' + btnReporte,
             success: function (data) {
                 console.log(data);

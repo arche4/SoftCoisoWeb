@@ -6,7 +6,7 @@
 package com.softcoisoweb.servlet;
 
 import com.softcoisoweb.conexion.OperacionesBD;
-import java.io.File;
+import com.softcoisoweb.util.Gestor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -15,7 +15,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ReportesServlet extends HttpServlet {
 
     private final static Logger LOGGER = Logger.getLogger("LogsErrores");
+    private final Gestor doc = new Gestor();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -56,8 +56,7 @@ public class ReportesServlet extends HttpServlet {
     }
 
     private String generarReporte(HttpServletRequest request) throws ParseException, IOException {
-        ServletContext servletContext = getServletContext();
-        String contextPath = servletContext.getRealPath(File.separator);
+        String contextPath = doc.leerProperties("rutaReportes");
         String respuesta = null;
         OperacionesBD ops = new OperacionesBD();
         String tCons = request.getParameter("tCons");

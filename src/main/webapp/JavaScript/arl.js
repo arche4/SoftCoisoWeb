@@ -10,7 +10,7 @@ $(document).ready(function () {
         $.ajax({
             async: false,
             type: "GET",
-            url: "/SoftCoisoWeb-V.1/ArlServlet",
+            url: "/SoftCoisoWeb/ArlServlet",
             data: 'btnConsultar=' + btnConsultar,
             success: function (data) {
                 $(".loader").fadeOut("slow");
@@ -52,7 +52,7 @@ function guardar() {
             $.ajax({
                 async: false,
                 type: "POST",
-                url: "/SoftCoisoWeb-V.1/ArlServlet",
+                url: "/SoftCoisoWeb/ArlServlet",
                 data: 'btnCrear=' + btnCrear + '&codigo=' + codigo + '&nombre=' + nombre,
                 success: function (data) {
                     $(".loader").fadeOut("slow");
@@ -115,7 +115,7 @@ function modificar() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/SoftCoisoWeb-V.1/ArlServlet",
+        url: "/SoftCoisoWeb/ArlServlet",
         data: 'btnModificar=' + btnModificar + '&codigo=' + codigo + '&nombre=' + nombre,
         success: function (data) {
             $(".loader").fadeOut("slow");
@@ -141,7 +141,7 @@ function eliminar() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/SoftCoisoWeb-V.1/ArlServlet",
+        url: "/SoftCoisoWeb/ArlServlet",
         data: 'btnEliminar=' + btnEliminar,
         success: function (data) {
             $(".loader").fadeOut("slow");
