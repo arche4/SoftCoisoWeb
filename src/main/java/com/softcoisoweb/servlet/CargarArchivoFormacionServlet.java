@@ -42,7 +42,7 @@ public class CargarArchivoFormacionServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         final String folder = doc.leerProperties("ArchivosFormacion");
-        String nombre;
+        String name;
         String resultado = null;
         String rutaArchivo;
         String nombreArchivo;
@@ -52,16 +52,15 @@ public class CargarArchivoFormacionServlet extends HttpServlet {
 
                 for (FileItem item : multiparts) {
                     if (!item.isFormField()) {
-                        nombre = new File(item.getName()).getName();
-                        String expediente = nombre.split("_")[0];
-                        String name = nombre.split("_")[1];
-                        File folderExpediente = new File(folder + File.separator + "Expediente" + expediente);
+                        name = new File(item.getName()).getName();
+                       
+                        File folderExpediente = new File(folder + File.separator +name);
                         if (folderExpediente.exists() == false) {
                             folderExpediente.mkdir();
                         }
 
                         item.write(new File(folderExpediente + File.separator + name));
-                        rutaArchivo = "http://127.0.0.1:8887/" + "Expediente" + expediente + "/" + name;
+                        rutaArchivo = "http://127.0.0.1:8887/" + name;
                         nombreArchivo = name;
                         resultado = "Exitoso" + "," + nombreArchivo + "," + rutaArchivo;
                     }

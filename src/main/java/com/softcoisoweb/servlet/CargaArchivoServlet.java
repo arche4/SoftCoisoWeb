@@ -1,6 +1,6 @@
 package com.softcoisoweb.servlet;
 
-import com.softcoisoweb.servicio.rest.restCargarArchivo;
+
 import com.softcoisoweb.util.Gestor;
 import java.io.File;
 import java.io.IOException;
@@ -24,17 +24,15 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 public class CargaArchivoServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    private final Random rand;
     private final static Logger LOGGER = Logger.getLogger("LogsErrores");
     private final Gestor doc = new Gestor();
 
     /**
-     * @throws java.security.NoSuchAlgorithmException
+     * 
      * @see HttpServlet#HttpServlet()
      */
-    public CargaArchivoServlet() throws NoSuchAlgorithmException {
-        super();
-        this.rand = SecureRandom.getInstanceStrong();
+    public CargaArchivoServlet() {
+      
     }
 
     /**

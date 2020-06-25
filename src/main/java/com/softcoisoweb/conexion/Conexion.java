@@ -9,8 +9,6 @@ import com.softcoisoweb.util.Gestor;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -26,7 +24,6 @@ public class Conexion {
     final private String DATABASE = doc.leerProperties("DATABASE");
     final static private String DRIVER = "com.mysql.cj.jdbc.Driver";
     final private String URL = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?useSSL=false";
-    private final static Logger LOGGER = Logger.getLogger("LogsErrores");
 
     public Connection conectarMySQL() throws SQLException {
         Connection CONMYSQL = null;
@@ -34,7 +31,6 @@ public class Conexion {
         try {
             Class.forName(DRIVER);
             CONMYSQL = DriverManager.getConnection(URL, USER, PASS);
-            doc.imprimirLog(doc.obtenerHoraActual() + "Prueba de logs: " );
         } catch (ClassNotFoundException e) {
             doc.imprimirLog(doc.obtenerHoraActual() + "Error conectandose a la base de datos, El error es: " + e);
         }

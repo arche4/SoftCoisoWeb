@@ -14,6 +14,7 @@ C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\s
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\ArlServlet.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\EstadoCasoServlet.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\exceptions\NonexistentEntityException.java
+C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\CargarArchivoFormacionServlet.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\servlet\DiagnosticoServlet.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\ProcesoReclamacionJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\Coiso\SoftCoisoWeb\src\main\java\com\softcoisoweb\controller\EstadoCasoJpaController.java

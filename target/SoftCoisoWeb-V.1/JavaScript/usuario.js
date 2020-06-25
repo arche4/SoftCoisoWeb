@@ -8,7 +8,7 @@ $(document).ready(function () {
         $.ajax({
             async: false,
             type: "GET",
-            url: "/SoftCoisoWeb-V.1/UsuarioServlet",
+            url: "/SoftCoisoWeb/UsuarioServlet",
             data: 'usuarioConsulta=' + usuarioConsulta,
             success: function (data) {
                 $(".loader").fadeOut("slow");
@@ -60,7 +60,7 @@ function guardarUsuario() {
             $.ajax({
                 async: false,
                 type: "POST",
-                url: "/SoftCoisoWeb-V.1/UsuarioServlet",
+                url: "/SoftCoisoWeb/UsuarioServlet",
                 data: 'btnCrearUsuario=' + btnCrearUsuario + '&cedula=' + cedula + '&nombre=' + nombre + '&apellido=' + apellido +
                         '&rol=' + rol + '&emalUsuario=' + emalUsuario,
                 success: function (data) {
@@ -122,7 +122,7 @@ function modificarUsuario() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/SoftCoisoWeb-V.1/UsuarioServlet",
+        url: "/SoftCoisoWeb/UsuarioServlet",
         data: 'btnModificar=' + btnModificar + '&cedula=' + cedula + '&nombre=' + nombre + '&apellido=' + apellido +
                 '&rol=' + rol + '&emalUsuario=' + emalUsuario + '&claveUsuario=' + claveUsuario,
         success: function (data) {
@@ -149,7 +149,7 @@ function eliminarUsuario() {
     $.ajax({
         async: false,
         type: "GET",
-        url: "/SoftCoisoWeb-V.1/UsuarioServlet",
+        url: "/SoftCoisoWeb/UsuarioServlet",
         data: 'btnEliminar=' + btnEliminar,
         success: function (data) {
             $(".loader").fadeOut("slow");

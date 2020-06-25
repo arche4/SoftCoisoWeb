@@ -23,7 +23,7 @@ function modificarUsuario() {
         $.ajax({
             async: false,
             type: "POST",
-            url: "/SoftCoisoWeb-V.1/perfilServlet",
+            url: "/SoftCoisoWeb/perfilServlet",
             data: 'btnEditarPerfil=' + btnEditarPerfil + '&cedula=' + cedula + '&nombre=' + nombre + '&apellido=' + apellido +
                     '&usuarioEmail=' + usuarioEmail  + '&nuevaContraseña=' + nuevaContraseña,
             success: function (data) {

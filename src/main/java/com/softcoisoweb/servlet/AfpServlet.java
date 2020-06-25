@@ -9,12 +9,11 @@ import com.softcoisoweb.controller.AfpJpaController;
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.model.Afp;
 import com.softcoisoweb.model.Persona;
+import com.softcoisoweb.util.Gestor;
 import com.softcoisoweb.util.JPAFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,7 +28,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "AfpServlet", urlPatterns = {"/AfpServlet"})
 public class AfpServlet extends HttpServlet {
 
-    private final static Logger LOGGER = Logger.getLogger("LogsErrores");
+    private final Gestor doc = new Gestor();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -85,7 +84,7 @@ public class AfpServlet extends HttpServlet {
                 resultado = "0";
             }
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Se presento un error creando una nueva AFP:  {0} El error es: {1}", new Object[]{codigo, e});
+            doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error creando una nueva AFP: " + codigo + " El error es: " + e);
             resultado = "2";
         }
         return resultado;
@@ -98,7 +97,7 @@ public class AfpServlet extends HttpServlet {
             List<Afp> listAfp = afpJpa.findAfpEntities();
             session.setAttribute("AFP", listAfp);
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Se presento un error cargando los datos de las  AFP:  El error es: {0}", new Object[]{e});
+            doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error cargando los datos de las  AFP, El error es: " + e);
         }
     }
 
@@ -109,7 +108,7 @@ public class AfpServlet extends HttpServlet {
             Afp afp = afpJpa.findAfp(codigo);
             respuesta = afp.getCodigoAfp() + "#" + afp.getNombreAfp();
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Se presento un error consultando los datos de la  AFP: {0} El error es: {1}", new Object[]{codigo, e});
+            doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error consultando los datos de la  AFP:: " + codigo + " El error es: " + e);
         }
         return respuesta;
 
@@ -125,12 +124,12 @@ public class AfpServlet extends HttpServlet {
             afpJpa.edit(afpEdit);
             resultado = "Exitoso";
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Se presento un error modificando los datos de la  AFP: {0} El error es: {1}", new Object[]{codigo, e});
+            doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error modificando los datos de la  AFP: " + codigo + " El error es: " + e);
             resultado = "Error";
         }
         return resultado;
     }
-    
+
     private String eliminar(String codigo) {
         String resultado;
         AfpJpaController afpJpa = new AfpJpaController(JPAFactory.getFACTORY());
@@ -143,7 +142,7 @@ public class AfpServlet extends HttpServlet {
                 resultado = "0";
             }
         } catch (NonexistentEntityException e) {
-            LOGGER.log(Level.SEVERE, "Se presento un error eliminando la  AFP: {0} El error es: {1}", new Object[]{codigo, e});
+            doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error eliminando la  AFP: " + codigo + " El error es: " + e);
             resultado = "2";
         }
         return resultado;

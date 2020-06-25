@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             $.ajax({
                 type: "GET",
-                url: "/SoftCoisoWeb-V.1/CalendarServlet",
+                url: "/SoftCoisoWeb/CalendarServlet",
                 data: '&codigo=' + codigo,
                 success: function (data) {
                     var respuesta = $.trim(data);
@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
         },
-        events: '/SoftCoisoWeb-V.1/CargarDatosCalendarServlet'
+        events: '/SoftCoisoWeb/CargarDatosCalendarServlet'
     });
     calendar.render();
     $('#submitButton').on('click', function (e) {
@@ -182,7 +182,7 @@ function guardar() {
         $.ajax({
             async: false,
             type: "POST",
-            url: "/SoftCoisoWeb-V.1/CalendarServlet",
+            url: "/SoftCoisoWeb/CalendarServlet",
             data: 'persona=' + persona + '&iniHora=' + iniHora + '&finHora=' + finHora + '&email=' + email +
                     '&emailUsuario=' + emailUsuario + '&cedulaUsuario=' + cedulaUsuario + '&titulo=' + titulo + '&comentario=' + comentario + '&btnCrearCita=' + btnCrearCita
                     + '&ano=' + ano + '&mes=' + mes + '&dia=' + dia,
@@ -251,7 +251,7 @@ function Modificar() {
         $.ajax({
             async: false,
             type: "POST",
-            url: "/SoftCoisoWeb-V.1/CalendarServlet",
+            url: "/SoftCoisoWeb/CalendarServlet",
             data: 'btnModificarCita=' + btnModificarCita + '&citaCedula=' + citaCedula + '&citaNom=' + citaNom + '&CitaIniHora=' + CitaIniHora + '&CitaFinHora=' + CitaFinHora +
                     '&Citaemail=' + Citaemail + '&Citatitulo=' + Citatitulo + '&Citacomentario=' + Citacomentario + '&emailUsuarioCita=' + emailUsuarioCita + '&cedulaUsuarioCita=' + cedulaUsuarioCita
                     + '&codigoCita=' + codigoCita + '&anoCita=' + anoCita + '&mesCita=' + mesCita + '&diaCita=' + diaCita + '&enviarCorreo=' + enviarCorreo,
@@ -302,7 +302,7 @@ function Eliminar() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/SoftCoisoWeb-V.1/CalendarServlet",
+        url: "/SoftCoisoWeb/CalendarServlet",
         data: 'btnEliminarCita=' + btnEliminarCita + '&codigoCita=' + codigoCita,
         success: function (data) {
             event.preventDefault();

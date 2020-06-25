@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 public class Gestor {
 
     private final static Logger LOGGER = Logger.getLogger("LogsErrores");
-    private final String Ruta = new Gestor().leerProperties("rutaLogs");
+    private final String Ruta = leerProperties("rutaLogs");
 
     public String leerProperties(final String proper) {
         String propiedad;
@@ -81,7 +81,7 @@ public class Gestor {
         if (!rutaLocal.isDirectory()) {
             rutaLocal.mkdir();
         }
-        return rutaLocal + File.separator + obtenerFechaActual() + ".txt";
+        return rutaLocal + File.separator + obtenerFechaActual() + "Errores.txt";
 
     }
     
