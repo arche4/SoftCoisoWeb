@@ -1,6 +1,7 @@
 package com.softcoisoweb.servlet;
 
 import com.softcoisoweb.servicio.rest.restCargarArchivo;
+import com.softcoisoweb.util.Gestor;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -25,6 +26,7 @@ public class CargaArchivoServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private final Random rand;
     private final static Logger LOGGER = Logger.getLogger("LogsErrores");
+    private final Gestor doc = new Gestor();
 
     /**
      * @throws java.security.NoSuchAlgorithmException
@@ -58,26 +60,29 @@ public class CargaArchivoServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        final String baseTempPath = System.getProperty("java.io.tmpdir");
-        restCargarArchivo cargarArchivo = new restCargarArchivo();
-        String name;
+        final String folder = doc.leerProperties("ArchivosExpediente");
+        String nombre;
         String resultado = null;
+        String rutaArchivo;
+        String nombreArchivo;
         if (ServletFileUpload.isMultipartContent(request)) {
             try {
                 List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
 
                 for (FileItem item : multiparts) {
                     if (!item.isFormField()) {
-                        int randomInt = this.rand.nextInt();
-
-                        File tempDir = new File(baseTempPath + File.separator + "tempDir" + randomInt);
-                        if (tempDir.exists() == false) {
-                            tempDir.mkdir();
+                        nombre = new File(item.getName()).getName();
+                        String expediente = nombre.split("_")[0];
+                        String name = nombre.split("_")[1];
+                        File folderExpediente = new File(folder + File.separator + "Expediente" + expediente);
+                        if (folderExpediente.exists() == false) {
+                            folderExpediente.mkdir();
                         }
-                        name = new File(item.getName()).getName();
-                        item.write(new File(tempDir + File.separator + name));
-                        File file = new File(tempDir + File.separator + name);
-                        resultado = cargarArchivo.cargarArchivo(file, 2);
+
+                        item.write(new File(folderExpediente + File.separator + name));
+                        rutaArchivo = "http://127.0.0.1:8887/" +  "Expediente" + expediente + "/" + name;
+                        nombreArchivo = name;
+                        resultado = "Exitoso" + "," + nombreArchivo + "," + rutaArchivo;
                     }
                 }
             } catch (Exception e) {

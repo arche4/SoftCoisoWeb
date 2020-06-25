@@ -160,6 +160,7 @@ function myFunctionReload() {
     location.reload();
 }
 function guardar() {
+     $('#crearCita').modal('hide');
     $(".loader").fadeIn("slow");
     var horaIni = $('#horaIni').val();
     var horaFin = $('#horaFin').val();
