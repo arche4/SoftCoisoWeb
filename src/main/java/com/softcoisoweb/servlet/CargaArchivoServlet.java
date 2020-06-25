@@ -78,7 +78,7 @@ public class CargaArchivoServlet extends HttpServlet {
                         }
 
                         item.write(new File(folderExpediente + File.separator + name));
-                        rutaArchivo = "http://127.0.0.1:8887/" +  "Expediente" + expediente + "/" + name;
+                        rutaArchivo = "http://127.0.0.1:8887/ArchivosExpedientes/" +  "Expediente" + expediente + "/" + name;
                         nombreArchivo = name;
                         resultado = "Exitoso" + "," + nombreArchivo + "," + rutaArchivo;
                     }

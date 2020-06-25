@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             $.ajax({
                 type: "GET",
-                url: "/SoftCoisoWeb-V.1/FormacionServlet",
+                url: "/SoftCoisoWeb/FormacionServlet",
                 data: '&btnConsultarFormacion=' + codigo,
                 success: function (data) {
                     var respuesta = $.trim(data);
@@ -58,60 +58,10 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         dateClick: function (info) {
             fechaCompleta1 = info.dateStr;
-            var moment = calendar.getDate();
-            moment = moment.toISOString();
-            moment = moment.split("T");
-            var fechaJS = new Date();
-            if (fechaJS.getMonth() < 10 && fechaJS.getDate() < 10) {
-                fechaJS = fechaJS.getFullYear() + "-0" + (fechaJS.getMonth() + 1) + "-0" + (fechaJS.getDate());
-            } else if (fechaJS.getDate() < 10) {
-                fechaJS = fechaJS.getFullYear() + "-" + (fechaJS.getMonth() + 1) + "-0" + (fechaJS.getDate());
-            } else if (fechaJS.getMonth() < 10) {
-                fechaJS = fechaJS.getFullYear() + "-0" + (fechaJS.getMonth() + 1) + "-" + (fechaJS.getDate());
-            } else {
-                fechaJS = fechaJS.getFullYear() + "-" + (fechaJS.getMonth() + 1) + "-" + (fechaJS.getDate());
-            }
-            var fechaCompleta = info.dateStr;
-            if (fechaCompleta < fechaJS) {
-                $('#Error').fadeIn(1000);
-                setTimeout(function () {
-                    $('#Error').fadeOut(1000);
-                }, 5000);
-            } else {
-                fechaCompleta = fechaCompleta.split('T');
-                if (fechaCompleta.length > 1) {
-                    var auxfecha = fechaCompleta[1].split('-');
-                    var horaJS = new Date();
-                    if (horaJS.getHours() < 10) {
-                        hsystem = "0" + horaJS.getHours();
-                    } else {
-                        hsystem = horaJS.getHours();
-                    }
-                    if (horaJS.getMinutes() < 10) {
-                        msystem = "0" + horaJS.getMinutes();
-                    } else {
-                        msystem = horaJS.getMinutes();
-                    }
-                    if (horaJS.getSeconds() < 10) {
-                        ssystem = "0" + horaJS.getSeconds();
-                    } else {
-                        ssystem = horaJS.getSeconds();
-                    }
-                    horaJS = hsystem + ":" + msystem + ":" + ssystem;
-                    if ((auxfecha[0] < horaJS) && (fechaJS === fechaCompleta[0])) {
-                        $('#Error').fadeIn(1000);
-                        setTimeout(function () {
-                            $('#Error').fadeOut(1000);
-                        }, 5000);
-                    } else {
-                        $("#crearFormacion").modal();
-                    }
-                } else {
-                    $("#crearFormacion").modal();
-                }
-            }
+            $("#crearFormacion").modal();
+
         },
-        events: '/SoftCoisoWeb-V.1/FormacionServlet'
+        events: '/SoftCoisoWeb/FormacionServlet'
     });
     calendar.render();
     $('#submitButton').on('click', function (e) {
@@ -126,7 +76,7 @@ $(document).ready(function () {
         maxFileCount: 5
 
     });
-    
+
     $("body").on("click", "#eliminarArchivo", function () {
         var cadena = ' <div class="form-row">'
                 + '<h5> ¿ Esta seguro que quieres eliminar el archivo ?</h3>'
@@ -145,7 +95,7 @@ $(document).ready(function () {
 
     $("#uploadBtn").on("click", function () {
         $(".loader").fadeIn("slow");
-        var url = "/SoftCoisoWeb-V.1/CargarArchivoFormacionServlet";
+        var url = "/SoftCoisoWeb/CargarArchivoFormacionServlet";
         var form = $("#sampleUploadFrm")[0];
         var data = new FormData(form);
         $.ajax({
@@ -218,7 +168,7 @@ function guardar() {
         $.ajax({
             async: false,
             type: "POST",
-            url: "/SoftCoisoWeb-V.1/FormacionServlet",
+            url: "/SoftCoisoWeb/FormacionServlet",
             data: 'tipoFormacion=' + tipoFormacion + '&iniHora=' + iniHora + '&finHora=' + finHora + '&correoFormador=' + correoFormador +
                     '&emailUsuario=' + emailUsuario + '&usuario=' + usuario + '&titulo=' + titulo + '&descripcion=' + descripcion +
                     '&btnCrearFormacion=' + btnCrearFormacion + '&ano=' + ano + '&mes=' + mes + '&dia=' + dia + '&tema=' + tema + '&nAsistentes=' + nAsistentes
@@ -284,7 +234,7 @@ function modificarFormacion() {
         $.ajax({
             async: false,
             type: "POST",
-            url: "/SoftCoisoWeb-V.1/FormacionServlet",
+            url: "/SoftCoisoWeb/FormacionServlet",
             data: 'tipoFormacion=' + tipoFormacion + '&IniHora=' + IniHora + '&FinHora=' + FinHora + '&correoFormador=' + correoFormador +
                     '&emailUsuario=' + emailUsuario + '&usuario=' + usuario + '&titulo=' + titulo + '&descripcion=' + descripcion +
                     '&btnModificarFormacion=' + btnModificarFormacion + '&tema=' + tema + '&nAsistentes=' + nAsistentes
@@ -336,7 +286,7 @@ function Eliminar() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/SoftCoisoWeb-V.1/FormacionServlet",
+        url: "/SoftCoisoWeb/FormacionServlet",
         data: 'btnEliminarFormacion=' + btnEliminarFormacion + '&codigoFormacion=' + codigoFormacion,
         success: function (data) {
             event.preventDefault();
@@ -367,7 +317,7 @@ function eliminarArchivo() {
     $.ajax({
         async: false,
         type: "POST",
-        url: "/SoftCoisoWeb-V.1/FormacionServlet",
+        url: "/SoftCoisoWeb/FormacionServlet",
         data: 'btnEliminarArchivo=' + btnEliminarArchivo,
         success: function (data) {
             event.preventDefault();

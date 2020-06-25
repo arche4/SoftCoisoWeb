@@ -54,13 +54,13 @@ public class CargarArchivoFormacionServlet extends HttpServlet {
                     if (!item.isFormField()) {
                         name = new File(item.getName()).getName();
                        
-                        File folderExpediente = new File(folder + File.separator +name);
+                        File folderExpediente = new File(folder);
                         if (folderExpediente.exists() == false) {
                             folderExpediente.mkdir();
                         }
 
                         item.write(new File(folderExpediente + File.separator + name));
-                        rutaArchivo = "http://127.0.0.1:8887/" + name;
+                        rutaArchivo = "http://127.0.0.1:8887/ArchivosFormaciones/"+name;
                         nombreArchivo = name;
                         resultado = "Exitoso" + "," + nombreArchivo + "," + rutaArchivo;
                     }

@@ -11,7 +11,7 @@ $(document).ready(function () {
     });
 
     $("#btnDescargar").click(function () {
-       window.location = 'http://127.0.0.1:8887//Reportes//SoftCoisoWeb-V.1Personas.xls';
+       window.location = 'http://127.0.0.1:8887//ReportesPersonas.xls';
     });
 
     //EL BOTON CONSULTAR EJECUTA  
