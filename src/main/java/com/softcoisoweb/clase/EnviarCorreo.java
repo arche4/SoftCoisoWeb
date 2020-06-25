@@ -5,9 +5,8 @@
  */
 package com.softcoisoweb.clase;
 
+import com.softcoisoweb.util.Gestor;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -23,12 +22,12 @@ import javax.mail.internet.MimeMessage;
  */
 public class EnviarCorreo {
 
-    private final static Logger LOGGER = Logger.getLogger("LogsErrores");
+    private final Gestor doc = new Gestor();
 
     public String enviarCorreo(String correos, String asunto, StringBuilder cuerpo) throws MessagingException {
         Properties propiedad = new Properties();
-        final String correoEnvia = "lymapre@gmail.com";
-        final String contraseña = "37957987398";
+        final String correoEnvia = doc.leerProperties("correo");
+        final String contraseña = doc.leerProperties("clave");
         propiedad.put("mail.smtp.host", "smtp.google.com");
         propiedad.put("mail.smtp.port", "587");
         propiedad.put("mail.smtp.auth", "true");
@@ -64,7 +63,7 @@ public class EnviarCorreo {
             }
 
         } catch (AddressException ex) {
-            LOGGER.log(Level.SEVERE, "Error al enviar el correo electronico:  {0}", new Object[]{ex});
+            doc.imprimirLog(doc.obtenerHoraActual() + "-Error al enviar el correo electronico, El error es: " + ex);
         }
 
         return resultado;

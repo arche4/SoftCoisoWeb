@@ -9,12 +9,11 @@ import com.softcoisoweb.controller.ArlJpaController;
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.model.Arl;
 import com.softcoisoweb.model.Persona;
+import com.softcoisoweb.util.Gestor;
 import com.softcoisoweb.util.JPAFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,7 +28,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "ArlServlet", urlPatterns = {"/ArlServlet"})
 public class ArlServlet extends HttpServlet {
 
-    private final static Logger LOGGER = Logger.getLogger("LogsErrores");
+    private final Gestor doc = new Gestor();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,12 +42,12 @@ public class ArlServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         String btnCrear = request.getParameter("btnCrear");
         String btnConsultar = request.getParameter("btnConsultar");
         String btnModificar = request.getParameter("btnModificar");
         String btnEliminar = request.getParameter("btnEliminar");
-        
+
         try ( PrintWriter out = response.getWriter()) {
             if (btnCrear != null && btnCrear.equals("ok")) {
                 String crear = crear(request);
@@ -69,7 +68,7 @@ public class ArlServlet extends HttpServlet {
             cargarDatos(request);
         }
     }
-    
+
     private String crear(HttpServletRequest request) {
         String resultado;
         String codigo = request.getParameter("codigo");
@@ -85,7 +84,7 @@ public class ArlServlet extends HttpServlet {
                 resultado = "0";
             }
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Se presento un error creando una nueva ARL:  {0} El error es: {1}", new Object[]{codigo, e});
+            doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error creando una nueva ARL: " + codigo + " El error es: " + e);
             resultado = "2";
         }
         return resultado;
@@ -98,7 +97,8 @@ public class ArlServlet extends HttpServlet {
             List<Arl> listArl = arlJpa.findArlEntities();
             session.setAttribute("ARL", listArl);
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Se presento un error cargando los datos de las  ARL:  El error es: {0}", new Object[]{e});
+            doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error cargando los datos de las  ARL, El error es: " + e);
+
         }
     }
 
@@ -109,7 +109,8 @@ public class ArlServlet extends HttpServlet {
             Arl arl = arlJpa.findArl(codigo);
             respuesta = arl.getCodigoArl() + "#" + arl.getNombreArl();
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Se presento un error consultando los datos de la  ARL: {0} El error es: {1}", new Object[]{codigo, e});
+            doc.imprimirLog(doc.obtenerHoraActual() + "-SSe presento un error consultando los datos de la  ARL: " + codigo + " El error es: " + e);
+
         }
         return respuesta;
 
@@ -125,12 +126,12 @@ public class ArlServlet extends HttpServlet {
             arlJpa.edit(arlEdit);
             resultado = "Exitoso";
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Se presento un error modificando los datos de la  ARL: {0} El error es: {1}", new Object[]{codigo, e});
+            doc.imprimirLog(doc.obtenerHoraActual() + "-SSe presento un error modificando los datos de la  ARL: " + codigo + " El error es: " + e);
             resultado = "Error";
         }
         return resultado;
     }
-    
+
     private String eliminar(String codigo) {
         String resultado;
         ArlJpaController arlJpa = new ArlJpaController(JPAFactory.getFACTORY());
@@ -143,7 +144,7 @@ public class ArlServlet extends HttpServlet {
                 resultado = "0";
             }
         } catch (NonexistentEntityException e) {
-            LOGGER.log(Level.SEVERE, "Se presento un error eliminando la  ARL: {0} El error es: {1}", new Object[]{codigo, e});
+            doc.imprimirLog(doc.obtenerHoraActual() + "-SSe presento un error eliminando  los datos de la  ARL: " + codigo + " El error es: " + e);
             resultado = "2";
         }
         return resultado;

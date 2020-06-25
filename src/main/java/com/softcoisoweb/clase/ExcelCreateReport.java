@@ -5,6 +5,7 @@
  */
 package com.softcoisoweb.clase;
 
+import com.softcoisoweb.util.Gestor;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,6 +24,8 @@ import org.apache.poi.ss.usermodel.IndexedColors;
  * @author manue
  */
 public class ExcelCreateReport {
+
+    private final Gestor doc = new Gestor();
 
     private HSSFWorkbook archivoExcel = null;
     private HSSFSheet hojaArchivo = null;
@@ -75,7 +78,7 @@ public class ExcelCreateReport {
         Font tipoFuente = archivoExcel.createFont();
         tipoFuente.setFontHeight((short) 250);
         estiloEncabezadoCeldas.setFont(tipoFuente);
-        
+
         //Estilo Informacion reporte
         CellStyle estiloInfo = archivoExcel.createCellStyle();
         estiloInfo.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
@@ -116,10 +119,12 @@ public class ExcelCreateReport {
         }
         //Genero el archivo
         try {
-            try (FileOutputStream file = new FileOutputStream(this.nombreArchivoExcel)) {
+            try ( FileOutputStream file = new FileOutputStream(this.nombreArchivoExcel)) {
                 this.archivoExcel.write(file);
             }
         } catch (IOException e) {
+            doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error creando el excel del reporte personas, El error es: " + e);
+
             response = false;
         }
 

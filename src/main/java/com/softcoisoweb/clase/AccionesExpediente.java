@@ -6,14 +6,13 @@ import com.softcoisoweb.controller.UsuarioJpaController;
 import com.softcoisoweb.controller.exceptions.NonexistentEntityException;
 import com.softcoisoweb.model.SeguimientoCaso;
 import com.softcoisoweb.model.Usuario;
+import com.softcoisoweb.util.Gestor;
 import com.softcoisoweb.util.JPAFactory;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -21,7 +20,7 @@ import java.util.logging.Logger;
  */
 public class AccionesExpediente {
 
-    private final static Logger LOGGER = Logger.getLogger("LogsErrores");
+    private final Gestor doc = new Gestor();
 
     public void guardarAccionesExpediente(String casoId, String usuarioCedula, String accion) {
         FlujoCasoJpaController flujoJpa = new FlujoCasoJpaController(JPAFactory.getFACTORY());
@@ -33,12 +32,12 @@ public class AccionesExpediente {
             SeguimientoCaso seguimiento = new SeguimientoCaso(casoId, accion, usuarioCedula, nombreUsuario, fechaActual);
             seguimientoJpa.create(seguimiento);
         } catch (SecurityException e) {
-            LOGGER.log(Level.SEVERE, "Se presento un error agreando actividad del expediente::  {0} El error es: {1}", new Object[]{casoId, e});
+            doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error agreando actividad del expediente: " + casoId + " El error es: " + e);
         }
         try {
             flujoJpa.actualizarFechaFlujoCaso(casoId, fechaActual, usuarioCedula);
         } catch (NonexistentEntityException e) {
-            LOGGER.log(Level.SEVERE, "Se presento un error agreando actividad del expediente:  {0} El error es: {1}", new Object[]{casoId, e});
+            doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error agreando actividad del expediente: " + casoId + " El error es: " + e);
 
         }
     }
@@ -51,7 +50,7 @@ public class AccionesExpediente {
             Usuario usuario = usuarioJpa.findUsuario(cedula);
             nombreUsuario = usuario.getNombreUsuario() + " " + usuario.getApellidoUsuario();
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Se presento un error buscando el usuario en sesion,  El Error es:  {0}", new Object[]{e});
+            doc.imprimirLog(doc.obtenerHoraActual() + "-Se presento un error buscando el usuario en sesion, El error es: " + e);
         }
 
         return nombreUsuario;
@@ -70,24 +69,22 @@ public class AccionesExpediente {
             fecha = formatterFecha2.format(date);
             fechaResultado = fecha + " " + horaActual;
         } catch (ParseException e) {
-            LOGGER.log(Level.SEVERE, "Error obteniendo la fechaa actual, El error es:  {0}", new Object[]{e});
-
+            doc.imprimirLog(doc.obtenerHoraActual() + "-Error obteniendo la fechaa actual, El error es: " + e);
         }
         return fechaResultado;
 
     }
-    
-    public String fechaActual(){
-         String fecha = null;
-           try {
+
+    public String fechaActual() {
+        String fecha = null;
+        try {
             String fechaActual = obtenerFechaActual();
             SimpleDateFormat formatterFecha = new SimpleDateFormat("yyyyMMdd");
             SimpleDateFormat formatterFecha2 = new SimpleDateFormat("yyyy-MM-dd");
             Date date = formatterFecha.parse(fechaActual);
             fecha = formatterFecha2.format(date);
         } catch (ParseException e) {
-            LOGGER.log(Level.SEVERE, "Error obteniendo la fechaa actual, El error es:  {0}", new Object[]{e});
-
+            doc.imprimirLog(doc.obtenerHoraActual() + "-Error obteniendo la fechaa actual, El error es: " + e);
         }
         return fecha;
     }
@@ -98,7 +95,7 @@ public class AccionesExpediente {
     }
 
     private String agregarCerosIzquierda(final String diames) {
-        final StringBuilder  retorno = new StringBuilder ();
+        final StringBuilder retorno = new StringBuilder();
         if (Integer.parseInt(diames) < 10) {
             final String add = "0" + diames;
             retorno.append(add);
