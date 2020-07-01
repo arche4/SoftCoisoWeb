@@ -59,6 +59,7 @@ public class CargaArchivoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         final String folder = doc.leerProperties("ArchivosExpediente");
+        final String ipruta = doc.leerProperties("ipRuta");
         String nombre;
         String resultado = null;
         String rutaArchivo;
@@ -78,7 +79,7 @@ public class CargaArchivoServlet extends HttpServlet {
                         }
 
                         item.write(new File(folderExpediente + File.separator + name));
-                        rutaArchivo = "http://127.0.0.1:8887/ArchivosExpedientes/" +  "Expediente" + expediente + "/" + name;
+                        rutaArchivo = ipruta+"ArchivosExpedientes/" +  "Expediente" + expediente + "/" + name;
                         nombreArchivo = name;
                         resultado = "Exitoso" + "," + nombreArchivo + "," + rutaArchivo;
                     }

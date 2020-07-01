@@ -42,6 +42,7 @@ public class CargarArchivoFormacionServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         final String folder = doc.leerProperties("ArchivosFormacion");
+        final String ipruta = doc.leerProperties("ipRuta");
         String name;
         String resultado = null;
         String rutaArchivo;
@@ -60,7 +61,7 @@ public class CargarArchivoFormacionServlet extends HttpServlet {
                         }
 
                         item.write(new File(folderExpediente + File.separator + name));
-                        rutaArchivo = "http://127.0.0.1:8887/ArchivosFormaciones/"+name;
+                        rutaArchivo = ipruta+"ArchivosFormaciones/"+name;
                         nombreArchivo = name;
                         resultado = "Exitoso" + "," + nombreArchivo + "," + rutaArchivo;
                     }
