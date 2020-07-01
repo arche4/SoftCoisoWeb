@@ -81,7 +81,7 @@
                             </a>
                             <ul class="sub">
                                 <li><a href="${pageContext.servletContext.contextPath}/views/calendar.jsp">Citas</a></li>
-                                <li><a href="${pageContext.servletContext.contextPath}/views/planeacion.jsp">Planeacion</a></li>
+                                <li><a href="${pageContext.servletContext.contextPath}/views/formacion.jsp">Formaciones</a></li>
                             </ul>
                         </li>
                         <li class="sub-menu">
